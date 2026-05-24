@@ -118,44 +118,67 @@
     text-align: center;
 }
 .stat-circle-ring {
-    width: 130px;
-    height: 130px;
+    width: 140px;
+    height: 140px;
     margin: 0 auto 16px;
     border-radius: 50%;
-    border: 3px solid var(--color-primary, #d43c18);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    transition: transform var(--transition, 0.3s ease), filter var(--transition, 0.3s ease);
+}
+.stat-circle-ring:hover {
+    transform: scale(1.08);
+    filter: drop-shadow(0 4px 10px rgba(212, 60, 24, 0.45));
+}
+.dial-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg); /* Start drawing from the top */
+}
+.dial-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 6px;
+}
+.dial-fill {
+    fill: none;
+    stroke: url(#dialGradient);
+    stroke-width: 6px;
+    stroke-linecap: round;
+    stroke-dasharray: 282.74; /* 2 * PI * 45 */
+    stroke-dashoffset: 282.74; /* Start fully offset */
+    transition: stroke-dashoffset 2.2s cubic-bezier(0.1, 0.8, 0.2, 1);
+}
+.dial-content {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #ffffff;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    padding: 10px;
-}
-.bg-dark .stat-circle-ring {
-    background: rgba(255,255,255,0.06);
-    border-color: var(--color-primary, #d43c18);
 }
 .stat-value {
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 800;
-    color: var(--color-primary, #d43c18);
+    color: #ffffff;
     line-height: 1.2;
+    text-shadow: 0 2px 10px rgba(212, 60, 24, 0.35);
 }
 .stat-value-sm {
-    font-size: 15px;
-}
-.bg-dark .stat-value {
-    color: #ffffff;
+    font-size: 13px;
 }
 .stat-label {
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 18px;
-    color: #555;
+    color: rgba(255, 255, 255, 0.75);
     max-width: 140px;
     margin: 0 auto;
-}
-.bg-dark .stat-label {
-    color: rgba(255,255,255,0.75);
 }
 
 /* SUB BLOCK 3: Vertical Tabs */
@@ -527,40 +550,85 @@
     </section>
 
     <!-- SUB BLOCK 2: Impact Stats -->
-    <section class="section-padding bg-dark">
+    <section class="section-padding bg-dark" id="serve-impact-section">
+        <!-- SVG Gradient Definition for Dials -->
+        <svg style="width: 0; height: 0; position: absolute;" aria-hidden="true">
+            <defs>
+                <linearGradient id="dialGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ff7b54" />
+                    <stop offset="100%" stop-color="#d43c18" />
+                </linearGradient>
+            </defs>
+        </svg>
+
         <div class="container">
             <div class="section-header">
                 <h2>Measuring Progress. Empowering Communities.</h2>
                 <p>A growing movement driven by collaboration, leadership and meaningful community impact across Malaysia and beyond.</p>
             </div>
             <div class="stats-grid">
+                <!-- Dial 1 -->
                 <div class="stat-circle">
                     <div class="stat-circle-ring">
-                        <span class="stat-value">720+</span>
+                        <svg class="dial-svg" viewBox="0 0 100 100">
+                            <circle class="dial-bg" cx="50" cy="50" r="45"></circle>
+                            <circle class="dial-fill" cx="50" cy="50" r="45" data-percentage="90"></circle>
+                        </svg>
+                        <div class="dial-content">
+                            <span class="stat-value" data-target="720" data-suffix="+">0+</span>
+                        </div>
                     </div>
                     <p class="stat-label">Days<br>Driving Change</p>
                 </div>
+                <!-- Dial 2 -->
                 <div class="stat-circle">
                     <div class="stat-circle-ring">
-                        <span class="stat-value">20+</span>
+                        <svg class="dial-svg" viewBox="0 0 100 100">
+                            <circle class="dial-bg" cx="50" cy="50" r="45"></circle>
+                            <circle class="dial-fill" cx="50" cy="50" r="45" data-percentage="65"></circle>
+                        </svg>
+                        <div class="dial-content">
+                            <span class="stat-value" data-target="20" data-suffix="+">0+</span>
+                        </div>
                     </div>
                     <p class="stat-label">Initiatives<br>Groundbreaking Programmes</p>
                 </div>
+                <!-- Dial 3 -->
                 <div class="stat-circle">
                     <div class="stat-circle-ring">
-                        <span class="stat-value stat-value-sm">RM5,000,000+</span>
+                        <svg class="dial-svg" viewBox="0 0 100 100">
+                            <circle class="dial-bg" cx="50" cy="50" r="45"></circle>
+                            <circle class="dial-fill" cx="50" cy="50" r="45" data-percentage="85"></circle>
+                        </svg>
+                        <div class="dial-content">
+                            <span class="stat-value stat-value-sm" data-target="5000000" data-prefix="RM" data-suffix="+">RM0+</span>
+                        </div>
                     </div>
                     <p class="stat-label">Raised for<br>Education</p>
                 </div>
+                <!-- Dial 4 -->
                 <div class="stat-circle">
                     <div class="stat-circle-ring">
-                        <span class="stat-value">10,000+</span>
+                        <svg class="dial-svg" viewBox="0 0 100 100">
+                            <circle class="dial-bg" cx="50" cy="50" r="45"></circle>
+                            <circle class="dial-fill" cx="50" cy="50" r="45" data-percentage="95"></circle>
+                        </svg>
+                        <div class="dial-content">
+                            <span class="stat-value" data-target="10000" data-suffix="+">0+</span>
+                        </div>
                     </div>
                     <p class="stat-label">Lives Empowered<br>Through Programmes</p>
                 </div>
+                <!-- Dial 5 -->
                 <div class="stat-circle">
                     <div class="stat-circle-ring">
-                        <span class="stat-value">5,000+</span>
+                        <svg class="dial-svg" viewBox="0 0 100 100">
+                            <circle class="dial-bg" cx="50" cy="50" r="45"></circle>
+                            <circle class="dial-fill" cx="50" cy="50" r="45" data-percentage="80"></circle>
+                        </svg>
+                        <div class="dial-content">
+                            <span class="stat-value" data-target="5000" data-suffix="+">0+</span>
+                        </div>
                     </div>
                     <p class="stat-label">Families Supported<br>During Ramadan</p>
                 </div>
@@ -731,6 +799,59 @@
     }
     initTabs('#membership-vertical-tabs', '.vtab-btn', '.vtab-panel');
     initTabs('#process-horizontal-tabs', '.htab-btn', '.htab-panel');
+
+    // Dials Animation logic when scrolled into view
+    var statsSection = document.getElementById('serve-impact-section');
+    if (statsSection && 'IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    animateDials();
+                    observer.unobserve(statsSection);
+                }
+            });
+        }, { threshold: 0.15 });
+        observer.observe(statsSection);
+    } else {
+        // Fallback for older browsers
+        setTimeout(animateDials, 800);
+    }
+
+    function animateDials() {
+        var dials = document.querySelectorAll('.dial-fill');
+        dials.forEach(function (dial) {
+            var percentage = parseFloat(dial.getAttribute('data-percentage'));
+            var radius = 45;
+            var circumference = 2 * Math.PI * radius; // 282.74
+            var offset = circumference - (percentage / 100) * circumference;
+            dial.style.strokeDashoffset = offset;
+        });
+
+        var counters = document.querySelectorAll('.stat-value');
+        counters.forEach(function (counter) {
+            var target = parseInt(counter.getAttribute('data-target'));
+            var prefix = counter.getAttribute('data-prefix') || '';
+            var suffix = counter.getAttribute('data-suffix') || '';
+            var start = 0;
+            var duration = 2000; // 2 seconds
+            var startTime = null;
+
+            function updateCounter(currentTime) {
+                if (!startTime) startTime = currentTime;
+                var progress = currentTime - startTime;
+                var currentVal = Math.min(Math.floor((progress / duration) * target), target);
+                
+                counter.textContent = prefix + currentVal.toLocaleString() + suffix;
+                
+                if (progress < duration) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.textContent = prefix + target.toLocaleString() + suffix;
+                }
+            }
+            requestAnimationFrame(updateCounter);
+        });
+    }
 })();
 </script>
 @endpush
