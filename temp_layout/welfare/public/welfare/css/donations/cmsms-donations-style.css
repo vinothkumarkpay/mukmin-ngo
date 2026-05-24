@@ -1,0 +1,605 @@
+/**
+ * @package 	WordPress
+ * @subpackage 	Welfare
+ * @version		1.2.0
+ * 
+ * CMSMS Donations CSS Rules
+ * Created by CMSMasters
+ * 
+ */
+/*-------------------------------------------------------------------------*/
+/*	1.	Donation Global Styles */
+/*-------------------------------------------------------------------------*/
+/***************** Donations Icons ******************/
+.cmsms_donation_notice.cmsms_donation_notice_success:before {
+  content: '\ef50';
+}
+.cmsms_donation_notice.cmsms_donation_notice_info:before {
+  content: '\ef4c';
+}
+/***************** Donations Header Button ******************/
+.header_top_donation_but {
+  display: inline-block;
+  padding: 1px 25px 0;
+  margin: 0 0 0 20px;
+  vertical-align: middle;
+}
+.header_top_donation_but:after {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+.header_top_donation_but span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.header_donation_but_wrap {
+  display: block;
+  margin-left: 20px;
+  position: relative;
+  float: right;
+  overflow: hidden;
+}
+.header_donation_but_wrap .header_donation_but_wrap_inner {
+  display: table;
+  height: 100%;
+}
+.header_donation_but_wrap .header_donation_but {
+  display: table-cell;
+  vertical-align: middle;
+}
+/*-------------------------------------------------------------------------*/
+/*	2.	Campaigns + Campaign Styles */
+/*-------------------------------------------------------------------------*/
+/***************** Campaign Donated ******************/
+.cmsms_campaign_donated .cmsms_stats.stats_mode_bars.stats_type_horizontal {
+  overflow: hidden;
+}
+.cmsms_campaign_donated .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap {
+  padding: 0 40px 0 0;
+}
+.cmsms_campaign_donated .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap:before {
+  display: none;
+}
+.cmsms_campaign_donated .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat {
+  overflow: visible;
+  min-height: 38px;
+}
+.cmsms_campaign_donated .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat .cmsms_stat_inner {
+  height: 4px;
+}
+.cmsms_campaign_donated .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat .cmsms_stat_inner .cmsms_stat_counter_wrap {
+  bottom: -8px;
+  right: -40px;
+}
+/***************** Featured Campaign ******************/
+.cmsms_featured_campaign {
+  position: relative;
+  overflow: hidden;
+}
+.cmsms_featured_campaign .campaign {
+  position: relative;
+  overflow: hidden;
+}
+.cmsms_featured_campaign .campaign .cmsms_campaign_wrap_img {
+  width: 25%;
+  position: relative;
+  float: left;
+}
+.cmsms_featured_campaign .campaign .cmsms_campaign_wrap_img .preloader {
+  padding-bottom: 100%;
+}
+.cmsms_featured_campaign .campaign .cmsms_campaign_wrap_img .img_placeholder {
+  outline: none;
+}
+.cmsms_featured_campaign .campaign .cmsms_campaign_donated_percent {
+  padding: 55px 40px 45px 0;
+  position: relative;
+  overflow: hidden;
+  float: right;
+}
+.cmsms_featured_campaign .campaign .cmsms_campaign_donated_percent .cmsms_stats.stats_mode_circles .cmsms_stat_wrap .cmsms_stat {
+  margin: 0;
+}
+.cmsms_featured_campaign .campaign .cmsms_campaign_donated_percent .cmsms_stats.stats_mode_circles .cmsms_stat_wrap .cmsms_stat .cmsms_stat_inner {
+  outline: none;
+}
+.cmsms_featured_campaign .campaign .cmsms_campaign_donated_percent .cmsms_stats.stats_mode_circles .cmsms_stat_wrap .cmsms_stat canvas {
+  outline: none;
+}
+.cmsms_featured_campaign .campaign .cmsms_campaign_cont {
+  padding: 30px 50px 30px 0;
+  position: relative;
+  overflow: hidden;
+}
+.cmsms_featured_campaign .campaign .cmsms_campaign_wrap_heading {
+  padding: 0 0 0 40px;
+  position: relative;
+  border-left-width: 4px;
+  border-left-style: solid;
+}
+.cmsms_featured_campaign .campaign .cmsms_campaign_rest_amount {
+  display: block;
+}
+.cmsms_featured_campaign .campaign .cmsms_campaign_header {
+  position: relative;
+}
+.cmsms_featured_campaign .campaign .cmsms_campaign_title {
+  margin: 0;
+}
+.cmsms_featured_campaign .campaign .cmsms_campaign_content {
+  padding: 20px 0 0 44px;
+  position: relative;
+  overflow: hidden;
+}
+.cmsms_featured_campaign .campaign .cmsms_campaign_content p {
+  padding: 0;
+}
+.cmsms_featured_campaign .campaign .cmsms_campaign_donate_button {
+  padding: 25px 0 0 44px;
+  position: relative;
+  overflow: hidden;
+}
+.cmsms_featured_campaign .campaign .cmsms_campaign_donate_button .button {
+  padding: 5px 15px;
+}
+/***************** Campaigns Page ******************/
+.cmsms_campaigns {
+  margin: 0 -20px;
+  padding-top: 80px;
+  position: relative;
+  overflow: hidden;
+}
+.cmsms_archive .cmsms_campaigns {
+  padding-top: 0;
+}
+.cmsms_campaigns .owl-buttons {
+  bottom: auto;
+  top: -70px;
+}
+.cmsms_campaigns .campaign {
+  min-width: 200px;
+  padding: 0 20px;
+  position: relative;
+  overflow: hidden;
+}
+.cmsms_campaigns .campaign .cmsms_img_wrap .preloader {
+  padding-bottom: 100%;
+}
+.cmsms_archive .cmsms_campaigns .campaign .cmsms_img_wrap .preloader {
+  padding-bottom: 46.5%;
+}
+.cmsms_campaigns .campaign .cmsms_img_wrap .preloader.highImg {
+  height: auto;
+  padding: 0;
+}
+.cmsms_campaigns .campaign .cmsms_img_wrap .preloader:before {
+  font-size: 36px;
+  z-index: 10;
+  opacity: 0;
+  width: 1em;
+  height: 1em;
+  margin: auto !important;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.cmsms_campaigns .campaign .cmsms_img_wrap .preloader:hover:before {
+  opacity: 1;
+}
+.cmsms_campaigns .campaign .cmsms_img_wrap .preloader:after {
+  content: '';
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.cmsms_campaigns .campaign .cmsms_campaign_header {
+  padding: 10px 0 0;
+  position: relative;
+}
+.cmsms_campaigns .campaign .cmsms_campaign_title {
+  margin: 0;
+}
+.cmsms_campaigns .campaign .cmsms_campaign_content {
+  padding: 10px 0 0;
+  position: relative;
+}
+.cmsms_campaigns .campaign .cmsms_campaign_content p {
+  margin: 0;
+  padding: 0;
+}
+.cmsms_campaigns .campaign .cmsms_campaign_donated_percent {
+  padding: 12px 0 0;
+}
+.cmsms_campaigns .campaign .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap {
+  padding: 0;
+}
+.cmsms_campaigns .campaign .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap:before {
+  height: 4px;
+  top: auto;
+  bottom: 25px;
+}
+.cmsms_campaigns .campaign .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat_title_wrap {
+  padding: 0 0 4px;
+  position: relative;
+  overflow: hidden;
+}
+.cmsms_campaigns .campaign .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat_title_wrap .cmsms_stat_counter_wrap {
+  float: right;
+}
+.cmsms_campaigns .campaign .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat_title_wrap .cmsms_stat_title {
+  display: block;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+.cmsms_campaigns .campaign .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat {
+  min-height: 4px;
+}
+.cmsms_campaigns .campaign .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat .cmsms_stat_inner {
+  height: 4px;
+}
+.cmsms_campaigns .campaign .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat .cmsms_stat_inner:before,
+.cmsms_campaigns .campaign .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat .cmsms_stat_inner .cmsms_stat_title,
+.cmsms_campaigns .campaign .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat .cmsms_stat_inner .cmsms_stat_counter_wrap {
+  bottom: 6px;
+}
+.cmsms_campaigns .campaign .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat_subtitle {
+  padding-top: 5px;
+}
+/***************** Single Campaign ******************/
+.opened-article > .campaign {
+  padding-bottom: 20px;
+}
+.opened-article > .campaign .campaign_meta_wrap {
+  display: table;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.opened-article > .campaign .campaign_meta_wrap + .cmsms_post_cont_info {
+  margin-top: 30px;
+}
+.opened-article > .campaign .campaign_meta_wrap > div {
+  display: table-cell;
+  padding: 25px 20px;
+  vertical-align: middle;
+  border-left-width: 2px;
+  border-left-style: solid;
+}
+.opened-article > .campaign .campaign_meta_wrap > div:first-child {
+  border-left-width: 0;
+  border-left-style: solid;
+}
+.opened-article > .campaign .campaign_meta_wrap .cmsms_campaign_target,
+.opened-article > .campaign .campaign_meta_wrap .cmsms_campaign_donations_count {
+  width: 21%;
+}
+.opened-article > .campaign .campaign_meta_wrap .cmsms_campaign_target_number,
+.opened-article > .campaign .campaign_meta_wrap .cmsms_campaign_donations_count_number {
+  margin-bottom: 5px;
+}
+.opened-article > .campaign .campaign_meta_wrap .cmsms_campaign_target_title,
+.opened-article > .campaign .campaign_meta_wrap .cmsms_campaign_donations_count_title {
+  margin-bottom: 0;
+}
+.opened-article > .campaign .campaign_meta_wrap .cmsms_campaign_donated {
+  width: 35%;
+}
+.opened-article > .campaign .campaign_meta_wrap .cmsms_campaign_donate_button {
+  width: 23%;
+}
+.opened-article > .campaign .campaign_meta_wrap .cmsms_campaign_donate_button > div {
+  text-align: center;
+}
+.opened-article > .campaign .cmsms_campaign_header {
+  padding: 35px 0 25px;
+  position: relative;
+}
+.opened-article > .campaign .cmsms_campaign_title {
+  margin: 0;
+  position: relative;
+}
+.opened-article > .campaign .cmsms_campaign_cont_info {
+  padding: 10px 0;
+  margin-bottom: 30px;
+  position: relative;
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  overflow: hidden;
+}
+.opened-article > .campaign .cmsms_campaign_cont_info > span {
+  display: inline-block;
+  margin-right: 25px;
+  white-space: nowrap;
+}
+.opened-article > .campaign .cmsms_campaign_meta_info {
+  position: relative;
+  float: right;
+  overflow: hidden;
+}
+.opened-article > .campaign .cmsms_campaign_meta_info > a {
+  margin-left: 10px;
+}
+.opened-article > .campaign .cmsms_campaign_meta_info > a:first-child {
+  margin-left: 0;
+}
+.related_posts_tabs_campaign .one_half .rel_post_content .related_posts_campaign_wrap {
+  display: table-cell;
+  vertical-align: middle;
+}
+.related_posts_tabs_campaign .one_half .rel_post_content .related_posts_campaign_wrap .related_posts_item_title {
+  display: block;
+  padding-bottom: 2px;
+  margin-top: -5px;
+}
+.related_posts_tabs_campaign .one_half .rel_post_content .related_posts_campaign_wrap .related_posts_campaign_togo {
+  display: inline-block;
+  padding-bottom: 7px;
+}
+.related_posts_tabs_campaign .one_half .rel_post_content .related_posts_campaign_wrap .cmsms_campaign_donated .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap {
+  padding: 0 35px 0 0;
+}
+.related_posts_tabs_campaign .one_half .rel_post_content .related_posts_campaign_wrap .cmsms_campaign_donated .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat {
+  min-height: 34px;
+}
+.related_posts_tabs_campaign .one_half .rel_post_content .related_posts_campaign_wrap .cmsms_campaign_donated .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat .cmsms_stat_title {
+  bottom: 10px;
+}
+.related_posts_tabs_campaign .one_half .rel_post_content .related_posts_campaign_wrap .cmsms_campaign_donated .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat .cmsms_stat_inner .cmsms_stat_counter_wrap {
+  bottom: -7px;
+  right: -37px;
+}
+.related_posts_tabs_campaign .one_half .rel_post_content .related_posts_campaign_wrap .cmsms_campaign_donated .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat_subtitle {
+  padding-top: 5px;
+}
+/*-------------------------------------------------------------------------*/
+/*	3.	Donations + Donation Styles	*/
+/*-------------------------------------------------------------------------*/
+/***************** Donations Page ******************/
+.cmsms_donations {
+  margin-top: -30px;
+  position: relative;
+}
+.cmsms_donations:after {
+  content: '.';
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+  overflow: hidden;
+}
+.cmsms_donations .donation {
+  padding: 30px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+.cmsms_donations .donation .cmsms_donation_cont_wrap {
+  position: relative;
+  overflow: hidden;
+}
+.cmsms_donations .donation .preloader {
+  padding-bottom: 100%;
+  margin-bottom: -5px;
+}
+.cmsms_donations .donation .cmsms_donation_cont {
+  padding: 10px 20px;
+}
+.cmsms_donations .donation .cmsms_donation_header {
+  margin: 0 0 -3px;
+  position: relative;
+}
+.cmsms_donations .donation .cmsms_donation_title {
+  margin: 0;
+}
+.cmsms_donations .donation .cmsms_donation_campaign {
+  display: block;
+}
+.cmsms_donations .donation .cmsms_donation_footer {
+  padding: 8px 20px;
+  margin: 10px 0 0;
+  position: relative;
+  border-top-width: 1px;
+  border-top-style: solid;
+}
+.cmsms_donations .donation .cmsms_donation_amount_title {
+  display: inline-block;
+  width: 50%;
+  padding: 0 5px 0 0;
+  vertical-align: middle;
+}
+.cmsms_donations .donation .cmsms_donation_amount_currency {
+  display: inline-block;
+  width: 50%;
+  padding: 0 0 0 5px;
+  vertical-align: middle;
+  word-wrap: break-word;
+  text-align: right;
+}
+/***************** Single Donation ******************/
+.donations.opened-article:after {
+  content: '.';
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+  overflow: hidden;
+}
+.donations.opened-article > .donation {
+  padding: 0 0 50px;
+  position: relative;
+  clear: both;
+}
+.donations.opened-article > .donation:after {
+  content: '.';
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+  overflow: hidden;
+}
+.donations.opened-article > .donation .cmsms_donation_info {
+  padding: 60px;
+  overflow: hidden;
+}
+.donations.opened-article > .donation .cmsms_donation_info_img {
+  display: inline-block;
+  width: 35%;
+  padding: 0 90px 0 0;
+  vertical-align: middle;
+}
+.donations.opened-article > .donation .cmsms_donation_info_img figure {
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.donations.opened-article > .donation .cmsms_donation_info_cont {
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: middle;
+  position: relative;
+  overflow: hidden;
+}
+.donations.opened-article > .donation .cmsms_donation_header {
+  position: relative;
+  padding: 0 0 15px;
+}
+.donations.opened-article > .donation .cmsms_donation_title {
+  margin: 0;
+  position: relative;
+}
+.donations.opened-article > .donation .cmsms_donation_amount_currency {
+  display: block;
+  position: relative;
+  word-wrap: break-word;
+}
+.donations.opened-article > .donation .cmsms_donation_campaign {
+  display: block;
+  margin: -10px 0 0;
+  position: relative;
+}
+.donations.opened-article > .donation .cmsms_donation_content {
+  padding: 35px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+.donations.opened-article > .donation .cmsms_donation_details {
+  padding: 10px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+.donations.opened-article > .donation .cmsms_donation_info + .cmsms_donation_details {
+  padding: 35px 0 0;
+}
+.donations.opened-article > .donation .cmsms_donation_details_item {
+  padding: 5px 0;
+  border-top-width: 1px;
+  border-top-style: solid;
+}
+.donations.opened-article > .donation .cmsms_donation_details_item:first-child {
+  border-top-width: 0;
+  border-top-style: solid;
+}
+.donations.opened-article > .donation .cmsms_donation_details_item_title,
+.donations.opened-article > .donation .cmsms_donation_details_item_value {
+  width: 50%;
+  display: inline-block;
+  vertical-align: middle;
+}
+.donations.opened-article > .donation .cmsms_donation_details_item_title {
+  padding: 0 15px 0 0;
+  text-align: left;
+}
+.donations.opened-article > .donation .cmsms_donation_details_item_value {
+  padding: 0 0 0 15px;
+  text-align: right;
+}
+/***************** Donation Confirm ******************/
+#page .content .cmsms_row.cmsms_donation_form_wrapper:first-of-type .cmsms_row_outer_parent {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+#page .middle_content .cmsms_row.cmsms_donation_form_wrapper:first-of-type .cmsms_row_outer_parent {
+  padding-bottom: 50px;
+}
+#page .middle_content .cmsms_row.cmsms_donation_form_wrapper:first-of-type .cmsms_row_inner {
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+.donation_confirm {
+  position: relative;
+  padding: 0 0 35px;
+}
+.donation_confirm:after {
+  content: '.';
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+  overflow: hidden;
+}
+.donation_confirm .donation_confirm_info {
+  display: table;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+}
+.donation_confirm .donation_confirm_info_item {
+  display: table-cell;
+  position: relative;
+  width: 20%;
+}
+.donation_confirm .donation_confirm_info_title {
+  display: block;
+  padding: 15px 10px 15px 25px;
+}
+.donation_confirm .donation_confirm_info_value {
+  display: block;
+  padding: 15px 10px 15px 25px;
+}
+.donation_confirm .donation_confirm_anonymous {
+  padding: 10px 0 0;
+}
+.donation_confirm .donation_confirm_cont_title {
+  margin: 30px 0 10px;
+}
+.donation_confirm .donation_confirm_cont {
+  position: relative;
+  overflow: hidden;
+}
+.donation_confirm .donation_confirm_cont > p:last-child {
+  padding: 0;
+  margin: 0;
+}
+/*-------------------------------------------------------------------------*/
+/*	4.	CSS3 Animations	*/
+/*-------------------------------------------------------------------------*/
+html.csstransitions .header_top_donation_but {
+  -webkit-transition: color .3s ease-in-out, background-color .3s ease-in-out;
+  -moz-transition: color .3s ease-in-out, background-color .3s ease-in-out;
+  -ms-transition: color .3s ease-in-out, background-color .3s ease-in-out;
+  -o-transition: color .3s ease-in-out, background-color .3s ease-in-out;
+  transition: color .3s ease-in-out, background-color .3s ease-in-out;
+}
+html.csstransitions .cmsms_campaigns .campaign .cmsms_img_wrap .preloader:before {
+  -webkit-transition: opacity 0.3s ease-in-out;
+  -moz-transition: opacity 0.3s ease-in-out;
+  -ms-transition: opacity 0.3s ease-in-out;
+  -o-transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
+}
+html.csstransitions .cmsms_campaigns .campaign .cmsms_img_wrap .preloader:after {
+  -webkit-transition: background-color .2s ease-in-out;
+  -moz-transition: background-color .2s ease-in-out;
+  -ms-transition: background-color .2s ease-in-out;
+  -o-transition: background-color .2s ease-in-out;
+  transition: background-color .2s ease-in-out;
+}

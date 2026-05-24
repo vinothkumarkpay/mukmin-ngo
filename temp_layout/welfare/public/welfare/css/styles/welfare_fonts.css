@@ -1,0 +1,1762 @@
+/**
+ * @package 	WordPress
+ * @subpackage 	Welfare
+ * @version 	1.2.4
+ * 
+ * Theme Fonts Rules
+ * Created by CMSMasters
+ * 
+ */
+
+
+/***************** Start Theme Font Styles ******************/
+
+	/* Start Content Font */
+	body, 
+	blockquote footer, 
+	.cmsms_breadcrumbs .cmsms_breadcrumbs_inner, 
+	.cmsms_breadcrumbs .cmsms_breadcrumbs_inner a {
+		font-family:Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:13px;
+		line-height:20px;
+		font-weight:normal;
+		font-style:normal;
+	}
+	
+	q, 
+	.cmsms_post_comments:before, 
+	.cmsmsLike:before {
+		font-size:13px;
+	}
+	
+	.cmsms_post_cont_info, 
+	.cmsms_posts_slider .post .cmsms_slider_post_content, 
+	.cmsms_posts_slider .post .cmsms_slider_post_quote_author, 
+	.widget_nav_menu ul ul li a, 
+	.widget_nav_menu ul ul ul li a, 
+	.widget_nav_menu ul ul ul ul li a, 
+	.widget_nav_menu ul ul ul ul ul li a, 
+	#wp-calendar th, 
+	#wp-calendar td, 
+	.cmsms_twitter .published { 
+		font-size:12px;
+	}
+	
+	.widget_nav_menu ul ul ul li a, 
+	.widget_nav_menu ul ul ul ul li a, 
+	.widget_nav_menu ul ul ul ul ul li a { 
+		font-size:11px;
+	}
+	
+	.cmsms_wrap_pagination ul li .cmsms_theme_icon_slide_prev, 
+	.cmsms_wrap_pagination ul li .cmsms_theme_icon_slide_next {
+		font-size:16px;
+	}
+	
+	.cmsms_post_filter_but:before, 
+	.cmsms_project_filter_but:before, 
+	.cmsms_project_sort_but:before {
+		font-size:15px;
+	}
+	
+	.cmsms_post_filter_but:before, 
+	.cmsms_project_filter_but:before {
+		width:15px !important;
+	}
+	
+	.cmsms_twitter .published, 
+	.cmsms_sitemap_wrap .cmsms_sitemap > li > ul > li li > a, 
+	.cmsms_sitemap_wrap .cmsms_sitemap_category > li li > a, 
+	.cmsms_sitemap_wrap .cmsms_sitemap_archive li, 
+	.cmsms_sitemap_wrap .cmsms_sitemap_archive li > a {
+		font-weight:700; /* static */
+	}
+	
+	q, 
+	.cmsmsLike:before,
+	.cmsms_post_comments:before, 
+	.contact_widget_name.cmsms_theme_icon_person:before, 
+	.contact_widget_email.cmsms_theme_icon_user_mail:before, 
+	.contact_widget_phone.cmsms_theme_icon_user_phone:before, 
+	.adress_wrap.cmsms_theme_icon_user_address:before, 
+	.cmsms_post_filter_but:before, 
+	.cmsms_project_filter_but:before, 
+	.cmsms_project_sort_but:before {
+		line-height:20px !important;
+	}
+	
+	.details_item_desc_like,
+	.details_item_desc_comments, 
+	.post .cmsms_post_meta_info, 
+	.cmsms_twitter .published {
+		height:20px;
+	}
+	/* Finish Content Font */
+
+
+	/* Start Link Font */
+	a,
+	.subpage_nav > strong,
+	.subpage_nav > span,
+	.subpage_nav > a,
+	.cmsms_tabs.lpr .cmsms_tabs_list .cmsms_tabs_list_item > a {
+		font-family:Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:13px;
+		line-height:20px;
+		font-weight:normal;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	
+	.cmsms_post_cont_info, 
+	.cmsms_post_cont_info a, 
+	.cmsms_project_cont_info, 
+	.cmsms_project_cont_info a, 
+	.pj_ddn .cmsms_project_category, 
+	.pj_ddn .cmsms_project_category a, 
+	.cmsms_tabs.lpr .cmsms_tabs_list .cmsms_tabs_list_item > a {
+		font-size:12px;
+	}
+	
+	.widget ul li a, 
+	.cmsms_tabs.lpr .cmsms_tabs_list .cmsms_tabs_list_item > a {
+		font-weight:700; /* static */
+	}
+
+	a:hover {
+		text-decoration:none;
+	}
+	/* Finish Link Font */
+
+
+	/* Start Navigation Title Font */
+	#navigation > li > a {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:14px;
+		line-height:20px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+	}
+	
+	#navigation > li > a > span:before {
+		font-size:17px;
+	}
+	
+	#navigation > li.menu-item-icon > a > span > span.nav_subtitle,
+	#navigation > li.menu-item-mega > div.menu-item-mega-container > ul > li.menu-item-icon > a > span > span.nav_subtitle {
+		padding-left:24px;
+	}
+	
+	body.rtl #navigation > li.menu-item-icon > a > span > span.nav_subtitle,
+	body.rtl #navigation > li.menu-item-mega > div.menu-item-mega-container > ul > li.menu-item-icon > a > span > span.nav_subtitle {
+		padding-right:24px;
+		padding-left:0; /* static */
+	}
+	
+	#navigation > li > a[data-tag]:before,
+	#navigation > li.menu-item-mega > div.menu-item-mega-container > ul > li > a[data-tag]:before {
+		margin-top:1px;
+	}
+	
+	#navigation > li.menu-item-mega > div.menu-item-mega-container > ul > li > a,
+	#navigation > li.menu-item-mega > div.menu-item-mega-container > ul > li:hover > a {
+		font-weight:700; /* static */
+	}
+	
+	@media only screen and (max-width: 1024px) {
+		html #page #header nav #navigation li a {
+			font-size:13px;
+			font-weight:400; /* static */
+		}
+		
+		html #page #header nav #navigation > li > a {
+			font-weight:500; /* static */
+		}
+		
+		html #page #header nav #navigation li li li a {
+			font-size:11px;
+		}
+		
+		html #page #header nav #navigation > li.menu-item-hide-text > a > span,
+		html #page #header nav #navigation > li.menu-item-mega > div.menu-item-mega-container > ul > li.menu-item-hide-text > a > span {
+			font-size:14px;
+			line-height:20px;
+		}
+		
+		html #page #header nav #navigation > li.menu-item-icon > a > span > span.nav_subtitle,
+		html #page #header nav #navigation > li.menu-item-mega > div.menu-item-mega-container > ul > li.menu-item-icon > a > span > span.nav_subtitle {
+			padding-left:24px;
+		}
+	}
+	/* Finish Navigation Title Font */
+
+
+	/* Start Navigation Dropdown Font */
+	#navigation ul li a {
+		font-family:Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:12px;
+		line-height:20px;
+		font-weight:bold;
+		font-style:normal;
+		text-transform:none;
+	}
+	
+	#navigation > li.menu-item-mega > div.menu-item-mega-container > ul > li > a {
+		font-size:13px;
+		line-height:21px;
+		font-weight:700; /* static */
+	}
+	
+	#navigation > li > a > span > span.nav_subtitle,
+	#navigation > li.menu-item-mega > div.menu-item-mega-container > ul > li > a > span > span.nav_subtitle, 
+	#navigation li > a[data-tag]:before {
+		font-family:Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:11px;
+		line-height:19px;
+		font-style:normal;
+		text-transform:none;
+		font-weight:400; /* static */
+	}
+	
+	#navigation > li > a > span > span.nav_subtitle {
+		font-size:12px;
+		line-height:18px;
+		font-weight:400; /* static */
+	}
+	
+	#navigation ul li a span:before {
+		font-size:15px;
+	}
+	
+	#navigation > li.menu-item-mega > div.menu-item-mega-container > ul > li > a > span:before {
+		font-size:16px;
+	}
+	
+	@media only screen and (max-width: 1024px) {
+		html #page #header nav #navigation > li.menu-item-hide-text > a > span > span.nav_subtitle,
+		html #page #header nav #navigation > li.menu-item-mega > div.menu-item-mega-container > ul > li.menu-item-hide-text > a > span > span.nav_subtitle {
+			font-size:10px;
+			line-height:18px;
+		}
+	}
+	/* Finish Navigation Dropdown Font */
+
+
+	/* Start H1 Font */
+	h1,
+	h1 a,
+	#header .logo .title,
+	.cmsms_pricing_table .cmsms_currency,
+	.cmsms_pricing_table .cmsms_price,
+	.cmsms_pricing_table .cmsms_coins,
+	.post.format-aside .cmsms_post_cont .cmsms_post_content,
+	.post.format-status .cmsms_post_cont .cmsms_post_content, 
+	.cmsms_search_post .cmsms_search_post_title, 
+	.cmsms_search_post .cmsms_search_post_title a, 
+	.cmsms_pricing_table .pricing_title {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:28px;
+		line-height:40px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	
+	.cmsms_dropcap {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	
+	.cmsms_icon_list_items.cmsms_icon_list_icon_type_number .cmsms_icon_list_item .cmsms_icon_list_icon:before,
+	.cmsms_icon_box.box_icon_type_number:before,
+	.cmsms_icon_box.cmsms_icon_heading_left.box_icon_type_number .icon_box_heading:before {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-weight:500;
+		font-style:normal;
+	}
+	
+	.cmsms_dropcap.type1 {
+		font-size:36px; /* static */
+	}
+	
+	.cmsms_dropcap.type2 {
+		font-size:20px; /* static */
+	}
+	
+	.headline_outer .headline_inner .headline_icon:before {
+		font-size:32px;
+		line-height:50px;
+	}
+	
+	.headline_outer .headline_inner.align_center .headline_icon:before {
+		font-size:54px;
+		line-height:60px;
+	}
+	
+	.headline_outer .headline_inner.align_left .headline_icon {
+		padding-left:50px;
+	}
+	
+	.headline_outer .headline_inner.align_right .headline_icon {
+		padding-right:50px;
+	}
+	
+	.headline_outer .headline_inner.align_center .headline_icon {
+		padding-top:70px;
+	}
+	
+	.cmsms_pricing_table .cmsms_currency,
+	.cmsms_pricing_table .cmsms_price,
+	.cmsms_pricing_table .cmsms_coins {
+		line-height:80px;
+	}
+	
+	.cmsms_pricing_table .cmsms_price {
+		font-size:64px;
+	}
+	
+	.cmsms_pricing_table .cmsms_currency,
+	.cmsms_pricing_table .cmsms_coins {
+		font-size:26px;
+	}
+	
+	.cmsms_pricing_table .cmsms_pricing_item_inner:before, 
+	.cmsms_profile.horizontal .profile:before {
+		width:64px;
+		margin-left:-32px;
+	}
+	
+	.cmsms_profile.vertical .profile:before {
+		height:56px;
+		margin-top:-28px;
+	}
+	
+	.owl-buttons span:before {
+		font-size:34px;
+		line-height:40px;
+	}
+	
+	.owl-buttons span {
+		width:17px;
+		height:40px;
+	}
+	
+	.cmsms_twitter .owl-buttons span:before {
+		line-height:17px;
+	}
+	
+	.cmsms_twitter .owl-buttons > div, 
+	.cmsms_twitter .owl-buttons span, 
+	.cmsms_twitter .owl-buttons span:before {
+		width:34px;
+		height:17px;
+	}
+	
+	.cmsms_twitter .owl-buttons {
+		margin-top:-17px;
+	}
+	
+	.cmsms_quotes_slider.cmsms_quotes_slider_type_center .owl-buttons span:before {
+		font-size:48px;
+		line-height:54px;
+	}
+	
+	.cmsms_quotes_slider.cmsms_quotes_slider_type_center .owl-buttons > div, 
+	.cmsms_quotes_slider.cmsms_quotes_slider_type_center .owl-buttons span, 
+	.cmsms_quotes_slider.cmsms_quotes_slider_type_center .owl-buttons span:before {
+		width:24px;
+		height:48px;
+	}
+	/* Finish H1 Font */
+
+
+	/* Start H2 Font */
+	h2,
+	h2 a,
+	.cmsms_stats.stats_mode_bars.stats_type_vertical .cmsms_stat_wrap .cmsms_stat .cmsms_stat_inner .cmsms_stat_counter_wrap, 
+	.cmsms_stats.stats_mode_circles .cmsms_stat_wrap .cmsms_stat .cmsms_stat_inner .cmsms_stat_counter_wrap, 
+	.cmsms_counters .cmsms_counter_wrap .cmsms_counter .cmsms_counter_inner .cmsms_counter_counter_wrap, 
+	.cmsms_sitemap_wrap .cmsms_sitemap > li > a,
+	.cmsms_search_post_number {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:24px;
+		line-height:36px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	
+	.post .cmsms_post_format_img:before, 
+	.cmsms_stats.stats_mode_bars.stats_type_vertical .cmsms_stat_wrap .cmsms_stat .cmsms_stat_inner:before {
+		font-size:24px;
+	}
+	
+	.post .cmsms_post_format_img:before, 
+	.cmsms_stats.stats_mode_bars.stats_type_vertical .cmsms_stat_wrap .cmsms_stat .cmsms_stat_inner:before {
+		line-height:36px;
+	}
+	
+	.cmsms_stats.stats_mode_circles .cmsms_stat_wrap .cmsms_stat .cmsms_stat_inner .cmsms_stat_counter_wrap {
+		font-size:45px; /* static */
+		line-height:60px; /* static */
+		font-weight:300; /* static */
+	}
+	
+	.cmsms_counters .cmsms_counter_wrap .cmsms_counter .cmsms_counter_inner .cmsms_counter_counter_wrap, 
+	.cmsms_counters .cmsms_counter_wrap .cmsms_counter .cmsms_counter_inner:before {
+		font-size:32px;
+		line-height:50px;
+	}
+	
+	.cmsms_counters.counters_type_horizontal .cmsms_counter_wrap .cmsms_counter.counter_has_icon .cmsms_counter_inner {
+		padding-left:50px;
+	}
+	
+	.post .cmsms_post_cont .cmsms_post_title:before {
+		height:24px;
+		margin-top:6px;
+	}
+	
+	.post.format-aside .cmsms_post_cont .cmsms_post_format_img, 
+	.post.format-aside .cmsms_post_cont .cmsms_post_format_img:after, 
+	.post.format-status .cmsms_post_cont .cmsms_post_format_img, 
+	.post.format-status .cmsms_post_cont .cmsms_post_format_img:after, 
+	.post.format-quote .cmsms_post_cont .cmsms_post_format_img, 
+	.post.format-quote .cmsms_post_cont .cmsms_post_format_img:after {
+		width:36px;
+	}
+	
+	.post.format-aside .cmsms_post_cont .cmsms_post_format_img, 
+	.post.format-status .cmsms_post_cont .cmsms_post_format_img, 
+	.post.format-quote .cmsms_post_cont .cmsms_post_format_img {
+		height:36px;
+		margin-left:-18px;
+	}
+	/* Finish H2 Font */
+
+
+	/* Start H3 Font */
+	h3,
+	h3 a,
+	.cmsms_post_info .cmsms_post_date .cmsms_year, 
+	.post.cmsms_post_timeline.format-status .cmsms_post_cont .cmsms_post_content,
+	.post.cmsms_post_timeline.format-aside .cmsms_post_cont .cmsms_post_content {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:20px;
+		line-height:30px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	
+	.post.format-quote .cmsms_post_cont .cmsms_quote_content, 
+	.post.cmsms_post_timeline .cmsms_post_format_img:before, 
+	.post.cmsms_post_timeline.format-quote .cmsms_post_cont .cmsms_quote_content, 
+	.bypostauthor > .comment-body .alignleft:before {
+		font-size:20px;
+	}
+	
+	.post_nav > span:before {
+		font-size:30px;
+	}
+	
+	.widget .owl-buttons span:before {
+		font-size:24px;
+	}
+	
+	.post.format-quote .cmsms_post_cont .cmsms_quote_content, 
+	.post.cmsms_post_timeline .cmsms_post_format_img:before, 
+	.post.cmsms_post_timeline.format-quote .cmsms_post_cont .cmsms_quote_content, 
+	.post_nav > span:before, 
+	.bypostauthor > .comment-body .alignleft:before, 
+	.widget .owl-buttons span:before {
+		line-height:30px;
+	}
+	
+	.post.cmsms_post_timeline.format-aside .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_timeline.format-status .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_timeline.format-quote .cmsms_post_cont .cmsms_post_format_img {
+		bottom:-41px;
+	}
+	
+	.portfolio .project .project_outer .project_inner .cmsms_project_header .cmsms_project_title, 
+	.cmsms_posts_slider .project .slider_project_outer .slider_project_inner .cmsms_slider_project_header .cmsms_slider_project_title {
+		line-height:28px;
+	}
+	
+	.cmsms_post_info .cmsms_post_date .cmsms_year {
+		font-size:18px;
+		line-height:20px;
+	}
+	
+	.post.cmsms_post_timeline .cmsms_post_cont .cmsms_post_title:before {
+		height:20px;
+		margin-top:5px;
+	}
+	
+	.post.cmsms_post_timeline.format-aside .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_timeline.format-aside .cmsms_post_cont .cmsms_post_format_img:after, 
+	.post.cmsms_post_timeline.format-status .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_timeline.format-status .cmsms_post_cont .cmsms_post_format_img:after, 
+	.post.cmsms_post_timeline.format-quote .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_timeline.format-quote .cmsms_post_cont .cmsms_post_format_img:after, 
+	.bypostauthor > .comment-body .alignleft:before {
+		width:30px;
+	}
+	
+	.post.cmsms_post_timeline.format-aside .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_timeline.format-status .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_timeline.format-quote .cmsms_post_cont .cmsms_post_format_img, 
+	.bypostauthor > .comment-body .alignleft:before {
+		height:30px;
+	}
+	
+	.post.cmsms_post_timeline.format-aside .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_timeline.format-status .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_timeline.format-quote .cmsms_post_cont .cmsms_post_format_img {
+		margin-left:-15px;
+	}
+	
+	.blog.timeline .post .cmsms_post_info {
+		width:70px;
+		height:70px;
+	}
+	
+	.blog.timeline .post.cmsms_timeline_left .cmsms_post_info {
+		right:-35px;
+	}
+	
+	.blog.timeline .post.cmsms_timeline_right .cmsms_post_info {
+		left:-35px;
+	}
+	
+	.widget .owl-buttons span {
+		width:12px;
+		height:30px;
+	}
+	/* Finish H3 Font */
+
+
+	/* Start H4 Font */
+	h4, 
+	h4 a, 
+	.bottom_inner .widgettitle, 
+	.post.cmsms_post_masonry.format-status .cmsms_post_cont .cmsms_post_content,
+	.post.cmsms_post_puzzle.format-status .cmsms_post_cont .cmsms_post_content,
+	.cmsms_posts_slider .post.format-status .cmsms_post_cont .cmsms_post_content, 
+	.post.cmsms_post_masonry.format-aside .cmsms_post_cont .cmsms_post_content, 
+	.post.cmsms_post_puzzle.format-aside .cmsms_post_cont .cmsms_post_content, 
+	.cmsms_posts_slider .post.format-aside .cmsms_post_cont .cmsms_post_content, 
+	.cmsms_sitemap_wrap .cmsms_sitemap > li > ul > li > a, 
+	.cmsms_sitemap_wrap .cmsms_sitemap_category > li > a, 
+	.cmsms_quotes_slider.cmsms_quotes_slider_type_center .quote_content, 
+	.cmsms_quotes_slider.cmsms_quotes_slider_type_center .quote_content a {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:16px;
+		line-height:26px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	
+	.pj_ddn .cmsmsLike, 
+	.pj_ddn .cmsmsLike:before {
+		line-height:28px !important;
+	}
+	
+	.post.cmsms_post_masonry .cmsms_post_format_img:before, 
+	.post.cmsms_post_puzzle .cmsms_post_format_img:before, 
+	.post.cmsms_post_masonry.format-quote .cmsms_post_cont .cmsms_quote_content, 
+	.post.cmsms_post_puzzle.format-quote .cmsms_post_cont .cmsms_quote_content, 
+	.cmsms_posts_slider .post.format-quote .cmsms_post_cont .cmsms_quote_content {
+		font-size:16px;
+		line-height:26px;
+	}
+	
+	.post.cmsms_post_masonry.format-aside .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_puzzle.format-aside .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_masonry.format-status .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_puzzle.format-status .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_masonry.format-quote .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_puzzle.format-quote .cmsms_post_cont .cmsms_post_format_img {
+		bottom:-37px;
+	}
+	
+	.post.cmsms_post_masonry .cmsms_post_cont .cmsms_post_title:before, 
+	.post.cmsms_post_puzzle .cmsms_post_cont .cmsms_post_title:before {
+		height:16px;
+		margin-top:5px;
+	}
+	
+	.post.cmsms_post_masonry.format-aside .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_puzzle.format-aside .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_masonry.format-aside .cmsms_post_cont .cmsms_post_format_img:after, 
+	.post.cmsms_post_puzzle.format-aside .cmsms_post_cont .cmsms_post_format_img:after, 
+	.post.cmsms_post_masonry.format-status .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_puzzle.format-status .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_masonry.format-status .cmsms_post_cont .cmsms_post_format_img:after, 
+	.post.cmsms_post_puzzle.format-status .cmsms_post_cont .cmsms_post_format_img:after, 
+	.post.cmsms_post_masonry.format-quote .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_puzzle.format-quote .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_masonry.format-quote .cmsms_post_cont .cmsms_post_format_img:after, 
+	.post.cmsms_post_puzzle.format-quote .cmsms_post_cont .cmsms_post_format_img:after {
+		width:26px;
+	}
+	
+	.post.cmsms_post_masonry.format-aside .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_puzzle.format-aside .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_masonry.format-status .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_puzzle.format-status .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_masonry.format-quote .cmsms_post_cont .cmsms_post_format_img, 
+	.post.cmsms_post_puzzle.format-quote .cmsms_post_cont .cmsms_post_format_img {
+		height:26px;
+		margin-left:-13px;
+	}
+	/* Finish H4 Font */
+
+
+	/* Start H5 Font */
+	h5,
+	h5 a, 
+	.cmsms_stats .cmsms_stat_wrap .cmsms_stat_title, 
+	.cmsms_stats.stats_mode_bars .cmsms_stat_wrap .cmsms_stat .cmsms_stat_inner .cmsms_stat_counter_wrap, 
+	.cmsms_counters .cmsms_counter_wrap .cmsms_counter .cmsms_counter_inner .cmsms_counter_title, 
+	.cmsms_tabs .cmsms_tabs_list .cmsms_tabs_list_item > a,
+	.post.format-chat .cmsms_post_cont .cmsms_chat .cmsms_chat_item .cmsms_chat_author_time .cmsms_chat_author, 
+	.post_nav > span, 
+	.post_nav > span a, 
+	.cmsms_pings_list .comment-body,
+	.cmsms_pings_list .comment-body a,
+	.project_navi > span > a,
+	table caption,
+	table thead th,
+	table thead th a,
+	table thead td,
+	table thead td a,
+	table tfoot th,
+	table tfoot th a,
+	table tfoot td,
+	table tfoot td a,
+	.cmsms_quotes h6.quote_title, 
+	.cmsms_pricing_table .cmsms_period,
+	.cmsms_toggles .cmsms_toggle_wrap .cmsms_toggle_title > a, 
+	.cmsms_twitter .cmsms_twitter_item_content,
+	.cmsms_twitter .cmsms_twitter_item_content a {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:14px;
+		line-height:22px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	
+	.post.format-chat .cmsms_post_cont .cmsms_chat .cmsms_chat_item .cmsms_chat_author_time .cmsms_chat_time {
+		line-height:26px;
+	}
+	
+	.post_nav > span a {
+		line-height:30px;
+	}
+	
+	.cmsms_toggles .cmsms_toggle_wrap .cmsms_toggle_title > a {
+		line-height:26px; /* static */
+	}
+	/* Finish H5 Font */
+
+
+	/* Start H6 Font */
+	h6,
+	h6 a, 
+	.button, 
+	input[type=submit], 
+	input[type=button], 
+	button,
+	table.shop_attributes th, 
+	fieldset legend,
+	.cmsms_post_read_more, 
+	blockquote footer,
+	.cmsms_post_info .cmsms_post_date .cmsms_day_mon, 
+	.post.cmsms_post_masonry.format-chat .cmsms_post_cont .cmsms_chat .cmsms_chat_item .cmsms_chat_author_time .cmsms_chat_author, 
+	.post.cmsms_post_timeline.format-chat .cmsms_post_cont .cmsms_chat .cmsms_chat_item .cmsms_chat_author_time .cmsms_chat_author, 
+	.post.cmsms_post_puzzle.format-chat .cmsms_post_cont .cmsms_chat .cmsms_chat_item .cmsms_chat_author_time .cmsms_chat_author, 
+	.cmsms_posts_slider .post.format-chat .cmsms_post_cont .cmsms_chat .cmsms_chat_item .cmsms_chat_author_time .cmsms_chat_author, 
+	.comment-edit-link, 
+	.comment-reply-link, 
+	#cancel-comment-reply-link, 
+	.cmsms_search_post .cmsms_search_post_number_wrap .cmsms_post_type_label {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:13px;
+		line-height:20px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	
+	.post.cmsms_post_masonry .cmsms_post_header .cmsms_post_subtitle, 
+	.post.cmsms_post_timeline .cmsms_post_header .cmsms_post_subtitle, 
+	.post.cmsms_post_puzzle .cmsms_post_header .cmsms_post_subtitle {
+		font-size:12px;
+	}
+	
+	.cmsms_post_info .cmsms_post_date .cmsms_day_mon, 
+	.cmsms_search_post .cmsms_search_post_number_wrap .cmsms_post_type_label {
+		font-size:11px;
+		line-height:13px;
+	}
+	
+	.post .cmsms_slider_post_header .cmsms_slider_post_subtitle {
+		font-weight:400; /* static */
+	}
+	
+	.post .cmsms_post_header .cmsms_post_subtitle, 
+	.cmsms_search_post .cmsms_search_post_number_wrap .cmsms_post_type_label {
+		text-transform:uppercase; /* static */
+	}
+	
+	#cancel-comment-reply-link {
+		line-height:30px;
+	}
+	/* Finish H6 Font */
+
+
+	/* Start Button Font */
+	.cmsms_button,
+	.cmsms_search_post_cont_info, 
+	.cmsms_search_post_cont_info a {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:15px;
+		line-height:44px;
+		font-weight:normal;
+		font-style:normal;
+		text-transform:none;
+	}
+	
+	.gform_wrapper .gform_footer input.button, 
+	.gform_wrapper .gform_footer input[type=submit] {
+		font-size:15px !important;
+	}
+	
+	.cmsms_posts_slider .cmsms_slider_post_header .cmsms_slider_post_subtitle,
+	.cmsms_search_post_cont_info, 
+	.cmsms_search_post_cont_info a {
+		font-size:13px;
+		line-height:19px;
+	}
+	
+	.cmsms_tabs .cmsms_tabs_list .cmsms_tabs_list_item > a {
+		line-height:23px;
+	}
+	
+	.cmsms_tabs.lpr .cmsms_tabs_list .cmsms_tabs_list_item > a {
+		line-height:40px;
+	}
+	
+	.cmsms_button.cmsms_but_icon_dark_bg, 
+	.cmsms_button.cmsms_but_icon_light_bg, 
+	.cmsms_button.cmsms_but_icon_divider, 
+	.cmsms_button.cmsms_but_icon_inverse {
+		padding-left:64px;
+	}
+	
+	.cmsms_button.cmsms_but_icon_dark_bg:before, 
+	.cmsms_button.cmsms_but_icon_light_bg:before, 
+	.cmsms_button.cmsms_but_icon_divider:before, 
+	.cmsms_button.cmsms_but_icon_inverse:before, 
+	.cmsms_button.cmsms_but_icon_dark_bg:after, 
+	.cmsms_button.cmsms_but_icon_light_bg:after, 
+	.cmsms_button.cmsms_but_icon_divider:after, 
+	.cmsms_button.cmsms_but_icon_inverse:after {
+		width:44px;
+	}
+	/* Finish Button Font */
+
+
+	/* Start Small Text Font */
+	small,
+	.meta_wrap,
+	.meta_wrap a,
+	form .formError .formErrorContent,
+	.header_top_inner nav > div > ul > li a {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:11px;
+		line-height:18px;
+		font-weight:normal;
+		font-style:normal;
+		text-transform:none;
+	}
+
+	#navigation > li.menu-item-mega > div.menu-item-mega-container ul ul li.menu-item-mega-description span.menu-item-mega-description-container {
+		font-size:11px;
+		line-height:18px;
+	}
+	
+	.cmsms_posts_slider .cmsms_slider_post_cont_info,
+	.cmsms_posts_slider .cmsms_slider_post_cont_info a {
+		font-size:12px;
+	}
+	
+	.gform_wrapper .description, 
+	.gform_wrapper .gfield_description, 
+	.gform_wrapper .gsection_description, 
+	.gform_wrapper .instruction {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif !important;
+		font-size:11px !important;
+		line-height:18px !important;
+	}
+	
+	.meta_wrap > div[class^="cmsms-icon-"]:before,
+	.meta_wrap > p[class^="cmsms-icon-"]:before,
+	.meta_wrap > span[class^="cmsms-icon-"]:before,
+	.meta_wrap > strong[class^="cmsms-icon-"]:before,
+	.meta_wrap > div[class*=" cmsms-icon-"]:before,
+	.meta_wrap > p[class*=" cmsms-icon-"]:before,
+	.meta_wrap > span[class*=" cmsms-icon-"]:before,
+	.meta_wrap > strong[class*=" cmsms-icon-"]:before, 
+	.meta_wrap > div[class^="cmsms_theme_icon_"]:before,
+	.meta_wrap > p[class^="cmsms_theme_icon_"]:before,
+	.meta_wrap > span[class^="cmsms_theme_icon_"]:before,
+	.meta_wrap > strong[class^="cmsms_theme_icon_"]:before,
+	.meta_wrap > div[class*=" cmsms_theme_icon_"]:before,
+	.meta_wrap > p[class*=" cmsms_theme_icon_"]:before,
+	.meta_wrap > span[class*=" cmsms_theme_icon_"]:before,
+	.meta_wrap > strong[class*=" cmsms_theme_icon_"]:before {
+		font-size:16px;
+	}
+
+	.post.format-chat .cmsms_post_cont .cmsms_chat .cmsms_chat_item .cmsms_chat_author_time .cmsms_chat_time {
+		font-size:10px;
+		font-weight:bold; /* static */
+		text-transform:uppercase; /* static */
+	}
+	
+	@media only screen and (max-width: 1024px) {
+		html #page #header .header_top .header_top_outer .header_top_inner .header_top_right .nav_wrap nav #top_line_nav > li > a {
+			font-size:12px;
+			font-weight:700; /* static */
+		}
+	}
+	/* Finish Small Text Font */
+
+
+	/* Start Text Fields Font */
+	input[type=text],
+	input[type=email],
+	input[type=password],
+	input[type=number],
+	input[type=url],
+	input[type=tel],
+	input[type=search],
+	textarea,
+	select,
+	option {
+		font-family:Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:13px;
+		line-height:20px;
+		font-weight:normal;
+		font-style:normal;
+	}
+	
+	.gform_wrapper input[type=text], 
+	.gform_wrapper input[type=url], 
+	.gform_wrapper input[type=email], 
+	.gform_wrapper input[type=tel], 
+	.gform_wrapper input[type=number], 
+	.gform_wrapper input[type=password], 
+	.gform_wrapper textarea, 
+	.gform_wrapper select {
+		font-size:13px !important;
+	}
+	/* Finish Text Fields Font */
+
+
+	/* Start Blockquote Font */
+	blockquote {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:16px;
+		line-height:26px;
+		font-weight:300;
+		font-style:italic;
+	}
+	
+	q {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-weight:300;
+		font-style:italic;
+	}
+	/* Finish Blockquote Font */
+
+/***************** Finish Theme Font Styles ******************/
+
+
+
+/***************** Start CMSMS Donations Font Styles ******************/
+
+	/* Start Content Font */
+	.campaign .cmsms_campaign_meta_info {
+		height:20px;
+	}
+	/* Finish Content Font */
+	
+	
+	/* Start Link Font */
+	/* Finish Link Font */
+	
+	
+	/* Start Navigation Title Font */
+	#header .header_donation_but .cmsms_button, 
+	#header .header_top_donation_but {
+		font-weight:500;
+	}
+	/* Finish Navigation Title Font */
+	
+	
+	/* Start H1 Font */
+	.cmsms_featured_campaign .campaign .cmsms_campaign_title, 
+	.cmsms_featured_campaign .campaign .cmsms_campaign_title a {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:28px;
+		line-height:40px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	
+	.donations.opened-article > .donation .cmsms_donation_title, 
+	.donations.opened-article > .donation .cmsms_donation_amount_currency {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	
+	.donations.opened-article > .donation .cmsms_donation_title {
+		font-size:32px;
+		line-height:44px;
+	}
+	
+	.donations.opened-article > .donation .cmsms_donation_amount_currency {
+		font-size:60px;
+		line-height:84px;
+	}
+	
+	@media only screen and (max-width: 540px) {
+		.donations.opened-article > .donation .cmsms_donation_amount_currency {
+			font-size:32px;
+			line-height:44px;
+		}
+	}
+	/* Finish H1 Font */
+	
+	
+	/* Start H2 Font */
+	/* Finish H2 Font */
+	
+	
+	/* Start H3 Font */
+	.donations.opened-article > .donation .cmsms_donation_campaign, 
+	.donations.opened-article > .donation .cmsms_donation_campaign a, 
+	.cmsms_donations .donation .cmsms_donation_amount_currency {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:20px;
+		line-height:30px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	/* Finish H3 Font */
+	
+	
+	/* Start H4 Font */
+	.cmsms_featured_campaign .campaign .cmsms_campaign_rest_amount {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:16px;
+		line-height:26px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	/* Finish H4 Font */
+	
+	
+	/* Start H5 Font */
+	.donation_confirm .donation_confirm_info_title, 
+	.cmsms_donations .donation .cmsms_donation_campaign, 
+	.cmsms_donations .donation .cmsms_donation_campaign a, 
+	.cmsms_donations .donation .cmsms_donation_amount_title, 
+	.cmsms_campaigns .campaign .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat_title_wrap {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:14px;
+		line-height:22px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	/* Finish H5 Font */
+	
+	
+	/* Start H6 Font */
+	.related_posts_tabs_campaign .cmsms_stats .cmsms_stat_wrap .cmsms_stat_title, 
+	.related_posts_tabs_campaign .cmsms_stats.stats_mode_bars .cmsms_stat_wrap .cmsms_stat .cmsms_stat_inner .cmsms_stat_counter_wrap {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:13px;
+		line-height:20px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	/* Finish H6 Font */
+	
+	
+	/* Start Button Font */
+	#header .header_top_donation_but {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+	}
+	
+	#header .header_top_donation_but {
+		font-size:13px;
+	}
+	/* Finish Button Font */
+	
+	
+	/* Start Small Text Font */
+	.related_posts_tabs_campaign .cmsms_stats .cmsms_stat_wrap .cmsms_stat_subtitle, 
+	.related_posts_tabs_campaign .rel_post_content .related_posts_campaign_wrap .related_posts_campaign_togo {
+		font-size:12px;
+	}
+	/* Finish Small Text Font */
+
+/***************** Finish CMSMS Donations Font Styles ******************/
+
+
+
+/***************** Start WooCommerce Font Styles ******************/
+
+	/* Start Content Font */
+	.cart_totals table tr.shipping th, 
+	.checkout #order_review .shop_table th, 
+	.checkout #order_review .shop_table td, 
+	.checkout #order_review .shop_table th *, 
+	.checkout #order_review .shop_table td *, 
+	.shop_table.order_details th, 
+	.shop_table.order_details td, 
+	.shop_table.order_details th *, 
+	.shop_table.order_details td *, 
+	.shop_table.order_details td.product-name, 
+	.shop_table.order_details td.product-name *, 
+	.cmsms_woo_wrap_result select {
+		font-family:Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:13px;
+		line-height:20px;
+		font-weight:normal;
+		font-style:normal;
+	}
+	
+	.cmsms_single_product .cmsms_woo_tabs #reviews #comments .commentlist .comment .comment_container .comment-text .meta, 
+	.product_list_widget li del .amount {
+		font-size:12px;
+	}
+	
+	.widget_shopping_cart_content .cart_list li a.remove {
+		font-size:16px;
+		line-height:16px;
+	}
+	
+	.cmsms_products .product .product_outer .product_inner .cmsms_product_footer {
+		height:56px;
+	}
+	
+	.cmsms_products .product .product_outer .product_inner .cmsms_product_footer > a {
+		height:32px;
+		padding-right:22px;
+		max-width:32px;
+	}
+	
+	@media only screen and (max-width: 767px) {
+		.cmsms_products .product .product_outer .product_inner .cmsms_product_footer > a {
+			max-width:32px !important;
+		}
+	}
+	/* Finish Content Font */
+	
+	
+	/* Start Link Font */
+	/* Finish Link Font */
+	
+	
+	/* Start H1 Font */
+	/* Finish H1 Font */
+	
+	
+	/* Start H2 Font */
+		.cmsms_single_product .cmsms_product_right_column .product_title {
+			font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+			font-size:24px;
+			line-height:36px;
+			font-weight:500;
+			font-style:normal;
+			text-transform:none;
+			text-decoration:none;
+		}
+	/* Finish H2 Font */
+	
+	
+	/* Start H3 Font */
+	.cmsms_single_product .cmsms_product_right_column .price, 
+	.cmsms_single_product .cmsms_woo_tabs h2, 
+	.cart_totals > h2, 
+	.shipping_calculator > h2, 
+	.shipping_calculator > h2 a {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:20px;
+		line-height:30px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	
+	.cmsms_products .product .product_outer .product_inner .cmsms_product_info .price {
+		font-size:20px;
+		line-height:30px;
+	}
+	/* Finish H3 Font */
+	
+	
+	/* Start H4 Font */
+	.cmsms_products .product .product_outer .product_inner .cmsms_product_info .price {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:16px;
+		line-height:26px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	
+	.widget_shopping_cart_content .total strong {
+		font-weight:500;
+	}
+	/* Finish H4 Font */
+	
+	
+	/* Start H5 Font */
+	.shop_table thead th, 
+	.cmsms_products .product.product-category .woocommerce-loop-category__title {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:14px;
+		line-height:22px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	
+	.shop_table td.product-price, 
+	.shop_table td.product-subtotal, 
+	.widget_shopping_cart_content .cart_list li .quantity, 
+	.widget_shopping_cart_content .total strong, 
+	.widget_shopping_cart_content .total .amount, 
+	.product_list_widget li .amount {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+	}
+	/* Finish H5 Font */
+	
+	
+	/* Start H6 Font */
+	.onsale, 
+	.out-of-stock, 
+	.woocommerce-info, 
+	.woocommerce-info a, 
+	.woocommerce-message, 
+	.woocommerce-message a, 
+	.woocommerce-error, 
+	.woocommerce-error a, 
+	.cart_totals table tr.cart-subtotal, 
+	.cart_totals table tr.order-total, 
+	.cart_totals table tr.cart-subtotal th, 
+	.cart_totals table tr.order-total th, 
+	ul.order_details li, 
+	.checkout #order_review table tr th.product-name, 
+	.checkout #order_review table tr th.product-total, 
+	.checkout #order_review table tr.cart-subtotal td, 
+	.checkout #order_review table tr.cart-subtotal td *, 
+	.checkout #order_review table tr.order-total td, 
+	.checkout #order_review table tr.order-total td *, 
+	.checkout #order_review table tr.cart-subtotal th, 
+	.checkout #order_review table tr.order-total th, 
+	.shop_table.order_details thead tr:first-child th, 
+	.shop_table.order_details thead tr:first-child td, 
+	.shop_table.order_details tfoot tr:first-child th, 
+	.shop_table.order_details tfoot tr:first-child td, 
+	.shop_table.order_details tfoot tr:first-child td *, 
+	.shop_table.order_details tfoot tr:last-child th, 
+	.shop_table.order_details tfoot tr:last-child td, 
+	.shop_table.order_details tfoot tr:last-child td * {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:13px;
+		line-height:20px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	
+	.cmsms_products .product .product_outer .product_inner .cmsms_product_info .price del, 
+	.cmsms_single_product .cmsms_product_right_column .price del {
+		font-size:13px;
+		line-height:20px;
+	}
+	/* Finish H6 Font */
+	
+	
+	/* Start Button Font */
+	.cmsms_products .product .product_outer .product_inner .cmsms_product_header .cmsms_product_title, 
+	.cmsms_products .product .product_outer .product_inner .cmsms_product_header .cmsms_product_title a, 
+	.shop_table td.product-name, 
+	.shop_table td.product-name a, 
+	.widget_shopping_cart_content .cart_list li a, 
+	.cmsms_added_product_info .cmsms_added_product_info_text, 
+	.product_list_widget li > a, 
+	.cmsms_products .product.product-category .woocommerce-loop-category__title {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-weight:normal;
+		font-style:normal;
+		text-transform:none;
+	}
+	
+	.cmsms_dynamic_cart_button {
+		line-height:44px;
+	}
+	/* Finish Button Font */
+	
+	
+	/* Start Text Fields Font */
+	.select2-dropdown {
+		font-family:Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:13px;
+		line-height:20px;
+		font-weight:normal;
+		font-style:normal;
+	}
+	/* Finish Text Fields Font */
+	
+	
+	/* Start Small Text Font */
+	.cmsms_single_product .cmsms_woo_tabs #reviews #comments .commentlist .comment .comment_container .comment-text .description {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:11px;
+		line-height:18px;
+		font-weight:normal;
+		font-style:normal;
+		text-transform:none;
+	}
+	/* Finish Small Text Font */
+
+/***************** Finish WooCommerce Font Styles ******************/
+
+
+
+/***************** Start Tribe Events Font Styles ******************/
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-list__event-description,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-list__event-description p,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-day__event-description,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-day__event-description p,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-month__multiday-event-bar-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-month__multiday-event-bar-title p,
+	.tribe-events-calendar-month__calendar-event-tooltip .tribe-events-calendar-month__calendar-event-tooltip-description,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-pro-week-grid__multiday-event-bar-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-single .tribe_events,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-single .tribe-events-single-event-description,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-single .tribe-events-single-event-description p {
+		font-family:Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:13px;
+		line-height:20px;
+		font-weight:normal;
+		font-style:normal;
+	}
+
+	.cmsmasters_tribe_events_views_v2 .tribe-events-single *,
+	.cmsmasters_tribe_events_views_v2 .tribe-events *,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-pro *,
+	.tribe-events-calendar-month__calendar-event-tooltip * {
+		font-family:Arial, Helvetica, 'Nimbus Sans L', sans-serif !important;
+	}
+
+	.tribe-events-calendar-month__calendar-event-tooltip .tribe-events-calendar-month__calendar-event-tooltip-description {
+		font-size:11px;
+		line-height:18px;
+	}
+
+	.cmsmasters_tribe_events_views_v2 .tribe-events .tribe-events-calendar-month__multiday-event-wrapper,
+	.cmsmasters_tribe_events_views_v2 .tribe-events .tribe-events-pro-week-grid__multiday-event-wrapper {
+		height:20px;
+	}
+
+	.cmsmasters_tribe_events_views_v2 .tribe-events-single .tribe-events-single-event-title {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:28px;
+		line-height:40px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-list__event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-list__event-title a,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-day__event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-day__event-title a,
+	.tribe-events-calendar-month__calendar-event-tooltip .tribe-events-calendar-month__calendar-event-tooltip-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-single ul.tribe-related-events li .tribe-related-events-title {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:24px;
+		line-height:36px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+
+	.tribe-events-calendar-month__calendar-event-tooltip .tribe-events-calendar-month__calendar-event-tooltip-title {
+		font-size:22px;
+		line-height:34px;
+	}
+
+	
+	@media only screen and (max-width: 540px) {
+		.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-list__event-title,
+		.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-list__event-title a,
+		.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-day__event-title,
+		.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-day__event-title a,
+		.tribe-events-calendar-month__calendar-event-tooltip .tribe-events-calendar-month__calendar-event-tooltip-title,
+		.cmsmasters_tribe_events_views_v2 .tribe-events-single ul.tribe-related-events li .tribe-related-events-title {
+			font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+			font-size:20px;
+			line-height:30px;
+			font-weight:500;
+			font-style:normal;
+			text-transform:none;
+			text-decoration:none;
+		}
+	
+		.tribe-events-calendar-month__calendar-event-tooltip .tribe-events-calendar-month__calendar-event-tooltip-title {
+			font-size:18px;
+			line-height:28px;
+		}
+	}
+
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-pro-summary__event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-pro-summary__event-title a,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-pro-photo__event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-pro-photo__event-title a,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-week .tribe-events-pro-week-mobile-events__event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-week .tribe-events-pro-week-mobile-events__event-title a,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-shortcode-events-week .tribe-events-pro-week-mobile-events__event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-shortcode-events-week .tribe-events-pro-week-mobile-events__event-title a,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-month .tribe-events-calendar-month-mobile-events__mobile-event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-month .tribe-events-calendar-month-mobile-events__mobile-event-title a,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-shortcode-month .tribe-events-calendar-month-mobile-events__mobile-event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-shortcode-month .tribe-events-calendar-month-mobile-events__mobile-event-title a,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-featured-venue .tribe-events-widget-featured-venue__event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-featured-venue .tribe-events-widget-featured-venue__event-title a,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-events-list .tribe-events-widget-events-list__event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-events-list .tribe-events-widget-events-list__event-title a {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:20px;
+		line-height:30px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-pro-map__event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-pro-map__event-title a,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-week .tribe-events-pro-week-mobile-events__event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-week .tribe-events-pro-week-mobile-events__event-title a,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-shortcode-events-week .tribe-events-pro-week-mobile-events__event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-shortcode-events-week .tribe-events-pro-week-mobile-events__event-title a,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-month .tribe-events-calendar-month-mobile-events__mobile-event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-month .tribe-events-calendar-month-mobile-events__mobile-event-title a,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-shortcode-month .tribe-events-calendar-month-mobile-events__mobile-event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-shortcode-month .tribe-events-calendar-month-mobile-events__mobile-event-title a,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-featured-venue .tribe-events-widget-featured-venue__event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-featured-venue .tribe-events-widget-featured-venue__event-title a,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-events-list .tribe-events-widget-events-list__event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-events-list .tribe-events-widget-events-list__event-title a {
+		font-size:18px;
+		line-height:28px;
+	}
+
+	.cmsmasters_tribe_events_views_v2 .cmsmasters_sidebar .widgettitle,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-countdown .tribe-events-widget-countdown__header-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-featured-venue .tribe-events-widget-featured-venue__header-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-events-list .tribe-events-widget-events-list__header-title {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:20px;
+		line-height:30px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-list__event-datetime-wrapper,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-list__event-venue,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-list__event-cost,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-day__event-datetime-wrapper,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-day__event-venue,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-calendar-day__event-cost,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-pro-photo__event-datetime,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-pro-photo__event-venue,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-pro-photo__event-cost,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-pro-summary__event-datetime-wrapper,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-pro-summary__event-venue,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-pro-summary__event-cost,
+	.tribe-events-calendar-month__calendar-event-tooltip .tribe-events-calendar-month__calendar-event-tooltip-datetime,
+	.tribe-events-calendar-month__calendar-event-tooltip .tribe-events-calendar-month__calendar-event-tooltip-cost,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-single .tribe-events-schedule,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-single .tribe-events-schedule *,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-week .tribe-events-header,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-week .tribe-events-pro-week-mobile-events__event-datetime-wrapper,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-week .tribe-events-pro-week-mobile-events__event-venue,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-week .tribe-events-pro-week-mobile-events__event-cost,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-shortcode-events-week .tribe-events-header,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-shortcode-events-week .tribe-events-pro-week-mobile-events__event-datetime-wrapper,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-shortcode-events-week .tribe-events-pro-week-mobile-events__event-venue,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-shortcode-events-week .tribe-events-pro-week-mobile-events__event-cost,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-month .tribe-events-calendar-month-mobile-events__mobile-event-datetime,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-shortcode-month .tribe-events-calendar-month-mobile-events__mobile-event-datetime,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-countdown .tribe-events-widget-countdown__event-title,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-countdown .tribe-events-widget-countdown__event-title a,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-featured-venue .tribe-events-widget-featured-venue__venue-name,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-featured-venue .tribe-events-widget-featured-venue__venue-name a,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-featured-venue .tribe-events-widget-featured-venue__event-datetime-wrapper,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-events-list .tribe-events-widget-events-list__event-datetime-wrapper,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-events-list .tribe-events-widget-events-list__event-venue a,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-events-list .tribe-events-widget-events-list__event-organizer-title-wrapper a {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:13px;
+		line-height:20px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+
+	.tribe-events-calendar-month__calendar-event-tooltip .tribe-events-calendar-month__calendar-event-tooltip-datetime,
+	.tribe-events-calendar-month__calendar-event-tooltip .tribe-events-calendar-month__calendar-event-tooltip-cost,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-pro-map__event-datetime-wrapper,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-pro-map__event-venue,
+	.cmsmasters_tribe_events_views_v2 .tribe-common .tribe-events-pro-map__event-cost,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-week .tribe-events-pro-week-mobile-events__event-datetime-wrapper,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-week .tribe-events-pro-week-mobile-events__event-venue,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-week .tribe-events-pro-week-mobile-events__event-cost,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-shortcode-events-week .tribe-events-pro-week-mobile-events__event-datetime-wrapper,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-shortcode-events-week .tribe-events-pro-week-mobile-events__event-venue,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-shortcode-events-week .tribe-events-pro-week-mobile-events__event-cost,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-month .tribe-events-calendar-month-mobile-events__mobile-event-datetime,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-widget-events-shortcode-month .tribe-events-calendar-month-mobile-events__mobile-event-datetime,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-featured-venue .tribe-events-widget-featured-venue__event-datetime-wrapper,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-widget.tribe-common.tribe-events.tribe-events-view--widget-events-list .tribe-events-widget-events-list__event-datetime-wrapper {
+		font-size:11px;
+		line-height:18px;
+	}
+
+	.cmsmasters_tribe_events_views_v2 .tribe-events .tribe-events-c-nav__next,
+	.cmsmasters_tribe_events_views_v2 .tribe-events .tribe-events-c-nav__prev,
+	.cmsmasters_tribe_events_views_v2 .tribe-events-pro .tribe-events-c-small-cta__link {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:15px;
+		line-height:44px;
+		font-weight:normal;
+		font-style:normal;
+		text-transform:none;
+	}
+
+	.cmsmasters_tribe_events_views_v2 .tribe-events-pro .tribe-events-c-small-cta__link {
+		font-size:13px;
+		line-height:42px;
+	}
+/***************** Finish Tribe Events Font Styles ******************/
+
+/***************** Start Gutenberg Module Custom Font Styles ******************/
+	
+	/* Start H2 Font */
+	.post-type-post .editor-post-title__block .editor-post-title__input {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:24px;
+		line-height:36px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	/* Finish H2 Font */
+	
+	/* Start H5 Font */
+	 .wp-block-table thead th,
+	 .wp-block-table thead td,
+	 .wp-block-freeform.mce-content-body > table thead th,
+	 .wp-block-freeform.mce-content-body > table thead td {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:14px;
+		line-height:22px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	/* Finish H5 Font */
+
+/***************** Finish Gutenberg Module Custom Font Styles ******************/
+
+
+
+
+
+/***************** Start Gutenberg Module General Font Styles ******************/
+
+	/* Start Content Font */
+	body .editor-styles-wrapper,
+	body .editor-styles-wrapper p,
+	 p.has-drop-cap:not(:focus)::first-letter,
+	 .wp-block-image figcaption,
+	 .wp-block-gallery .blocks-gallery-image figcaption,
+	 .wp-block-gallery .blocks-gallery-item figcaption,
+	 .wp-block-gallery .gallery-item .gallery-caption,
+	 .wp-block-audio figcaption,
+	 .wp-block-video figcaption,
+	 .wp-caption dd,
+	 div.wp-block ul,
+	 div.wp-block ul > li,
+	 div.wp-block ol,
+	 div.wp-block ol > li,
+	 .wp-block-latest-comments.has-avatars .wp-block-latest-comments__comment-meta, 
+	 .wp-block-latest-comments .wp-block-latest-comments__comment-meta,
+	 .wp-block-latest-comments.has-avatars .wp-block-latest-comments__comment-excerpt p, 
+	 .wp-block-latest-comments .wp-block-latest-comments__comment-excerpt p,
+	 .wp-block-freeform,
+	 .wp-block-freeform p,
+	 .wp-block-freeform.mce-content-body {
+		font-family:Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:13px;
+		line-height:20px;
+		font-weight:normal;
+		font-style:normal;
+	}
+	
+	 p.has-drop-cap:not(:focus)::first-letter {
+		font-size:3em;
+		line-height:1.2em;
+	}
+	/* Finish Content Font */
+	
+	
+	/* Start Link Font */
+	.editor-styles-wrapper a,
+	.editor-styles-wrapper .wp-block-file .wp-block-file__textlink .editor-rich-text__tinymce {
+		font-family:Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:13px;
+		line-height:20px;
+		font-weight:normal;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	/* Finish Link Font */
+	
+	
+	/* Start H1 Font */
+	 .wp-block-heading h1,
+	 .wp-block-heading h1.editor-rich-text__tinymce,
+	.editor-styles-wrapper h1,
+	.editor-styles-wrapper .wp-block-freeform.block-library-rich-text__tinymce h1,
+	.editor-post-title__block .editor-post-title__input {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:28px;
+		line-height:40px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	/* Finish H1 Font */
+	
+	
+	/* Start H2 Font */
+	 .wp-block-heading h2,
+	 .wp-block-heading h2.editor-rich-text__tinymce,
+	.editor-styles-wrapper h2,
+	.editor-styles-wrapper .wp-block-freeform.block-library-rich-text__tinymce h2,
+	 h2.editor-rich-text__tinymce,
+	 .wp-block-cover h2, 
+	 .wp-block-cover .wp-block-cover-text, 
+	 .wp-block-cover .wp-block-cover-image-text, 
+	 .wp-block-cover-image h2, 
+	 .wp-block-cover-image .wp-block-cover-text, 
+	 .wp-block-cover-image .wp-block-cover-image-text {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:24px;
+		line-height:36px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	/* Finish H2 Font */
+	
+	
+	/* Start H3 Font */
+	 .wp-block-heading h3,
+	 .wp-block-heading h3.editor-rich-text__tinymce,
+	.editor-styles-wrapper h3,
+	.editor-styles-wrapper .wp-block-freeform.block-library-rich-text__tinymce h3 {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:20px;
+		line-height:30px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	/* Finish H3 Font */
+	
+	
+	/* Start H4 Font */
+	 .wp-block-heading h4,
+	 .wp-block-heading h4.editor-rich-text__tinymce,
+	.editor-styles-wrapper h4,
+	.editor-styles-wrapper .wp-block-freeform.block-library-rich-text__tinymce h4 {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:16px;
+		line-height:26px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	/* Finish H4 Font */
+	
+	
+	/* Start H5 Font */
+	 .wp-block-heading h5,
+	 .wp-block-heading h5.editor-rich-text__tinymce,
+	.editor-styles-wrapper h5,
+	.editor-styles-wrapper .wp-block-freeform.block-library-rich-text__tinymce h5 {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:14px;
+		line-height:22px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	/* Finish H5 Font */
+	
+	
+	/* Start H6 Font */
+	 .wp-block-heading h6,
+	 .wp-block-heading h6.editor-rich-text__tinymce,
+	.editor-styles-wrapper h6,
+	.editor-styles-wrapper .wp-block-freeform.block-library-rich-text__tinymce h6 {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:13px;
+		line-height:20px;
+		font-weight:500;
+		font-style:normal;
+		text-transform:none;
+		text-decoration:none;
+	}
+	/* Finish H6 Font */
+	
+	
+	/* Start Button Font */
+	 .wp-block-button .wp-block-button__link,
+	 .wp-block-file .wp-block-file__button {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:15px;
+		line-height:44px;
+		font-weight:normal;
+		font-style:normal;
+		text-transform:none;
+	}
+	/* Finish Button Font */
+	
+	
+	/* Start Small Text Font */
+	 small,
+	 .wp-block-latest-posts .wp-block-latest-posts__post-date,
+	 .wp-block-latest-comments .wp-block-latest-comments__comment-date {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:11px;
+		line-height:18px;
+		font-weight:normal;
+		font-style:normal;
+		text-transform:none;
+	}
+	/* Finish Small Text Font */
+	
+	
+	/* Start Text Fields Font */
+	.editor-styles-wrapper select,
+	.editor-styles-wrapper option {
+		font-family:Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:13px;
+		line-height:20px;
+		font-weight:normal;
+		font-style:normal;
+	}
+	
+	.editor-styles-wrapper select {
+		line-height:1em;
+	}
+	/* Finish Text Fields Font */
+	
+	
+	/* Start Blockquote Font */
+	 .wp-block-quote,
+	 .wp-block-quote.is-large,
+	 .wp-block-quote.is-style-large,
+	 .wp-block-pullquote,
+	.editor-styles-wrapper .wp-block-freeform blockquote,
+	.editor-styles-wrapper .wp-block-freeform blockquote p {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-size:16px;
+		line-height:26px;
+		font-weight:300;
+		font-style:italic;
+	}
+	
+	 .wp-block-quote.is-large,
+	 .wp-block-quote.is-style-large {
+		font-size:20px;
+		line-height:30px;
+	}
+	
+	.editor-styles-wrapper q {
+		font-family:'Roboto', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+		font-weight:300;
+		font-style:italic;
+	}
+	/* Finish Blockquote Font */
+
+/***************** Finish Gutenberg Module General Font Styles ******************/
+

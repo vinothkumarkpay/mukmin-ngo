@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welfare NGO - Nonprofit Organization Charity Theme</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* ============================================
+   WELFARE NGO THEME - Exact Color Match
+   Primary:  #d43c18  |  Heading: #1e1e1e
+   Text:     #959595  |  BG:      #f4f4f4
+   Border:   #e1e1e1  |  Dark:    #3d3d3d
+   Footer:   #1e1e1e
+   ============================================ */
+:root {
+    --color-primary:    #d43c18;
+    --color-primary-dk: #b83210;
+    --color-text:       #959595;
+    --color-heading:    #1e1e1e;
+    --color-bg:         #f4f4f4;
+    --color-white:      #ffffff;
+    --color-border:     #e1e1e1;
+    --color-footer-bg:  #1e1e1e;
+    --color-dark-sec:   #3d3d3d;
+    --color-footer-link:#858585;
+    --font-main: 'Roboto', Arial, Helvetica, sans-serif;
+    --transition: 0.3s ease;
+    --shadow: 0 2px 15px rgba(0,0,0,0.1);
+    --shadow-hover: 0 8px 30px rgba(0,0,0,0.15);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-main); font-size: 13px; line-height: 20px; color: var(--color-text); background: var(--color-bg); }
+a { color: var(--color-primary); text-decoration: none; transition: color var(--transition); }
+a:hover { color: var(--color-primary-dk); }
+img { max-width: 100%; height: auto; display: block; }
+ul { list-style: none; }
+h1,h2,h3,h4,h5,h6 { font-family: var(--font-main); color: var(--color-heading); font-weight: 500; line-height: 1.4; }
+h1{font-size:28px;line-height:40px} h2{font-size:24px;line-height:36px} h3{font-size:20px;line-height:30px}
+h4{font-size:16px;line-height:26px} h5{font-size:14px;line-height:22px}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.bg-white { background: var(--color-white); }
+.bg-light  { background: var(--color-bg); }
+.text-center { text-align: center; }
+.mt-40 { margin-top: 40px; }
+
+/* BUTTONS */
+.btn { display:inline-block;padding:0 28px;font-family:var(--font-main);font-size:15px;font-weight:500;line-height:44px;text-align:center;cursor:pointer;border:2px solid transparent;transition:all var(--transition); }
+.btn-primary { background:var(--color-primary);color:var(--color-white);border-color:var(--color-primary); }
+.btn-primary:hover { background:var(--color-primary-dk);border-color:var(--color-primary-dk);color:var(--color-white); }
+.btn-outline { background:transparent;color:var(--color-white);border-color:var(--color-white); }
+.btn-outline:hover { background:var(--color-white);color:var(--color-heading); }
+.btn-outline-dark { background:transparent;color:var(--color-heading);border-color:var(--color-heading); }
+.btn-outline-dark:hover { background:var(--color-heading);color:var(--color-white); }
+.btn-white { background:var(--color-white);color:var(--color-primary);border-color:var(--color-white); }
+.btn-white:hover { background:transparent;color:var(--color-white); }
+.btn-sm { padding:0 14px;font-size:12px;line-height:32px; }
+.btn-full { width:100%;display:block;text-align:center; }
+.btn-donate { display:inline-block;background:var(--color-primary);color:var(--color-white);padding:10px 22px;font-size:14px;font-weight:500;transition:background var(--transition); }
+.btn-donate:hover { background:var(--color-primary-dk);color:var(--color-white); }
+
+/* TOP BAR */
+.top-bar { background:var(--color-white);border-bottom:1px solid var(--color-border);height:35px;line-height:35px;font-size:12px; }
+.top-bar-inner { display:flex;align-items:center;justify-content:space-between; }
+.top-bar-info { display:flex;gap:20px; }
+.top-info-item { color:var(--color-text); }
+.top-info-item i { color:var(--color-primary);margin-right:5px; }
+.top-info-item a { color:var(--color-text); }
+.top-info-item a:hover { color:var(--color-primary); }
+.top-bar-social { display:flex;gap:8px;align-items:center; }
+.top-bar-social .social-icon { color:var(--color-text);font-size:12px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;border:1px solid var(--color-border);border-radius:50%;transition:all var(--transition); }
+.top-bar-social .social-icon:hover { background:var(--color-primary);border-color:var(--color-primary);color:var(--color-white); }
+
+/* HEADER */
+.site-header { background:var(--color-white);box-shadow:0 2px 8px rgba(0,0,0,.07);position:sticky;top:0;z-index:1000; }
+.header-inner { display:flex;align-items:center;justify-content:space-between;height:110px; }
+.site-logo a { display:flex;flex-direction:column;text-decoration:none; }
+.site-logo .logo-text { font-size:28px;font-weight:700;color:var(--color-primary);letter-spacing:2px;line-height:1; }
+.site-logo .logo-sub { font-size:11px;color:var(--color-text);letter-spacing:.5px;margin-top:3px; }
+.main-nav { flex:1;display:flex;justify-content:center; }
+.nav-menu { display:flex;gap:0;align-items:center; }
+.nav-item { position:relative; }
+.nav-item > a { display:block;padding:0 16px;height:50px;line-height:50px;font-size:13px;font-weight:500;color:var(--color-heading);transition:color var(--transition); }
+.nav-item > a:hover,.nav-item.active > a { color:var(--color-primary); }
+.nav-item.active > a::after { content:'';position:absolute;bottom:0;left:16px;right:16px;height:2px;background:var(--color-primary); }
+.nav-item.has-dropdown:hover .dropdown-menu { display:block; }
+.dropdown-menu { display:none;position:absolute;top:100%;left:0;background:var(--color-white);min-width:200px;box-shadow:var(--shadow);border-top:2px solid var(--color-primary);z-index:200; }
+.dropdown-menu li a { display:block;padding:10px 20px;font-size:13px;color:var(--color-text);border-bottom:1px solid var(--color-border);transition:all var(--transition); }
+.dropdown-menu li:last-child a { border-bottom:none; }
+.dropdown-menu li a:hover { background:var(--color-bg);color:var(--color-primary);padding-left:25px; }
+.header-actions { display:flex;align-items:center;gap:12px; }
+.search-toggle { background:none;border:none;color:var(--color-text);font-size:16px;cursor:pointer;padding:5px;transition:color var(--transition); }
+.search-toggle:hover { color:var(--color-primary); }
+.mobile-menu-toggle { display:none;background:none;border:none;font-size:22px;color:var(--color-heading);cursor:pointer; }
+.search-bar { display:none;background:var(--color-bg);border-top:1px solid var(--color-border);padding:12px 0; }
+.search-bar.open { display:block; }
+.search-form { display:flex; }
+.search-form input { flex:1;padding:10px 15px;border:1px solid var(--color-border);font-family:var(--font-main);font-size:13px;outline:none; }
+.search-form button { background:var(--color-primary);color:var(--color-white);border:none;padding:10px 18px;cursor:pointer;transition:background var(--transition); }
+.search-form button:hover { background:var(--color-primary-dk); }
+
+/* HERO SLIDER */
+.hero-slider { position:relative;overflow:hidden; }
+.slider-container { position:relative; }
+.slide { display:none;background-size:cover;background-position:center;min-height:560px;align-items:center; }
+.slide.active { display:flex; }
+.slide-content { width:100%;padding:80px 0; }
+.slide-text { max-width:620px; }
+.slide-text h1 { font-size:42px;line-height:54px;color:var(--color-white);font-weight:500;margin-bottom:20px;text-shadow:0 2px 8px rgba(0,0,0,.3); }
+.slide-text p { font-size:16px;color:rgba(255,255,255,.88);margin-bottom:30px;line-height:26px; }
+.slide-buttons { display:flex;gap:15px;flex-wrap:wrap; }
+.slider-prev,.slider-next { position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.35);color:var(--color-white);border:none;width:44px;height:44px;cursor:pointer;font-size:18px;transition:background var(--transition);z-index:10;display:flex;align-items:center;justify-content:center; }
+.slider-prev { left:15px; } .slider-next { right:15px; }
+.slider-prev:hover,.slider-next:hover { background:var(--color-primary); }
+.slider-dots { position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10; }
+.slider-dots .dot { width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:background var(--transition); }
+.slider-dots .dot.active { background:var(--color-primary); }
+
+/* SECTIONS */
+section { padding:60px 0; }
+.section-header { margin-bottom:45px; }
+.section-header h2 { margin-bottom:15px; }
+.section-divider { display:flex;align-items:center;justify-content:center;margin:12px auto 18px; }
+.section-divider span { display:block;width:50px;height:3px;background:var(--color-primary);position:relative; }
+.section-divider span::before,.section-divider span::after { content:'';position:absolute;top:0;height:3px;background:var(--color-border);width:40px; }
+.section-divider span::before { right:calc(100% + 6px); }
+.section-divider span::after  { left:calc(100% + 6px); }
+.section-subtitle { font-size:14px;max-width:600px;margin:0 auto;line-height:22px; }
+
+/* WELCOME */
+.welcome-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:30px; }
+.welcome-card { background:var(--color-white);border:1px solid var(--color-border);padding:35px 28px;transition:box-shadow var(--transition);text-align:center; }
+.welcome-card:hover { box-shadow:var(--shadow-hover); }
+.welcome-icon { width:70px;height:70px;background:var(--color-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:28px;color:var(--color-primary);transition:all var(--transition); }
+.welcome-card:hover .welcome-icon { background:var(--color-primary);color:var(--color-white); }
+.welcome-card h3 { margin-bottom:12px;font-size:18px; }
+.welcome-card p { margin-bottom:18px;line-height:22px; }
+.read-more { color:var(--color-primary);font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:5px; }
+.read-more:hover { color:var(--color-primary-dk); }
+
+/* STATS */
+.section-stats { background:var(--color-dark-sec);padding:50px 0; }
+.stats-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:20px; }
+.stat-item { text-align:center; }
+.stat-number { font-size:48px;font-weight:700;color:var(--color-white);line-height:1;margin-bottom:10px; }
+.stat-label { color:rgba(255,255,255,.65);font-size:13px;text-transform:uppercase;letter-spacing:1px; }
+
+/* CAMPAIGNS */
+.campaigns-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:30px; }
+.campaign-card { background:var(--color-white);border:1px solid var(--color-border);overflow:hidden;transition:box-shadow var(--transition); }
+.campaign-card:hover { box-shadow:var(--shadow-hover); }
+.campaign-img { position:relative;overflow:hidden; }
+.campaign-img img { width:100%;height:220px;object-fit:cover;transition:transform .4s ease; }
+.campaign-card:hover .campaign-img img { transform:scale(1.05); }
+.campaign-overlay { position:absolute;inset:0;background:rgba(212,60,24,.75);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity var(--transition); }
+.campaign-card:hover .campaign-overlay { opacity:1; }
+.campaign-body { padding:22px; }
+.campaign-body h3 { font-size:16px;margin-bottom:10px; }
+.campaign-body h3 a { color:var(--color-heading); }
+.campaign-body h3 a:hover { color:var(--color-primary); }
+.campaign-body p { margin-bottom:16px;font-size:13px;line-height:20px; }
+.campaign-progress { margin-bottom:18px; }
+.progress-bar { height:6px;background:var(--color-border);border-radius:3px;overflow:hidden;margin-bottom:8px; }
+.progress-fill { height:100%;background:var(--color-primary);border-radius:3px;transition:width 1s ease; }
+.progress-meta { display:flex;justify-content:space-between;font-size:12px; }
+.progress-meta .raised { color:var(--color-primary);font-weight:500; }
+
+/* DONATE CTA */
+.section-donate-cta { background:var(--color-primary);padding:50px 0; }
+.donate-cta-inner { display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap; }
+.donate-cta-text h2 { color:var(--color-white);margin-bottom:8px; }
+.donate-cta-text p { color:rgba(255,255,255,.85); }
+.donate-cta-amounts { display:flex;align-items:center;gap:10px;flex-wrap:wrap; }
+.amount-btn { display:inline-block;padding:10px 22px;background:rgba(255,255,255,.15);color:var(--color-white);border:2px solid rgba(255,255,255,.5);font-size:16px;font-weight:500;transition:all var(--transition); }
+.amount-btn:hover { background:var(--color-white);color:var(--color-primary);border-color:var(--color-white); }
+
+/* TEAM */
+.team-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:25px; }
+.team-card { background:var(--color-white);border:1px solid var(--color-border);overflow:hidden;transition:box-shadow var(--transition); }
+.team-card:hover { box-shadow:var(--shadow-hover); }
+.team-img { position:relative;overflow:hidden; }
+.team-img img { width:100%;height:240px;object-fit:cover;object-position:top;transition:transform .4s ease; }
+.team-card:hover .team-img img { transform:scale(1.05); }
+.team-social { position:absolute;inset:0;background:rgba(212,60,24,.8);display:flex;align-items:center;justify-content:center;gap:10px;opacity:0;transition:opacity var(--transition); }
+.team-card:hover .team-social { opacity:1; }
+.team-social a { color:var(--color-white);width:36px;height:36px;border:1px solid rgba(255,255,255,.6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;transition:background var(--transition); }
+.team-social a:hover { background:rgba(255,255,255,.2); }
+.team-info { padding:16px 18px;text-align:center; }
+.team-info h4 { font-size:15px;margin-bottom:4px; }
+.team-role { font-size:12px;color:var(--color-primary); }
+
+/* TESTIMONIALS */
+.testimonials-slider { max-width:750px;margin:0 auto; }
+.testimonial-item { display:none; }
+.testimonial-item.active { display:block; }
+.testimonial-content { background:var(--color-white);border:1px solid var(--color-border);padding:40px;text-align:center; }
+.quote-icon { font-size:36px;color:var(--color-primary);margin-bottom:20px;opacity:.4; }
+.testimonial-content > p { font-size:15px;line-height:26px;font-style:italic;margin-bottom:28px;color:var(--color-heading); }
+.testimonial-author { display:flex;align-items:center;justify-content:center;gap:15px; }
+.testimonial-author img { width:55px;height:55px;border-radius:50%;object-fit:cover;border:3px solid var(--color-primary); }
+.testimonial-author strong { display:block;color:var(--color-heading);font-weight:500; }
+.testimonial-author span { font-size:12px;color:var(--color-primary); }
+.testimonial-dots { display:flex;justify-content:center;gap:8px;margin-top:20px; }
+.testimonial-dots .dot { width:10px;height:10px;border-radius:50%;background:var(--color-border);cursor:pointer;transition:background var(--transition); }
+.testimonial-dots .dot.active { background:var(--color-primary); }
+
+/* BLOG */
+.blog-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:30px; }
+.blog-card { background:var(--color-white);border:1px solid var(--color-border);overflow:hidden;transition:box-shadow var(--transition); }
+.blog-card:hover { box-shadow:var(--shadow-hover); }
+.blog-img { position:relative;overflow:hidden; }
+.blog-img img { width:100%;height:200px;object-fit:cover;transition:transform .4s ease; }
+.blog-card:hover .blog-img img { transform:scale(1.05); }
+.blog-cat { position:absolute;top:12px;left:12px;background:var(--color-primary);color:var(--color-white);font-size:11px;padding:3px 10px;font-weight:500;text-transform:uppercase; }
+.blog-body { padding:22px; }
+.blog-meta { font-size:12px;color:var(--color-text);margin-bottom:10px; }
+.blog-meta i { color:var(--color-primary);margin-right:4px; }
+.blog-body h3 { font-size:15px;margin-bottom:10px;line-height:22px; }
+.blog-body h3 a { color:var(--color-heading); }
+.blog-body h3 a:hover { color:var(--color-primary); }
+.blog-body p { font-size:13px;line-height:20px;margin-bottom:14px; }
+
+/* PARTNERS */
+.section-partners { background:var(--color-white);border-top:1px solid var(--color-border); }
+.partners-grid { display:grid;grid-template-columns:repeat(6,1fr);gap:20px;align-items:center; }
+.partner-logo { text-align:center;font-size:16px;font-weight:700;color:var(--color-border);padding:20px 10px;border:1px solid var(--color-border);letter-spacing:1px;transition:all var(--transition);cursor:pointer; }
+.partner-logo:hover { color:var(--color-primary);border-color:var(--color-primary); }
+
+/* FOOTER */
+.site-footer { background:var(--color-footer-bg); }
+.footer-main { padding:60px 0 40px; }
+.footer-grid { display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px; }
+.footer-logo .logo-text { font-size:24px;font-weight:700;color:var(--color-white);letter-spacing:2px;display:block;margin-bottom:15px; }
+.footer-about-text { color:var(--color-footer-link);font-size:13px;line-height:22px;margin-bottom:20px; }
+.footer-social { display:flex;gap:8px; }
+.footer-social a { width:32px;height:32px;background:rgba(255,255,255,.07);border:1px solid #2e2e2e;color:var(--color-footer-link);display:flex;align-items:center;justify-content:center;font-size:13px;border-radius:50%;transition:all var(--transition); }
+.footer-social a:hover { background:var(--color-primary);border-color:var(--color-primary);color:var(--color-white); }
+.footer-widget-title { color:var(--color-white);font-size:16px;font-weight:500;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--color-primary);display:inline-block; }
+.footer-links li { border-bottom:1px solid #2e2e2e; }
+.footer-links li:last-child { border-bottom:none; }
+.footer-links a { display:block;padding:8px 0;color:var(--color-footer-link);font-size:13px;transition:all var(--transition); }
+.footer-links a:hover { color:var(--color-white);padding-left:8px; }
+.footer-bottom { background:#141414;padding:18px 0;border-top:1px solid #2e2e2e; }
+.footer-bottom-inner { display:flex;align-items:center;justify-content:space-between; }
+.footer-copyright { color:var(--color-footer-link);font-size:12px; }
+.footer-nav { display:flex;gap:20px; }
+.footer-nav a { color:var(--color-footer-link);font-size:12px; }
+.footer-nav a:hover { color:var(--color-white); }
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+    .nav-item > a{padding:0 10px;font-size:12px}
+    .team-grid{grid-template-columns:repeat(2,1fr)}
+    .partners-grid{grid-template-columns:repeat(3,1fr)}
+    .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+    .top-bar{display:none}
+    .header-inner{height:70px}
+    .main-nav{display:none}
+    .main-nav.open{display:block;position:absolute;top:70px;left:0;right:0;background:var(--color-white);box-shadow:var(--shadow);z-index:999;padding:10px 0}
+    .nav-menu{flex-direction:column;align-items:stretch}
+    .nav-item > a{height:auto;line-height:1;padding:12px 20px;border-bottom:1px solid var(--color-border)}
+    .dropdown-menu{position:static;box-shadow:none;border-top:none;background:var(--color-bg)}
+    .mobile-menu-toggle{display:block}
+    .btn-donate{display:none}
+    .slide-text h1{font-size:28px;line-height:36px}
+    .welcome-grid,.campaigns-grid,.blog-grid{grid-template-columns:1fr}
+    .stats-grid{grid-template-columns:repeat(2,1fr)}
+    .team-grid{grid-template-columns:repeat(2,1fr)}
+    .partners-grid{grid-template-columns:repeat(2,1fr)}
+    .footer-grid{grid-template-columns:1fr}
+    .donate-cta-inner{flex-direction:column}
+    .footer-bottom-inner{flex-direction:column;gap:10px;text-align:center}
+}
+@media(max-width:480px){
+    .stats-grid,.team-grid{grid-template-columns:1fr}
+    .slide{min-height:400px}
+    .slide-text h1{font-size:22px;line-height:30px}
+    section{padding:40px 0}
+}
+</style>
+</head>
+<body class="home-page">
+
+<!-- TOP BAR -->
+<div class="top-bar">
+    <div class="container">
+        <div class="top-bar-inner">
+            <div class="top-bar-info">
+                <span class="top-info-item"><i class="fas fa-map-marker-alt"></i> Brooklyn, NY 10036, United States</span>
+                <span class="top-info-item"><i class="fas fa-phone"></i> 1-800-123-1234</span>
+                <span class="top-info-item"><i class="fas fa-envelope"></i> <a href="mailto:example@welfare_ngo.com">example@welfare_ngo.com</a></span>
+            </div>
+            <div class="top-bar-social">
+                <a href="#" class="social-icon" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon" title="Google+"><i class="fab fa-google-plus-g"></i></a>
+                <a href="#" class="social-icon" title="Vimeo"><i class="fab fa-vimeo-v"></i></a>
+                <a href="#" class="social-icon" title="Skype"><i class="fab fa-skype"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header" id="site-header">
+    <div class="container">
+        <div class="header-inner">
+            <div class="site-logo">
+                <a href="#">
+                    <span class="logo-text">WELFARE</span>
+                    <span class="logo-sub">NGO & Nonprofit Organization</span>
+                </a>
+            </div>
+            <nav class="main-nav" id="main-nav">
+                <ul class="nav-menu">
+                    <li class="nav-item active"><a href="#">Home</a></li>
+                    <li class="nav-item has-dropdown"><a href="#">About Us</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">About Us</a></li><li><a href="#">Our Team</a></li>
+                            <li><a href="#">Volunteer Engagement</a></li><li><a href="#">Communications</a></li><li><a href="#">Services</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item has-dropdown"><a href="#">Discover</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Mission</a></li><li><a href="#">Where We Are Headed</a></li>
+                            <li><a href="#">History</a></li><li><a href="#">Board and Staff</a></li><li><a href="#">Join Our Team</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item has-dropdown"><a href="#">Support</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Terms of Use</a></li><li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Donor Privacy Policy</a></li><li><a href="#">Internship</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item has-dropdown"><a href="#">News</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Press Room</a></li><li><a href="#">Effectiveness &amp; Results</a></li>
+                            <li><a href="#">Advisory Panel</a></li><li><a href="#">Endorsements</a></li><li><a href="#">Annual Report</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="search-toggle" id="search-toggle"><i class="fas fa-search"></i></button>
+                <a href="#donate" class="btn-donate">Donate Now!</a>
+                <button class="mobile-menu-toggle" id="mobile-toggle"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="search-bar" id="search-bar">
+        <div class="container">
+            <form class="search-form" onsubmit="return false">
+                <input type="text" placeholder="Search...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+    </div>
+</header>
+
+<!-- HERO SLIDER -->
+<section class="hero-slider">
+    <div class="slider-container">
+        <div class="slide active" style="background-image:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1600')">
+            <div class="slide-content"><div class="container"><div class="slide-text">
+                <h1>Together We Can<br>Change The World</h1>
+                <p>Join us in making a difference. Your support helps thousands of families every year access clean water, education, and healthcare.</p>
+                <div class="slide-buttons"><a href="#" class="btn btn-primary">Learn More</a><a href="#donate" class="btn btn-outline">Donate Now</a></div>
+            </div></div></div>
+        </div>
+        <div class="slide" style="background-image:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=1600')">
+            <div class="slide-content"><div class="container"><div class="slide-text">
+                <h1>Your Donation<br>Changes Lives</h1>
+                <p>Every dollar you give goes directly toward our programs — helping children, families, and entire communities thrive.</p>
+                <div class="slide-buttons"><a href="#" class="btn btn-primary">Our Campaigns</a><a href="#donate" class="btn btn-outline">Donate Now</a></div>
+            </div></div></div>
+        </div>
+        <div class="slide" style="background-image:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=1600')">
+            <div class="slide-content"><div class="container"><div class="slide-text">
+                <h1>Building Hope<br>For Tomorrow</h1>
+                <p>Our volunteers and staff work tirelessly in communities around the globe. You can help us expand our impact.</p>
+                <div class="slide-buttons"><a href="#" class="btn btn-primary">Get Involved</a><a href="#donate" class="btn btn-outline">Donate Now</a></div>
+            </div></div></div>
+        </div>
+        <button class="slider-prev" id="slider-prev"><i class="fas fa-chevron-left"></i></button>
+        <button class="slider-next" id="slider-next"><i class="fas fa-chevron-right"></i></button>
+        <div class="slider-dots" id="slider-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+        </div>
+    </div>
+</section>
+
+<!-- WELCOME -->
+<section class="section-welcome bg-white">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2>Welcome to Welfare</h2>
+            <div class="section-divider"><span></span></div>
+            <p class="section-subtitle">We are a nonprofit organization committed to improving lives through sustainable programs and community partnerships worldwide.</p>
+        </div>
+        <div class="welcome-grid">
+            <div class="welcome-card"><div class="welcome-icon"><i class="fas fa-hands-helping"></i></div><h3>Our Mission</h3><p>To empower individuals and communities by providing access to essential resources, education, and healthcare regardless of background.</p><a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a></div>
+            <div class="welcome-card"><div class="welcome-icon"><i class="fas fa-globe"></i></div><h3>Our Vision</h3><p>A world where every person has the opportunity to live a healthy, dignified, and fulfilling life, supported by thriving communities.</p><a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a></div>
+            <div class="welcome-card"><div class="welcome-icon"><i class="fas fa-heart"></i></div><h3>Our Values</h3><p>Compassion, integrity, transparency, and accountability guide everything we do — from how we raise funds to how we deliver programs.</p><a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a></div>
+        </div>
+    </div>
+</section>
+
+<!-- STATS -->
+<section class="section-stats">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item"><div class="stat-number" data-count="12500">0</div><div class="stat-label">People Helped</div></div>
+            <div class="stat-item"><div class="stat-number" data-count="48">0</div><div class="stat-label">Countries Reached</div></div>
+            <div class="stat-item"><div class="stat-number" data-count="320">0</div><div class="stat-label">Volunteers</div></div>
+            <div class="stat-item"><div class="stat-number" data-count="95">0</div><div class="stat-label">Programs Running</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- CAMPAIGNS -->
+<section class="section-campaigns bg-light">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2>Our Campaigns</h2>
+            <div class="section-divider"><span></span></div>
+            <p class="section-subtitle">Your donations directly fund these life-changing programs around the world.</p>
+        </div>
+        <div class="campaigns-grid">
+            <div class="campaign-card">
+                <div class="campaign-img"><img src="https://images.unsplash.com/photo-1541544537156-7627a7a4aa1c?w=600" alt="Clean Water"><div class="campaign-overlay"><a href="#" class="btn btn-sm btn-primary">Learn More</a></div></div>
+                <div class="campaign-body"><h3><a href="#">Clean Water Initiative</a></h3><p>Bringing safe drinking water to rural communities in sub-Saharan Africa.</p>
+                    <div class="campaign-progress"><div class="progress-bar"><div class="progress-fill" style="width:74%"></div></div><div class="progress-meta"><span class="raised">Raised: $18,500</span><span>Goal: $25,000</span></div></div>
+                    <a href="#donate" class="btn btn-primary btn-full">Donate Now</a>
+                </div>
+            </div>
+            <div class="campaign-card">
+                <div class="campaign-img"><img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600" alt="Education"><div class="campaign-overlay"><a href="#" class="btn btn-sm btn-primary">Learn More</a></div></div>
+                <div class="campaign-body"><h3><a href="#">Education for All</a></h3><p>Building schools and providing scholarships to children in need around the world.</p>
+                    <div class="campaign-progress"><div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div><div class="progress-meta"><span class="raised">Raised: $32,000</span><span>Goal: $40,000</span></div></div>
+                    <a href="#donate" class="btn btn-primary btn-full">Donate Now</a>
+                </div>
+            </div>
+            <div class="campaign-card">
+                <div class="campaign-img"><img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600" alt="Healthcare"><div class="campaign-overlay"><a href="#" class="btn btn-sm btn-primary">Learn More</a></div></div>
+                <div class="campaign-body"><h3><a href="#">Healthcare Access</a></h3><p>Mobile clinics delivering essential healthcare to remote villages and underserved areas.</p>
+                    <div class="campaign-progress"><div class="progress-bar"><div class="progress-fill" style="width:49%"></div></div><div class="progress-meta"><span class="raised">Raised: $9,800</span><span>Goal: $20,000</span></div></div>
+                    <a href="#donate" class="btn btn-primary btn-full">Donate Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-40"><a href="#" class="btn btn-outline-dark">View All Campaigns</a></div>
+    </div>
+</section>
+
+<!-- DONATE CTA -->
+<section class="section-donate-cta" id="donate">
+    <div class="container">
+        <div class="donate-cta-inner">
+            <div class="donate-cta-text">
+                <h2>Make a Difference Today</h2>
+                <p>Your generosity helps us reach more communities and create lasting change. Every dollar matters.</p>
+            </div>
+            <div class="donate-cta-amounts">
+                <a href="#" class="amount-btn">$25</a>
+                <a href="#" class="amount-btn">$50</a>
+                <a href="#" class="amount-btn">$100</a>
+                <a href="#" class="amount-btn">$250</a>
+                <a href="#" class="btn btn-white">Other Amount</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TEAM -->
+<section class="section-team bg-white">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2>Our Team</h2>
+            <div class="section-divider"><span></span></div>
+            <p class="section-subtitle">Dedicated professionals and volunteers working together to make a difference.</p>
+        </div>
+        <div class="team-grid">
+            <div class="team-card"><div class="team-img"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300" alt="Sarah"><div class="team-social"><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a></div></div><div class="team-info"><h4>Sarah Johnson</h4><span class="team-role">Executive Director</span></div></div>
+            <div class="team-card"><div class="team-img"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300" alt="Michael"><div class="team-social"><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a></div></div><div class="team-info"><h4>Michael Chen</h4><span class="team-role">Program Director</span></div></div>
+            <div class="team-card"><div class="team-img"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300" alt="Emily"><div class="team-social"><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a></div></div><div class="team-info"><h4>Emily Rodriguez</h4><span class="team-role">Outreach Coordinator</span></div></div>
+            <div class="team-card"><div class="team-img"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300" alt="David"><div class="team-social"><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a></div></div><div class="team-info"><h4>David Osei</h4><span class="team-role">Field Manager</span></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section-testimonials bg-light">
+    <div class="container">
+        <div class="section-header text-center"><h2>What People Say</h2><div class="section-divider"><span></span></div></div>
+        <div class="testimonials-slider">
+            <div class="testimonial-item active"><div class="testimonial-content"><div class="quote-icon"><i class="fas fa-quote-left"></i></div><p>Welfare NGO transformed our village. We now have access to clean water and our children attend school. I am forever grateful for their commitment and compassion.</p><div class="testimonial-author"><img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=80" alt="Amara"><div><strong>Amara Diallo</strong><span>Community Leader, Mali</span></div></div></div></div>
+            <div class="testimonial-item"><div class="testimonial-content"><div class="quote-icon"><i class="fas fa-quote-left"></i></div><p>Volunteering with Welfare was one of the most rewarding experiences of my life. The team is professional, passionate, and truly makes a measurable impact.</p><div class="testimonial-author"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80" alt="James"><div><strong>James Park</strong><span>Volunteer, New York</span></div></div></div></div>
+            <div class="testimonial-item"><div class="testimonial-content"><div class="quote-icon"><i class="fas fa-quote-left"></i></div><p>I've been donating to Welfare for three years. Their transparency and consistent reporting gives me full confidence that my contributions are being used wisely.</p><div class="testimonial-author"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80" alt="Lisa"><div><strong>Lisa Thompson</strong><span>Regular Donor, Chicago</span></div></div></div></div>
+        </div>
+        <div class="testimonial-dots" id="testimonial-dots">
+            <span class="dot active" data-index="0"></span><span class="dot" data-index="1"></span><span class="dot" data-index="2"></span>
+        </div>
+    </div>
+</section>
+
+<!-- BLOG -->
+<section class="section-blog bg-white">
+    <div class="container">
+        <div class="section-header text-center"><h2>Latest News</h2><div class="section-divider"><span></span></div><p class="section-subtitle">Stay updated with our latest projects, stories, and announcements.</p></div>
+        <div class="blog-grid">
+            <div class="blog-card"><div class="blog-img"><a href="#"><img src="https://images.unsplash.com/photo-1541544537156-7627a7a4aa1c?w=500" alt="Blog 1"></a><span class="blog-cat">Projects</span></div><div class="blog-body"><div class="blog-meta"><span><i class="fas fa-calendar-alt"></i> June 15, 2024</span></div><h3><a href="#">New Water Wells Completed in Rural Kenya</a></h3><p>Thanks to our donors, 12 new wells have been completed in rural Kenya, providing clean water to over 3,000 people.</p><a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a></div></div>
+            <div class="blog-card"><div class="blog-img"><a href="#"><img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=500" alt="Blog 2"></a><span class="blog-cat">Events</span></div><div class="blog-body"><div class="blog-meta"><span><i class="fas fa-calendar-alt"></i> May 28, 2024</span></div><h3><a href="#">Annual Charity Gala Raises Record Funds</a></h3><p>Our annual gala raised over $450,000 — the highest amount in our organization's 20-year history.</p><a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a></div></div>
+            <div class="blog-card"><div class="blog-img"><a href="#"><img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=500" alt="Blog 3"></a><span class="blog-cat">Volunteering</span></div><div class="blog-body"><div class="blog-meta"><span><i class="fas fa-calendar-alt"></i> May 10, 2024</span></div><h3><a href="#">Volunteer Training Program Launches in 10 Cities</a></h3><p>We are expanding our volunteer training program to 10 new cities across the US, preparing community leaders.</p><a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="section-partners">
+    <div class="container">
+        <div class="section-header text-center"><h2>Our Partners</h2><div class="section-divider"><span></span></div></div>
+        <div class="partners-grid">
+            <div class="partner-logo">UNICEF</div>
+            <div class="partner-logo">WHO</div>
+            <div class="partner-logo">Red Cross</div>
+            <div class="partner-logo">USAID</div>
+            <div class="partner-logo">World Bank</div>
+            <div class="partner-logo">UNESCO</div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+    <div class="footer-main">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-widget">
+                    <div class="footer-logo"><span class="logo-text">WELFARE</span></div>
+                    <p class="footer-about-text">We are a nonprofit organization dedicated to improving lives and creating lasting change in communities around the world.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-google-plus-g"></i></a><a href="#"><i class="fab fa-vimeo-v"></i></a><a href="#"><i class="fab fa-skype"></i></a>
+                    </div>
+                </div>
+                <div class="footer-widget">
+                    <h4 class="footer-widget-title">About Us</h4>
+                    <ul class="footer-links"><li><a href="#">About Us</a></li><li><a href="#">Our Team</a></li><li><a href="#">Volunteer Engagement</a></li><li><a href="#">Communications</a></li><li><a href="#">Services</a></li></ul>
+                </div>
+                <div class="footer-widget">
+                    <h4 class="footer-widget-title">Discover</h4>
+                    <ul class="footer-links"><li><a href="#">Mission</a></li><li><a href="#">Where We Are Headed</a></li><li><a href="#">History</a></li><li><a href="#">Board and Staff</a></li><li><a href="#">Join Our Team</a></li></ul>
+                </div>
+                <div class="footer-widget">
+                    <h4 class="footer-widget-title">News</h4>
+                    <ul class="footer-links"><li><a href="#">Press Room</a></li><li><a href="#">Effectiveness &amp; Results</a></li><li><a href="#">Advisory Panel</a></li><li><a href="#">Endorsements</a></li><li><a href="#">Annual Report</a></li></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="footer-bottom-inner">
+                <p class="footer-copyright">&copy; 2024 Welfare NGO. All Rights Reserved.</p>
+                <nav class="footer-nav"><a href="#">Terms of Use</a><a href="#">Privacy Policy</a><a href="#">Contact</a></nav>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+(function(){
+    /* HERO SLIDER */
+    var slides=document.querySelectorAll('.slide'),dots=document.querySelectorAll('#slider-dots .dot'),cur=0,ap;
+    function goSlide(n){slides[cur].classList.remove('active');dots[cur]&&dots[cur].classList.remove('active');cur=(n+slides.length)%slides.length;slides[cur].classList.add('active');dots[cur]&&dots[cur].classList.add('active');}
+    function startAP(){ap=setInterval(function(){goSlide(cur+1)},5000);}
+    if(slides.length){
+        var p=document.getElementById('slider-prev'),nx=document.getElementById('slider-next');
+        p&&p.addEventListener('click',function(){clearInterval(ap);goSlide(cur-1);startAP();});
+        nx&&nx.addEventListener('click',function(){clearInterval(ap);goSlide(cur+1);startAP();});
+        dots.forEach(function(d){d.addEventListener('click',function(){clearInterval(ap);goSlide(parseInt(this.dataset.index));startAP();});});
+        startAP();
+    }
+    /* TESTIMONIALS */
+    var ti=document.querySelectorAll('.testimonial-item'),td=document.querySelectorAll('#testimonial-dots .dot'),tc=0;
+    function goT(n){ti[tc].classList.remove('active');td[tc]&&td[tc].classList.remove('active');tc=(n+ti.length)%ti.length;ti[tc].classList.add('active');td[tc]&&td[tc].classList.add('active');}
+    if(ti.length){td.forEach(function(d){d.addEventListener('click',function(){goT(parseInt(this.dataset.index));});});setInterval(function(){goT(tc+1)},6000);}
+    /* MOBILE MENU */
+    var mt=document.getElementById('mobile-toggle'),mn=document.getElementById('main-nav');
+    if(mt&&mn)mt.addEventListener('click',function(){mn.classList.toggle('open');var ic=mt.querySelector('i');ic.classList.toggle('fa-bars');ic.classList.toggle('fa-times');});
+    /* SEARCH */
+    var st=document.getElementById('search-toggle'),sb=document.getElementById('search-bar');
+    if(st&&sb)st.addEventListener('click',function(){sb.classList.toggle('open');if(sb.classList.contains('open'))sb.querySelector('input').focus();});
+    /* COUNTERS */
+    function animCtrs(){document.querySelectorAll('.stat-number').forEach(function(c){var t=parseInt(c.dataset.count),s=0,step=t/125;var tm=setInterval(function(){s+=step;if(s>=t){c.textContent=t.toLocaleString();clearInterval(tm);}else{c.textContent=Math.floor(s).toLocaleString();}},16);});}
+    var ss=document.querySelector('.section-stats'),triggered=false;
+    if(ss)window.addEventListener('scroll',function(){if(!triggered){var r=ss.getBoundingClientRect();if(r.top<window.innerHeight-100){triggered=true;animCtrs();}}});
+    /* PROGRESS BARS */
+    function animPB(){document.querySelectorAll('.progress-fill').forEach(function(b){var w=b.style.width;b.style.width='0';setTimeout(function(){b.style.width=w;},200);});}
+    var cs=document.querySelector('.section-campaigns'),pbt=false;
+    if(cs)window.addEventListener('scroll',function(){if(!pbt){var r=cs.getBoundingClientRect();if(r.top<window.innerHeight){pbt=true;animPB();}}});
+})();
+</script>
+</body>
+</html>

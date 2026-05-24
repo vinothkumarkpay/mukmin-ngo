@@ -1,0 +1,65 @@
+[cmsms_row data_padding_bottom="50" data_padding_top="0" data_color="default" data_padding_right="0" data_padding_left="0" data_width="fullwidth"][cmsms_column data_width="1/1"]
+
+[cmsms_slider slider_plugin="rev" slider_rev="home"]
+
+[/cmsms_column][/cmsms_row][cmsms_row data_padding_bottom="50" data_padding_top="0" data_color="default" data_width="boxed"][cmsms_column data_width="1/4"][cmsms_icon_box box_type="cmsms_icon_box_top" title="Mission" heading_type="h2" box_icon_type="icon" box_icon="cmsms-icon-award-1" box_icon_size="24" box_icon_space="52" box_icon_border_width="0" box_icon_border_radius="50%" box_icon_color="#ffffff" box_border_width="0" box_bg_color="#ffffff" button_show="true" button_title="Read more" button_target="self" button_font_size="14" button_line_height="36" button_font_weight="normal" button_font_style="normal" button_padding_hor="20" button_border_style="solid" button_bg_color="#adadad" button_text_color="#ffffff" button_bg_color_h="#d43c18" button_text_color_h="#ffffff" animation_delay="0"]
+
+Accusantium quam, ultricies eget tempor id, aliquam eget nibh et. Maecen aliquam, risus at semper ullamcorper, magna
+
+[/cmsms_icon_box][/cmsms_column][cmsms_column data_width="1/4"][cmsms_icon_box box_type="cmsms_icon_box_top" title="Events" heading_type="h2" box_icon_type="icon" box_icon="cmsms-icon-user-group" box_icon_size="24" box_icon_space="52" box_icon_border_width="0" box_icon_border_radius="50%" box_icon_color="#ffffff" box_border_width="0" button_show="true" button_title="Read more" button_target="self" button_font_size="14" button_line_height="36" button_font_weight="normal" button_font_style="normal" button_padding_hor="20" button_border_style="solid" button_bg_color="#adadad" button_text_color="#ffffff" button_bg_color_h="#d43c18" button_text_color_h="#ffffff" animation_delay="0"]
+
+Accusantium quam, ultricies eget tempor id, aliquam eget nibh et. Maecen aliquam, risus at semper ullamcorper, magna
+
+[/cmsms_icon_box][/cmsms_column][cmsms_column data_width="1/4"][cmsms_icon_box box_type="cmsms_icon_box_top" title="Support" heading_type="h2" box_icon_type="icon" box_icon="cmsms-icon-headphones-alt" box_icon_size="24" box_icon_space="52" box_icon_border_width="0" box_icon_border_radius="50%" box_icon_color="#ffffff" box_border_width="0" button_show="true" button_title="Read more" button_target="self" button_font_size="14" button_line_height="36" button_font_weight="normal" button_font_style="normal" button_padding_hor="20" button_border_style="solid" button_bg_color="#adadad" button_text_color="#ffffff" button_bg_color_h="#d43c18" button_text_color_h="#ffffff" animation_delay="0"]
+
+Accusantium quam, ultricies eget tempor id, aliquam eget nibh et. Maecen aliquam, risus at semper ullamcorper, magna
+
+[/cmsms_icon_box][/cmsms_column][cmsms_column data_width="1/4"][cmsms_icon_box box_type="cmsms_icon_box_top" title="Volunteer" heading_type="h2" box_icon_type="icon" box_icon="cmsms-icon-user-add-2" box_icon_size="24" box_icon_space="52" box_icon_border_width="0" box_icon_border_radius="50%" box_icon_color="#ffffff" box_border_width="0" button_show="true" button_title="Read more" button_target="self" button_font_size="14" button_line_height="36" button_font_weight="normal" button_font_style="normal" button_padding_hor="20" button_border_style="solid" button_bg_color="#adadad" button_text_color="#ffffff" button_bg_color_h="#d43c18" button_text_color_h="#ffffff" animation_delay="0"]
+
+Accusantium quam, ultricies eget tempor id, aliquam eget nibh et. Maecen aliquam, risus at semper ullamcorper, magna
+
+[/cmsms_icon_box][/cmsms_column][/cmsms_row][cmsms_row data_padding_bottom="60" data_padding_top="10" data_color="default" data_width="boxed"][cmsms_column data_width="1/1"]
+
+[cmsms_featured_campaign campaign="2947" campaign_metadata="image,link,rest_amount,donated_percent,excerpt,donation_but" animation_delay="0"]
+
+[/cmsms_column][/cmsms_row][cmsms_row data_padding_bottom="50" data_padding_top="50" data_color="fifth" data_width="boxed"][cmsms_column data_width="1/1"][cmsms_heading type="h2" font_weight="500" font_style="normal" text_align="left" margin_top="0" margin_bottom="-50" animation_delay="0"]Cause List[/cmsms_heading]
+
+[cmsms_campaigns orderby="date" order="DESC" campaigns_categories="charity,disabled,education,elderly,unemployment" columns="4" count="8" pause="5" campaigns_metadata="title,excerpt,donated_percent" animation_delay="0"]
+
+[/cmsms_column][/cmsms_row][cmsms_row data_padding_bottom="50" data_padding_top="50" data_color="default" data_width="boxed"][cmsms_column data_width="1/2"][cmsms_heading type="h2" font_weight="500" font_style="normal" text_align="left" margin_top="0" margin_bottom="40" animation_delay="0"]Events List[/cmsms_heading]
+
+[cmsms_sidebar sidebar="event-list-sidebar"]
+
+[/cmsms_column][cmsms_column data_width="1/2"][cmsms_heading type="h2" font_weight="500" font_style="normal" text_align="left" margin_top="0" margin_bottom="40" animation_delay="0"] Short Information[/cmsms_heading][cmsms_tabs mode="tab" active="1" animation_delay="0"][cmsms_tab title="Event"]
+
+[cmsms_sidebar sidebar="countdown-sitebar"]
+
+[cmsms_dropcap type="type1"]A[/cmsms_dropcap]ras nec imperdiet neque. Vestibulum sem libero, ultrices sit amet elit at, aliquet accumsan purus. Suspendisse interdum felis at odio molestie, at elementum nisi dictum. Donec ac ultricies nisl. Nam posuere accumsan diam, vel mattis nibh volutpat hendrerit. Curabitur ultrices auctor nisl, vel ultricies massa euismod sed. Etiam at imperdiet nulla.
+
+[/cmsms_tab][cmsms_tab title="Press"]
+<h3>Jobs for disabled people</h3>
+Etiam eu molestie eros, commodo hendrerit sapien. Maecenas tempus leo ac nisi iaculis porta. Sed sapien tortor, aliquet a velit ut, lacinia molestie velit. Maecenas ornare consequat massa ullamcorper dapibus. Aliquam auctor, sapien sit amet accumsan facilisis, enim enim aliquet arcu, tincidunt pellentesque justo turpis id neque. Duis eleifend nunc sit amet mi dapibus ornare. Suspendisse vel libero sem.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultrices ipsum non mattis pharetra. Integer laoreet non felis sit amet pharetra. Integer mollis eget felis non finibus.
+
+[/cmsms_tab][cmsms_tab title="Video"]
+
+[cmsms_embed link="https://vimeo.com/49053083" wrap="true" animation_delay="0"]
+
+[/cmsms_tab][/cmsms_tabs][/cmsms_column][/cmsms_row][cmsms_row data_width="boxed" data_color="default" data_bg_img="4429|http://welfare.cmsmasters.net/demo/wp-content/uploads/sites/3/2015/05/04-300x169.jpg|medium" data_bg_position="top center" data_bg_repeat="no-repeat" data_bg_attachment="scroll" data_bg_size="cover" data_bg_parallax="true" data_bg_parallax_ratio="0.85" data_color_overlay="rgba(22,22,22,0.4)" data_padding_top="80" data_padding_bottom="80"][cmsms_column data_width="1/2"][/cmsms_column][cmsms_column data_width="1/2"][cmsms_heading type="h1" font_size="40" line_height="50" font_weight="500" font_style="normal" text_align="left" color="#ffffff" margin_top="0" margin_bottom="50" animation_delay="0"]No one has ever become poor by giving[/cmsms_heading][cmsms_heading type="h6" font_size="15" line_height="24" font_weight="400" font_style="normal" text_align="left" color="rgba(255,255,255,0.8)" margin_top="0" margin_bottom="40" animation_delay="0"]Lorem ipsum dolor sit amet, consectetur cing elit. Suspe ndisse suscipit sagittis leo sit met condimentum estibulum dignissim posuere cubilia Curae; Suspendisse at consectetur massa. Curabitur non ipsum nisinec dapibus elit. Donec nec magna id lacus consequat posuere. Aenean ut diam vitae ante interdum interdum ut sit amet metus. [/cmsms_heading]
+
+[cmsms_divider width="long" height="0" style="solid" position="center" color="rgba(255,255,255,0)" margin_top="0" margin_bottom="0" animation_delay="0"]
+
+[cmsms_button button_donation="disable" button_target="self" button_text_align="left" button_font_weight="normal" button_font_style="normal" button_border_style="solid" button_bg_color_h="#ffffff" button_text_color_h="#353535" animation_delay="0"]Donate Now![/cmsms_button][/cmsms_column][/cmsms_row][cmsms_row data_padding_bottom="60" data_padding_top="60" data_color="default" data_width="boxed"][cmsms_column data_width="1/1"][cmsms_heading type="h1" font_weight="500" font_style="normal" text_align="center" margin_top="0" margin_bottom="50" animation_delay="0"]Latest News[/cmsms_heading]
+
+[cmsms_blog orderby="date" order="ASC" count="4" categories="news" layout="columns" layout_mode="puzzle" columns="4" metadata="date,categories,author,comments,likes" pagination="disabled"]
+
+[/cmsms_column][/cmsms_row][cmsms_row data_padding_bottom="70" data_padding_top="60" data_color="fifth" data_width="boxed"][cmsms_column data_width="1/1"][cmsms_heading type="h1" font_weight="500" font_style="normal" text_align="center" margin_top="0" margin_bottom="50" animation_delay="0"]Our Donators[/cmsms_heading]
+
+[cmsms_donations orderby="date" order="DESC" count="4" campaigns="2956,2947,2935,2898" columns="4" donation_metadata="image,link,campaign,amount" animation_delay="0"]
+
+[/cmsms_column][/cmsms_row][cmsms_row data_padding_bottom="20" data_padding_top="20" data_bg_color="#d43c18" data_color="third" data_width="boxed"][cmsms_column data_width="1/1"]
+
+[cmsms_twitter user="cmsmasters" count="5" date="true" control="true" autoplay="true" speed="3" animation_delay="0"]
+
+[/cmsms_column][/cmsms_row]

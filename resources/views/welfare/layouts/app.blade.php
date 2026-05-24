@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>@yield('title', 'Pertubuhan Gabungan MUKMIN Nasional')</title>
+
+    <!-- Google Fonts - Roboto (matches theme settings) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{{ asset('css/welfare.css') }}">
+    @stack('styles')
+</head>
+<body class="@yield('body-class', '')">
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-inner">
+                <div class="top-bar-info">
+                    <span class="top-info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        {{ config('welfare.address_short') }}
+                    </span>
+                    <span class="top-info-item">
+                        <i class="fas fa-phone"></i>
+                        {{ config('welfare.phone') }}
+                    </span>
+                    <span class="top-info-item">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:{{ config('welfare.email') }}">{{ config('welfare.email') }}</a>
+                    </span>
+                </div>
+                <div class="top-bar-social">
+                    <a href="#" class="social-icon" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" class="social-icon" title="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="site-header" id="site-header">
+        <!-- Top Row -->
+        <div class="header-top-row">
+            <div class="container">
+                <div class="header-top-inner">
+                    <!-- Logo -->
+                    <div class="site-logo">
+                        <a href="{{ route('welfare.home') }}" style="display: flex; align-items: center; text-decoration: none;">
+                            <img src="{{ asset('welfare/img/mukmin_logo.png') }}" alt="{{ config('welfare.name', 'MUKMIN') }}" style="height: 48px; width: auto; max-width: 100%; display: block;">
+                        </a>
+                    </div>
+
+                    <!-- Top Row Actions -->
+                    <div class="header-top-actions">
+                        <!-- Search Box (inline expandable) -->
+                        <div class="search-box-inline" id="search-box-inline">
+                            <form action="#" method="GET" onsubmit="return false;">
+                                <input type="text" name="q" placeholder="enter keywords" id="search-input-inline" value="{{ request('q') }}">
+                                <button type="button" class="search-clear" id="search-clear-btn"><i class="fas fa-times"></i></button>
+                            </form>
+                        </div>
+                        
+                        <!-- Donate Button -->
+                        <a href="{{ route('welfare.donate') }}" class="btn-donate-rounded">Donate Now!</a>
+                        
+                        <!-- Search Toggle Icon -->
+                        <button class="search-icon-btn" id="search-icon-btn" title="Search">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        
+                        <!-- Mobile menu toggle -->
+                        <button class="mobile-menu-toggle" id="mobile-toggle" style="background: none; border: none; font-size: 22px; cursor: pointer; color: var(--color-heading);">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Row (Nav Menu) -->
+        <div class="header-bottom-row">
+            <div class="container">
+                <nav class="main-nav" id="main-nav">
+                    <ul class="nav-menu">
+                        @foreach(config('welfare.nav', []) as $item)
+                            <li class="nav-item @if(request()->routeIs($item['route']) || (request()->is('/') && $item['route'] == 'welfare.home')) active @endif">
+                                <a href="{{ route($item['route']) }}">{{ $item['label'] }}</a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main id="main-content">
+        @yield('content')
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-bottom" style="padding: 25px 0; border-top: 1px solid rgba(255,255,255,0.08); font-size: 13.5px; color: rgba(255,255,255,0.7);">
+            <div class="container">
+                <div class="footer-content-inline" style="display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; line-height: 1.6;">
+                    <div class="footer-left" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                        <span>&copy; 2026 Pertubuhan Gabungan MUKMIN Nasional (PPM-019-10-15042026)</span>
+                        <span style="color: rgba(255,255,255,0.25);">|</span>
+                        <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">Integrity</a>
+                        <span style="color: rgba(255,255,255,0.25);">|</span>
+                        <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">Legal Disclaimer</a>
+                    </div>
+                    <div class="footer-right" style="display: flex; align-items: center; gap: 18px;">
+                        <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ asset('js/welfare.js') }}"></script>
+    @stack('scripts')
+</body>
+</html>

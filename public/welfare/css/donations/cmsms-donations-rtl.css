@@ -1,0 +1,194 @@
+/**
+ * @package 	WordPress
+ * @subpackage 	Welfare
+ * @version		1.0.4
+ * 
+ * CMSMS Donations RTL Rules
+ * Created by CMSMasters
+ * 
+ */
+
+
+.header_top_donation_but {
+	margin:0 20px 0 0;
+}
+
+.header_donation_but_wrap {
+	float: left;
+	margin-left: 0;
+	margin-right: 20px;
+}
+
+.cmsms_campaign_donated .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap {
+	padding-left: 40px;
+	padding-right: 0;
+}
+
+.cmsms_campaign_donated .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat .cmsms_stat_inner .cmsms_stat_counter_wrap {
+	right: auto;
+	left: -40px;
+}
+
+.cmsms_featured_campaign .campaign .cmsms_campaign_wrap_img {
+	float: right;
+}
+
+.cmsms_featured_campaign .campaign .cmsms_campaign_donated_percent {
+	padding-left: 40px;
+	padding-right: 0;
+	float: left;
+}
+
+.cmsms_featured_campaign .campaign .cmsms_campaign_cont {
+	padding-left: 50px;
+	padding-right: 0;
+}
+
+.cmsms_featured_campaign .campaign .cmsms_campaign_wrap_heading {
+	padding-left: 0;
+	padding-right: 40px;
+	border-left-width: 0;
+	border-right-width: 4px;
+	border-right-style: solid;
+}
+
+.cmsms_featured_campaign .campaign .cmsms_campaign_content {
+	padding-left: 0;
+	padding-right: 44px;
+}
+
+.cmsms_featured_campaign .campaign .cmsms_campaign_donate_button {
+	padding-left: 0;
+	padding-right: 44px;
+}
+
+.cmsms_campaigns .campaign .cmsms_img_wrap .preloader:before {
+	left: 0;
+	right: 0;
+}
+
+.cmsms_campaigns .campaign .cmsms_img_wrap .preloader:after {
+	left: auto;
+	right: 0;
+}
+
+.cmsms_campaigns .campaign .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat_title_wrap .cmsms_stat_counter_wrap {
+	float: left;
+}
+
+.opened-article > .campaign .campaign_meta_wrap > div {
+	border-right-width: 2px;
+	border-right-style: solid;
+}
+
+.opened-article > .campaign .campaign_meta_wrap > div:first-child {
+	border-right-width: 0;
+	border-right-style: solid;
+}
+
+.opened-article > .campaign .campaign_meta_wrap .cmsms_campaign_donate_button > div {
+	text-align: center;
+}
+
+.opened-article > .campaign .cmsms_campaign_cont_info > span {
+	margin-right: 0;
+	margin-left: 25px;
+}
+
+.opened-article > .campaign .cmsms_campaign_meta_info {
+	float: left;
+}
+
+.opened-article > .campaign .cmsms_campaign_meta_info > a {
+	margin-left: 0;
+	margin-right: 10px;
+}
+
+.opened-article > .campaign .cmsms_campaign_meta_info > a:first-child {
+	margin-right: 0;
+}
+
+.related_posts_tabs_campaign .one_half .rel_post_content .related_posts_campaign_wrap .cmsms_campaign_donated .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap {
+	padding-left: 35px;
+	padding-right: 0;
+}
+
+.related_posts_tabs_campaign .one_half .rel_post_content .related_posts_campaign_wrap .cmsms_campaign_donated .cmsms_stats.stats_mode_bars.stats_type_horizontal .cmsms_stat_wrap .cmsms_stat .cmsms_stat_inner .cmsms_stat_counter_wrap {
+	right: auto;
+	left: -35px;
+}
+
+.cmsms_donations .donation .cmsms_donation_amount_title {
+	padding-left: 5px;
+	padding-right: 0;
+}
+
+.cmsms_donations .donation .cmsms_donation_amount_currency {
+	padding-left: 0;
+	padding-right: 5px;
+	text-align: left;
+}
+
+.donations.opened-article > .donation .cmsms_donation_info_img {
+	padding-left: 90px;
+	padding-right: 0;
+}
+
+.donations.opened-article > .donation .cmsms_donation_details_item_title {
+	padding-left: 15px;
+	padding-right: 0;
+	text-align: right;
+}
+
+.donations.opened-article > .donation .cmsms_donation_details_item_value {
+	padding-left: 0;
+	padding-right: 15px;
+	text-align: left;
+}
+
+.donation_confirm .donation_confirm_info_title {
+	padding-left: 10px;
+	padding-right: 25px;
+}
+
+.donation_confirm .donation_confirm_info_value {
+	padding-left: 10px;
+	padding-right: 25px;
+}
+
+
+/*-------------------------------------------------------------------------*/
+/*	Tablet Monitor
+/*-------------------------------------------------------------------------*/
+@media only screen and (max-width: 1024px) {
+	#page .donations.opened-article > .donation .cmsms_donation_info {
+		text-align: center;
+	}
+}
+
+
+/*-------------------------------------------------------------------------*/
+/*	Small Tablet Monitor
+/*-------------------------------------------------------------------------*/
+@media only screen and (max-width: 767px) {
+	#page .header_donation_but_wrap {
+		float: none;
+	}
+	
+	#page .cmsms_featured_campaign .campaign {
+		text-align: center;
+	}
+
+	#page .cmsms_featured_campaign .campaign .cmsms_campaign_wrap_img {
+		float: none;
+	}
+
+	#page .cmsms_featured_campaign .campaign .cmsms_campaign_donated_percent {
+		float: none;
+	}
+
+	#page .cmsms_featured_campaign .campaign .cmsms_campaign_cont {
+		float: none;
+	}
+}
+

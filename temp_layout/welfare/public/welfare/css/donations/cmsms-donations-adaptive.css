@@ -1,0 +1,144 @@
+/**
+ * @package 	WordPress
+ * @subpackage 	Welfare
+ * @version		1.2.0
+ * 
+ * Responsive CMSMS Donations CSS Rules
+ * Created by CMSMasters
+ * 
+ */
+@media only screen {
+  /*-------------------------------------------------------------------------*/
+  /*	1.	Large Monitor
+/*-------------------------------------------------------------------------*/
+  /*-------------------------------------------------------------------------*/
+  /*	2.	Tablet Monitor
+/*-------------------------------------------------------------------------*/
+  /*-------------------------------------------------------------------------*/
+  /*	Tablet Monitor 950
+/*-------------------------------------------------------------------------*/
+  /*-------------------------------------------------------------------------*/
+  /*	3.	Small Tablet Monitor
+/*-------------------------------------------------------------------------*/
+  /*-------------------------------------------------------------------------*/
+  /*	Tablet Monitor 600
+/*-------------------------------------------------------------------------*/
+  /*-------------------------------------------------------------------------*/
+  /*	4.	Phone Monitor
+/*-------------------------------------------------------------------------*/
+  /*-------------------------------------------------------------------------*/
+  /*	5.	Small Phone Monitor
+/*-------------------------------------------------------------------------*/
+}
+@media only screen and (min-width: 1440px) {
+  .donations {
+    outline: none;
+  }
+}
+@media only screen and (min-width: 1025px) {
+  .donations {
+    outline: none;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  #page .donations.opened-article > .donation .cmsms_donation_info {
+    text-align: center;
+  }
+  #page .donations.opened-article > .donation .cmsms_donation_info_img {
+    width: 40%;
+    padding: 0 0 30px;
+  }
+  #page .donations.opened-article > .donation .cmsms_donation_info_cont {
+    display: block;
+    width: 100%;
+  }
+  #page .header_top_donation_but {
+    margin: 10px 0 0;
+    padding: 5px 20px;
+  }
+}
+@media only screen and (max-width: 950px) {
+  .donations {
+    outline: none;
+  }
+}
+@media only screen and (max-width: 768px) {
+  #page .header_donation_but_wrap {
+    width: 100%;
+    float: none;
+    margin: 0;
+    padding: 15px 5% 0;
+    clear: both;
+  }
+  #page .header_donation_but_wrap .header_donation_but_wrap_inner {
+    display: block;
+    height: auto !important;
+    width: 100%;
+  }
+  #page .header_donation_but_wrap .header_donation_but_wrap_inner .header_donation_but {
+    display: block;
+    text-align: center;
+  }
+  #page .donations.opened-article > .donation .cmsms_donation_info_img {
+    width: 60%;
+  }
+  #page .cmsms_featured_campaign .campaign {
+    text-align: center;
+  }
+  #page .cmsms_featured_campaign .campaign .cmsms_campaign_wrap_img {
+    display: inline-block;
+    float: none;
+    width: 50%;
+    vertical-align: middle;
+  }
+  #page .cmsms_featured_campaign .campaign .cmsms_campaign_donated_percent {
+    display: inline-block;
+    float: none;
+    width: 50%;
+    vertical-align: middle;
+    padding: 30px 0;
+  }
+  #page .cmsms_featured_campaign .campaign .cmsms_campaign_cont {
+    float: none;
+    width: 100%;
+    clear: both;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .donations {
+    outline: none;
+  }
+}
+@media only screen and (max-width: 540px) {
+  #page .opened-article > .campaign .campaign_meta_wrap {
+    display: block;
+  }
+  #page .opened-article > .campaign .campaign_meta_wrap > div {
+    display: block;
+    width: 100%;
+    border-left-width: 0;
+    border-left-style: solid;
+    border-top-width: 2px;
+    border-top-style: solid;
+  }
+  #page .donations.opened-article > .donation .cmsms_donation_info {
+    padding: 30px;
+  }
+  #page .cmsms_featured_campaign .campaign {
+    text-align: center;
+  }
+  #page .cmsms_featured_campaign .campaign .cmsms_campaign_wrap_img {
+    display: block;
+    width: 100%;
+  }
+  #page .cmsms_featured_campaign .campaign .cmsms_campaign_donated_percent {
+    display: block;
+    width: 100%;
+    padding-bottom: 5px;
+  }
+}
+@media only screen and (max-width: 320px) {
+  .donations {
+    outline: none;
+  }
+}
