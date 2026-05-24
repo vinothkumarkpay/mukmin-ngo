@@ -69,15 +69,15 @@
                         <p style="font-size: 16px; margin-bottom: 30px;">MUKMIN operates through three complementary engines strengthen collaboration, align stakeholders, and drive meaningful community impact at scale.</p>
                         
                         <div style="margin-bottom: 20px;">
-                            <h3 style="margin-bottom: 5px; color: #008751;">FIKRAH (Strategic Think Tank)</h3>
+                            <h3 style="margin-bottom: 5px; color: #d43c18;">FIKRAH (Strategic Think Tank)</h3>
                             <p>Driving policy, research and long-term strategy to shape stronger communities and future-ready institutions.</p>
                         </div>
                         <div style="margin-bottom: 20px;">
-                            <h3 style="margin-bottom: 5px; color: #008751;">Pertubuhan Gabungan MUKMIN Nasional (National Coordination Platform)</h3>
+                            <h3 style="margin-bottom: 5px; color: #d43c18;">Pertubuhan Gabungan MUKMIN Nasional (National Coordination Platform)</h3>
                             <p>Uniting organisations, aligning stakeholders and coordinating collective action for nationwide impact.</p>
                         </div>
                         <div style="margin-bottom: 40px;">
-                            <h3 style="margin-bottom: 5px; color: #008751;">Yayasan MUKMIN (Community Impact Foundation)</h3>
+                            <h3 style="margin-bottom: 5px; color: #d43c18;">Yayasan MUKMIN (Community Impact Foundation)</h3>
                             <p>Transforming ideas into measurable outcomes through education, outreach and community-driven initiatives.</p>
                         </div>
                         <a href="{{ route('welfare.ecosystem') }}" class="cmsms_button"><span>Find out more</span></a>

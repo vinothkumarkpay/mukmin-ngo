@@ -71,7 +71,7 @@
 
                 <div class="logo_wrap">
                     <a href="{{ route('welfare.home') }}" title="{{ config('welfare.name') }}" class="logo" style="display: flex; align-items: center; height: 100%; text-decoration: none;">
-                        <span style="font-size: 42px; font-weight: 800; color: #008751; text-transform: lowercase; font-family: 'Roboto', sans-serif;">mukmin</span>
+                        <span style="font-size: 42px; font-weight: 800; color: #d43c18; text-transform: lowercase; font-family: 'Roboto', sans-serif;">mukmin</span>
                     </a>
                 </div>
             </div>

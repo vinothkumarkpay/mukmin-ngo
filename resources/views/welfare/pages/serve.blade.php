@@ -672,7 +672,7 @@
                             <li>Participation in programmes, platforms, and ecosystem initiatives</li>
                             <li>Opportunity to nominate organisational representatives subject to constitutional provisions and approvals</li>
                         </ul>
-                        <a href="{{ route('welfare.contact') }}?interest=ordinary-member" class="card-btn">Be a MUKMIN Member</a>
+                        <a href="{{ route('welfare.membership.ordinary') }}" class="card-btn">Be a MUKMIN Member</a>
                     </div>
                     <div class="vtab-panel" id="vtab-friends" role="tabpanel" aria-labelledby="vtab-btn-friends" hidden>
                         <h3>Community &amp; Supporter Network</h3>
@@ -688,7 +688,7 @@
                         <div class="membership-note">
                             <strong>Important Note:</strong> Friends of MUKMIN do not possess voting rights and are not eligible to hold positions within the Executive Committee of the organisation.
                         </div>
-                        <a href="{{ route('welfare.contact') }}?interest=friends-of-mukmin" class="card-btn">Be Friends of MUKMIN</a>
+                        <a href="{{ route('welfare.membership.friends') }}" class="card-btn">Be Friends of MUKMIN</a>
                     </div>
                 </div>
             </div>
@@ -744,28 +744,28 @@
                     <p class="engage-time">Have a Moment?</p>
                     <h3>Share Your Ideas</h3>
                     <p>Contribute perspectives, proposals and solutions that can shape meaningful community impact.</p>
-                    <a href="{{ route('welfare.contact') }}?interest=share-ideas" class="card-btn-outline">Listen To Me</a>
+                    <a href="{{ route('welfare.feedback') }}" class="card-btn-outline">Listen To Me</a>
                 </article>
                 <article class="engage-card">
                     <div class="engage-icon"><i class="fas fa-hands-helping" aria-hidden="true"></i></div>
                     <p class="engage-time">Have a Few Hours?</p>
                     <h3>Let's Volunteer</h3>
                     <p>Support impactful initiatives, develop meaningful experiences and contribute directly to community-driven programmes.</p>
-                    <a href="{{ route('welfare.contact') }}?interest=volunteer" class="card-btn-outline">Volunteer Now</a>
+                    <a href="{{ route('welfare.volunteer') }}" class="card-btn-outline">Volunteer Now</a>
                 </article>
                 <article class="engage-card">
                     <div class="engage-icon"><i class="fas fa-user-graduate" aria-hidden="true"></i></div>
                     <p class="engage-time">Ready to Guide Others?</p>
                     <h3>Be A Mentor</h3>
                     <p>Empower future leaders through mentorship, professional guidance and shared experience.</p>
-                    <a href="{{ route('welfare.contact') }}?interest=mentor" class="card-btn-outline">Contribute Now</a>
+                    <a href="{{ route('welfare.mentor') }}" class="card-btn-outline">Contribute Now</a>
                 </article>
                 <article class="engage-card">
                     <div class="engage-icon"><i class="fas fa-handshake" aria-hidden="true"></i></div>
                     <p class="engage-time">Looking to Create Greater Impact?</p>
                     <h3>Partner With Us</h3>
                     <p>Collaborate with MUKMIN through strategic partnerships, initiatives and long-term community development efforts.</p>
-                    <a href="{{ route('welfare.contact') }}?interest=partner" class="card-btn-outline">Partner Now</a>
+                    <a href="{{ route('welfare.partner') }}" class="card-btn-outline">Partner Now</a>
                 </article>
             </div>
         </div>
