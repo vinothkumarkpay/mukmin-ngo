@@ -23,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 Route::name('welfare.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/about', [PageController::class, 'about'])->name('about');
+    Route::get('/about/who-we-are', [PageController::class, 'whoWeAre'])->name('about.who-we-are');
+    Route::get('/about/president-note', [PageController::class, 'presidentNote'])->name('about.president-note');
+    Route::get('/about/leadership', [PageController::class, 'leadership'])->name('about.leadership');
     Route::get('/contact', [PageController::class, 'contact'])->name('contact');
     Route::get('/donate', [PageController::class, 'donate'])->name('donate');
     
