@@ -31,7 +31,10 @@
 
 /* --- RESET & BASE --- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
 body {
     font-family: var(--font-main);
     font-size: 13px;
@@ -39,6 +42,10 @@ body {
     font-weight: 400;
     color: var(--color-text);
     background-color: var(--color-bg);
+    overflow-x: hidden;
+}
+body.mobile-nav-active {
+    overflow: hidden;
 }
 a { color: var(--color-primary); text-decoration: none; transition: color var(--transition); }
 a:hover { color: #c0c0c0; }
@@ -384,6 +391,25 @@ h6 { font-size: 13px; line-height: 20px; }
     font-size: 22px;
     color: var(--color-heading);
     cursor: pointer;
+    padding: 8px;
+    line-height: 1;
+    flex-shrink: 0;
+    z-index: 1002;
+}
+
+/* Mobile nav backdrop (shown via .site-header.mobile-nav-open) */
+.mobile-nav-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1000;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+.site-header.mobile-nav-open .mobile-nav-backdrop {
+    display: block;
 }
 
 /* --- HERO SLIDER --- */
@@ -730,7 +756,15 @@ section { padding: 60px 0; }
 .testimonial-dots .dot.active { background: var(--color-primary); }
 
 /* --- BLOG --- */
-.blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+/* News & Activities on home — override inline grids; stack on smaller screens */
+.section-blog .blog-grid.news-activities-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
 .blog-card {
     background: var(--color-white);
     border: 1px solid var(--color-border);
@@ -868,36 +902,72 @@ section { padding: 60px 0; }
 @media (max-width: 768px) {
     .top-bar { display: none; }
     .header-top-inner { height: 70px; }
-    .header-bottom-row { display: none; }
-    .main-nav { display: none; }
-    .main-nav.open {
-        display: block;
-        position: absolute;
+    /* Keep bottom row in DOM so nav can open; collapse when menu is closed */
+    .header-bottom-row {
+        border: none;
+        background: transparent;
+        height: 0;
+        overflow: visible;
+    }
+    .header-bottom-row .container {
+        padding: 0;
+    }
+    .main-nav {
+        display: none;
+        position: fixed;
         top: 70px;
         left: 0;
         right: 0;
+        bottom: 0;
         background: var(--color-white);
         box-shadow: var(--shadow);
-        z-index: 999;
-        padding: 10px 0;
+        z-index: 1001;
+        padding: 8px 0 24px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .main-nav.open {
+        display: block;
     }
     .nav-menu { flex-direction: column; align-items: stretch; }
-    .nav-item > a { height: auto; line-height: 1; padding: 12px 20px; border-bottom: 1px solid var(--color-border); }
+    .nav-item > a {
+        height: auto;
+        line-height: 1.4;
+        padding: 14px 20px;
+        min-height: 48px;
+        border-bottom: 1px solid var(--color-border);
+    }
+    .nav-item.active > a::before { display: none; }
+    .nav-item.active > a {
+        background: rgba(212, 60, 24, 0.06);
+        border-left: 3px solid var(--color-primary);
+        padding-left: 17px;
+    }
     .dropdown-menu { position: static; box-shadow: none; border-top: none; background: var(--color-bg); }
-    .mobile-menu-toggle { display: block; }
+    .mobile-menu-toggle { display: flex; align-items: center; justify-content: center; }
     .btn-donate-rounded { display: none; }
-    .search-box-inline { width: 180px; }
+    .search-box-inline { width: min(180px, 42vw); }
+    .header-top-actions { gap: 10px; }
+    .site-logo img { height: 40px !important; }
 
     .slide-text h1 { font-size: 28px; line-height: 36px; }
     .welcome-grid { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
     .campaigns-grid { grid-template-columns: 1fr; }
     .team-grid { grid-template-columns: repeat(2, 1fr); }
-    .blog-grid { grid-template-columns: 1fr; }
+    .blog-grid,
+    .section-blog .blog-grid.news-activities-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        max-width: 520px;
+        margin-left: auto;
+        margin-right: auto;
+    }
     .partners-grid { grid-template-columns: repeat(2, 1fr); }
     .footer-grid { grid-template-columns: 1fr; }
     .donate-cta-inner { flex-direction: column; }
     .footer-bottom-inner { flex-direction: column; gap: 10px; text-align: center; }
+    #main-content { min-width: 0; }
 }
 
 @media (max-width: 480px) {

@@ -651,6 +651,28 @@
         grid-template-columns: 1fr !important;
     }
 }
+
+/* News & Activities — single column on mobile/tablet */
+.section-blog .news-activities-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+@media (max-width: 991px) {
+    .section-blog .news-activities-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        max-width: 520px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .section-blog .news-activities-grid .blog-card {
+        width: 100%;
+    }
+    .section-blog .news-activities-grid .blog-img {
+        height: 200px !important;
+    }
+}
 </style>
 
     <!-- HERO SLIDER SECTION -->
@@ -1281,7 +1303,7 @@
                 <p class="section-subtitle">Stay updated with the latest events and highlights from Pertubuhan Gabungan MUKMIN Nasional.</p>
             </div>
             
-            <div class="blog-grid" style="grid-template-columns: repeat(3, 1fr); gap: 30px;">
+            <div class="blog-grid news-activities-grid">
                 @php
                 $activities = [
                     [

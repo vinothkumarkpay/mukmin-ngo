@@ -60,12 +60,51 @@
     /* ---- MOBILE MENU ---- */
     var mobileToggle = document.getElementById('mobile-toggle');
     var mainNav      = document.getElementById('main-nav');
+    var siteHeader   = document.getElementById('site-header');
+    var mobileBackdrop = document.getElementById('mobile-nav-backdrop');
+
+    function setMobileNavOpen(isOpen) {
+        if (!mainNav || !mobileToggle) return;
+        mainNav.classList.toggle('open', isOpen);
+        if (siteHeader) siteHeader.classList.toggle('mobile-nav-open', isOpen);
+        document.body.classList.toggle('mobile-nav-active', isOpen);
+        mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        mobileToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+        if (mobileBackdrop) mobileBackdrop.hidden = !isOpen;
+        var icon = mobileToggle.querySelector('i');
+        if (icon) {
+            icon.classList.toggle('fa-bars', !isOpen);
+            icon.classList.toggle('fa-times', isOpen);
+        }
+    }
+
     if (mobileToggle && mainNav) {
         mobileToggle.addEventListener('click', function () {
-            mainNav.classList.toggle('open');
-            var icon = mobileToggle.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
+            setMobileNavOpen(!mainNav.classList.contains('open'));
+        });
+
+        if (mobileBackdrop) {
+            mobileBackdrop.addEventListener('click', function () {
+                setMobileNavOpen(false);
+            });
+        }
+
+        mainNav.querySelectorAll('a[href]').forEach(function (link) {
+            link.addEventListener('click', function () {
+                setMobileNavOpen(false);
+            });
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && mainNav.classList.contains('open')) {
+                setMobileNavOpen(false);
+            }
+        });
+
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 768 && mainNav.classList.contains('open')) {
+                setMobileNavOpen(false);
+            }
         });
     }
 
@@ -145,7 +184,14 @@
     /* ---- SMOOTH SCROLL for anchor links ---- */
     document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
         anchor.addEventListener('click', function (e) {
-            var target = document.querySelector(this.getAttribute('href'));
+            var href = this.getAttribute('href');
+            if (!href || href === '#') return;
+            var target;
+            try {
+                target = document.querySelector(href);
+            } catch (err) {
+                return;
+            }
             if (target) {
                 e.preventDefault();
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });

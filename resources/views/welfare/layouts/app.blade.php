@@ -77,8 +77,8 @@
                         </button>
                         
                         <!-- Mobile menu toggle -->
-                        <button class="mobile-menu-toggle" id="mobile-toggle" style="background: none; border: none; font-size: 22px; cursor: pointer; color: var(--color-heading);">
-                            <i class="fas fa-bars"></i>
+                        <button type="button" class="mobile-menu-toggle" id="mobile-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
+                            <i class="fas fa-bars" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>
@@ -99,6 +99,8 @@
                 </nav>
             </div>
         </div>
+
+        <button type="button" class="mobile-nav-backdrop" id="mobile-nav-backdrop" aria-label="Close menu" hidden></button>
     </header>
 
     <!-- MAIN CONTENT -->
