@@ -91,8 +91,28 @@
                 <nav class="main-nav" id="main-nav">
                     <ul class="nav-menu">
                         @foreach(config('welfare.nav', []) as $item)
-                            <li class="nav-item @if(request()->routeIs($item['route']) || (request()->is('/') && $item['route'] == 'welfare.home')) active @endif">
-                                <a href="{{ route($item['route']) }}">{{ $item['label'] }}</a>
+                            @php
+                                $hasDropdown = isset($item['children']) && count($item['children']) > 0;
+                                $isActive = request()->routeIs($item['route']) || 
+                                            (request()->is('/') && $item['route'] == 'welfare.home') ||
+                                            ($hasDropdown && collect($item['children'])->contains(function($child) {
+                                                return request()->routeIs($child['route']);
+                                            }));
+                            @endphp
+                            <li class="nav-item {{ $hasDropdown ? 'has-dropdown' : '' }} {{ $isActive ? 'active' : '' }}">
+                                <a href="{{ $hasDropdown ? '#' : route($item['route']) }}">
+                                    {{ $item['label'] }}
+                                    @if($hasDropdown) <i class="fas fa-chevron-down" style="font-size: 10px; margin-left: 5px;"></i> @endif
+                                </a>
+                                @if($hasDropdown)
+                                    <ul class="dropdown-menu">
+                                        @foreach($item['children'] as $child)
+                                            <li class="@if(request()->routeIs($child['route'])) active @endif">
+                                                <a href="{{ route($child['route']) }}">{{ $child['label'] }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </li>
                         @endforeach
                     </ul>

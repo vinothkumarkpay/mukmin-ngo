@@ -90,7 +90,13 @@
         }
 
         mainNav.querySelectorAll('a[href]').forEach(function (link) {
-            link.addEventListener('click', function () {
+            link.addEventListener('click', function (e) {
+                var href = this.getAttribute('href');
+                if (window.innerWidth <= 768 && (href === '#' || this.parentElement.classList.contains('has-dropdown'))) {
+                    e.preventDefault();
+                    this.parentElement.classList.toggle('open');
+                    return;
+                }
                 setMobileNavOpen(false);
             });
         });

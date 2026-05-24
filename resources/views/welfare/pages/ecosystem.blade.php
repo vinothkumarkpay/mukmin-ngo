@@ -409,7 +409,7 @@
                         <p>Its role ensures that initiatives move beyond planning into meaningful and sustainable impact on the ground.</p>
                         <div class="card-footer-wrap">
                             <a href="{{ route('welfare.impact') }}" class="card-btn-outline">
-                                Explore Our Impact Areas <i class="fas fa-arrow-right" style="font-size: 11px;"></i>
+                                Explore Our Impact <i class="fas fa-arrow-right" style="font-size: 11px;"></i>
                             </a>
                         </div>
                     </div>

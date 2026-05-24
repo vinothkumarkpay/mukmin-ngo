@@ -41,7 +41,15 @@ return [
 
     'nav' => [
         ['label' => 'Home', 'route' => 'welfare.home'],
-        ['label' => 'About Us', 'route' => 'welfare.about'],
+        [
+            'label' => 'About Us',
+            'route' => 'welfare.about',
+            'children' => [
+                ['label' => 'Who We Are', 'route' => 'welfare.about.who-we-are'],
+                ['label' => "President's Note", 'route' => 'welfare.about.president-note'],
+                ['label' => 'Leadership & Governance', 'route' => 'welfare.about.leadership'],
+            ]
+        ],
         ['label' => 'Our Ecosystem', 'route' => 'welfare.ecosystem'],
         ['label' => 'Serve Together', 'route' => 'welfare.serve'],
         ['label' => 'Impact Areas', 'route' => 'welfare.impact'],

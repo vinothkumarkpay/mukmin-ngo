@@ -357,7 +357,8 @@ h6 { font-size: 13px; line-height: 20px; }
 }
 
 /* Dropdown */
-.nav-item.has-dropdown:hover .dropdown-menu { display: block; }
+.nav-item.has-dropdown:hover .dropdown-menu,
+.nav-item.has-dropdown.open .dropdown-menu { display: block; }
 .dropdown-menu {
     display: none;
     position: absolute;
