@@ -1156,7 +1156,7 @@
                     <p>Supporting strategic and community-driven initiatives that address evolving challenges and areas requiring immediate impact.</p>
                     <!-- Progress Bar and Link -->
                     <div style="margin-top: auto;">
-                        <a href="{{ route('welfare.contact') }}" class="read-more-btn">Find out more</a>
+                        <a href="{{ route('welfare.contact') }}" class="read-more-btn">Talk To Us</a>
                         <div class="aid-card-progress" style="margin-top: 20px; margin-bottom: 0;">
                             <div class="aid-card-progress-label">
                                 <span>Aid Target Reached</span>
