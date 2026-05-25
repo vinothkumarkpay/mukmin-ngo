@@ -146,8 +146,6 @@
                         <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">Integrity</a>
                         <span style="color: rgba(255,255,255,0.25);">|</span>
                         <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">Legal Disclaimer</a>
-                        <span style="color: rgba(255,255,255,0.25);">|</span>
-                        <a href="{{ route('welfare.admin.login') }}" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">Admin Portal</a>
                     </div>
                     <div class="footer-right" style="display: flex; align-items: center; gap: 18px;">
                         <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="Facebook"><i class="fab fa-facebook-f"></i></a>
