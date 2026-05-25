@@ -479,6 +479,82 @@
     line-height: 22px;
     color: #444;
 }
+.adopt-media-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.adopt-stats-card {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.adopt-stats-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+.progress-circle-wrap {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+}
+.progress-circle {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+.progress-circle-bg {
+    stroke: #f2f2f2;
+}
+.progress-circle-bar {
+    stroke: var(--color-primary);
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.progress-circle-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.progress-percent {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--color-heading);
+    line-height: 1.1;
+}
+.progress-label {
+    font-size: 9px;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+}
+.stats-details h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-heading);
+    margin: 0 0 5px 0;
+}
+.stats-details p {
+    font-size: 13px;
+    line-height: 18px;
+    color: #666666;
+    margin: 0;
+}
 
 /* Key Engagements Layout */
 .engagements-grid {
@@ -1063,8 +1139,27 @@
                     
                     <a href="{{ route('welfare.contact') }}" class="btn btn-primary" style="margin-top: 15px;">Partner with Us</a>
                 </div>
-                <div>
-                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800" alt="Graduation Career Pathways" style="border-radius: 6px; box-shadow: var(--shadow); width: 100%;">
+                <div class="adopt-media-col">
+                    <div class="adopt-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800" alt="Graduation Career Pathways" style="border-radius: 6px; box-shadow: var(--shadow); width: 100%;">
+                    </div>
+                    <!-- Progress Card -->
+                    <div class="adopt-stats-card" id="adopt-stats-card">
+                        <div class="progress-circle-wrap">
+                            <svg class="progress-circle" viewBox="0 0 100 100">
+                                <circle class="progress-circle-bg" cx="50" cy="50" r="42" fill="none" stroke-width="8"></circle>
+                                <circle class="progress-circle-bar" id="adopt-progress-bar" cx="50" cy="50" r="42" fill="none" stroke-width="8" stroke-dasharray="263.89" stroke-dashoffset="263.89"></circle>
+                            </svg>
+                            <div class="progress-circle-text">
+                                <span class="progress-percent" id="adopt-progress-percent">0%</span>
+                                <span class="progress-label">Placed</span>
+                            </div>
+                        </div>
+                        <div class="stats-details">
+                            <h4>Employment Success Rate</h4>
+                            <p>85% of our graduate cohort have successfully transitioned into high-value corporate roles.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1450,6 +1545,42 @@ document.addEventListener('DOMContentLoaded', function() {
             closeSubtabModal();
         }
     });
+
+    // Progress Circle Animation for Adopt A Graduate
+    const statsCard = document.getElementById('adopt-stats-card');
+    const progressBar = document.getElementById('adopt-progress-bar');
+    const progressPercent = document.getElementById('adopt-progress-percent');
+    
+    if (statsCard && progressBar && progressPercent) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Trigger SVG bar animation
+                    // Circumference is 2 * pi * 42 = 263.89
+                    // 85% progress => dashoffset = 263.89 * (1 - 0.85) = 39.58
+                    progressBar.style.strokeDashoffset = '39.58';
+                    
+                    // Count-up percentage animation
+                    let count = 0;
+                    const target = 85;
+                    const duration = 1800; // 1.8 seconds (matches CSS transition)
+                    const stepTime = Math.abs(Math.floor(duration / target));
+                    
+                    const timer = setInterval(() => {
+                        count++;
+                        progressPercent.textContent = count + '%';
+                        if (count >= target) {
+                            clearInterval(timer);
+                        }
+                    }, stepTime);
+                    
+                    observer.unobserve(statsCard); // Run once
+                }
+            });
+        }, { threshold: 0.2 });
+        
+        observer.observe(statsCard);
+    }
 });
 </script>
 @endpush
