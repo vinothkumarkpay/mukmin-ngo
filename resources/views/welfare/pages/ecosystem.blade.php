@@ -97,6 +97,12 @@
     flex-direction: column;
     height: 100%;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    scroll-margin-top: 160px;
+}
+@media (max-width: 768px) {
+    .custom-card {
+        scroll-margin-top: 90px;
+    }
 }
 .custom-card:hover {
     transform: translateY(-6px);
@@ -336,7 +342,7 @@
             <div class="cards-grid">
                 
                 <!-- Card 1: FIKRAH -->
-                <div class="custom-card">
+                <div class="custom-card" id="fikrah">
                     <div class="card-logo-header">
                         <span class="card-badge fikrah-badge">Shape</span>
                         <div class="brand-mark-logo fikrah-logo">
@@ -364,7 +370,7 @@
                 </div>
 
                 <!-- Card 2: MUKMIN -->
-                <div class="custom-card">
+                <div class="custom-card" id="gabungan">
                     <div class="card-logo-header">
                         <span class="card-badge mukmin-badge">Connect</span>
                         <div class="brand-mark-logo mukmin-logo-container">
@@ -388,7 +394,7 @@
                 </div>
 
                 <!-- Card 3: Yayasan MUKMIN -->
-                <div class="custom-card">
+                <div class="custom-card" id="yayasan">
                     <div class="card-logo-header">
                         <span class="card-badge yayasan-badge">Deliver</span>
                         <div class="brand-mark-logo yayasan-logo">

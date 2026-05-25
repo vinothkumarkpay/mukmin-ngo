@@ -50,11 +50,56 @@ return [
                 ['label' => 'Leadership & Governance', 'route' => 'welfare.about.leadership'],
             ]
         ],
-        ['label' => 'Our Ecosystem', 'route' => 'welfare.ecosystem'],
-        ['label' => 'Serve Together', 'route' => 'welfare.serve'],
-        ['label' => 'Impact Areas', 'route' => 'welfare.impact'],
-        ['label' => 'News & Gallery', 'route' => 'welfare.news'],
-        ['label' => 'Changing Lives', 'route' => 'welfare.changing'],
+        [
+            'label' => 'Our Ecosystem',
+            'route' => 'welfare.ecosystem',
+            'children' => [
+                ['label' => 'FIKRAH', 'route' => 'welfare.ecosystem', 'hash' => 'fikrah'],
+                ['label' => 'Gabungan MUKMIN Nasional', 'route' => 'welfare.ecosystem', 'hash' => 'gabungan'],
+                ['label' => 'Yayasan MUKMIN', 'route' => 'welfare.ecosystem', 'hash' => 'yayasan'],
+            ]
+        ],
+        [
+            'label' => 'Serve Together',
+            'route' => 'welfare.serve',
+            'children' => [
+                ['label' => 'Be Affiliate Member', 'route' => 'welfare.serve', 'hash' => 'affiliate'],
+                ['label' => 'Be Friends of MUKMIN', 'route' => 'welfare.serve', 'hash' => 'friends'],
+                ['label' => 'Let’s Volunteer', 'route' => 'welfare.serve', 'hash' => 'volunteer'],
+                ['label' => 'Be A Mentor', 'route' => 'welfare.serve', 'hash' => 'mentor'],
+                ['label' => 'Partner with Us', 'route' => 'welfare.serve', 'hash' => 'partner'],
+                ['label' => 'Share Your Ideas', 'route' => 'welfare.serve', 'hash' => 'ideas'],
+            ]
+        ],
+        [
+            'label' => 'Impact Areas',
+            'route' => 'welfare.impact',
+            'children' => [
+                ['label' => 'Socio-economic Mobility', 'route' => 'welfare.impact', 'hash' => 'socio-economic'],
+                ['label' => 'Education & Future Readiness - Feature MFLS', 'route' => 'welfare.impact', 'hash' => 'education'],
+                ['label' => 'Leadership & Capacity Building - Feature SIRAT Series', 'route' => 'welfare.impact', 'hash' => 'leadership'],
+                ['label' => 'Entrepreneurship & Innovation', 'route' => 'welfare.impact', 'hash' => 'entrepreneurship'],
+                ['label' => 'Faith, Identity & Ukhwah', 'route' => 'welfare.impact', 'hash' => 'faith'],
+            ]
+        ],
+        [
+            'label' => 'News & Gallery',
+            'route' => 'welfare.news',
+            'children' => [
+                ['label' => 'Impact Insights', 'route' => 'welfare.news', 'hash' => 'insights'],
+                ['label' => 'Moments of MUKMIN', 'route' => 'welfare.news', 'hash' => 'moments'],
+            ]
+        ],
+        [
+            'label' => 'Changing Lives',
+            'route' => 'welfare.changing',
+            'children' => [
+                ['label' => 'Philanthropic Funds', 'route' => 'welfare.changing', 'hash' => 'funds'],
+                ['label' => 'Faith & Giving', 'route' => 'welfare.changing', 'hash' => 'giving'],
+                ['label' => 'Ecosystem Building Initiatives', 'route' => 'welfare.changing', 'hash' => 'ecosystem'],
+                ['label' => 'ImpactCollab', 'route' => 'welfare.changing', 'hash' => 'collab'],
+            ]
+        ],
         ['label' => 'Contact Us', 'route' => 'welfare.contact'],
     ],
 

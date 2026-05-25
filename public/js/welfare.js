@@ -188,21 +188,53 @@
     }
 
     /* ---- SMOOTH SCROLL for anchor links ---- */
-    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
-        anchor.addEventListener('click', function (e) {
-            var href = this.getAttribute('href');
-            if (!href || href === '#') return;
-            var target;
+    document.querySelectorAll('a').forEach(function (anchor) {
+        var href = anchor.getAttribute('href');
+        if (!href) return;
+
+        var isAnchorLink = href.startsWith('#');
+        var isCurrentPageAnchor = false;
+        var targetHash = '';
+
+        if (!isAnchorLink && href.includes('#')) {
+            var parts = href.split('#');
+            var path = parts[0];
+            var hash = parts[1];
+
             try {
-                target = document.querySelector(href);
+                var anchorUrl = new URL(anchor.href, window.location.origin);
+                if (anchorUrl.pathname === window.location.pathname) {
+                    isCurrentPageAnchor = true;
+                    targetHash = '#' + hash;
+                }
             } catch (err) {
-                return;
+                if (path === '' || path === window.location.pathname) {
+                    isCurrentPageAnchor = true;
+                    targetHash = '#' + hash;
+                }
             }
-            if (target) {
-                e.preventDefault();
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
+        } else if (isAnchorLink && href !== '#') {
+            targetHash = href;
+        }
+
+        if (targetHash) {
+            anchor.addEventListener('click', function (e) {
+                var target;
+                try {
+                    target = document.querySelector(targetHash);
+                } catch (err) {
+                    return;
+                }
+                if (target) {
+                    e.preventDefault();
+                    if (mainNav && mainNav.classList.contains('open')) {
+                        setMobileNavOpen(false);
+                    }
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    history.pushState(null, null, targetHash);
+                }
+            });
+        }
     });
 
     /* ---- PROGRESS BARS ANIMATION ---- */

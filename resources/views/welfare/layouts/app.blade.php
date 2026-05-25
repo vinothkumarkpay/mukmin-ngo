@@ -108,15 +108,22 @@
                                             }));
                             @endphp
                             <li class="nav-item {{ $hasDropdown ? 'has-dropdown' : '' }} {{ $isActive ? 'active' : '' }}">
-                                <a href="{{ $hasDropdown ? '#' : route($item['route']) }}">
+                                <a href="{{ route($item['route']) }}">
                                     {{ $item['label'] }}
                                     @if($hasDropdown) <i class="fas fa-chevron-down" style="font-size: 10px; margin-left: 5px;"></i> @endif
                                 </a>
                                 @if($hasDropdown)
                                     <ul class="dropdown-menu">
                                         @foreach($item['children'] as $child)
-                                            <li class="@if(request()->routeIs($child['route'])) active @endif">
-                                                <a href="{{ route($child['route']) }}">{{ $child['label'] }}</a>
+                                            @php
+                                                $childUrl = route($child['route']);
+                                                if (isset($child['hash'])) {
+                                                    $childUrl .= '#' . $child['hash'];
+                                                }
+                                                $childActive = request()->routeIs($child['route']) && !isset($child['hash']);
+                                            @endphp
+                                            <li class="{{ $childActive ? 'active' : '' }}">
+                                                <a href="{{ $childUrl }}">{{ $child['label'] }}</a>
                                             </li>
                                         @endforeach
                                     </ul>

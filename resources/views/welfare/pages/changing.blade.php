@@ -267,6 +267,14 @@
         gap: 30px;
     }
 }
+#funds, #giving, #ecosystem, #collab {
+    scroll-margin-top: 160px;
+}
+@media (max-width: 991px) {
+    #funds, #giving, #ecosystem, #collab {
+        scroll-margin-top: 90px;
+    }
+}
 </style>
 
 <div class="changing-lives-page">
@@ -297,7 +305,7 @@
             <div class="columns-grid">
 
                 <!-- Sub Tab 1: Philanthropic Funds -->
-                <article class="column-card">
+                <article class="column-card" id="funds">
                     <div class="column-card-image">
                         <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=600&h=400&q=80" alt="Philanthropic Funds">
                     </div>
@@ -312,7 +320,7 @@
                 </article>
 
                 <!-- Sub Tab 2: Faith & Giving -->
-                <article class="column-card">
+                <article class="column-card" id="giving">
                     <div class="column-card-image">
                         <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&h=400&q=80" alt="Faith and Giving">
                     </div>
@@ -329,7 +337,7 @@
                 <!-- Sub Tab 3 & 4: Stacked Column -->
                 <div class="stacked-column">
                     <!-- Sub Tab 3: Ecosystem Building Initiatives -->
-                    <article class="quote-card">
+                    <article class="quote-card" id="ecosystem">
                         <p class="quote-card-meta"><strong>Ecosystem Building Initiatives</strong></p>
                         <div class="quote-card-icon"><i class="fas fa-microphone" aria-hidden="true"></i></div>
                         <h3 class="quote-card-text">Connecting Communities for Greater Impact</h3>
@@ -337,7 +345,7 @@
                     </article>
 
                     <!-- Sub Tab 4: ImpactCollab -->
-                    <article class="text-card">
+                    <article class="text-card" id="collab">
                         <p class="text-card-meta"><strong>ImpactCollab</strong></p>
                         <div class="text-card-icon"><i class="fas fa-comment-dots" aria-hidden="true"></i></div>
                         <p class="text-card-desc">Advancing high-impact collaborations that transform ideas into measurable outcomes through collective action, innovation and shared responsibility.</p>

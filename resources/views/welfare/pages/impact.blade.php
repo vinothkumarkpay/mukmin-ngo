@@ -80,6 +80,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     overflow: hidden;
     transition: box-shadow 0.25s ease;
+    scroll-margin-top: 160px;
 }
 .expand-item.is-open {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
@@ -229,6 +230,9 @@
 }
 
 @media (max-width: 767px) {
+    .expand-item {
+        scroll-margin-top: 90px;
+    }
     .expand-panel {
         padding: 0 20px 20px 20px;
     }
@@ -264,7 +268,7 @@
             <div class="expandable-tabs" id="impact-expandable-tabs">
 
                 <!-- Sub Expandable Tab 1 -->
-                <article class="expand-item is-open" data-expand-item>
+                <article class="expand-item is-open" data-expand-item id="socio-economic">
                     <button type="button" class="expand-trigger" aria-expanded="true" aria-controls="expand-socio-economic" id="expand-btn-socio-economic">
                         <span class="expand-icon-wrap" aria-hidden="true"><i class="fas fa-chart-line"></i></span>
                         <h2>Socio-Economic Mobility</h2>
@@ -283,7 +287,7 @@
                 </article>
 
                 <!-- Sub Expandable Tab 2 -->
-                <article class="expand-item" data-expand-item>
+                <article class="expand-item" data-expand-item id="education">
                     <button type="button" class="expand-trigger" aria-expanded="false" aria-controls="expand-education" id="expand-btn-education">
                         <span class="expand-icon-wrap" aria-hidden="true"><i class="fas fa-graduation-cap"></i></span>
                         <h2>Education &amp; Future Readiness</h2>
@@ -308,7 +312,7 @@
                 </article>
 
                 <!-- Sub Expandable Tab 3 -->
-                <article class="expand-item" data-expand-item>
+                <article class="expand-item" data-expand-item id="leadership">
                     <button type="button" class="expand-trigger" aria-expanded="false" aria-controls="expand-leadership" id="expand-btn-leadership">
                         <span class="expand-icon-wrap" aria-hidden="true"><i class="fas fa-users"></i></span>
                         <h2>Leadership &amp; Capacity Building</h2>
@@ -332,7 +336,7 @@
                 </article>
 
                 <!-- Sub Expandable Tab 4 -->
-                <article class="expand-item" data-expand-item>
+                <article class="expand-item" data-expand-item id="entrepreneurship">
                     <button type="button" class="expand-trigger" aria-expanded="false" aria-controls="expand-entrepreneurship" id="expand-btn-entrepreneurship">
                         <span class="expand-icon-wrap" aria-hidden="true"><i class="fas fa-lightbulb"></i></span>
                         <h2>Entrepreneurship &amp; Innovation</h2>
@@ -351,7 +355,7 @@
                 </article>
 
                 <!-- Sub Expandable Tab 5 -->
-                <article class="expand-item" data-expand-item>
+                <article class="expand-item" data-expand-item id="faith">
                     <button type="button" class="expand-trigger" aria-expanded="false" aria-controls="expand-faith" id="expand-btn-faith">
                         <span class="expand-icon-wrap" aria-hidden="true"><i class="fas fa-hands-helping"></i></span>
                         <h2>Faith, Identity &amp; Ukhwah</h2>
@@ -395,6 +399,33 @@
                 panel.hidden = false;
             }
         });
+    });
+
+    function handleImpactHashes(hash) {
+        if (!hash) return;
+        var cleanHash = hash.replace('#', '');
+        var targetItem = document.getElementById(cleanHash);
+        if (targetItem && targetItem.classList.contains('expand-item')) {
+            if (!targetItem.classList.contains('is-open')) {
+                var trigger = targetItem.querySelector('.expand-trigger');
+                var panel = targetItem.querySelector('.expand-panel');
+                if (trigger && panel) {
+                    targetItem.classList.add('is-open');
+                    trigger.setAttribute('aria-expanded', 'true');
+                    panel.hidden = false;
+                }
+            }
+            setTimeout(function () {
+                targetItem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 50);
+        }
+    }
+    
+    if (window.location.hash) {
+        handleImpactHashes(window.location.hash);
+    }
+    window.addEventListener('hashchange', function () {
+        handleImpactHashes(window.location.hash);
     });
 })();
 </script>

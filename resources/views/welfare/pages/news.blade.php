@@ -546,6 +546,14 @@
         grid-template-columns: 1fr;
     }
 }
+#insights, #moments {
+    scroll-margin-top: 160px;
+}
+@media (max-width: 991px) {
+    #insights, #moments {
+        scroll-margin-top: 90px;
+    }
+}
 </style>
 
 <div class="news-gallery-page">
@@ -561,8 +569,8 @@
         <!-- ==========================================================================
            SUB BLOCK 1: Impact at a Glance
            ========================================================================== -->
-        <div class="news-section-header" style="margin-bottom: 25px; text-align: left;">
-            <h3 style="font-size: 24px; font-weight: 700; color: #0f172a; margin: 0;">Impact at a Glance</h3>
+        <div class="news-section-header" style="margin-bottom: 25px; text-align: left;" id="insights">
+            <h3 style="font-size: 24px; font-weight: 700; color: #0f172a; margin: 0;">Impact Insights</h3>
         </div>
 
         <div class="impact-glance-container">
@@ -1012,7 +1020,7 @@
         <!-- ==========================================================================
            SUB BLOCK 2: Moments of MUKMIN
            ========================================================================== -->
-        <section class="section-moments" id="moments-section">
+        <section class="section-moments" id="moments">
             <div class="news-section-header" style="margin-bottom: 25px; text-align: left;">
                 <h3 style="font-size: 24px; font-weight: 700; color: #0f172a; margin: 0;">Moments of MUKMIN</h3>
             </div>
@@ -1166,7 +1174,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 2. Smooth Scroll CTA to Moments of MUKMIN
     // -------------------------------------------------------------
     const scrollCtaBtns = document.querySelectorAll('.scroll-to-gallery');
-    const momentsSection = document.getElementById('moments-section');
+    const momentsSection = document.getElementById('moments');
     
     scrollCtaBtns.forEach(btn => {
         btn.addEventListener('click', function() {

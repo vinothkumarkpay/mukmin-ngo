@@ -425,6 +425,9 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
 }
+#membership-vertical-tabs {
+    scroll-margin-top: 160px;
+}
 .engage-card {
     background: #ffffff;
     border: 1px solid #eaeaea;
@@ -437,6 +440,7 @@
     flex-direction: column;
     height: 100%;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    scroll-margin-top: 190px;
 }
 .engage-card:hover {
     transform: translateY(-6px);
@@ -505,6 +509,12 @@
 }
 
 @media (max-width: 991px) {
+    #membership-vertical-tabs {
+        scroll-margin-top: 90px;
+    }
+    .engage-card {
+        scroll-margin-top: 120px;
+    }
     .featured-block { flex-direction: column; }
     .featured-left, .featured-right { width: 100%; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -739,28 +749,28 @@
     <section class="section-padding bg-light" style="padding-bottom: 70px;">
         <div class="container">
             <div class="engage-grid">
-                <article class="engage-card">
+                <article class="engage-card" id="ideas">
                     <div class="engage-icon"><i class="fas fa-lightbulb" aria-hidden="true"></i></div>
                     <p class="engage-time">Have a Moment?</p>
                     <h3>Share Your Ideas</h3>
                     <p>Contribute perspectives, proposals and solutions that can shape meaningful community impact.</p>
                     <a href="{{ route('welfare.feedback') }}" class="card-btn-outline">Listen To Me</a>
                 </article>
-                <article class="engage-card">
+                <article class="engage-card" id="volunteer">
                     <div class="engage-icon"><i class="fas fa-hands-helping" aria-hidden="true"></i></div>
                     <p class="engage-time">Have a Few Hours?</p>
                     <h3>Let's Volunteer</h3>
                     <p>Support impactful initiatives, develop meaningful experiences and contribute directly to community-driven programmes.</p>
                     <a href="{{ route('welfare.volunteer') }}" class="card-btn-outline">Volunteer Now</a>
                 </article>
-                <article class="engage-card">
+                <article class="engage-card" id="mentor">
                     <div class="engage-icon"><i class="fas fa-user-graduate" aria-hidden="true"></i></div>
                     <p class="engage-time">Ready to Guide Others?</p>
                     <h3>Be A Mentor</h3>
                     <p>Empower future leaders through mentorship, professional guidance and shared experience.</p>
                     <a href="{{ route('welfare.mentor') }}" class="card-btn-outline">Contribute Now</a>
                 </article>
-                <article class="engage-card">
+                <article class="engage-card" id="partner">
                     <div class="engage-icon"><i class="fas fa-handshake" aria-hidden="true"></i></div>
                     <p class="engage-time">Looking to Create Greater Impact?</p>
                     <h3>Partner With Us</h3>
@@ -799,6 +809,33 @@
     }
     initTabs('#membership-vertical-tabs', '.vtab-btn', '.vtab-panel');
     initTabs('#process-horizontal-tabs', '.htab-btn', '.htab-panel');
+
+    function handleServeHashes(hash) {
+        if (!hash) return;
+        var targetBtn = null;
+        if (hash === '#affiliate') {
+            targetBtn = document.getElementById('vtab-btn-ordinary');
+        } else if (hash === '#friends') {
+            targetBtn = document.getElementById('vtab-btn-friends');
+        }
+        
+        if (targetBtn) {
+            targetBtn.click();
+            var container = document.getElementById('membership-vertical-tabs');
+            if (container) {
+                setTimeout(function () {
+                    container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 50);
+            }
+        }
+    }
+    
+    if (window.location.hash) {
+        handleServeHashes(window.location.hash);
+    }
+    window.addEventListener('hashchange', function () {
+        handleServeHashes(window.location.hash);
+    });
 
     // Dials Animation logic when scrolled into view
     var statsSection = document.getElementById('serve-impact-section');
