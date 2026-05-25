@@ -11,6 +11,7 @@ use App\Models\FriendMemberSubmission;
 use App\Models\MentorSubmission;
 use App\Models\PartnerSubmission;
 use App\Models\VolunteerSubmission;
+use App\Models\ContactSubmission;
 use Response;
 
 class AdminDashboardController extends Controller
@@ -25,6 +26,7 @@ class AdminDashboardController extends Controller
             'mentor' => MentorSubmission::count(),
             'partner' => PartnerSubmission::count(),
             'volunteer' => VolunteerSubmission::count(),
+            'contact' => ContactSubmission::count(),
         ];
 
         // 2. Fetch all submissions
@@ -34,6 +36,7 @@ class AdminDashboardController extends Controller
         $mentor = MentorSubmission::orderBy('created_at', 'desc')->get();
         $partner = PartnerSubmission::orderBy('created_at', 'desc')->get();
         $volunteer = VolunteerSubmission::orderBy('created_at', 'desc')->get();
+        $contact = ContactSubmission::orderBy('created_at', 'desc')->get();
 
         // 3. Fetch dropdown options grouped by form_type
         $options = FormDropdownOption::orderBy('form_type')
@@ -60,7 +63,7 @@ class AdminDashboardController extends Controller
         ];
 
         return view('welfare.admin.dashboard', compact(
-            'stats', 'feedback', 'ordinary', 'friends', 'mentor', 'partner', 'volunteer', 'options', 'formTypesMap'
+            'stats', 'feedback', 'ordinary', 'friends', 'mentor', 'partner', 'volunteer', 'contact', 'options', 'formTypesMap'
         ));
     }
 
@@ -85,6 +88,9 @@ class AdminDashboardController extends Controller
                 break;
             case 'volunteer':
                 $submission = VolunteerSubmission::find($id);
+                break;
+            case 'contact':
+                $submission = ContactSubmission::find($id);
                 break;
         }
 
@@ -346,6 +352,20 @@ class AdminDashboardController extends Controller
                             $item->emergency_contact_name,
                             $item->emergency_contact_relationship,
                             $item->emergency_contact_phone
+                        ]);
+                    }
+                    break;
+
+                case 'contact':
+                    fputcsv($file, ['ID', 'Date', 'Name', 'Email', 'Phone', 'Message']);
+                    foreach (ContactSubmission::all() as $item) {
+                        fputcsv($file, [
+                            $item->id,
+                            $item->created_at,
+                            $item->name,
+                            $item->email,
+                            $item->phone,
+                            $item->message
                         ]);
                     }
                     break;

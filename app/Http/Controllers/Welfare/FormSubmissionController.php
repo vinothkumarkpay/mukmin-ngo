@@ -11,6 +11,7 @@ use App\Models\FriendMemberSubmission;
 use App\Models\MentorSubmission;
 use App\Models\PartnerSubmission;
 use App\Models\VolunteerSubmission;
+use App\Models\ContactSubmission;
 
 class FormSubmissionController extends Controller
 {
@@ -288,6 +289,38 @@ class FormSubmissionController extends Controller
         return view('welfare.pages.form_success', [
             'title' => 'Volunteer Registered',
             'message' => 'Thank you for registering to volunteer! We appreciate your willingness to serve. We will notify you when volunteer opportunities matching your interests arise.',
+        ]);
+    }
+
+    public function submitContact(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+            'message' => 'required|string',
+        ]);
+
+        ContactSubmission::create($validated);
+
+        return view('welfare.pages.form_success', [
+            'title' => 'Message Sent Successfully',
+            'message' => 'Thank you for reaching out to us! Your message has been received, and our team will get in touch with you shortly.',
+        ]);
+    }
+
+    public function submitDonate(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'amount' => 'nullable|numeric|min:1',
+            'custom_amount' => 'nullable|numeric|min:1',
+        ]);
+
+        return view('welfare.pages.form_success', [
+            'title' => 'Donation Portal - Coming Soon',
+            'message' => 'Thank you for your generosity and willingness to support MUKMIN. Our online donation payment gateway is currently under integration. Please check back soon or contact our administration directly for offline donation instructions.',
         ]);
     }
 }

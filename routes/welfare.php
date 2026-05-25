@@ -30,7 +30,9 @@ Route::name('welfare.')->group(function () {
     Route::get('/about/president-note', [PageController::class, 'presidentNote'])->name('about.president-note');
     Route::get('/about/leadership', [PageController::class, 'leadership'])->name('about.leadership');
     Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+    Route::post('/contact/submit', [FormSubmissionController::class, 'submitContact'])->name('contact.submit');
     Route::get('/donate', [PageController::class, 'donate'])->name('donate');
+    Route::post('/donate/submit', [FormSubmissionController::class, 'submitDonate'])->name('donate.submit');
     
     // New placeholders
     Route::get('/ecosystem', [PageController::class, 'ecosystem'])->name('ecosystem');

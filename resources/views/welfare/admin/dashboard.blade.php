@@ -45,6 +45,11 @@
                     <i class="fas fa-hands-helping"></i> Volunteers
                 </div>
             </li>
+            <li>
+                <div class="sidebar-link" data-tab="panel-contact">
+                    <i class="fas fa-envelope"></i> Contact Messages
+                </div>
+            </li>
             <li style="border-top: 1px solid rgba(255,255,255,0.08); margin-top: 15px; padding-top: 15px;">
                 <div class="sidebar-link" data-tab="panel-options">
                     <i class="fas fa-sliders-h"></i> Options Manager
@@ -64,9 +69,14 @@
         <!-- TOP NAV -->
         <header class="top-nav">
             <h2 id="top-nav-title">Dashboard Overview</h2>
-            <div class="user-profile">
-                <i class="fas fa-user-shield"></i>
-                <span>System Administrator</span>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div class="user-profile">
+                    <i class="fas fa-user-shield"></i>
+                    <span>System Administrator</span>
+                </div>
+                <a href="{{ route('welfare.admin.logout') }}" class="btn-admin btn-admin-secondary" style="padding: 8px 14px; display: inline-flex; align-items: center; gap: 6px; text-decoration: none;" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
             </div>
         </header>
 
@@ -121,6 +131,13 @@
                         <div class="stat-info">
                             <h3>{{ $stats['volunteer'] }}</h3>
                             <p>Volunteers Registered</p>
+                        </div>
+                    </div>
+                    <div class="stat-card" onclick="switchTab('panel-contact')">
+                        <div class="stat-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="stat-info">
+                            <h3>{{ $stats['contact'] }}</h3>
+                            <p>Contact Messages</p>
                         </div>
                     </div>
                 </div>
@@ -476,6 +493,54 @@
                                     @empty
                                         <tr>
                                             <td colspan="9" style="text-align: center; color: var(--admin-text-muted);">No volunteers found.</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. CONTACT MESSAGES PANEL -->
+            <div class="dashboard-panel" id="panel-contact">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Contact Us Messages</h3>
+                        <div class="card-actions">
+                            <a href="{{ route('welfare.admin.export', 'contact') }}" class="btn-admin btn-admin-secondary">
+                                <i class="fas fa-download"></i> Export CSV
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Date</th>
+                                        <th>Full Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th style="text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($contact as $item)
+                                        <tr>
+                                            <td>#{{ $item->id }}</td>
+                                            <td>{{ $item->created_at->format('d M Y, h:i A') }}</td>
+                                            <td><strong>{{ $item->name }}</strong></td>
+                                            <td>{{ $item->email }}</td>
+                                            <td>{{ $item->phone }}</td>
+                                            <td style="text-align: right;">
+                                                <button onclick="viewDetail('contact', {{ $item->id }})" class="btn-admin btn-admin-primary">View</button>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="6" style="text-align: center; color: var(--admin-text-muted);">No messages found.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

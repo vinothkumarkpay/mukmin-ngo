@@ -33,7 +33,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 body {
     font-family: var(--font-main);
@@ -42,7 +42,7 @@ body {
     font-weight: 400;
     color: var(--color-text);
     background-color: var(--color-bg);
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 body.mobile-nav-active {
     overflow: hidden;

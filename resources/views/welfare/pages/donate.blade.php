@@ -11,7 +11,7 @@
             <p class="section-subtitle">Your generosity fuels our programs. Choose an amount below.</p>
         </div>
 
-        <form method="POST" action="#" style="display: flex; flex-direction: column; gap: 20px;">
+        <form method="POST" action="{{ route('welfare.donate.submit') }}" style="display: flex; flex-direction: column; gap: 20px;">
             @csrf
             
             <div>

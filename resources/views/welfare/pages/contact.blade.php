@@ -55,7 +55,7 @@
 
             <div>
                 <h3 style="margin-bottom: 20px; font-size: 20px; color: var(--color-heading);">Send a Message</h3>
-                <form method="POST" action="#" style="display: flex; flex-direction: column; gap: 15px;">
+                <form method="POST" action="{{ route('welfare.contact.submit') }}" style="display: flex; flex-direction: column; gap: 15px;">
                     @csrf
                     <div>
                         <label style="display: block; font-weight: 500; margin-bottom: 5px; color: var(--color-heading);">Full Name</label>
