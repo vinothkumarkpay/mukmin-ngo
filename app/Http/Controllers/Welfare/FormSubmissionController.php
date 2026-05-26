@@ -370,4 +370,60 @@ class FormSubmissionController extends Controller
             'message' => 'Thank you for your generosity and willingness to support MUKMIN. Our online donation payment gateway is currently under integration. Please check back soon or contact our administration directly for offline donation instructions.',
         ]);
     }
+
+    public function communityAid()
+    {
+        return view('welfare.pages.community_aid');
+    }
+
+    public function submitCommunityAid(Request $request)
+    {
+        $validated = $request->validate([
+            'full_name' => 'required|string|max:255',
+            'nric_passport' => 'required|string|max:255',
+            'gender' => 'required|string|in:Male,Female',
+            'dob' => 'required|date',
+            'nationality' => 'required|string|max:255',
+            'occupation' => 'required|string|max:255',
+            'monthly_income' => 'nullable|string|max:255',
+            'contact_number' => 'required|string|max:20',
+            'email' => 'required|email|max:255',
+            'full_address' => 'required|string',
+            'state_residency' => 'required|string|max:50',
+            'type_of_aid' => 'required|array|min:1',
+            'type_of_aid_other' => 'nullable|string|max:255',
+            'situation_description' => 'required|string',
+            'who_benefits' => 'required|string|in:Individual,Family,Community / Group,Organisation / Institution',
+            'number_of_beneficiaries' => 'nullable|integer|min:1',
+            'received_aid_before' => 'required|boolean',
+            'received_aid_before_details' => 'nullable|string',
+            'supporting_files' => 'nullable|array',
+            'supporting_files.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,zip,ppt,pptx|max:20480',
+            'emergency_contact_name' => 'required|string|max:255',
+            'emergency_contact_relationship' => 'required|string|max:255',
+            'emergency_contact_phone' => 'required|string|max:20',
+            'declaration_confirmed' => 'required|accepted',
+        ]);
+
+        if ($request->hasFile('supporting_files')) {
+            $filePaths = [];
+            foreach ($request->file('supporting_files') as $file) {
+                $filePaths[] = $file->store('documents', 'public');
+            }
+            $validated['supporting_documents'] = $filePaths;
+        }
+
+        \App\Models\CommunityAidSubmission::create($validated);
+
+        try {
+            Mail::to('support@mukmin.org')->send(new FormSubmissionMail('Community Aid & Assistance Request', $validated, true));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Mail sending failed for Community Aid Request: ' . $e->getMessage());
+        }
+
+        return view('welfare.pages.form_success', [
+            'title' => 'Request Submitted Successfully',
+            'message' => 'Your request for MUKMIN Community Aid & Assistance has been received. Our welfare department will review your details and contact you or your emergency contact if additional verification is required.',
+        ]);
+    }
 }

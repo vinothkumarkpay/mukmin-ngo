@@ -1185,6 +1185,7 @@
                     <p>Providing educational support, learning access and development opportunities to empower future generations through knowledge and skills.</p>
                     <!-- Progress Bar -->
                     <div style="margin-top: auto;">
+                        <a href="{{ route('welfare.community-aid') }}" class="read-more-btn" style="display: inline-block; margin-bottom: 15px;">Talk to us</a>
                         <div class="aid-card-progress" style="margin-bottom: 0;">
                             <div class="aid-card-progress-label">
                                 <span>Aid Target Reached</span>
@@ -1207,6 +1208,7 @@
                     <p>Delivering community assistance and outreach programmes that uplift vulnerable groups and strengthen social well-being.</p>
                     <!-- Progress Bar -->
                     <div style="margin-top: auto;">
+                        <a href="{{ route('welfare.community-aid') }}" class="read-more-btn" style="display: inline-block; margin-bottom: 15px;">Talk to us</a>
                         <div class="aid-card-progress" style="margin-bottom: 0;">
                             <div class="aid-card-progress-label">
                                 <span>Aid Target Reached</span>
@@ -1229,6 +1231,7 @@
                     <p>Improving access to healthcare support, wellness initiatives and essential assistance for healthier and more resilient communities.</p>
                     <!-- Progress Bar -->
                     <div style="margin-top: auto;">
+                        <a href="{{ route('welfare.community-aid') }}" class="read-more-btn" style="display: inline-block; margin-bottom: 15px;">Talk to us</a>
                         <div class="aid-card-progress" style="margin-bottom: 0;">
                             <div class="aid-card-progress-label">
                                 <span>Aid Target Reached</span>
@@ -1251,8 +1254,8 @@
                     <p>Supporting strategic and community-driven initiatives that address evolving challenges and areas requiring immediate impact.</p>
                     <!-- Progress Bar and Link -->
                     <div style="margin-top: auto;">
-                        <a href="{{ route('welfare.contact') }}" class="read-more-btn">Find out more</a>
-                        <div class="aid-card-progress" style="margin-top: 20px; margin-bottom: 0;">
+                        <a href="{{ route('welfare.community-aid') }}" class="read-more-btn" style="display: inline-block; margin-bottom: 15px;">Talk to us</a>
+                        <div class="aid-card-progress" style="margin-bottom: 0;">
                             <div class="aid-card-progress-label">
                                 <span>Aid Target Reached</span>
                                 <span>90%</span>

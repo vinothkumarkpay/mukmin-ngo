@@ -66,6 +66,9 @@ Route::name('welfare.')->group(function () {
     Route::get('/volunteer-registration', [FormSubmissionController::class, 'volunteer'])->name('volunteer');
     Route::post('/volunteer-registration/submit', [FormSubmissionController::class, 'submitVolunteer'])->name('volunteer.submit');
 
+    Route::get('/community-aid', [FormSubmissionController::class, 'communityAid'])->name('community-aid');
+    Route::post('/community-aid/submit', [FormSubmissionController::class, 'submitCommunityAid'])->name('community-aid.submit');
+
     // Admin Section
     Route::get('/admin', function () {
         return redirect()->route('welfare.admin.login');

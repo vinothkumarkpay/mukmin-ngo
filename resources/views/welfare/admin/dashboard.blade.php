@@ -46,6 +46,11 @@
                 </div>
             </li>
             <li>
+                <div class="sidebar-link" data-tab="panel-aid">
+                    <i class="fas fa-hand-holding-medical"></i> Community Aid Requests
+                </div>
+            </li>
+            <li>
                 <div class="sidebar-link" data-tab="panel-contact">
                     <i class="fas fa-envelope"></i> Contact Messages
                 </div>
@@ -131,6 +136,13 @@
                         <div class="stat-info">
                             <h3>{{ $stats['volunteer'] }}</h3>
                             <p>Volunteers Registered</p>
+                        </div>
+                    </div>
+                    <div class="stat-card" onclick="switchTab('panel-aid')">
+                        <div class="stat-icon"><i class="fas fa-hand-holding-medical"></i></div>
+                        <div class="stat-info">
+                            <h3>{{ $stats['aid'] }}</h3>
+                            <p>Community Aid Requests</p>
                         </div>
                     </div>
                     <div class="stat-card" onclick="switchTab('panel-contact')">
@@ -541,6 +553,70 @@
                                     @empty
                                         <tr>
                                             <td colspan="6" style="text-align: center; color: var(--admin-text-muted);">No messages found.</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. COMMUNITY AID PANEL -->
+            <div class="dashboard-panel" id="panel-aid">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Community Aid & Assistance Requests</h3>
+                        <div class="card-actions">
+                            <a href="{{ route('welfare.admin.export', 'aid') }}" class="btn-admin btn-admin-secondary">
+                                <i class="fas fa-download"></i> Export CSV
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Date</th>
+                                        <th>Full Name</th>
+                                        <th>Email</th>
+                                        <th>State</th>
+                                        <th>Aid Type(s)</th>
+                                        <th>Status</th>
+                                        <th style="text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($aid as $item)
+                                        <tr id="row-aid-{{ $item->id }}">
+                                            <td>#{{ $item->id }}</td>
+                                            <td>{{ $item->created_at->format('d M Y') }}</td>
+                                            <td><strong>{{ $item->full_name }}</strong></td>
+                                            <td>{{ $item->email }}</td>
+                                            <td>{{ $item->state_residency }}</td>
+                                            <td>
+                                                @if(is_array($item->type_of_aid))
+                                                    {{ implode(', ', $item->type_of_aid) }}
+                                                @else
+                                                    {{ $item->type_of_aid }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-{{ $item->status }}" id="badge-aid-{{ $item->id }}">
+                                                    {{ $item->status }}
+                                                </span>
+                                            </td>
+                                            <td style="text-align: right; display: flex; gap: 5px; justify-content: flex-end;">
+                                                <button onclick="viewDetail('aid', {{ $item->id }})" class="btn-admin btn-admin-primary">View</button>
+                                                <button onclick="updateStatus('aid', {{ $item->id }}, 'approved')" class="btn-admin btn-admin-secondary" style="color: #059669;" title="Approve"><i class="fas fa-check"></i></button>
+                                                <button onclick="updateStatus('aid', {{ $item->id }}, 'rejected')" class="btn-admin btn-admin-danger" style="padding: 8px 12px;" title="Reject"><i class="fas fa-times"></i></button>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="8" style="text-align: center; color: var(--admin-text-muted);">No aid requests found.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

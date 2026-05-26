@@ -12,6 +12,7 @@ use App\Models\MentorSubmission;
 use App\Models\PartnerSubmission;
 use App\Models\VolunteerSubmission;
 use App\Models\ContactSubmission;
+use App\Models\CommunityAidSubmission;
 use Response;
 
 class AdminDashboardController extends Controller
@@ -27,6 +28,7 @@ class AdminDashboardController extends Controller
             'partner' => PartnerSubmission::count(),
             'volunteer' => VolunteerSubmission::count(),
             'contact' => ContactSubmission::count(),
+            'aid' => CommunityAidSubmission::count(),
         ];
 
         // 2. Fetch all submissions
@@ -37,6 +39,7 @@ class AdminDashboardController extends Controller
         $partner = PartnerSubmission::orderBy('created_at', 'desc')->get();
         $volunteer = VolunteerSubmission::orderBy('created_at', 'desc')->get();
         $contact = ContactSubmission::orderBy('created_at', 'desc')->get();
+        $aid = CommunityAidSubmission::orderBy('created_at', 'desc')->get();
 
         // 3. Fetch dropdown options grouped by form_type
         $options = FormDropdownOption::orderBy('form_type')
@@ -63,7 +66,7 @@ class AdminDashboardController extends Controller
         ];
 
         return view('welfare.admin.dashboard', compact(
-            'stats', 'feedback', 'ordinary', 'friends', 'mentor', 'partner', 'volunteer', 'contact', 'options', 'formTypesMap'
+            'stats', 'feedback', 'ordinary', 'friends', 'mentor', 'partner', 'volunteer', 'contact', 'aid', 'options', 'formTypesMap'
         ));
     }
 
@@ -92,6 +95,9 @@ class AdminDashboardController extends Controller
             case 'contact':
                 $submission = ContactSubmission::find($id);
                 break;
+            case 'aid':
+                $submission = CommunityAidSubmission::find($id);
+                break;
         }
 
         if (!$submission) {
@@ -117,6 +123,9 @@ class AdminDashboardController extends Controller
                 break;
             case 'partner':
                 $submission = PartnerSubmission::findOrFail($id);
+                break;
+            case 'aid':
+                $submission = CommunityAidSubmission::findOrFail($id);
                 break;
         }
 
@@ -366,6 +375,35 @@ class AdminDashboardController extends Controller
                             $item->email,
                             $item->phone,
                             $item->message
+                        ]);
+                    }
+                    break;
+
+                case 'aid':
+                    fputcsv($file, ['ID', 'Date', 'Full Name', 'NRIC/Passport', 'Gender', 'DOB', 'Nationality', 'Occupation', 'Monthly Income', 'Phone', 'Email', 'Address', 'State', 'Type of Aid', 'Type of Aid Other', 'Situation', 'Who Benefits', 'Beneficiaries Count', 'Received Aid Before', 'Previous Aid Details', 'Status']);
+                    foreach (CommunityAidSubmission::all() as $item) {
+                        fputcsv($file, [
+                            $item->id,
+                            $item->created_at,
+                            $item->full_name,
+                            $item->nric_passport,
+                            $item->gender,
+                            $item->dob ? $item->dob->format('Y-m-d') : '',
+                            $item->nationality,
+                            $item->occupation,
+                            $item->monthly_income,
+                            $item->contact_number,
+                            $item->email,
+                            $item->full_address,
+                            $item->state_residency,
+                            is_array($item->type_of_aid) ? implode(', ', $item->type_of_aid) : $item->type_of_aid,
+                            $item->type_of_aid_other,
+                            $item->situation_description,
+                            $item->who_benefits,
+                            $item->number_of_beneficiaries,
+                            $item->received_aid_before ? 'Yes' : 'No',
+                            $item->received_aid_before_details,
+                            ucfirst($item->status)
                         ]);
                     }
                     break;

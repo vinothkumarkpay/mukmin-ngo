@@ -114,6 +114,18 @@ class FormSubmissionMail extends Mailable
         'emergency_contact_name' => 'Emergency Contact Name',
         'emergency_contact_relationship' => 'Emergency Contact Relationship',
         'emergency_contact_phone' => 'Emergency Contact Phone',
+        
+        // Community Aid
+        'dob' => 'Date of Birth',
+        'nationality' => 'Nationality',
+        'monthly_income' => 'Monthly Household Income',
+        'type_of_aid' => 'Type of Aid Required',
+        'type_of_aid_other' => 'Other Type of Aid',
+        'situation_description' => 'Current Situation & Assistance Required',
+        'who_benefits' => 'Who Will Benefit',
+        'number_of_beneficiaries' => 'Number of Beneficiaries',
+        'received_aid_before' => 'Has Received Aid Before',
+        'received_aid_before_details' => 'Previous Aid Details',
     ];
 
     /**
