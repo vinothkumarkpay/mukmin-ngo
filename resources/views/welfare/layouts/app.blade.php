@@ -20,9 +20,13 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:title" content="MUKMIN">
     <meta property="og:description" content="Driving community transformation through unity, leadership and collective action.">
-    <meta property="og:image" content="{{ asset('apple-touch-icon.png') }}">
+    <meta property="og:image" content="{{ asset('android-chrome-512x512.png') }}">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
 
     <link rel="stylesheet" href="{{ asset('css/welfare.css') }}">
     @stack('styles')
