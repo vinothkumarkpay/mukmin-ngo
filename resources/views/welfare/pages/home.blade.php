@@ -755,7 +755,7 @@
     <section class="hero-slider">
         <div class="slider-container">
             <!-- Slide 1 -->
-            <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600');">
+            <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('{{ asset('welfare/img/slider1.jpg') }}');">
                 <div class="slide-content">
                     <div class="container">
                         <div class="slide-text">
@@ -769,7 +769,7 @@
                 </div>
             </div>
             <!-- Slide 2 -->
-            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=1600');">
+            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('{{ asset('welfare/img/slider2.jpg') }}');">
                 <div class="slide-content">
                     <div class="container">
                         <div class="slide-text">
@@ -797,7 +797,7 @@
                 </div>
             </div>
             <!-- Slide 4 -->
-            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1600');">
+            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('{{ asset('welfare/img/slider4.jpg') }}');">
                 <div class="slide-content">
                     <div class="container">
                         <div class="slide-text">

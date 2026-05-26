@@ -18,6 +18,12 @@
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MUKMIN">
+    <meta property="og:description" content="Driving community transformation through unity, leadership and collective action.">
+    <meta property="og:image" content="{{ asset('apple-touch-icon.png') }}">
+
     <link rel="stylesheet" href="{{ asset('css/welfare.css') }}">
     @stack('styles')
 </head>

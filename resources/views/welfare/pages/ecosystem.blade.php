@@ -136,88 +136,24 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 60px;
+    height: 120px;
 }
 
-/* FIKRAH Brand Design */
-.brand-mark-logo.fikrah-logo {
-    gap: 12px;
-}
-.fikrah-logo .brand-icon {
-    background: #f1f5f9;
-    color: #1e293b;
-    border: 1px solid #cbd5e1;
-    font-size: 22px;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.fikrah-logo .brand-text {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-.fikrah-logo .brand-title {
-    font-size: 18px;
-    font-weight: 800;
-    color: #1e293b;
-    letter-spacing: 1px;
-    line-height: 1;
-}
-.fikrah-logo .brand-sub {
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #64748b;
-    margin-top: 3px;
-}
-
-/* MUKMIN Brand Container */
-.mukmin-logo-container img {
-    height: 50px;
+/* Brand Logo Images */
+.brand-mark-logo img {
+    height: 120px;
     width: auto;
     max-width: 100%;
     object-fit: contain;
 }
 
-/* YAYASAN Brand Design */
-.brand-mark-logo.yayasan-logo {
-    gap: 12px;
-}
-.yayasan-logo .brand-icon {
-    background: #f0fdf4;
-    color: #16a34a;
-    border: 1px solid #bbf7d0;
-    font-size: 22px;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.yayasan-logo .brand-text {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-.yayasan-logo .brand-title {
-    font-size: 14px;
-    font-weight: 800;
-    color: #15803d;
-    letter-spacing: 0.5px;
-    line-height: 1;
-}
-.yayasan-logo .brand-sub {
-    font-size: 13px;
-    font-weight: 700;
-    color: #16a34a;
-    letter-spacing: 1px;
-    line-height: 1;
-    margin-top: 2px;
+@media (max-width: 768px) {
+    .brand-mark-logo {
+        height: 90px;
+    }
+    .brand-mark-logo img {
+        height: 90px;
+    }
 }
 
 .card-image-wrap img {
@@ -345,12 +281,8 @@
                 <div class="custom-card" id="fikrah">
                     <div class="card-logo-header">
                         <span class="card-badge fikrah-badge">Shape</span>
-                        <div class="brand-mark-logo fikrah-logo">
-                            <div class="brand-icon"><i class="fas fa-brain"></i></div>
-                            <div class="brand-text">
-                                <span class="brand-title">FIKRAH</span>
-                                <span class="brand-sub">Think Tank</span>
-                            </div>
+                        <div class="brand-mark-logo">
+                            <img src="{{ asset('welfare/img/fikrah_logo.png') }}" alt="FIKRAH Logo">
                         </div>
                     </div>
                     <div class="card-image-wrap">
@@ -373,8 +305,8 @@
                 <div class="custom-card" id="gabungan">
                     <div class="card-logo-header">
                         <span class="card-badge mukmin-badge">Connect</span>
-                        <div class="brand-mark-logo mukmin-logo-container">
-                            <img src="{{ asset('welfare/img/mukmin_logo.png') }}" alt="MUKMIN Logo">
+                        <div class="brand-mark-logo">
+                            <img src="{{ asset('welfare/img/mukmin_ecosystem_logo.png') }}" alt="MUKMIN Logo">
                         </div>
                     </div>
                     <div class="card-image-wrap">
@@ -397,12 +329,8 @@
                 <div class="custom-card" id="yayasan">
                     <div class="card-logo-header">
                         <span class="card-badge yayasan-badge">Deliver</span>
-                        <div class="brand-mark-logo yayasan-logo">
-                            <div class="brand-icon"><i class="fas fa-hand-holding-heart"></i></div>
-                            <div class="brand-text">
-                                <span class="brand-title">YAYASAN</span>
-                                <span class="brand-sub">MUKMIN</span>
-                            </div>
+                        <div class="brand-mark-logo">
+                            <img src="{{ asset('welfare/img/yayasan_logo.png') }}" alt="Yayasan MUKMIN Logo">
                         </div>
                     </div>
                     <div class="card-image-wrap">
