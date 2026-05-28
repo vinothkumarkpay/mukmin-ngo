@@ -270,7 +270,7 @@
         <div class="form-card">
             <div class="form-header">
                 <h2>MUKMIN Organisation Membership Registration</h2>
-                <p><strong>Ordinary Member (Ahli Biasa)</strong> - Open to legally registered organisations, mosques, suraus, madrasahs, and chambers of commerce across Malaysia.</p>
+                <p><strong>Ordinary Member (Ahli Biasa)</strong><br><br>Open to legally registered organisations that align with the mission, vision, and values of MUKMIN, including NGOs, civil society organisations, chambers of commerce, industry associations, institutions, foundations, community-based organisations, as well as mosques, madrasah, and surau throughout Malaysia.</p>
             </div>
 
             <!-- ELIGIBILITY SECTION -->
@@ -278,7 +278,6 @@
                 <h4 style="margin: 0 0 8px 0; color: #d43c18; font-weight: 700; font-size: 14.5px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
                     <i class="fas fa-info-circle"></i> MUKMIN Membership Eligibility
                 </h4>
-                <p style="margin: 0 0 8px 0;">Membership is open to registered organisations including NGOs, masjid, surau, and madrasah that align with the mission, vision, and values of MUKMIN.</p>
                 <p style="margin: 0 0 8px 0;">All members must demonstrate active involvement in community, educational, or welfare initiatives and commit to collaborative participation in MUKMIN programmes.</p>
                 <p style="margin: 0; font-weight: 600;">The MUKMIN central committee reserves the right to approve or reject applications.</p>
             </div>
@@ -300,7 +299,7 @@
                 <!-- SECTION A: ORGANISATION CATEGORY -->
                 <div class="form-section-title">Section A: Organisation Category</div>
                 <div class="form-group">
-                    <label>Select Category * (Dropdown List)</label>
+                    <label>Select Category (Dropdown List)</label>
                     <div class="custom-dropdown-container" id="org-type-dropdown">
                         <div class="dropdown-trigger" data-placeholder="Choose category types...">
                             <span class="trigger-text">Choose category types...</span>
@@ -318,7 +317,7 @@
                 </div>
 
                 <div class="form-group" id="other-orgtype-group" style="display: none;">
-                    <label for="org_type_other">Please specify "Others" Category *</label>
+                    <label for="org_type_other">Please specify "Others" Category</label>
                     <input type="text" id="org_type_other" name="org_type_other" class="form-control" value="{{ old('org_type_other') }}">
                 </div>
 
@@ -326,24 +325,24 @@
                 <div class="form-section-title">Section B: Organisation Details</div>
                 
                 <div class="form-group">
-                    <label for="name_of_organisation">Name of Organisation *</label>
+                    <label for="name_of_organisation">Name of Organisation</label>
                     <input type="text" id="name_of_organisation" name="name_of_organisation" class="form-control" value="{{ old('name_of_organisation') }}" required>
                 </div>
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="org_reg_number">Organisation Registration Number *</label>
+                        <label for="org_reg_number">Organisation Registration Number</label>
                         <input type="text" id="org_reg_number" name="org_reg_number" class="form-control" value="{{ old('org_reg_number') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="org_reg_date">Organisation Registration Date *</label>
+                        <label for="org_reg_date">Organisation Registration Date</label>
                         <input type="date" id="org_reg_date" name="org_reg_date" class="form-control" value="{{ old('org_reg_date') }}" required>
                     </div>
                 </div>
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="registered_state">Registered State *</label>
+                        <label for="registered_state">Registered State</label>
                         <select id="registered_state" name="registered_state" class="form-control" required>
                             <option value="">-- Choose State --</option>
                             @foreach(['Johor', 'Kedah', 'Kelantan', 'Melaka', 'Negeri Sembilan', 'Pahang', 'Penang', 'Perak', 'Perlis', 'Sabah', 'Sarawak', 'Selangor', 'Terengganu', 'Wilayah Persekutuan Kuala Lumpur', 'Wilayah Persekutuan Labuan', 'Wilayah Persekutuan Putrajaya'] as $state)
@@ -352,38 +351,38 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="district_city">District / City *</label>
+                        <label for="district_city">District / City</label>
                         <input type="text" id="district_city" name="district_city" class="form-control" value="{{ old('district_city') }}" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="full_address">Full Address of Organisation *</label>
+                    <label for="full_address">Full Address of Organisation</label>
                     <textarea id="full_address" name="full_address" rows="3" class="form-control" style="font-family: inherit;" required>{{ old('full_address') }}</textarea>
                 </div>
 
                 <div class="grid-3">
                     <div class="form-group">
-                        <label for="postcode">Postcode *</label>
+                        <label for="postcode">Postcode</label>
                         <input type="text" id="postcode" name="postcode" class="form-control" value="{{ old('postcode') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="year_established">Year Established *</label>
+                        <label for="year_established">Year Established</label>
                         <input type="number" id="year_established" name="year_established" class="form-control" value="{{ old('year_established') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="total_members_size">Members / Congregation Size *</label>
+                        <label for="total_members_size">Members / Congregation Size</label>
                         <input type="number" id="total_members_size" name="total_members_size" class="form-control" value="{{ old('total_members_size') }}" required>
                     </div>
                 </div>
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="email">Official Organisation Email Address *</label>
+                        <label for="email">Official Organisation Email Address</label>
                         <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="contact_number">Official Contact Number (WhatsApp preferred) *</label>
+                        <label for="contact_number">Official Contact Number (WhatsApp preferred)</label>
                         <input type="tel" id="contact_number" name="contact_number" class="form-control" placeholder="e.g. +60123456789" value="{{ old('contact_number') }}" required>
                     </div>
                 </div>
@@ -397,7 +396,7 @@
                 <div class="form-section-title">Section C: Organisation Profile</div>
                 
                 <div class="form-group">
-                    <label>Primary Activities * (Dropdown List)</label>
+                    <label>Primary Activities (Dropdown List)</label>
                     <div class="custom-dropdown-container" id="activity-dropdown">
                         <div class="dropdown-trigger" data-placeholder="Choose activities...">
                             <span class="trigger-text">Choose activities...</span>
@@ -415,7 +414,7 @@
                 </div>
 
                 <div class="form-group" id="other-activity-group" style="display: none;">
-                    <label for="primary_activities_other">Please specify "Others" Activity *</label>
+                    <label for="primary_activities_other">Please specify "Others" Activity</label>
                     <input type="text" id="primary_activities_other" name="primary_activities_other" class="form-control" value="{{ old('primary_activities_other') }}">
                 </div>
 
@@ -423,7 +422,7 @@
                 <div class="form-section-title">Section D: Governance & Legal</div>
                 
                 <div class="form-group">
-                    <label>Is your organisation registered with ROS / Religious Authority? *</label>
+                    <label>Is your organisation registered with ROS / Religious Authority?</label>
                     <div class="radio-group">
                         <label class="radio-label">
                             <input type="radio" name="is_registered_ros" value="1" {{ old('is_registered_ros') === '1' ? 'checked' : '' }} required>
@@ -437,15 +436,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Attach Supporting Documents *</label>
+                    <label>Attach Supporting Documents</label>
                     <div style="background: #fdf6f4; border: 1px dashed #ccc; padding: 20px; border-radius: 6px; display: flex; flex-direction: column; gap: 15px;">
                         <div>
-                            <label style="font-weight: 500; font-size: 13px; margin-bottom: 5px; display: block;">Copy of Registration Certificate (ROS / JAIS / relevant authority) *</label>
+                            <label style="font-weight: 500; font-size: 13px; margin-bottom: 5px; display: block;">Copy of Registration Certificate (ROS / JAIS / relevant authority)</label>
                             <input type="file" name="registration_certificate" class="form-control" required style="font-size: 13px;">
                         </div>
                         <div>
-                            <label style="font-weight: 500; font-size: 13px; margin-bottom: 5px; display: block;">List of Committee Members *</label>
-                            <input type="file" name="committee_members" class="form-control" required style="font-size: 13px;">
+                            <label style="font-weight: 500; font-size: 13px; margin-bottom: 5px; display: block;">List of Committee Members (Optional)</label>
+                            <input type="file" name="committee_members" class="form-control" style="font-size: 13px;">
                         </div>
                         <span style="display: block; font-size: 11.5px; color: #666;">* Accepted file types: PDF, Images (JPG, PNG), Word (DOC, DOCX) - Max 10MB per file</span>
                     </div>
@@ -456,18 +455,18 @@
                 
                 <!-- President -->
                 <div class="bearer-row">
-                    <h4>President / Chairman *</h4>
+                    <h4>President / Chairman</h4>
                     <div class="form-group">
-                        <label>Full Name *</label>
+                        <label>Full Name</label>
                         <input type="text" name="key_office_bearers[president][name]" class="form-control" value="{{ old('key_office_bearers.president.name') }}" required>
                     </div>
                     <div class="grid-2">
                         <div class="form-group">
-                            <label>Email Address *</label>
+                            <label>Email Address</label>
                             <input type="email" name="key_office_bearers[president][email]" class="form-control" value="{{ old('key_office_bearers.president.email') }}" required>
                         </div>
                         <div class="form-group">
-                            <label>Contact Number *</label>
+                            <label>Contact Number</label>
                             <input type="tel" name="key_office_bearers[president][phone]" class="form-control" placeholder="e.g. +60123456789" value="{{ old('key_office_bearers.president.phone') }}" required>
                         </div>
                     </div>
@@ -475,18 +474,18 @@
 
                 <!-- Secretary -->
                 <div class="bearer-row">
-                    <h4>Secretary *</h4>
+                    <h4>Secretary General</h4>
                     <div class="form-group">
-                        <label>Full Name *</label>
+                        <label>Full Name</label>
                         <input type="text" name="key_office_bearers[secretary][name]" class="form-control" value="{{ old('key_office_bearers.secretary.name') }}" required>
                     </div>
                     <div class="grid-2">
                         <div class="form-group">
-                            <label>Email Address *</label>
+                            <label>Email Address</label>
                             <input type="email" name="key_office_bearers[secretary][email]" class="form-control" value="{{ old('key_office_bearers.secretary.email') }}" required>
                         </div>
                         <div class="form-group">
-                            <label>Contact Number *</label>
+                            <label>Contact Number</label>
                             <input type="tel" name="key_office_bearers[secretary][phone]" class="form-control" placeholder="e.g. +60123456789" value="{{ old('key_office_bearers.secretary.phone') }}" required>
                         </div>
                     </div>

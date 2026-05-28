@@ -28,7 +28,7 @@ class FormDropdownSeeder extends Seeder
                 'Funding / Partnerships', 'Events & Programmes', 'Other'
             ],
             'ordinary_org_type' => [
-                'NGO', 'Masjid', 'Surau', 'Madrasah', 'Chambers of Commerce', 'Others'
+                'NGO', 'Chambers of Commerce', 'Civil Society Organisation', 'Masjid', 'Surau', 'Madrasah', 'Others'
             ],
             'ordinary_activity' => [
                 'Education / Classes', 'Dakwah / Outreach', 'Welfare / Charity',

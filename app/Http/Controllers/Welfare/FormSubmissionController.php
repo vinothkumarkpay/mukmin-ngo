@@ -95,7 +95,7 @@ class FormSubmissionController extends Controller
             'primary_activities_other' => 'nullable|string|max:255',
             'is_registered_ros' => 'required|boolean',
             'registration_certificate' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
-            'committee_members' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+            'committee_members' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
             'key_office_bearers' => 'required|array',
             'key_office_bearers.president.name' => 'required|string|max:255',
             'key_office_bearers.president.email' => 'required|email|max:255',

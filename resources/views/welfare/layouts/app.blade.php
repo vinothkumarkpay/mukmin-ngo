@@ -28,7 +28,7 @@
     <meta property="og:image:width" content="512">
     <meta property="og:image:height" content="512">
 
-    <link rel="stylesheet" href="{{ asset('css/welfare.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/welfare.css') }}?v={{ filemtime(public_path('css/welfare.css')) }}">
     @stack('styles')
 </head>
 <body class="@yield('body-class', '')">
@@ -85,6 +85,9 @@
                                 <button type="button" class="search-clear" id="search-clear-btn"><i class="fas fa-times"></i></button>
                             </form>
                         </div>
+                        
+                        <!-- Register As A Member Button -->
+                        <a href="{{ route('welfare.serve') }}" class="btn-register-rounded">Register As A Member</a>
                         
                         <!-- Donate Button -->
                         <a href="{{ route('welfare.donate') }}" class="btn-donate-rounded">Donate Now!</a>

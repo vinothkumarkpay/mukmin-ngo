@@ -107,4 +107,44 @@ class FormUploadTest extends TestCase
             Storage::disk('public')->assertExists($filePath);
         }
     }
+
+    public function test_submit_ordinary_membership_without_committee_members()
+    {
+        Storage::fake('public');
+
+        $regCert = UploadedFile::fake()->create('reg_cert.pdf', 100);
+
+        $formData = [
+            'name_of_organisation' => 'Test Org Welfare No Committee',
+            'org_reg_number' => 'REG-67890',
+            'org_reg_date' => '2025-01-01',
+            'registered_state' => 'Selangor',
+            'full_address' => '123 Test Street, Petaling Jaya',
+            'postcode' => '47300',
+            'district_city' => 'Petaling Jaya',
+            'year_established' => 2020,
+            'total_members_size' => 50,
+            'email' => 'testorg2@example.com',
+            'contact_number' => '+60123456789',
+            'org_type' => ['NGO'],
+            'primary_activities' => ['Welfare / Charity'],
+            'is_registered_ros' => '1',
+            'registration_certificate' => $regCert,
+            'key_office_bearers' => [
+                'president' => ['name' => 'President Name', 'email' => 'pres@example.com', 'phone' => '12345'],
+                'secretary' => ['name' => 'Sec Name', 'email' => 'sec@example.com', 'phone' => '67890'],
+            ],
+            'declaration_confirmed' => '1',
+        ];
+
+        $response = $this->post(route('welfare.membership.ordinary.submit'), $formData);
+
+        $response->assertStatus(200);
+        $response->assertViewIs('welfare.pages.form_success');
+
+        $this->assertDatabaseHas('ordinary_member_submissions', [
+            'name_of_organisation' => 'Test Org Welfare No Committee',
+            'committee_members' => null,
+        ]);
+    }
 }

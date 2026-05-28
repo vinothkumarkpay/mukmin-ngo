@@ -285,6 +285,19 @@
     background: #d43c18;
     color: #ffffff;
 }
+.engine-modal-logo {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+}
+.engine-modal-logo img {
+    height: 70px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+}
 .engine-modal-card h4 {
     font-size: 14.5px;
     font-weight: 700;
@@ -788,7 +801,7 @@
                     <div class="container">
                         <div class="slide-text">
                             <h1>Our Ecosystem</h1>
-                            <p>Shape. Connect. Deliver. Developing Solutions. Connecting Communities. Driving Impact. A structured and integrated approach that transforms ideas into action through three complementary roles.</p>
+                            <p><strong>Developing Solutions. Connecting Communities. Driving Impact.</strong><br>A structured and integrated approach that transforms ideas into action through three complementary roles.</p>
                             <div class="slide-buttons">
                                 <a href="{{ route('welfare.ecosystem') }}" class="btn btn-primary">Find out more</a>
                             </div>
@@ -802,9 +815,9 @@
                     <div class="container">
                         <div class="slide-text">
                             <h1>We Are Here For You</h1>
-                            <p>Compassion in Action. Unity in Giving. Strengthening communities through service, dignity, and shared blessings.</p>
+                            <p><strong>Compassion in Action. Unity in Giving.</strong><br>Strengthening communities through service, dignity, and shared blessings.</p>
                             <div class="slide-buttons">
-                                <a href="{{ route('welfare.contact') }}" class="btn btn-primary">Find out more</a>
+                                <a href="#aid-programs" class="btn btn-primary">Find out more</a>
                             </div>
                         </div>
                     </div>
@@ -980,30 +993,27 @@
                 <div class="modal-grid-3">
                     <!-- Engine 1 -->
                     <div class="engine-modal-card">
-                        <div class="engine-modal-icon">
-                            <i class="fas fa-brain"></i>
+                        <div class="engine-modal-logo">
+                            <img src="{{ asset('welfare/img/fikrah_logo.png') }}" alt="FIKRAH Logo">
                         </div>
-                        <h4>FIKRAH</h4>
                         <span>Think Tank</span>
                         <p>Driving policy, research and long-term strategy to shape stronger communities and future-ready institutions.</p>
                     </div>
 
                     <!-- Engine 2 -->
                     <div class="engine-modal-card">
-                        <div class="engine-modal-icon">
-                            <i class="fas fa-globe"></i>
+                        <div class="engine-modal-logo">
+                            <img src="{{ asset('welfare/img/mukmin_ecosystem_logo.png') }}" alt="MUKMIN Logo">
                         </div>
-                        <h4>MUKMIN</h4>
                         <span>Coordination Platform</span>
                         <p>Uniting organisations, aligning stakeholders and coordinating collective action for nationwide impact.</p>
                     </div>
 
                     <!-- Engine 3 -->
                     <div class="engine-modal-card">
-                        <div class="engine-modal-icon">
-                            <i class="fas fa-hand-holding-heart"></i>
+                        <div class="engine-modal-logo">
+                            <img src="{{ asset('welfare/img/yayasan_logo.png') }}" alt="Yayasan MUKMIN Logo">
                         </div>
-                        <h4>Yayasan MUKMIN</h4>
                         <span>Impact Foundation</span>
                         <p>Transforming ideas into measurable outcomes through education, outreach and community-driven initiatives.</p>
                     </div>
@@ -1156,8 +1166,8 @@
                             </div>
                         </div>
                         <div class="stats-details">
-                            <h4>Employment Success Rate</h4>
-                            <p>85% of our graduate cohort have successfully transitioned into high-value corporate roles.</p>
+                            <h4>Emerging Talent Opportunities Facilitated</h4>
+                            <p>Creating meaningful connections between graduates, employers and industry ecosystems.</p>
                         </div>
                     </div>
                 </div>
@@ -1166,7 +1176,7 @@
     </section>
 
     <!-- SUB BLOCK 3 (CAUSES LIST / TABBED OR CARDS) -->
-    <section class="section-campaigns bg-white" style="padding-top: 80px; padding-bottom: 80px;">
+    <section id="aid-programs" class="section-campaigns bg-white" style="padding-top: 80px; padding-bottom: 80px;">
         <div class="container">
             <div class="section-header text-center" style="margin-bottom: 50px;">
                 <h2>Our Aid Programs</h2>
@@ -1378,7 +1388,7 @@
     </section>
 
     <!-- SUB BLOCK 5 (QUOTE PARALLAX / CTA BANNER) -->
-    <section class="section-donate-cta" style="background-image: linear-gradient(rgba(212,60,24,0.9), rgba(212,60,24,0.9)), url('https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=1600'); background-size: cover; background-position: center; background-attachment: fixed; text-align: center; padding: 80px 0;">
+    <section class="section-donate-cta" style="background-image: linear-gradient(rgba(30,30,30,0.85), rgba(30,30,30,0.85)), url('https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=1600'); background-size: cover; background-position: center; background-attachment: fixed; text-align: center; padding: 80px 0;">
         <div class="container" style="max-width: 800px;">
             <i class="fas fa-quote-left" style="font-size: 40px; color: white; opacity: 0.3; margin-bottom: 20px;"></i>
             <h2 style="color: white; font-size: 32px; line-height: 42px; font-weight: 700; margin-bottom: 20px; font-style: italic;">"No one has ever become poor by giving"</h2>
@@ -1560,22 +1570,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (entry.isIntersecting) {
                     // Trigger SVG bar animation
                     // Circumference is 2 * pi * 42 = 263.89
-                    // 85% progress => dashoffset = 263.89 * (1 - 0.85) = 39.58
-                    progressBar.style.strokeDashoffset = '39.58';
+                    // 0% progress => dashoffset = 263.89 * (1 - 0) = 263.89
+                    progressBar.style.strokeDashoffset = '263.89';
                     
                     // Count-up percentage animation
-                    let count = 0;
-                    const target = 85;
-                    const duration = 1800; // 1.8 seconds (matches CSS transition)
-                    const stepTime = Math.abs(Math.floor(duration / target));
-                    
-                    const timer = setInterval(() => {
-                        count++;
-                        progressPercent.textContent = count + '%';
-                        if (count >= target) {
-                            clearInterval(timer);
-                        }
-                    }, stepTime);
+                    progressPercent.textContent = '0%';
                     
                     observer.unobserve(statsCard); // Run once
                 }
