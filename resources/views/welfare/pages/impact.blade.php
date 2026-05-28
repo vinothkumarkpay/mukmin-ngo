@@ -307,7 +307,7 @@
                             <li>Industry and institutional collaboration</li>
                             <li>Development of values-driven and future-ready talent</li>
                         </ul>
-                        <a href="#" class="expand-cta" title="MFLS site — update link when available">Read More <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                        <a href="{{ route('welfare.impact.mfls') }}" class="expand-cta">Read More <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                     </div>
                 </article>
 

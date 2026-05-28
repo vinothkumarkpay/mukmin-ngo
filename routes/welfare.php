@@ -38,6 +38,7 @@ Route::name('welfare.')->group(function () {
     Route::get('/ecosystem', [PageController::class, 'ecosystem'])->name('ecosystem');
     Route::get('/serve-together', [PageController::class, 'serve'])->name('serve');
     Route::get('/impact-areas', [PageController::class, 'impact'])->name('impact');
+    Route::get('/impact-areas/mfls', [PageController::class, 'mfls'])->name('impact.mfls');
     Route::get('/news', [PageController::class, 'news'])->name('news');
     Route::get('/changing-lives', [PageController::class, 'changing'])->name('changing');
 

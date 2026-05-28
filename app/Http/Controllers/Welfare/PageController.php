@@ -78,6 +78,11 @@ class PageController extends Controller
         return view('welfare.pages.impact');
     }
 
+    public function mfls()
+    {
+        return view('welfare.pages.mfls');
+    }
+
     public function news()
     {
         return view('welfare.pages.news');
