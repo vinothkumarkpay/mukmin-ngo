@@ -79,6 +79,7 @@
 
                     <!-- Top Row Actions -->
                     <div class="header-top-actions">
+                        {{--
                         <!-- Search Box (inline expandable) -->
                         <div class="search-box-inline" id="search-box-inline">
                             <form action="#" method="GET" onsubmit="return false;">
@@ -86,6 +87,7 @@
                                 <button type="button" class="search-clear" id="search-clear-btn"><i class="fas fa-times"></i></button>
                             </form>
                         </div>
+                        --}}
                         
                         <!-- Register As A Member Button -->
                         <a href="{{ route('welfare.serve') }}#membership-vertical-tabs" class="btn-register-rounded" aria-label="Register as a member">
@@ -99,10 +101,12 @@
                             <span class="action-text">Donate Now!</span>
                         </a>
                         
+                        {{--
                         <!-- Search Toggle Icon -->
                         <button class="search-icon-btn" id="search-icon-btn" title="Search">
                             <i class="fas fa-search"></i>
                         </button>
+                        --}}
                         
                         <!-- Mobile menu toggle -->
                         <button type="button" class="mobile-menu-toggle" id="mobile-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav" title="Menu">

@@ -54,6 +54,7 @@
                 </div>
                 @endif
 
+                {{--
                 @if($t['header_search'] ?? true)
                 <div class="search_wrap">
                     <div class="search_wrap_inner">
@@ -68,6 +69,7 @@
                     </div>
                 </div>
                 @endif
+                --}}
 
                 <div class="logo_wrap">
                     <a href="{{ route('welfare.home') }}" title="{{ config('welfare.name') }}" class="logo" style="display: flex; align-items: center; height: 100%; text-decoration: none;">
