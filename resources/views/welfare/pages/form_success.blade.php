@@ -13,8 +13,8 @@
             <h2 style="font-size: 28px; font-weight: 700; color: #1e1e1e; margin-bottom: 15px;">{{ $title }}</h2>
             <p style="font-size: 15px; line-height: 26px; color: #555; margin-bottom: 35px;">{!! nl2br(e($message)) !!}</p>
             
-            <a href="{{ route('welfare.serve') }}" class="btn-donate-rounded" style="padding: 14px 32px; font-size: 15px; text-decoration: none; display: inline-block;">
-                Return to Serve Together
+            <a href="{{ route('welfare.home') }}" class="btn-donate-rounded" style="padding: 14px 32px; font-size: 15px; text-decoration: none; display: inline-block;">
+                Home
             </a>
         </div>
     </div>

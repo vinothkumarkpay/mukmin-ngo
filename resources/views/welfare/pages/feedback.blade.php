@@ -286,7 +286,7 @@
                         <input type="text" id="nric_number" name="nric_number" class="form-control" placeholder="e.g. 900101-14-5555" value="{{ old('nric_number') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="state_residency">State of Residency *</label>
+                        <label for="state_residency">State *</label>
                         <select id="state_residency" name="state_residency" class="form-control" required>
                             <option value="">-- Choose State --</option>
                             @foreach(['Johor', 'Kedah', 'Kelantan', 'Melaka', 'Negeri Sembilan', 'Pahang', 'Penang', 'Perak', 'Perlis', 'Sabah', 'Sarawak', 'Selangor', 'Terengganu', 'Wilayah Persekutuan Kuala Lumpur', 'Wilayah Persekutuan Labuan', 'Wilayah Persekutuan Putrajaya'] as $state)

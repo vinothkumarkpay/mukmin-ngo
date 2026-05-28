@@ -25,7 +25,7 @@ class FormSubmissionMail extends Mailable
         'nric_number' => 'NRIC Number',
         'organisation' => 'Organisation / Company',
         'position' => 'Position',
-        'state_residency' => 'State of Residency',
+        'state_residency' => 'State',
         'full_address' => 'Full Address',
         'email' => 'Email Address',
         'contact_number' => 'Contact Number',
