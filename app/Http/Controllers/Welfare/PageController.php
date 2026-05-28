@@ -163,6 +163,11 @@ class PageController extends Controller
         return view('welfare.pages.contact');
     }
 
+    public function legalDisclaimer()
+    {
+        return view('welfare.pages.legal-disclaimer');
+    }
+
     public function donate()
     {
         return view('welfare.pages.donate');
