@@ -789,7 +789,7 @@
                             <h1>Join Us</h1>
                             <p>Be part of a national movement connecting communities, empowering people, and shaping a stronger, more inclusive future.</p>
                             <div class="slide-buttons">
-                                <a href="{{ route('welfare.serve') }}" class="btn btn-primary">Register as Member</a>
+                                <a href="{{ route('welfare.serve') }}#membership-vertical-tabs" class="btn btn-primary">Register as Member</a>
                             </div>
                         </div>
                     </div>
