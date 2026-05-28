@@ -12,9 +12,9 @@
     <div class="container">
         <div class="president-grid">
             <div class="president-img-container">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80" alt="Datuk Dr. Mohd Gazali Haji Mohd Abas">
+                <img src="{{ asset('welfare/img/about/president-shahul-hameed.png') }}" alt="Datuk Wira Shahul Hameed Bin Shaik Dawood">
                 <div class="president-title-overlay">
-                    <h4>Datuk Dr. Mohd Gazali Haji Mohd Abas</h4>
+                    <h4>Datuk Wira Shahul Hameed Bin Shaik Dawood</h4>
                     <span>President, Pertubuhan Gabungan MUKMIN Nasional</span>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                 <p>Thank you and Wassalam.</p>
                 
                 <div class="president-signature">
-                    <h5>Datuk Dr. Mohd Gazali Haji Mohd Abas</h5>
+                    <h5>Datuk Wira Shahul Hameed Bin Shaik Dawood</h5>
                     <p>President, Pertubuhan Gabungan MUKMIN Nasional</p>
                 </div>
             </div>
