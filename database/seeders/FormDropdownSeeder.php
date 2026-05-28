@@ -82,11 +82,10 @@ class FormDropdownSeeder extends Seeder
 
         foreach ($options as $type => $values) {
             foreach ($values as $index => $value) {
-                FormDropdownOption::create([
-                    'form_type' => $type,
-                    'option_value' => $value,
-                    'sort_order' => $index * 10
-                ]);
+                FormDropdownOption::firstOrCreate(
+                    ['form_type' => $type, 'option_value' => $value],
+                    ['sort_order' => $index * 10]
+                );
             }
         }
 
