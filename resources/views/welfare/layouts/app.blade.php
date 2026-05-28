@@ -87,7 +87,7 @@
                         </div>
                         
                         <!-- Register As A Member Button -->
-                        <a href="{{ route('welfare.serve') }}" class="btn-register-rounded">Register As A Member</a>
+                        <a href="{{ route('welfare.serve') }}#membership-vertical-tabs" class="btn-register-rounded">Register As A Member</a>
                         
                         <!-- Donate Button -->
                         <a href="{{ route('welfare.donate') }}" class="btn-donate-rounded">Donate Now!</a>

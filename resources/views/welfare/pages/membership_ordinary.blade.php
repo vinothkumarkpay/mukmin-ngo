@@ -474,19 +474,19 @@
 
                 <!-- Secretary -->
                 <div class="bearer-row">
-                    <h4>Secretary General</h4>
+                    <h4>Secretary General (Optional)</h4>
                     <div class="form-group">
                         <label>Full Name</label>
-                        <input type="text" name="key_office_bearers[secretary][name]" class="form-control" value="{{ old('key_office_bearers.secretary.name') }}" required>
+                        <input type="text" name="key_office_bearers[secretary][name]" class="form-control" value="{{ old('key_office_bearers.secretary.name') }}">
                     </div>
                     <div class="grid-2">
                         <div class="form-group">
                             <label>Email Address</label>
-                            <input type="email" name="key_office_bearers[secretary][email]" class="form-control" value="{{ old('key_office_bearers.secretary.email') }}" required>
+                            <input type="email" name="key_office_bearers[secretary][email]" class="form-control" value="{{ old('key_office_bearers.secretary.email') }}">
                         </div>
                         <div class="form-group">
                             <label>Contact Number</label>
-                            <input type="tel" name="key_office_bearers[secretary][phone]" class="form-control" placeholder="e.g. +60123456789" value="{{ old('key_office_bearers.secretary.phone') }}" required>
+                            <input type="tel" name="key_office_bearers[secretary][phone]" class="form-control" placeholder="e.g. +60123456789" value="{{ old('key_office_bearers.secretary.phone') }}">
                         </div>
                     </div>
                 </div>
