@@ -6,9 +6,10 @@
 <section class="section-donate bg-white" style="padding: 60px 0;">
     <div class="container" style="max-width: 600px; margin: 0 auto; padding: 20px;">
         <div class="section-header text-center" style="margin-bottom: 45px;">
-            <h2>Support MUKMIN</h2>
+            <h2>Every Contribution Begins With A Shared Purpose</h2>
             <div class="section-divider"><span></span></div>
-            <p class="section-subtitle">Your generosity fuels our programs. Choose an amount below.</p>
+            <p class="section-subtitle" style="margin-bottom: 16px;">Thank you for your willingness to support the MUKMIN movement and the communities we serve.</p>
+            <p class="section-subtitle">Our donation platform is currently under development and will be launched soon to facilitate future contributions and impact initiatives.</p>
         </div>
 
         <form method="POST" action="{{ route('welfare.donate.submit') }}" style="display: flex; flex-direction: column; gap: 20px;">
