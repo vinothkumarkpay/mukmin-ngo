@@ -39,7 +39,7 @@
 
             <div>
                 <label style="display: block; font-weight: 500; margin-bottom: 5px; color: var(--color-heading);">Email Address</label>
-                <input type="email" name="email" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';" required>
+                <input type="email" name="email" placeholder="name@example.com" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';" required>
             </div>
 
             <div style="margin-top: 10px;">

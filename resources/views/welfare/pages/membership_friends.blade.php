@@ -314,7 +314,7 @@
                     <div class="grid-2">
                         <div class="form-group">
                             <label for="ind_email">Email Address *</label>
-                            <input type="email" id="ind_email" name="ind_email" class="form-control" value="{{ old('ind_email') }}">
+                            <input type="email" id="ind_email" name="ind_email" class="form-control" placeholder="name@example.com" value="{{ old('ind_email') }}">
                         </div>
                         <div class="form-group">
                             <label for="ind_phone">Contact Number *</label>
@@ -350,7 +350,7 @@
                     <div class="grid-2">
                         <div class="form-group">
                             <label for="org_email">Official Organisation Email Address *</label>
-                            <input type="email" id="org_email" name="org_email" class="form-control" value="{{ old('org_email') }}">
+                            <input type="email" id="org_email" name="org_email" class="form-control" placeholder="name@example.com" value="{{ old('org_email') }}">
                         </div>
                         <div class="form-group">
                             <label for="org_phone">Official Contact Number (WhatsApp preferred) *</label>

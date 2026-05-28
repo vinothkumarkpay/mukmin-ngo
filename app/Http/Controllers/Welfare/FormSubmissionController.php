@@ -73,14 +73,14 @@ class FormSubmissionController extends Controller
         return 'nullable|regex:/^\+?[0-9][0-9\s\-()]{7,19}$/';
     }
 
-    private function requiredNricRule(): string
+    private function requiredNricRule(): array
     {
-        return 'required|regex:/^(?:\d{12}|\d{6}-\d{2}-\d{4})$/';
+        return ['required', 'regex:/^(?:\d{12}|\d{6}-\d{2}-\d{4})$/'];
     }
 
-    private function requiredNricOrPassportRule(): string
+    private function requiredNricOrPassportRule(): array
     {
-        return 'required|regex:/^(?:\d{12}|\d{6}-\d{2}-\d{4}|[A-Za-z0-9]{6,20})$/';
+        return ['required', 'regex:/^(?:\d{12}|\d{6}-\d{2}-\d{4}|[A-Za-z0-9]{6,20})$/'];
     }
 
     public function feedback()

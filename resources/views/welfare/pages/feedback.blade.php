@@ -315,7 +315,7 @@
                 <div class="grid-2">
                     <div class="form-group">
                         <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}" required>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" value="{{ old('email') }}" required>
                     </div>
                     <div class="form-group">
                         <label for="contact_number">Contact Number *</label>
