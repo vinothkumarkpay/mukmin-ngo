@@ -53,6 +53,36 @@ class FormSubmissionController extends Controller
             ->toArray();
     }
 
+    private function requiredEmailRule(): string
+    {
+        return 'required|email:rfc,dns|max:255';
+    }
+
+    private function nullableEmailRule(): string
+    {
+        return 'nullable|email:rfc,dns|max:255';
+    }
+
+    private function requiredPhoneRule(): string
+    {
+        return 'required|regex:/^\+?[0-9][0-9\s\-()]{7,19}$/';
+    }
+
+    private function nullablePhoneRule(): string
+    {
+        return 'nullable|regex:/^\+?[0-9][0-9\s\-()]{7,19}$/';
+    }
+
+    private function requiredNricRule(): string
+    {
+        return 'required|regex:/^(?:\d{12}|\d{6}-\d{2}-\d{4})$/';
+    }
+
+    private function requiredNricOrPassportRule(): string
+    {
+        return 'required|regex:/^(?:\d{12}|\d{6}-\d{2}-\d{4}|[A-Za-z0-9]{6,20})$/';
+    }
+
     public function feedback()
     {
         $categories = $this->getOptions('feedback_category');
@@ -63,13 +93,13 @@ class FormSubmissionController extends Controller
     {
         $validated = $request->validate([
             'full_name' => 'required|string|max:255',
-            'nric_number' => 'required|string|max:20',
+            'nric_number' => $this->requiredNricRule(),
             'organisation' => 'nullable|string|max:255',
             'position' => 'nullable|string|max:255',
             'state_residency' => 'required|string|max:50',
             'full_address' => 'required|string',
-            'email' => 'required|email|max:255',
-            'contact_number' => 'required|string|max:20',
+            'email' => $this->requiredEmailRule(),
+            'contact_number' => $this->requiredPhoneRule(),
             'categories' => 'required|array|min:1',
             'other_category' => 'nullable|string|max:255',
             'suggestion_description' => 'required|string',
@@ -108,8 +138,8 @@ class FormSubmissionController extends Controller
             'district_city' => 'required|string|max:100',
             'year_established' => 'required|integer|min:1800|max:' . date('Y'),
             'total_members_size' => 'required|integer|min:0',
-            'email' => 'required|email|max:255',
-            'contact_number' => 'required|string|max:20',
+            'email' => $this->requiredEmailRule(),
+            'contact_number' => $this->requiredPhoneRule(),
             'website' => 'nullable|string|max:255',
             'org_type' => 'required|array|min:1',
             'org_type_other' => 'nullable|string|max:255',
@@ -120,14 +150,14 @@ class FormSubmissionController extends Controller
             'committee_members' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
             'key_office_bearers' => 'required|array',
             'key_office_bearers.president.name' => 'required|string|max:255',
-            'key_office_bearers.president.email' => 'required|email|max:255',
-            'key_office_bearers.president.phone' => 'required|string|max:20',
+            'key_office_bearers.president.email' => $this->requiredEmailRule(),
+            'key_office_bearers.president.phone' => $this->requiredPhoneRule(),
             'key_office_bearers.secretary.name' => 'nullable|string|max:255',
-            'key_office_bearers.secretary.email' => 'nullable|email|max:255',
-            'key_office_bearers.secretary.phone' => 'nullable|string|max:20',
+            'key_office_bearers.secretary.email' => $this->nullableEmailRule(),
+            'key_office_bearers.secretary.phone' => $this->nullablePhoneRule(),
             'key_office_bearers.treasurer.name' => 'nullable|string|max:255',
-            'key_office_bearers.treasurer.email' => 'nullable|email|max:255',
-            'key_office_bearers.treasurer.phone' => 'nullable|string|max:20',
+            'key_office_bearers.treasurer.email' => $this->nullableEmailRule(),
+            'key_office_bearers.treasurer.phone' => $this->nullablePhoneRule(),
             'declaration_confirmed' => 'required|accepted',
         ]);
 
@@ -166,19 +196,19 @@ class FormSubmissionController extends Controller
         if ($request->input('entity_type') === 'Individual') {
             $rules = array_merge($rules, [
                 'ind_name' => 'required|string|max:255',
-                'ind_nric' => 'required|string|max:20',
+                'ind_nric' => $this->requiredNricRule(),
                 'ind_state' => 'required|string|max:50',
                 'ind_address' => 'required|string',
-                'ind_email' => 'required|email|max:255',
-                'ind_phone' => 'required|string|max:20',
+                'ind_email' => $this->requiredEmailRule(),
+                'ind_phone' => $this->requiredPhoneRule(),
             ]);
         } else {
             $rules = array_merge($rules, [
                 'org_name' => 'required|string|max:255',
                 'org_state' => 'required|string|max:50',
                 'org_address' => 'required|string',
-                'org_email' => 'required|email|max:255',
-                'org_phone' => 'required|string|max:20',
+                'org_email' => $this->requiredEmailRule(),
+                'org_phone' => $this->requiredPhoneRule(),
                 'org_website' => 'nullable|string|max:255',
             ]);
         }
@@ -208,7 +238,7 @@ class FormSubmissionController extends Controller
     {
         $validated = $request->validate([
             'full_name' => 'required|string|max:255',
-            'nric_passport' => 'required|string|max:255',
+            'nric_passport' => $this->requiredNricOrPassportRule(),
             'gender' => 'required|string|in:Male,Female',
             'occupation' => 'required|string|max:255',
             'organisation' => 'required|string|max:255',
@@ -216,8 +246,8 @@ class FormSubmissionController extends Controller
             'experience_years' => 'required|integer|min:0',
             'state_residency' => 'required|string|max:50',
             'full_address' => 'required|string',
-            'email' => 'required|email|max:255',
-            'contact_number' => 'required|string|max:20',
+            'email' => $this->requiredEmailRule(),
+            'contact_number' => $this->requiredPhoneRule(),
             'linkedin' => 'nullable|string|max:255',
             'expertise_areas' => 'required|array|min:1',
             'expertise_other' => 'nullable|string|max:255',
@@ -254,8 +284,8 @@ class FormSubmissionController extends Controller
             'contact_person' => 'required|string|max:255',
             'position' => 'required|string|max:255',
             'org_reg_number' => 'nullable|string|max:50',
-            'email' => 'required|email|max:255',
-            'contact_number' => 'required|string|max:20',
+            'email' => $this->requiredEmailRule(),
+            'contact_number' => $this->requiredPhoneRule(),
             'office_address' => 'required|string',
             'state_country' => 'required|string|max:50',
             'org_type' => 'required|array|min:1',
@@ -303,14 +333,14 @@ class FormSubmissionController extends Controller
     {
         $validated = $request->validate([
             'full_name' => 'required|string|max:255',
-            'nric_passport' => 'required|string|max:255',
+            'nric_passport' => $this->requiredNricOrPassportRule(),
             'gender' => 'required|string|in:Male,Female',
             'occupation_study' => 'required|string|max:255',
             'organisation' => 'nullable|string|max:255',
             'state_residency' => 'required|string|max:50',
             'full_address' => 'required|string',
-            'email' => 'required|email|max:255',
-            'contact_number' => 'required|string|max:20',
+            'email' => $this->requiredEmailRule(),
+            'contact_number' => $this->requiredPhoneRule(),
             'interest_areas' => 'required|array|min:1',
             'interest_other' => 'nullable|string|max:255',
             'skills_expertise' => 'required|string',
@@ -320,7 +350,7 @@ class FormSubmissionController extends Controller
             'volunteered_before_details' => 'nullable|string',
             'emergency_contact_name' => 'required|string|max:255',
             'emergency_contact_relationship' => 'required|string|max:255',
-            'emergency_contact_phone' => 'required|string|max:20',
+            'emergency_contact_phone' => $this->requiredPhoneRule(),
             'declaration_confirmed' => 'required|accepted',
         ]);
 
@@ -338,8 +368,8 @@ class FormSubmissionController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email:rfc,dns|max:255',
-            'phone' => 'required|string|max:20',
+            'email' => $this->requiredEmailRule(),
+            'phone' => $this->requiredPhoneRule(),
             'message' => 'required|string',
         ]);
 
@@ -355,7 +385,7 @@ class FormSubmissionController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'email' => $this->requiredEmailRule(),
             'amount' => 'nullable|numeric|min:1',
             'custom_amount' => 'nullable|numeric|min:1',
         ]);
@@ -375,14 +405,14 @@ class FormSubmissionController extends Controller
     {
         $validated = $request->validate([
             'full_name' => 'required|string|max:255',
-            'nric_passport' => 'required|string|max:255',
+            'nric_passport' => $this->requiredNricOrPassportRule(),
             'gender' => 'required|string|in:Male,Female',
             'dob' => 'required|date',
             'nationality' => 'required|string|max:255',
             'occupation' => 'required|string|max:255',
             'monthly_income' => 'nullable|string|max:255',
-            'contact_number' => 'required|string|max:20',
-            'email' => 'required|email|max:255',
+            'contact_number' => $this->requiredPhoneRule(),
+            'email' => $this->requiredEmailRule(),
             'full_address' => 'required|string',
             'state_residency' => 'required|string|max:50',
             'type_of_aid' => 'required|array|min:1',
@@ -396,7 +426,7 @@ class FormSubmissionController extends Controller
             'supporting_files.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,zip,ppt,pptx|max:20480',
             'emergency_contact_name' => 'required|string|max:255',
             'emergency_contact_relationship' => 'required|string|max:255',
-            'emergency_contact_phone' => 'required|string|max:20',
+            'emergency_contact_phone' => $this->requiredPhoneRule(),
             'declaration_confirmed' => 'required|accepted',
         ]);
 

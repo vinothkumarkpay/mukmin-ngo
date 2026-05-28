@@ -52,6 +52,16 @@ a:hover { color: #c0c0c0; }
 img { max-width: 100%; height: auto; display: block; }
 ul { list-style: none; }
 
+/* Remove browser spinner controls on numeric inputs */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-main);
     color: var(--color-heading);
