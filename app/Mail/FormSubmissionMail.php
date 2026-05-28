@@ -155,9 +155,12 @@ class FormSubmissionMail extends Mailable
      */
     public function build()
     {
-        $email = $this->from(config('mail.from.address'), config('mail.from.name'))
-                     ->subject($this->subject)
-                     ->view('emails.form_submission');
+        $email = $this->from(
+            config('mail.from.address'),
+            config('mail.from.name')
+        )
+            ->subject($this->subject)
+            ->view('emails.form_submission');
 
         // Attach files if the email is for support
         if ($this->isForSupport) {

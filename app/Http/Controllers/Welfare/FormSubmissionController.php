@@ -12,11 +12,38 @@ use App\Models\MentorSubmission;
 use App\Models\PartnerSubmission;
 use App\Models\VolunteerSubmission;
 use App\Models\ContactSubmission;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\FormSubmissionMail;
 
 class FormSubmissionController extends Controller
 {
+    /**
+     * Send acknowledgement to the applicant (when email provided) and a copy to support.
+     * Each recipient is mailed independently so one failure does not block the other.
+     */
+    private function sendFormSubmissionEmails(string $formName, array $validated, ?string $applicantEmail = null): void
+    {
+        if ($applicantEmail) {
+            try {
+                Mail::to($applicantEmail)->send(new FormSubmissionMail($formName, $validated));
+            } catch (\Throwable $e) {
+                Log::error("Mail to applicant failed for {$formName}", [
+                    'email' => $applicantEmail,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        try {
+            Mail::to('support@mukmin.org')->send(new FormSubmissionMail($formName, $validated, true));
+        } catch (\Throwable $e) {
+            Log::error("Mail to support failed for {$formName}", [
+                'error' => $e->getMessage(),
+            ]);
+        }
+    }
+
     private function getOptions($type)
     {
         return FormDropdownOption::where('form_type', $type)
@@ -54,12 +81,7 @@ class FormSubmissionController extends Controller
 
         FeedbackSubmission::create($validated);
 
-        try {
-            Mail::to($validated['email'])->send(new FormSubmissionMail('Feedback & Suggestion', $validated));
-            Mail::to('support@mukmin.org')->send(new FormSubmissionMail('Feedback & Suggestion', $validated, true));
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Mail sending failed for Feedback & Suggestion: ' . $e->getMessage());
-        }
+        $this->sendFormSubmissionEmails('Feedback & Suggestion', $validated, $validated['email']);
 
         return view('welfare.pages.form_success', [
             'title' => 'Thank you for sharing your feedback with MUKMIN.',
@@ -118,12 +140,7 @@ class FormSubmissionController extends Controller
 
         OrdinaryMemberSubmission::create($validated);
 
-        try {
-            Mail::to($validated['email'])->send(new FormSubmissionMail('Ordinary Member Registration', $validated));
-            Mail::to('support@mukmin.org')->send(new FormSubmissionMail('Ordinary Member Registration', $validated, true));
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Mail sending failed for Ordinary Member Registration: ' . $e->getMessage());
-        }
+        $this->sendFormSubmissionEmails('Ordinary Member Registration', $validated, $validated['email']);
 
         return view('welfare.pages.form_success', [
             'title' => 'Application Submitted',
@@ -171,14 +188,7 @@ class FormSubmissionController extends Controller
         FriendMemberSubmission::create($validated);
 
         $email = $validated['entity_type'] === 'Individual' ? ($validated['ind_email'] ?? null) : ($validated['org_email'] ?? null);
-        if ($email) {
-            try {
-                Mail::to($email)->send(new FormSubmissionMail('Friend of MUKMIN Registration', $validated));
-                Mail::to('support@mukmin.org')->send(new FormSubmissionMail('Friend of MUKMIN Registration', $validated, true));
-            } catch (\Exception $e) {
-                \Illuminate\Support\Facades\Log::error('Mail sending failed for Friend of MUKMIN: ' . $e->getMessage());
-            }
-        }
+        $this->sendFormSubmissionEmails('Friend of MUKMIN Registration', $validated, $email ?: null);
 
         return view('welfare.pages.form_success', [
             'title' => 'Your submission has been successfully received.',
@@ -221,12 +231,7 @@ class FormSubmissionController extends Controller
 
         MentorSubmission::create($validated);
 
-        try {
-            Mail::to($validated['email'])->send(new FormSubmissionMail('Mentor Registration', $validated));
-            Mail::to('support@mukmin.org')->send(new FormSubmissionMail('Mentor Registration', $validated, true));
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Mail sending failed for Mentor Registration: ' . $e->getMessage());
-        }
+        $this->sendFormSubmissionEmails('Mentor Registration', $validated, $validated['email']);
 
         return view('welfare.pages.form_success', [
             'title' => 'Thank you for registering as a MUKMIN Mentor.',
@@ -278,12 +283,7 @@ class FormSubmissionController extends Controller
 
         PartnerSubmission::create($validated);
 
-        try {
-            Mail::to($validated['email'])->send(new FormSubmissionMail('Partnership & Collaboration Proposal', $validated));
-            Mail::to('support@mukmin.org')->send(new FormSubmissionMail('Partnership & Collaboration Proposal', $validated, true));
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Mail sending failed for Partnership & Collaboration: ' . $e->getMessage());
-        }
+        $this->sendFormSubmissionEmails('Partnership & Collaboration Proposal', $validated, $validated['email']);
 
         return view('welfare.pages.form_success', [
             'title' => 'Thank you for engaging with MUKMIN.',
@@ -326,12 +326,7 @@ class FormSubmissionController extends Controller
 
         VolunteerSubmission::create($validated);
 
-        try {
-            Mail::to($validated['email'])->send(new FormSubmissionMail('Volunteer Registration', $validated));
-            Mail::to('support@mukmin.org')->send(new FormSubmissionMail('Volunteer Registration', $validated, true));
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Mail sending failed for Volunteer Registration: ' . $e->getMessage());
-        }
+        $this->sendFormSubmissionEmails('Volunteer Registration', $validated, $validated['email']);
 
         return view('welfare.pages.form_success', [
             'title' => 'Thank You For Stepping Forward To Serve',
@@ -415,11 +410,7 @@ class FormSubmissionController extends Controller
 
         \App\Models\CommunityAidSubmission::create($validated);
 
-        try {
-            Mail::to('support@mukmin.org')->send(new FormSubmissionMail('Community Aid & Assistance Request', $validated, true));
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Mail sending failed for Community Aid Request: ' . $e->getMessage());
-        }
+        $this->sendFormSubmissionEmails('Community Aid & Assistance Request', $validated);
 
         return view('welfare.pages.form_success', [
             'title' => 'Request Submitted Successfully',
