@@ -12,6 +12,7 @@
             <p class="section-subtitle">Our donation platform is currently under development and will be launched soon to facilitate future contributions and impact initiatives.</p>
         </div>
 
+        @if(false) {{-- Temporarily hide donation form until launch --}}
         <form method="POST" action="{{ route('welfare.donate.submit') }}" style="display: flex; flex-direction: column; gap: 20px;">
             @csrf
             
@@ -46,9 +47,11 @@
                 <button type="submit" class="btn btn-primary" style="border: none; border-radius: 4px; font-size: 16px; width: 100%; line-height: 20px; padding: 12px 28px;">Complete Donation</button>
             </div>
         </form>
+        @endif
     </div>
 </section>
 
+@if(false)
 <style>
 /* Style for active radio button selection */
 .amount-radio:checked + .amount-card {
@@ -60,4 +63,5 @@
     border-color: var(--color-primary) !important;
 }
 </style>
+@endif
 @endsection
