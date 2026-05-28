@@ -1191,7 +1191,6 @@
                         <i class="fas fa-graduation-cap"></i>
                     </div>
                     <h3>Education Aid</h3>
-                    <div class="aid-card-subheading"></div>
                     <p>Providing educational support, learning access and development opportunities to empower future generations through knowledge and skills.</p>
                     <!-- Progress Bar -->
                     <div style="margin-top: auto;">
