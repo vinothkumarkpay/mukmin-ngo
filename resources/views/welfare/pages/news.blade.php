@@ -1028,95 +1028,29 @@
             <!-- Filter Controls -->
             <div class="gallery-filter-bar">
                 <button class="gallery-filter-btn active" data-filter="all">All Photos</button>
-                <button class="gallery-filter-btn" data-filter="ramadhan">Ramadhan Aid</button>
-                <button class="gallery-filter-btn" data-filter="forums">Forums & Summits</button>
-                <button class="gallery-filter-btn" data-filter="celebrations">Celebrations</button>
-                <button class="gallery-filter-btn" data-filter="coordination">Coordination</button>
+                <button class="gallery-filter-btn" data-filter="kembara-ramadhan-mukmin">Kembara Ramadhan MUKMIN</button>
+                <button class="gallery-filter-btn" data-filter="sirat-series">SIRAT Series</button>
             </div>
 
             <!-- Image Grid -->
             <div class="gallery-masonry-grid">
-                
-                <!-- Image 1 -->
-                <div class="gallery-card" data-category="celebrations" data-title="Hari Raya Open House 2025" data-src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=800&auto=format&fit=crop&q=80">
-                    <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=800&auto=format&fit=crop&q=80" alt="Hari Raya Open House 2025">
+                @forelse($momentsGallery as $image)
+                <div class="gallery-card"
+                     data-category="{{ $image['category'] }}"
+                     data-title="{{ $image['title'] }}"
+                     data-src="{{ $image['src'] }}">
+                    <img src="{{ $image['src'] }}" alt="{{ $image['title'] }}" loading="lazy">
                     <div class="gallery-card-overlay">
                         <div class="gallery-overlay-icon"><i class="fas fa-search-plus" aria-hidden="true"></i></div>
-                        <h4 class="gallery-overlay-title">Hari Raya Open House 2025</h4>
-                        <span class="gallery-overlay-cat">Celebrations</span>
+                        <h4 class="gallery-overlay-title">{{ $image['title'] }}</h4>
+                        <span class="gallery-overlay-cat">{{ $image['category_label'] }}</span>
                     </div>
                 </div>
-
-                <!-- Image 2 -->
-                <div class="gallery-card" data-category="ramadhan" data-title="Kembara Ramadhan Welfare Basket Distribution" data-src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&auto=format&fit=crop&q=80">
-                    <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&auto=format&fit=crop&q=80" alt="Kembara Ramadhan Welfare Basket Distribution">
-                    <div class="gallery-card-overlay">
-                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus" aria-hidden="true"></i></div>
-                        <h4 class="gallery-overlay-title">Kembara Ramadhan Aid</h4>
-                        <span class="gallery-overlay-cat">Ramadhan Aid</span>
-                    </div>
-                </div>
-
-                <!-- Image 3 -->
-                <div class="gallery-card" data-category="forums" data-title="SIRAT Leaders Summit Panel Discussion" data-src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=80">
-                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=80" alt="SIRAT Leaders Summit Panel Discussion">
-                    <div class="gallery-card-overlay">
-                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus" aria-hidden="true"></i></div>
-                        <h4 class="gallery-overlay-title">Leaders Summit Panel</h4>
-                        <span class="gallery-overlay-cat">Forums & Summits</span>
-                    </div>
-                </div>
-
-                <!-- Image 4 -->
-                <div class="gallery-card" data-category="forums" data-title="SIRAT Youth Icon Awards Gathering" data-src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&auto=format&fit=crop&q=80">
-                    <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&auto=format&fit=crop&q=80" alt="SIRAT Youth Icon Awards Gathering">
-                    <div class="gallery-card-overlay">
-                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus" aria-hidden="true"></i></div>
-                        <h4 class="gallery-overlay-title">SIRAT Youth Icon Awards</h4>
-                        <span class="gallery-overlay-cat">Forums & Summits</span>
-                    </div>
-                </div>
-
-                <!-- Image 5 -->
-                <div class="gallery-card" data-category="ramadhan" data-title="Ramadhan Assistance Program Penang" data-src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&auto=format&fit=crop&q=80">
-                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&auto=format&fit=crop&q=80" alt="Ramadhan Assistance Program Penang">
-                    <div class="gallery-card-overlay">
-                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus" aria-hidden="true"></i></div>
-                        <h4 class="gallery-overlay-title">Welfare Aid Distribution</h4>
-                        <span class="gallery-overlay-cat">Ramadhan Aid</span>
-                    </div>
-                </div>
-
-                <!-- Image 6 -->
-                <div class="gallery-card" data-category="coordination" data-title="Joint Strategic Partnership Session" data-src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&auto=format&fit=crop&q=80">
-                    <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&auto=format&fit=crop&q=80" alt="Joint Strategic Partnership Session">
-                    <div class="gallery-card-overlay">
-                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus" aria-hidden="true"></i></div>
-                        <h4 class="gallery-overlay-title">Ecosystem Collaboration</h4>
-                        <span class="gallery-overlay-cat">Coordination</span>
-                    </div>
-                </div>
-
-                <!-- Image 7 -->
-                <div class="gallery-card" data-category="celebrations" data-title="Unity and Community Spirit Gathering" data-src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&auto=format&fit=crop&q=80">
-                    <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&auto=format&fit=crop&q=80" alt="Unity and Community Spirit Gathering">
-                    <div class="gallery-card-overlay">
-                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus" aria-hidden="true"></i></div>
-                        <h4 class="gallery-overlay-title">Community Togetherness</h4>
-                        <span class="gallery-overlay-cat">Celebrations</span>
-                    </div>
-                </div>
-
-                <!-- Image 8 -->
-                <div class="gallery-card" data-category="coordination" data-title="FIKRAH Global Roundtable Dialogue" data-src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop&q=80">
-                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop&q=80" alt="FIKRAH Global Roundtable Dialogue">
-                    <div class="gallery-card-overlay">
-                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus" aria-hidden="true"></i></div>
-                        <h4 class="gallery-overlay-title">Global Industry Roundtable</h4>
-                        <span class="gallery-overlay-cat">Coordination</span>
-                    </div>
-                </div>
-
+                @empty
+                <p style="grid-column: 1 / -1; text-align: center; color: #666; font-size: 14px; padding: 24px 0;">
+                    Photos will appear here once images are uploaded to the Kembara Ramadhan MUKMIN or SIRAT Series gallery folders.
+                </p>
+                @endforelse
             </div>
         </section>
 

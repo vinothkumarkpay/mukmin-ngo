@@ -90,7 +90,67 @@ class PageController extends Controller
 
     public function news()
     {
-        return view('welfare.pages.news');
+        return view('welfare.pages.news', [
+            'momentsGallery' => $this->buildMomentsGallery(),
+        ]);
+    }
+
+    /**
+     * Load Moments of MUKMIN images from configured public folders.
+     */
+    private function buildMomentsGallery(): array
+    {
+        $images = [];
+        $extensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+        $basePath = public_path(config('welfare_gallery.moments_path'));
+
+        foreach (config('welfare_gallery.categories', []) as $category) {
+            $folderPath = $basePath . DIRECTORY_SEPARATOR . $category['folder'];
+
+            if (! is_dir($folderPath)) {
+                continue;
+            }
+
+            $files = scandir($folderPath);
+            if ($files === false) {
+                continue;
+            }
+
+            foreach ($files as $file) {
+                if ($file === '.' || $file === '..') {
+                    continue;
+                }
+
+                $fullPath = $folderPath . DIRECTORY_SEPARATOR . $file;
+                if (! is_file($fullPath)) {
+                    continue;
+                }
+
+                $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                if (! in_array($extension, $extensions, true)) {
+                    continue;
+                }
+
+                $relative = config('welfare_gallery.moments_path')
+                    . '/' . $category['folder']
+                    . '/' . $file;
+
+                $title = ucwords(str_replace(['-', '_'], ' ', pathinfo($file, PATHINFO_FILENAME)));
+
+                $images[] = [
+                    'src' => asset($relative),
+                    'title' => $title,
+                    'category' => $category['slug'],
+                    'category_label' => $category['label'],
+                ];
+            }
+        }
+
+        usort($images, function ($a, $b) {
+            return strcmp($a['title'], $b['title']);
+        });
+
+        return $images;
     }
 
     public function changing()
