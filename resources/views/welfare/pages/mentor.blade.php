@@ -337,7 +337,7 @@
                     </div>
                     <div class="form-group">
                         <label for="linkedin">LinkedIn / Professional Profile (if applicable)</label>
-                        <input type="url" id="linkedin" name="linkedin" class="form-control" placeholder="https://linkedin.com/in/username" value="{{ old('linkedin') }}">
+                        <input type="text" id="linkedin" name="linkedin" class="form-control" placeholder="LinkedIn or professional profile link" value="{{ old('linkedin') }}">
                     </div>
                 </div>
 

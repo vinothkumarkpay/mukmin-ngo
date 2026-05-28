@@ -109,59 +109,85 @@
     box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
-/* Reverted Brand Logo Headers */
-.card-logo-header {
+/* Custom Header Banner (Dynamic Vector Background) */
+.card-header-banner {
     position: relative;
-    padding: 30px 20px 25px;
+    padding: 25px 20px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    overflow: hidden;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.banner-title-text {
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 12px;
+    z-index: 2;
+}
+.vector-wrap {
+    width: 100%;
+    max-width: 180px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+.vector-wrap svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
+}
+.banner-shape {
+    background: linear-gradient(135deg, #0f172a 0%, #2563eb 100%);
+}
+.banner-connect {
+    background: linear-gradient(135deg, #7f1d1d 0%, #f97316 100%);
+}
+.banner-deliver {
+    background: linear-gradient(135deg, #064e3b 0%, #10b981 100%);
+}
+
+.card-logo-header {
+    padding: 20px 20px;
     text-align: center;
     background: #ffffff;
     border-bottom: 1px solid #f1f5f9;
 }
-.card-badge {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    text-transform: uppercase;
-}
-.fikrah-badge { background: #e2e8f0; color: #1e293b; }
-.mukmin-badge { background: #fee2e2; color: #b91c1c; }
-.yayasan-badge { background: #dcfce7; color: #15803d; }
-
 .brand-mark-logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 120px;
+    height: 80px;
 }
-
 /* Brand Logo Images */
 .brand-mark-logo img {
-    height: 120px;
+    height: 80px;
     width: auto;
     max-width: 100%;
     object-fit: contain;
 }
 
 @media (max-width: 768px) {
+    .card-header-banner {
+        height: 180px;
+    }
     .brand-mark-logo {
-        height: 90px;
+        height: 70px;
     }
     .brand-mark-logo img {
-        height: 90px;
+        height: 70px;
     }
 }
 
-.card-image-wrap img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    display: block;
-}
 .card-body-wrap {
     padding: 25px 22px;
     display: flex;
@@ -279,14 +305,50 @@
                 
                 <!-- Card 1: FIKRAH -->
                 <div class="custom-card" id="fikrah">
+                    <div class="card-header-banner banner-shape">
+                        <span class="banner-title-text">SHAPE</span>
+                        <div class="vector-wrap">
+                            <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor">
+                              <!-- Glowing Background Effect -->
+                              <circle cx="100" cy="60" r="45" fill="rgba(255, 255, 255, 0.05)" />
+                              <!-- Drafting/Strategy Grid Lines -->
+                              <line x1="40" y1="60" x2="160" y2="60" stroke="rgba(255, 255, 255, 0.1)" stroke-dasharray="2,2" />
+                              <line x1="100" y1="15" x2="100" y2="105" stroke="rgba(255, 255, 255, 0.1)" stroke-dasharray="2,2" />
+                              <circle cx="100" cy="60" r="35" stroke="rgba(255, 255, 255, 0.15)" stroke-dasharray="4,4" />
+                              
+                              <!-- Stylized Compass / Diamond Point (Strategy) -->
+                              <path d="M100,25 L112,60 L100,95 L88,60 Z" fill="url(#shape-diamond-grad)" stroke="#ffffff" stroke-width="1.5" />
+                              <path d="M100,25 L100,95" stroke="rgba(255,255,255,0.4)" stroke-width="1" />
+                              <path d="M88,60 L112,60" stroke="rgba(255,255,255,0.4)" stroke-width="1" />
+                              
+                              <!-- Small Gear (Execution) -->
+                              <circle cx="140" cy="80" r="10" stroke="rgba(255,255,255,0.8)" stroke-width="1.5" />
+                              <path d="M140,67 L140,70 M140,90 L140,93 M127,80 L130,80 M150,80 L153,80 M131,71 L133,73 M149,89 L147,87 M131,89 L133,87 M149,71 L147,73" stroke="rgba(255,255,255,0.8)" stroke-width="1.5" stroke-linecap="round" />
+                              <circle cx="140" cy="80" r="4" fill="rgba(255,255,255,0.3)" />
+
+                              <!-- Brain/Lightbulb Concept - Spark of Idea -->
+                              <circle cx="60" cy="40" r="10" stroke="rgba(255,255,255,0.8)" stroke-width="1.5" />
+                              <path d="M57,48 L63,48 M60,40 L60,46" stroke="rgba(255,255,255,0.8)" stroke-width="1.5" />
+                              <path d="M54,34 Q60,26 66,34" stroke="rgba(255,255,255,0.8)" stroke-width="1.5" />
+                              <circle cx="60" cy="40" r="3" fill="rgba(255,255,255,0.3)" />
+
+                              <!-- Connection Paths (dashed lines) -->
+                              <path d="M70,40 Q100,30 100,25" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-dasharray="3,3" />
+                              <path d="M100,95 Q120,95 130,85" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-dasharray="3,3" />
+                              
+                              <defs>
+                                <linearGradient id="shape-diamond-grad" x1="0" y1="0" x2="1" y2="1">
+                                  <stop offset="0%" stop-color="rgba(255,255,255,0.8)" />
+                                  <stop offset="100%" stop-color="rgba(255,255,255,0.2)" />
+                                </linearGradient>
+                              </defs>
+                            </svg>
+                        </div>
+                    </div>
                     <div class="card-logo-header">
-                        <span class="card-badge fikrah-badge">Shape</span>
                         <div class="brand-mark-logo">
                             <img src="{{ asset('welfare/img/fikrah_logo.png') }}" alt="FIKRAH Logo">
                         </div>
-                    </div>
-                    <div class="card-image-wrap">
-                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=600&h=400&q=80" alt="Education and Policy">
                     </div>
                     <div class="card-body-wrap">
                         <div class="card-subtitle-tag">Strategic Think Tank</div>
@@ -303,14 +365,51 @@
 
                 <!-- Card 2: MUKMIN -->
                 <div class="custom-card" id="gabungan">
+                    <div class="card-header-banner banner-connect">
+                        <span class="banner-title-text">CONNECT</span>
+                        <div class="vector-wrap">
+                            <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor">
+                              <!-- Glowing Background Circles -->
+                              <circle cx="100" cy="60" r="40" fill="rgba(255, 255, 255, 0.05)" />
+                              
+                              <!-- Outer Connecting Links -->
+                              <path d="M60,35 L100,25 L140,35 L150,75 L100,95 L50,75 Z" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="2,2" />
+
+                              <!-- Primary Network Links (Thicker) -->
+                              <line x1="100" y1="25" x2="100" y2="95" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" />
+                              <line x1="60" y1="35" x2="150" y2="75" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" />
+                              <line x1="140" y1="35" x2="50" y2="75" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" />
+                              <line x1="60" y1="35" x2="100" y2="95" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                              <line x1="140" y1="35" x2="100" y2="95" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+
+                              <!-- Nodes (Glowing Dots) -->
+                              <circle cx="100" cy="25" r="7" fill="url(#connect-node-grad)" stroke="#ffffff" stroke-width="1.5" />
+                              <circle cx="60" cy="35" r="7" fill="url(#connect-node-grad)" stroke="#ffffff" stroke-width="1.5" />
+                              <circle cx="140" cy="35" r="7" fill="url(#connect-node-grad)" stroke="#ffffff" stroke-width="1.5" />
+                              <circle cx="50" cy="75" r="7" fill="url(#connect-node-grad)" stroke="#ffffff" stroke-width="1.5" />
+                              <circle cx="150" cy="75" r="7" fill="url(#connect-node-grad)" stroke="#ffffff" stroke-width="1.5" />
+                              
+                              <!-- Central Coordination Hub (Larger) -->
+                              <circle cx="100" cy="60" r="14" fill="#ffffff" stroke="rgba(255,255,255,0.4)" stroke-width="3" />
+                              <!-- Inner symbol inside central hub -->
+                              <path d="M96,60 L104,60 M100,56 L100,64" stroke="#d43c18" stroke-width="2" stroke-linecap="round" />
+
+                              <!-- Glowing rings around central hub -->
+                              <circle cx="100" cy="60" r="22" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+
+                              <defs>
+                                <linearGradient id="connect-node-grad" x1="0" y1="0" x2="1" y2="1">
+                                  <stop offset="0%" stop-color="#ffffff" />
+                                  <stop offset="100%" stop-color="rgba(255,255,255,0.4)" />
+                                </linearGradient>
+                              </defs>
+                            </svg>
+                        </div>
+                    </div>
                     <div class="card-logo-header">
-                        <span class="card-badge mukmin-badge">Connect</span>
                         <div class="brand-mark-logo">
                             <img src="{{ asset('welfare/img/mukmin_ecosystem_logo.png') }}" alt="MUKMIN Logo">
                         </div>
-                    </div>
-                    <div class="card-image-wrap">
-                        <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=600&h=400&q=80" alt="Partnership and Networks">
                     </div>
                     <div class="card-body-wrap">
                         <div class="card-subtitle-tag">National Coordinating Ecosystem</div>
@@ -327,14 +426,51 @@
 
                 <!-- Card 3: Yayasan MUKMIN -->
                 <div class="custom-card" id="yayasan">
+                    <div class="card-header-banner banner-deliver">
+                        <span class="banner-title-text">DELIVER</span>
+                        <div class="vector-wrap">
+                            <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor">
+                              <!-- Glowing Background Circle -->
+                              <circle cx="100" cy="60" r="40" fill="rgba(255, 255, 255, 0.05)" />
+
+                              <!-- Delivery Paths/Grids -->
+                              <path d="M40,90 Q100,80 160,90" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" />
+                              
+                              <!-- Sprout of Hope (Growth/Delivery) -->
+                              <path d="M100,90 L100,45" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+                              <path d="M100,70 Q80,60 75,45 Q90,45 100,65" fill="url(#deliver-leaf-grad)" stroke="#ffffff" stroke-width="1.5" />
+                              <path d="M100,60 Q120,50 125,35 Q110,35 100,55" fill="url(#deliver-leaf-grad)" stroke="#ffffff" stroke-width="1.5" />
+
+                              <!-- Direct Target / Bullseye in Background -->
+                              <circle cx="100" cy="30" r="10" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="2,2" />
+                              <circle cx="100" cy="30" r="5" stroke="rgba(255,255,255,0.4)" stroke-dasharray="2,2" />
+                              
+                              <!-- Arrow heading to Target -->
+                              <path d="M100,45 L100,32" stroke="rgba(255,255,255,0.6)" stroke-dasharray="2,2" />
+                              <path d="M98,35 L100,31 L102,35" stroke="rgba(255,255,255,0.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+
+                              <!-- Delivery Hand/Support representation -->
+                              <path d="M80,95 Q100,85 120,95" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" />
+                              <path d="M85,95 Q100,91 115,95" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" />
+
+                              <!-- Small Sparks of Delivery/Result -->
+                              <circle cx="70" cy="35" r="1.5" fill="#ffffff" />
+                              <circle cx="130" cy="30" r="1.5" fill="#ffffff" />
+                              <circle cx="100" cy="20" r="2" fill="#ffffff" />
+
+                              <defs>
+                                <linearGradient id="deliver-leaf-grad" x1="0" y1="0" x2="1" y2="1">
+                                  <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+                                  <stop offset="100%" stop-color="#ffffff" stop-opacity="0.3" />
+                                </linearGradient>
+                              </defs>
+                            </svg>
+                        </div>
+                    </div>
                     <div class="card-logo-header">
-                        <span class="card-badge yayasan-badge">Deliver</span>
                         <div class="brand-mark-logo">
                             <img src="{{ asset('welfare/img/yayasan_logo.png') }}" alt="Yayasan MUKMIN Logo">
                         </div>
-                    </div>
-                    <div class="card-image-wrap">
-                        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&h=400&q=80" alt="Outreach and Care">
                     </div>
                     <div class="card-body-wrap">
                         <div class="card-subtitle-tag">Implementation & Community Impact</div>

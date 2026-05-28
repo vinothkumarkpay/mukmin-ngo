@@ -238,7 +238,6 @@
                 <h4 style="margin: 0 0 8px 0; color: #d43c18; font-weight: 700; font-size: 14.5px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
                     <i class="fas fa-info-circle"></i> MUKMIN Membership Eligibility
                 </h4>
-                <p style="margin: 0 0 8px 0;">Membership is open to organisations including NGOs, masjid, surau, and madrasah that align with the mission, vision, and values of MUKMIN.</p>
                 <p style="margin: 0 0 8px 0;">All members must demonstrate active involvement in community, educational, or welfare initiatives and commit to collaborative participation in MUKMIN programmes.</p>
                 <p style="margin: 0; font-weight: 600;">The MUKMIN central committee reserves the right to approve or reject applications.</p>
             </div>

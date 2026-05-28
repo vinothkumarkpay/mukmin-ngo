@@ -62,8 +62,8 @@ class FormSubmissionController extends Controller
         }
 
         return view('welfare.pages.form_success', [
-            'title' => 'Feedback Received',
-            'message' => 'Thank you for your valuable feedback. Your suggestion has been recorded and will help strengthen the MUKMIN ecosystem.',
+            'title' => 'Thank you for sharing your feedback with MUKMIN.',
+            'message' => 'Your submission has been successfully received and will be reviewed by our team accordingly.',
         ]);
     }
 
@@ -181,8 +181,8 @@ class FormSubmissionController extends Controller
         }
 
         return view('welfare.pages.form_success', [
-            'title' => 'Registration Completed',
-            'message' => 'Thank you for registering as a Friend of MUKMIN! Your request is received and you are now part of our community network.',
+            'title' => 'Your submission has been successfully received.',
+            'message' => 'Our team will review the information provided and reach out to you within 3–7 working days where applicable. We appreciate your patience and engagement with MUKMIN.',
         ]);
     }
 
@@ -229,8 +229,8 @@ class FormSubmissionController extends Controller
         }
 
         return view('welfare.pages.form_success', [
-            'title' => 'Registration Submitted',
-            'message' => 'Your application to become a MUKMIN Mentor has been received. Our team will review your professional background and get in touch to discuss onboarding.',
+            'title' => 'Thank you for registering as a MUKMIN Mentor.',
+            'message' => 'We appreciate your willingness to contribute your experience, leadership and expertise towards empowering communities and future changemakers. Our team will review your professional background and reach out regarding the next steps for onboarding and engagement.',
         ]);
     }
 
@@ -286,8 +286,8 @@ class FormSubmissionController extends Controller
         }
 
         return view('welfare.pages.form_success', [
-            'title' => 'Proposal Submitted',
-            'message' => 'Thank you for your partnership proposal. MUKMIN values strategic collaborations, and our leadership team will review your proposal and initiate a discussion soon.',
+            'title' => 'Thank you for engaging with MUKMIN.',
+            'message' => 'We appreciate your interest in building strategic collaborations that strengthen communities and drive collective impact. Our leadership team will review your proposal and initiate further engagement accordingly.',
         ]);
     }
 
@@ -334,8 +334,8 @@ class FormSubmissionController extends Controller
         }
 
         return view('welfare.pages.form_success', [
-            'title' => 'Volunteer Registered',
-            'message' => 'Thank you for registering to volunteer! We appreciate your willingness to serve. We will notify you when volunteer opportunities matching your interests arise.',
+            'title' => 'Thank You For Stepping Forward To Serve',
+            'message' => 'Your willingness to volunteer reflects the spirit of compassion, unity and collective responsibility that drives the MUKMIN ecosystem. We look forward to engaging you in future initiatives and community impact programmes.',
         ]);
     }
 
