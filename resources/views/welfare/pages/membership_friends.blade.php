@@ -293,7 +293,7 @@
                     <div class="grid-2">
                         <div class="form-group">
                             <label for="ind_nric">NRIC Number *</label>
-                            <input type="text" id="ind_nric" name="ind_nric" class="form-control" placeholder="e.g. 900101-14-5555" value="{{ old('ind_nric') }}">
+                            <input type="text" id="ind_nric" name="ind_nric" class="form-control" placeholder="e.g. 900101145555" inputmode="numeric" pattern="[0-9]{1,12}" maxlength="12" value="{{ old('ind_nric') }}">
                         </div>
                         <div class="form-group">
                             <label for="ind_state">State *</label>

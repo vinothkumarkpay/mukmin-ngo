@@ -1151,7 +1151,7 @@
                 </div>
                 <div class="adopt-media-col">
                     <div class="adopt-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800" alt="Graduation Career Pathways" style="border-radius: 6px; box-shadow: var(--shadow); width: 100%;">
+                        <img src="{{ asset('welfare/img/adopt-graduate-programme.png') }}" alt="Adopt A Graduate Programme" style="border-radius: 6px; box-shadow: var(--shadow); width: 100%;">
                     </div>
                     <!-- Progress Card -->
                     <div class="adopt-stats-card" id="adopt-stats-card">

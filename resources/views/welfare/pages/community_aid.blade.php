@@ -288,7 +288,7 @@
                 <div class="grid-2">
                     <div class="form-group">
                         <label for="nric_passport">NRIC / Passport Number *</label>
-                        <input type="text" id="nric_passport" name="nric_passport" class="form-control" placeholder="e.g. 900101-14-5555" value="{{ old('nric_passport') }}" required>
+                        <input type="text" id="nric_passport" name="nric_passport" class="form-control" placeholder="e.g. 900101145555" value="{{ old('nric_passport') }}" required>
                     </div>
                     <div class="form-group">
                         <label>Gender *</label>
