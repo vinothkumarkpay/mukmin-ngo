@@ -72,8 +72,8 @@
                     <!-- Logo -->
                     <div class="site-logo">
                         <a href="{{ route('welfare.home') }}" aria-label="Go to homepage">
-                            <img class="logo-desktop" src="{{ asset('welfare/img/mukmin_logo.png') }}" alt="{{ config('welfare.name', 'MUKMIN') }}" style="height: 48px; width: auto; max-width: 100%; display: block;">
-                            <img class="logo-mobile" src="{{ asset('favicon-32x32.png') }}" alt="{{ config('welfare.name', 'MUKMIN') }} icon">
+                            <img class="logo-desktop" src="{{ asset('welfare/img/mukmin_logo.png') }}" alt="{{ config('welfare.name', 'MUKMIN') }}">
+                            <img class="logo-mobile" src="{{ asset('apple-touch-icon.png') }}" alt="{{ config('welfare.name', 'MUKMIN') }} icon">
                         </a>
                     </div>
 
