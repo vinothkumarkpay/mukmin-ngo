@@ -331,7 +331,7 @@
                             <li>Community engagement and collaborative action</li>
                             <li>Capacity building through networking and ecosystem partnerships</li>
                         </ul>
-                        <a href="#" class="expand-cta" title="SIRAT Series site — update link when available">Read More <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                        <a href="{{ route('welfare.impact.sirat') }}" class="expand-cta">Read More <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                     </div>
                 </article>
 

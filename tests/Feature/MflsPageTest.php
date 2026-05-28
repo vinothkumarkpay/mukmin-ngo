@@ -12,10 +12,10 @@ class MflsPageTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('MUKMIN Future Leaders Scholarship (MFLS)', false);
-        $response->assertSee('A National Scholarship & Talent Development Programme', false);
         $response->assertSee('How It Works', false);
         $response->assertSee('Available Pathways', false);
-        $response->assertSee('TVET (Skills & Technical Pathways)', false);
+        $response->assertSee('Programme Snapshot', false);
+        $response->assertSee('Further details on MFLS will be shared soon', false);
     }
 
     public function test_impact_page_read_more_links_to_mfls()

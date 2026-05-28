@@ -83,6 +83,11 @@ class PageController extends Controller
         return view('welfare.pages.mfls');
     }
 
+    public function sirat()
+    {
+        return view('welfare.pages.sirat');
+    }
+
     public function news()
     {
         return view('welfare.pages.news');

@@ -77,7 +77,7 @@ return [
             'children' => [
                 ['label' => 'Socio-economic Mobility', 'route' => 'welfare.impact', 'hash' => 'socio-economic'],
                 ['label' => 'Education & Future Readiness - Feature MFLS', 'route' => 'welfare.impact.mfls'],
-                ['label' => 'Leadership & Capacity Building - Feature SIRAT Series', 'route' => 'welfare.impact', 'hash' => 'leadership'],
+                ['label' => 'Leadership & Capacity Building - Feature SIRAT Series', 'route' => 'welfare.impact.sirat'],
                 ['label' => 'Entrepreneurship & Innovation', 'route' => 'welfare.impact', 'hash' => 'entrepreneurship'],
                 ['label' => 'Faith, Identity & Ukhwah', 'route' => 'welfare.impact', 'hash' => 'faith'],
             ]
