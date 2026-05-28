@@ -19,8 +19,34 @@
             </p>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; max-width: 1000px; margin: 0 auto; padding: 20px;">
-            <div>
+        <div class="contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; max-width: 1000px; margin: 0 auto; padding: 20px;">
+            <div class="contact-form-col">
+                <h3 style="margin-bottom: 20px; font-size: 20px; color: var(--color-heading);">Send a Message</h3>
+                <form method="POST" action="{{ route('welfare.contact.submit') }}" style="display: flex; flex-direction: column; gap: 15px;">
+                    @csrf
+                    <div>
+                        <label style="display: block; font-weight: 500; margin-bottom: 5px; color: var(--color-heading);">Full Name</label>
+                        <input type="text" name="name" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';" required>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: 500; margin-bottom: 5px; color: var(--color-heading);">Email Address</label>
+                        <input type="email" name="email" placeholder="name@example.com" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';" required>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: 500; margin-bottom: 5px; color: var(--color-heading);">Your Contact Number</label>
+                        <input type="tel" name="phone" placeholder="+60 12-345 6789" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';" required>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: 500; margin-bottom: 5px; color: var(--color-heading);">Message</label>
+                        <textarea name="message" rows="5" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s; font-family: inherit;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';" required></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary" style="border: none; border-radius: 4px; font-size: 15px; width: 100%; line-height: 20px; padding: 12px 28px;">Send Message</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="contact-info-col">
                 <h3 style="margin-bottom: 20px; font-size: 20px; color: var(--color-heading);">Contact Information</h3>
                 <div style="font-size: 14px; line-height: 24px; color: #555; margin-bottom: 30px;">
                     <p style="margin-bottom: 12px;">
@@ -53,39 +79,13 @@
                     <a href="https://youtube.com/@mukmin-i7l?si=ZDB9eyr679HET6Ew" target="_blank" rel="noopener noreferrer" style="width: 36px; height: 36px; border: 1px solid var(--color-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-text); transition: all var(--transition);" onmouseover="this.style.background='var(--color-primary)';this.style.color='white';this.style.borderColor='var(--color-primary)';" onmouseout="this.style.background='none';this.style.color='var(--color-text)';this.style.borderColor='var(--color-border)';" title="YouTube"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
-
-            <div>
-                <h3 style="margin-bottom: 20px; font-size: 20px; color: var(--color-heading);">Send a Message</h3>
-                <form method="POST" action="{{ route('welfare.contact.submit') }}" style="display: flex; flex-direction: column; gap: 15px;">
-                    @csrf
-                    <div>
-                        <label style="display: block; font-weight: 500; margin-bottom: 5px; color: var(--color-heading);">Full Name</label>
-                        <input type="text" name="name" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';" required>
-                    </div>
-                    <div>
-                        <label style="display: block; font-weight: 500; margin-bottom: 5px; color: var(--color-heading);">Email Address</label>
-                        <input type="email" name="email" placeholder="name@example.com" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';" required>
-                    </div>
-                    <div>
-                        <label style="display: block; font-weight: 500; margin-bottom: 5px; color: var(--color-heading);">Your Contact Number</label>
-                        <input type="tel" name="phone" placeholder="+60 12-345 6789" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';" required>
-                    </div>
-                    <div>
-                        <label style="display: block; font-weight: 500; margin-bottom: 5px; color: var(--color-heading);">Message</label>
-                        <textarea name="message" rows="5" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s; font-family: inherit;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';" required></textarea>
-                    </div>
-                    <div>
-                        <button type="submit" class="btn btn-primary" style="border: none; border-radius: 4px; font-size: 15px; width: 100%; line-height: 20px; padding: 12px 28px;">Send Message</button>
-                    </div>
-                </form>
-            </div>
         </div>
     </div>
 </section>
 
 <style>
-@media (max-width: 768px) {
-    .section-contact > .container > div {
+@media (max-width: 991px) {
+    .section-contact .contact-grid {
         grid-template-columns: 1fr !important;
         gap: 30px !important;
     }
