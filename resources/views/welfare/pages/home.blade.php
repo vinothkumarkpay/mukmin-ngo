@@ -1214,7 +1214,6 @@
                         <i class="fas fa-hands-helping"></i>
                     </div>
                     <h3>Social Aid</h3>
-                    <div class="aid-card-subheading">Strengthening Communities Through Support</div>
                     <p>Delivering community assistance and outreach programmes that uplift vulnerable groups and strengthen social well-being.</p>
                     <!-- Progress Bar -->
                     <div style="margin-top: auto;">
@@ -1237,7 +1236,6 @@
                         <i class="fas fa-first-aid"></i>
                     </div>
                     <h3>Healthcare Aid</h3>
-                    <div class="aid-card-subheading">Advancing Community Well-Being</div>
                     <p>Improving access to healthcare support, wellness initiatives and essential assistance for healthier and more resilient communities.</p>
                     <!-- Progress Bar -->
                     <div style="margin-top: auto;">
@@ -1260,7 +1258,6 @@
                         <i class="fas fa-ellipsis-h"></i>
                     </div>
                     <h3>Others</h3>
-                    <div class="aid-card-subheading">Responding to Emerging Community Needs</div>
                     <p>Supporting strategic and community-driven initiatives that address evolving challenges and areas requiring immediate impact.</p>
                     <!-- Progress Bar and Link -->
                     <div style="margin-top: auto;">
