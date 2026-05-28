@@ -16,6 +16,7 @@ class FormSubmissionMail extends Mailable
     public $formattedData;
     public $isForSupport;
     public $subject;
+    public $recipientName;
 
     /**
      * Label mapping for form fields to human-readable names.
@@ -134,12 +135,14 @@ class FormSubmissionMail extends Mailable
      * @param string $formName
      * @param array $formData
      * @param bool $isForSupport
+     * @param string|null $recipientName
      */
-    public function __construct(string $formName, array $formData, bool $isForSupport = false)
+    public function __construct(string $formName, array $formData, bool $isForSupport = false, ?string $recipientName = null)
     {
         $this->formName = $formName;
         $this->formData = $formData;
         $this->isForSupport = $isForSupport;
+        $this->recipientName = $recipientName;
         
         $this->subject = $isForSupport 
             ? "New Submission: {$formName}" 

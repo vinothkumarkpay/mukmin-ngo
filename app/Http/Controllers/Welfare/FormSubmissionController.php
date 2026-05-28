@@ -22,11 +22,19 @@ class FormSubmissionController extends Controller
      * Send acknowledgement to the applicant (when email provided) and a copy to support.
      * Each recipient is mailed independently so one failure does not block the other.
      */
-    private function sendFormSubmissionEmails(string $formName, array $validated, ?string $applicantEmail = null): void
+    private function sendFormSubmissionEmails(
+        string $formName,
+        array $validated,
+        ?string $applicantEmail = null,
+        ?string $applicantName = null
+    ): void
     {
+        $applicantEmail = $applicantEmail ?: $this->resolveApplicantEmail($validated);
+        $applicantName = $applicantName ?: $this->resolveApplicantName($validated);
+
         if ($applicantEmail) {
             try {
-                Mail::to($applicantEmail)->send(new FormSubmissionMail($formName, $validated));
+                Mail::to($applicantEmail)->send(new FormSubmissionMail($formName, $validated, false, $applicantName));
             } catch (\Throwable $e) {
                 Log::error("Mail to applicant failed for {$formName}", [
                     'email' => $applicantEmail,
@@ -42,6 +50,36 @@ class FormSubmissionController extends Controller
                 'error' => $e->getMessage(),
             ]);
         }
+    }
+
+    private function resolveApplicantEmail(array $validated): ?string
+    {
+        foreach (['email', 'ind_email', 'org_email'] as $field) {
+            if (!empty($validated[$field]) && is_string($validated[$field])) {
+                return $validated[$field];
+            }
+        }
+
+        return null;
+    }
+
+    private function resolveApplicantName(array $validated): ?string
+    {
+        foreach ([
+            'name',
+            'full_name',
+            'ind_name',
+            'contact_person',
+            'name_of_organisation',
+            'org_name',
+            'company_name',
+        ] as $field) {
+            if (!empty($validated[$field]) && is_string($validated[$field])) {
+                return $validated[$field];
+            }
+        }
+
+        return null;
     }
 
     private function getOptions($type)
@@ -374,6 +412,7 @@ class FormSubmissionController extends Controller
         ]);
 
         ContactSubmission::create($validated);
+        $this->sendFormSubmissionEmails('Contact Us', $validated, $validated['email'], $validated['name']);
 
         return view('welfare.pages.form_success', [
             'title' => 'Message Sent Successfully',
@@ -383,12 +422,14 @@ class FormSubmissionController extends Controller
 
     public function submitDonate(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => $this->requiredEmailRule(),
             'amount' => 'nullable|numeric|min:1',
             'custom_amount' => 'nullable|numeric|min:1',
         ]);
+
+        $this->sendFormSubmissionEmails('Donation Enquiry', $validated, $validated['email'], $validated['name']);
 
         return view('welfare.pages.form_success', [
             'title' => 'Donation Portal - Coming Soon',
@@ -440,7 +481,7 @@ class FormSubmissionController extends Controller
 
         \App\Models\CommunityAidSubmission::create($validated);
 
-        $this->sendFormSubmissionEmails('Community Aid & Assistance Request', $validated);
+        $this->sendFormSubmissionEmails('Community Aid & Assistance Request', $validated, $validated['email'], $validated['full_name']);
 
         return view('welfare.pages.form_success', [
             'title' => 'Request Submitted Successfully',

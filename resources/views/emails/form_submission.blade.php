@@ -34,6 +34,12 @@
             text-align: center;
             border-bottom: 3px solid #b3913b; /* Accent Gold */
         }
+        .email-header-logo {
+            max-width: 110px;
+            height: auto;
+            margin: 0 auto 12px;
+            display: block;
+        }
         .email-header h1 {
             color: #ffffff;
             margin: 0;
@@ -144,6 +150,7 @@
         <div class="email-container">
             <!-- Header Section -->
             <div class="email-header">
+                <img class="email-header-logo" src="{{ asset('welfare/img/mukmin_logo.png') }}" alt="MUKMIN Logo">
                 <h1>Pertubuhan Gabungan MUKMIN Nasional</h1>
                 <p>{{ $formName }}</p>
             </div>
@@ -157,7 +164,7 @@
                     </div>
                 @else
                     <div class="intro-text">
-                        Assalamu alaikum,<br><br>
+                        Assalamu alaikum {{ $recipientName ?: 'there' }},<br><br>
                         Thank you for registering. Your submission for <strong>{{ $formName }}</strong> has been successfully received. Below is a copy of the details you submitted for your reference:
                     </div>
                 @endif
