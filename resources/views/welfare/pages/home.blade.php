@@ -1414,43 +1414,43 @@
                         'title' => 'MUKMIN Hari Raya Aidilfitri Open House 2025',
                         'meta' => '12 April 2025 | IDCC, Shah Alam',
                         'desc' => 'MUKMIN’s Hari Raya Aidilfitri Open House gathered NGOs, mosques, madrasahs, suraus and tahfiz institutions from across Malaysia in a celebration of unity and community spirit, welcoming approximately 2,000 guests including more than 200 religious scholars.',
-                        'image' => 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=500'
+                        'image' => asset('welfare/img/news/mukmin-open-house-2025.png')
                     ],
                     [
                         'title' => 'SIRAT Leaders Forum',
                         'meta' => '29 – 31 August 2025 | Pahang',
                         'desc' => 'The SIRAT Leaders Forum convened 250 NGO leaders, policymakers, professionals and religious institutions in a strategic platform focused on collaboration, leadership and sustainable community development.',
-                        'image' => 'https://images.unsplash.com/photo-1540317580384-e5d43616b9aa?w=500'
+                        'image' => asset('welfare/img/news/sirat-leaders-forum.png')
                     ],
                     [
                         'title' => 'Official Launch of FIKRAH',
                         'meta' => '22 November 2025 | PICCA Convention Centre',
                         'desc' => 'FIKRAH was officially launched as MUKMIN’s strategic think tank focused on innovation, policy thinking, research and long-term community development.',
-                        'image' => 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=500'
+                        'image' => asset('welfare/img/news/fikrah-launch.png')
                     ],
                     [
                         'title' => 'SIRAT Youth Summit & Youth Icon Awards',
                         'meta' => '22 November 2025 | PICCA Convention Centre',
                         'desc' => 'Malaysia’s largest community youth gatherings, the programme brought together over 1,000 changemakers through leadership sessions, panel discussions, pitching sessions and the Youth Icon Awards.',
-                        'image' => 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500'
+                        'image' => asset('welfare/img/news/sirat-youth-summit-awards.png')
                     ],
                     [
                         'title' => 'Kembara Ramadan MUKMIN – Food Basket Initiative',
                         'meta' => '28 February – 17 March 2026',
                         'desc' => 'MUKMIN successfully distributed 5,000 food baskets nationwide through mosque, madrasah, surau and NGO networks to support communities in need during Ramadan.',
-                        'image' => 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=500'
+                        'image' => asset('welfare/img/news/kembara-ramadan-mukmin.png')
                     ],
                     [
                         'title' => 'SIRAT Global Forum 2026',
                         'meta' => '23 – 25 January 2026 | Kuala Lumpur',
                         'desc' => 'An international platform bringing together business leaders, professionals, innovators and youths from over 20 countries to strengthen global collaboration and future community development.',
-                        'image' => 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=500'
+                        'image' => asset('welfare/img/news/sirat-global-forum-2026.png')
                     ],
                     [
                         'title' => 'Ramadan Assistance for Religious Scholars & Ustaz',
                         'meta' => '11 March 2026 | Kuala Lumpur',
                         'desc' => 'Ramadan assistance initiatives were carried out to support religious scholars and ustaz through food aid, financial assistance and complimentary medical protection coverage.',
-                        'image' => 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=500'
+                        'image' => asset('welfare/img/news/ramadan-assistance-ustaz.png')
                     ]
                 ];
                 @endphp
