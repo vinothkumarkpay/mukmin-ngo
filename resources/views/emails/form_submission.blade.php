@@ -30,27 +30,36 @@
         }
         .email-header {
             background-color: #0c5930; /* Mukmin Brand Green */
-            padding: 30px;
-            text-align: center;
+            padding: 0;
+            text-align: left;
             border-bottom: 3px solid #b3913b; /* Accent Gold */
         }
+        .email-header-top {
+            background: #ffffff;
+            padding: 16px 30px 12px;
+            border-bottom: 1px solid #e6e6e6;
+        }
+        .email-header-main {
+            padding: 22px 30px 24px;
+        }
         .email-header-logo {
-            max-width: 110px;
+            max-width: 165px;
             height: auto;
-            margin: 0 auto 12px;
+            margin: 0;
             display: block;
         }
         .email-header h1 {
             color: #ffffff;
-            margin: 0;
-            font-size: 22px;
+            margin: 0 0 6px 0;
+            font-size: 20px;
             font-weight: 500;
             letter-spacing: 0.5px;
         }
         .email-header p {
             color: #d1ffd6;
-            margin: 5px 0 0 0;
-            font-size: 14px;
+            margin: 0;
+            font-size: 15px;
+            font-weight: 500;
         }
         .email-body {
             padding: 40px 30px;
@@ -150,9 +159,13 @@
         <div class="email-container">
             <!-- Header Section -->
             <div class="email-header">
-                <img class="email-header-logo" src="{{ asset('welfare/img/mukmin_logo.png') }}" alt="MUKMIN Logo">
-                <h1>Pertubuhan Gabungan MUKMIN Nasional</h1>
-                <p>{{ $formName }}</p>
+                <div class="email-header-top">
+                    <img class="email-header-logo" src="{{ asset('welfare/img/mukmin_logo.png') }}" alt="MUKMIN Logo">
+                </div>
+                <div class="email-header-main">
+                    <h1>Pertubuhan Gabungan MUKMIN Nasional</h1>
+                    <p>{{ $formName }}</p>
+                </div>
             </div>
 
             <!-- Body Section -->
