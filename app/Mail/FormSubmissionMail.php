@@ -155,7 +155,7 @@ class FormSubmissionMail extends Mailable
      */
     public function build()
     {
-        $email = $this->from('no-reply@mukmin.org', 'MUKMIN')
+        $email = $this->from(config('mail.from.address'), config('mail.from.name'))
                      ->subject($this->subject)
                      ->view('emails.form_submission');
 
