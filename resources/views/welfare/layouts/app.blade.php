@@ -71,8 +71,9 @@
                 <div class="header-top-inner">
                     <!-- Logo -->
                     <div class="site-logo">
-                        <a href="{{ route('welfare.home') }}" style="display: flex; align-items: center; text-decoration: none;">
-                            <img src="{{ asset('welfare/img/mukmin_logo.png') }}" alt="{{ config('welfare.name', 'MUKMIN') }}" style="height: 48px; width: auto; max-width: 100%; display: block;">
+                        <a href="{{ route('welfare.home') }}" aria-label="Go to homepage">
+                            <img class="logo-desktop" src="{{ asset('welfare/img/mukmin_logo.png') }}" alt="{{ config('welfare.name', 'MUKMIN') }}" style="height: 48px; width: auto; max-width: 100%; display: block;">
+                            <img class="logo-mobile" src="{{ asset('favicon-32x32.png') }}" alt="{{ config('welfare.name', 'MUKMIN') }} icon">
                         </a>
                     </div>
 
@@ -87,10 +88,16 @@
                         </div>
                         
                         <!-- Register As A Member Button -->
-                        <a href="{{ route('welfare.serve') }}#membership-vertical-tabs" class="btn-register-rounded">Register As A Member</a>
+                        <a href="{{ route('welfare.serve') }}#membership-vertical-tabs" class="btn-register-rounded" aria-label="Register as a member">
+                            <i class="fas fa-user-plus" aria-hidden="true"></i>
+                            <span class="action-text">Register As A Member</span>
+                        </a>
                         
                         <!-- Donate Button -->
-                        <a href="{{ route('welfare.donate') }}" class="btn-donate-rounded">Donate Now!</a>
+                        <a href="{{ route('welfare.donate') }}" class="btn-donate-rounded" aria-label="Donate now">
+                            <i class="fas fa-hand-holding-heart" aria-hidden="true"></i>
+                            <span class="action-text">Donate Now!</span>
+                        </a>
                         
                         <!-- Search Toggle Icon -->
                         <button class="search-icon-btn" id="search-icon-btn" title="Search">
@@ -98,7 +105,7 @@
                         </button>
                         
                         <!-- Mobile menu toggle -->
-                        <button type="button" class="mobile-menu-toggle" id="mobile-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
+                        <button type="button" class="mobile-menu-toggle" id="mobile-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav" title="Menu">
                             <i class="fas fa-bars" aria-hidden="true"></i>
                         </button>
                     </div>
