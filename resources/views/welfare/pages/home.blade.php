@@ -1147,7 +1147,7 @@
                         More than 25 companies and strategic partners are currently being engaged to support graduate adoption opportunities across multiple industries and sectors — reflecting MUKMIN’s long-term commitment towards human capital development, talent mobility and inclusive socio-economic advancement.
                     </div>
                     
-                    <a href="{{ route('welfare.contact') }}" class="btn btn-primary" style="margin-top: 15px;">Partner with Us</a>
+                    <a href="{{ route('welfare.partner') }}" class="btn btn-primary" style="margin-top: 15px;">Partner with Us</a>
                 </div>
                 <div class="adopt-media-col">
                     <div class="adopt-img-wrap">
