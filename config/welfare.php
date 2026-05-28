@@ -32,7 +32,7 @@ return [
         'header_top_donations_text' => 'Donate Now',
         'header_top_info' => true,
         'footer_scheme' => 'footer',
-        'footer_copyright' => '© 2026 Pertubuhan Gabungan MUKMIN Nasional (PPM-019-10-15042026) | Integrity | Legal Disclaimer',
+        'footer_copyright' => '© 2026 Pertubuhan Gabungan MUKMIN Nasional (PPM-019-10-15042026) | Legal Disclaimer',
         'primary_color' => '#d43c18',
         'ilightbox_skin' => 'dark',
     ],

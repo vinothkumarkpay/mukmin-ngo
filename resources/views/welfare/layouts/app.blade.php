@@ -171,8 +171,6 @@
                     <div class="footer-left" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
                         <span>&copy; 2026 Pertubuhan Gabungan MUKMIN Nasional (PPM-019-10-15042026)</span>
                         <span style="color: rgba(255,255,255,0.25);">|</span>
-                        <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">Integrity</a>
-                        <span style="color: rgba(255,255,255,0.25);">|</span>
                         <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">Legal Disclaimer</a>
                     </div>
                     <div class="footer-right" style="display: flex; align-items: center; gap: 18px;">
