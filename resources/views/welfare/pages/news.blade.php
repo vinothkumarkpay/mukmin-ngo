@@ -580,70 +580,10 @@
                 <aside class="news-sidebar">
                     <div class="news-tab-list" role="tablist" aria-label="Impact Events">
                         
-                        <!-- Tab 1 -->
-                        <button class="news-tab-item active" role="tab" aria-selected="true" aria-controls="event-tab-1" id="tab-1" data-index="1">
-                            <span class="news-tab-title">Majlis Rumah Terbuka MUKMIN Sempena Hari Raya Aidilfitri</span>
-                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 12 April 2025</span>
-                        </button>
-                        
-                        <!-- Tab 2 -->
-                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-2" id="tab-2" data-index="2">
-                            <span class="news-tab-title">SIRAT Leaders Forum (Strengthening India Muslim Roots)</span>
-                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 29 – 31 August 2025</span>
-                        </button>
-                        
-                        <!-- Tab 3 -->
-                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-3" id="tab-3" data-index="3">
-                            <span class="news-tab-title">SIRAT Youth Summit & Youth Icon Awards</span>
-                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
-                        </button>
-                        
-                        <!-- Tab 4 -->
-                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-4" id="tab-4" data-index="4">
-                            <span class="news-tab-title">FIKRAH Launch</span>
-                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
-                        </button>
-                        
-                        <!-- Tab 5 -->
-                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-5" id="tab-5" data-index="5">
-                            <span class="news-tab-title">FIKRAH Global Roundtable</span>
-                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 23 January 2026</span>
-                        </button>
-                        
-                        <!-- Tab 6 -->
-                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-6" id="tab-6" data-index="6">
-                            <span class="news-tab-title">MUKMIN Future Leaders Scholarship Pledge</span>
-                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 24 January 2026</span>
-                        </button>
-                        
-                        <!-- Tab 7 -->
-                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-7" id="tab-7" data-index="7">
-                            <span class="news-tab-title">SIRAT Global Forum 2026</span>
-                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 23 – 25 January 2026</span>
-                        </button>
-                        
-                        <!-- Tab 8 -->
-                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-8" id="tab-8" data-index="8">
-                            <span class="news-tab-title">The KL Declaration</span>
-                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 25 January 2026</span>
-                        </button>
-                        
-                        <!-- Tab 9 -->
-                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-9" id="tab-9" data-index="9">
-                            <span class="news-tab-title">Kembara Ramadhan MUKMIN</span>
-                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 28 Feb – 17 Mar 2026</span>
-                        </button>
-                        
-                        <!-- Tab 10 -->
-                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-10" id="tab-10" data-index="10">
-                            <span class="news-tab-title">Kembara Ramadhan MUKMIN Penang</span>
-                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 7 March 2026</span>
-                        </button>
-                        
-                        <!-- Tab 11 -->
-                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-11" id="tab-11" data-index="11">
-                            <span class="news-tab-title">Ramadhan Assistance for Scholars & Ustaz</span>
-                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 11 March 2026</span>
+                        <!-- Tab 13 -->
+                        <button class="news-tab-item active" role="tab" aria-selected="true" aria-controls="event-tab-13" id="tab-13" data-index="13">
+                            <span class="news-tab-title">Takbir Raya MUKMIN</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 17 March 2026</span>
                         </button>
                         
                         <!-- Tab 12 -->
@@ -652,34 +592,96 @@
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 17 March 2026</span>
                         </button>
                         
-                        <!-- Tab 13 -->
-                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-13" id="tab-13" data-index="13">
-                            <span class="news-tab-title">Takbir Raya MUKMIN</span>
-                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 17 March 2026</span>
+                        <!-- Tab 11 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-11" id="tab-11" data-index="11">
+                            <span class="news-tab-title">Ramadhan Assistance for Scholars & Ustaz</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 11 March 2026</span>
                         </button>
+                        
+                        <!-- Tab 10 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-10" id="tab-10" data-index="10">
+                            <span class="news-tab-title">Kembara Ramadhan MUKMIN Penang</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 7 March 2026</span>
+                        </button>
+                        
+                        <!-- Tab 9 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-9" id="tab-9" data-index="9">
+                            <span class="news-tab-title">Kembara Ramadhan MUKMIN</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 28 Feb – 17 Mar 2026</span>
+                        </button>
+                        
+                        <!-- Tab 8 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-8" id="tab-8" data-index="8">
+                            <span class="news-tab-title">The KL Declaration</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 25 January 2026</span>
+                        </button>
+                        
+                        <!-- Tab 7 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-7" id="tab-7" data-index="7">
+                            <span class="news-tab-title">SIRAT Global Forum 2026</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 23 – 25 January 2026</span>
+                        </button>
+                        
+                        <!-- Tab 6 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-6" id="tab-6" data-index="6">
+                            <span class="news-tab-title">MUKMIN Future Leaders Scholarship Pledge</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 24 January 2026</span>
+                        </button>
+                        
+                        <!-- Tab 5 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-5" id="tab-5" data-index="5">
+                            <span class="news-tab-title">FIKRAH Global Roundtable</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 23 January 2026</span>
+                        </button>
+                        
+                        <!-- Tab 4 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-4" id="tab-4" data-index="4">
+                            <span class="news-tab-title">FIKRAH Launch</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
+                        </button>
+                        
+                        <!-- Tab 3 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-3" id="tab-3" data-index="3">
+                            <span class="news-tab-title">SIRAT Youth Summit & Youth Icon Awards</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
+                        </button>
+                        
+                        <!-- Tab 2 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-2" id="tab-2" data-index="2">
+                            <span class="news-tab-title">SIRAT Leaders Forum (Strengthening India Muslim Roots)</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 29 – 31 August 2025</span>
+                        </button>
+                        
+                        <!-- Tab 1 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-1" id="tab-1" data-index="1">
+                            <span class="news-tab-title">Majlis Rumah Terbuka MUKMIN Sempena Hari Raya Aidilfitri</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 12 April 2025</span>
+                        </button>
+                        
                     </div>
                 </aside>
 
                 <!-- Right Display Area -->
                 <main class="news-content-display">
                     
-                    <!-- Detail 1 (Hari Raya) -->
-                    <article class="news-card-detail active" id="event-tab-1" role="tabpanel" aria-labelledby="tab-1">
+                    <!-- Detail 13 (Takbir Raya) -->
+                    <article class="news-card-detail active" id="event-tab-13" role="tabpanel" aria-labelledby="tab-13">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1581078426770-6d336e5de7bf?w=800&auto=format&fit=crop&q=80" alt="Majlis Rumah Terbuka MUKMIN Sempena Hari Raya Aidilfitri">
+                            <img src="https://images.unsplash.com/photo-1519817650390-64a93db51149?w=800&auto=format&fit=crop&q=80" alt="Takbir Raya MUKMIN">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">Majlis Rumah Terbuka MUKMIN Sempena Hari Raya Aidilfitri</h4>
+                                <h4 class="news-detail-title">Takbir Raya MUKMIN</h4>
                             </div>
                             <div class="news-detail-meta">
-                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 12 April 2025</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> IDCC, Shah Alam</span>
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 17 March 2026</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Masjid Negara, Kuala Lumpur</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
-                            <p>The MUKMIN Hari Raya Aidilfitri Open House 2025 brought together representatives from NGOs, mosque, madrasah, surau and tahfiz institutions from across the country in a spirit of unity and togetherness. The event was attended by approximately 2,000 guests, including more than 200 religious scholars. As a gesture of appreciation and concern for their well-being, medical protection cards were also presented to the scholars during the event.</p>
+                            <p>The MUKMIN Takbir Raya Initiative, organised in conjunction with the Aidilfitri celebrations, was among the organisation’s key community engagement programmes, bringing together NGO leaders from across Malaysia, including presidents and senior representatives from Indian Muslim organisations nationwide.</p>
+                            <p>Approximately 50 community leaders participated in the recording, which was subsequently published across MUKMIN’s official social media platforms and YouTube channel. The initiative received overwhelmingly positive feedback and was widely appreciated for fostering unity, strengthening community bonds, and celebrating a shared sense of identity and togetherness within the Indian Muslim community.</p>
                         </div>
                         <div class="news-detail-cta-wrap">
                             <button class="news-detail-cta scroll-to-gallery">
@@ -688,25 +690,26 @@
                         </div>
                     </article>
 
-                    <!-- Detail 2 (SIRAT Leaders Forum) -->
-                    <article class="news-card-detail" id="event-tab-2" role="tabpanel" aria-labelledby="tab-2">
+                    <!-- Detail 12 (Kembara KL) -->
+                    <article class="news-card-detail" id="event-tab-12" role="tabpanel" aria-labelledby="tab-12">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=80" alt="SIRAT Leaders Forum">
+                            <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80" alt="Kembara Ramadhan MUKMIN Kuala Lumpur">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">SIRAT Leaders Forum (Strengthening India Muslim Roots & Aspiration Together)</h4>
+                                <h4 class="news-detail-title">Majlis Berbuka Puasa & Kembara Ramadhan MUKMIN Kuala Lumpur</h4>
                             </div>
                             <div class="news-detail-meta">
-                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 29 – 31 August 2025</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> The Chateau Resort, Bukit Tinggi, Pahang</span>
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 17 March 2026</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Kuala Lumpur Golf & Country Club (KLGCC)</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
-                            <p>The SIRAT Leaders Forum brought together NGO leaders, religious institutions, policymakers and professionals from across the country on a strategic platform aimed at strengthening collaboration and shaping a more structured, inclusive and sustainable community development agenda.</p>
-                            <p>Throughout the three-day programme, six panel sessions were held featuring experts in education, youth and politics, women empowerment, economics, religion and social development. These sessions focused on addressing current challenges and developing strategic solutions for the progress of the Indian Muslim community.</p>
-                            <p>The programme also gathered approximately 250 delegates and panelists, further strengthening collaborative networks and fostering a stronger spirit of unity among participants.</p>
+                            <p>The Majlis Berbuka Puasa & Kembara Ramadhan MUKMIN Contribution Ceremony Kuala Lumpur was successfully held with the presence of YB Khairy Jamaluddin.</p>
+                            <p>The programme featured a Fireside Chat session that brought together more than 100 community leaders on a constructive dialogue platform to discuss current issues, strengthen networks and explore collaborative approaches towards more structured and sustainable community development.</p>
+                            <p>In addition, food basket contributions were distributed to single mothers, while duit raya contributions were presented to tahfiz students as a gesture of care and support.</p>
+                            <p>Overall, the programme reflected a balance between strategic discourse and community welfare efforts in strengthening social well-being, unity and collective progress.</p>
                         </div>
                         <div class="news-detail-cta-wrap">
                             <button class="news-detail-cta scroll-to-gallery">
@@ -715,25 +718,24 @@
                         </div>
                     </article>
 
-                    <!-- Detail 3 (Youth Summit) -->
-                    <article class="news-card-detail" id="event-tab-3" role="tabpanel" aria-labelledby="tab-3">
+                    <!-- Detail 11 (Ustaz Assistance) -->
+                    <article class="news-card-detail" id="event-tab-11" role="tabpanel" aria-labelledby="tab-11">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&auto=format&fit=crop&q=80" alt="SIRAT Youth Summit & Youth Icon Awards">
+                            <img src="https://images.unsplash.com/photo-1579621970795-87faff3f68b8?w=800&auto=format&fit=crop&q=80" alt="Ramadhan Assistance for Religious Scholars & Ustaz">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">SIRAT Youth Summit & Youth Icon Awards</h4>
+                                <h4 class="news-detail-title">Ramadhan Assistance for Religious Scholars & Ustaz</h4>
                             </div>
                             <div class="news-detail-meta">
-                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> PICCA Convention Centre</span>
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 11 March 2026</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Madrasah Kampung Pandan, Kuala Lumpur</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
-                            <p>The SIRAT Youth Summit & Youth Icon Awards brought together more than 1,000 youths, making it one of the largest Indian Muslim youth gatherings in Malaysia.</p>
-                            <p>Featuring inspirational talks, panel discussions, fireside chats and pitching sessions, the programme provided a platform for youths to showcase ideas, build networks and explore future opportunities. The event also celebrated outstanding young individuals through the Youth Icon Awards, strengthening the spirit of youth leadership and empowerment.</p>
-                            <p>In recognition of its scale and impact, the programme was also recorded in the Malaysian Book of Records for the largest participation in an Indian Muslim youth gathering.</p>
+                            <p>The Ramadhan Assistance Programme for Religious Scholars & Ustaz was carried out to support religious scholars and ustaz across Selangor and Kuala Lumpur through food basket contributions and financial assistance.</p>
+                            <p>As part of the initiative, 175 ustaz were also registered to receive complimentary medical protection cards in appreciation of their service and contributions to the community.</p>
                         </div>
                         <div class="news-detail-cta-wrap">
                             <button class="news-detail-cta scroll-to-gallery">
@@ -742,24 +744,25 @@
                         </div>
                     </article>
 
-                    <!-- Detail 4 (FIKRAH Launch) -->
-                    <article class="news-card-detail" id="event-tab-4" role="tabpanel" aria-labelledby="tab-4">
+                    <!-- Detail 10 (Kembara Penang) -->
+                    <article class="news-card-detail" id="event-tab-10" role="tabpanel" aria-labelledby="tab-10">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&auto=format&fit=crop&q=80" alt="FIKRAH Launch">
+                            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&auto=format&fit=crop&q=80" alt="Kembara Ramadhan MUKMIN Penang">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">FIKRAH Launch</h4>
+                                <h4 class="news-detail-title">Majlis Berbuka Puasa & Kembara Ramadhan MUKMIN Penang</h4>
                             </div>
                             <div class="news-detail-meta">
-                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> PICCA Convention Centre</span>
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 7 March 2026</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Chinese Town Hall, Georgetown, Pulau Pinang</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
-                            <p>The official launch of FIKRAH was officiated by YB Tuan Steven Sim Chee Keong. Spearheaded by MUKMIN’s women leadership, FIKRAH is a strategic think tank that convenes cross-sector experts, leaders, and practitioners to drive impactful ideas, research, innovation, and collaborative solutions.</p>
-                            <p>Representing the Foundation for Innovation, Knowledge and Research in Advancing Humanity, FIKRAH serves as a strategic platform for shaping discourse, developing policy frameworks, and advancing community development towards meaningful and sustainable societal progress.</p>
+                            <p>The Majlis Berbuka Puasa & Kembara Ramadhan MUKMIN Contribution Ceremony was successfully held with the presence of YB Tuan Steven Sim Chee Keong.</p>
+                            <p>During the programme, a total of RM230,000 in contributions was channeled to NGOs, mosques and madrasahs, alongside the distribution of 50 food baskets and Ramadan aid for orphans and tahfiz students.</p>
+                            <p>The event hosted approximately 400 guests, further fostering the spirit of togetherness, compassion and community solidarity during the month of Ramadan.</p>
                         </div>
                         <div class="news-detail-cta-wrap">
                             <button class="news-detail-cta scroll-to-gallery">
@@ -768,78 +771,24 @@
                         </div>
                     </article>
 
-                    <!-- Detail 5 (FIKRAH Roundtable) -->
-                    <article class="news-card-detail" id="event-tab-5" role="tabpanel" aria-labelledby="tab-5">
+                    <!-- Detail 9 (Kembara Ramadhan) -->
+                    <article class="news-card-detail" id="event-tab-9" role="tabpanel" aria-labelledby="tab-9">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop&q=80" alt="FIKRAH Global Roundtable">
+                            <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&auto=format&fit=crop&q=80" alt="Kembara Ramadhan MUKMIN">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">FIKRAH Global Roundtable</h4>
+                                <h4 class="news-detail-title">Kembara Ramadhan MUKMIN</h4>
                             </div>
                             <div class="news-detail-meta">
-                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 23 January 2026</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> MAHSA Avenue, Kuala Lumpur</span>
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 28 February – 17 March 2026</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Nationwide, Malaysia</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
-                            <p>The FIKRAH Global Roundtable, held in conjunction with the SIRAT Global Forum, brought together more than 50 international industry leaders in a high-impact strategic discussion session.</p>
-                            <p>The roundtable focused on collective impact initiatives, emphasising cross-border collaboration, strategic investments and sustainable community empowerment. Discussions also explored potential partnerships and joint initiatives, further strengthening FIKRAH’s role as a strategic connector in advancing inclusive and globally competitive community development.</p>
-                        </div>
-                        <div class="news-detail-cta-wrap">
-                            <button class="news-detail-cta scroll-to-gallery">
-                                View Gallery <i class="fas fa-images" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </article>
-
-                    <!-- Detail 6 (Scholarship Pledge) -->
-                    <article class="news-card-detail" id="event-tab-6" role="tabpanel" aria-labelledby="tab-6">
-                        <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&auto=format&fit=crop&q=80" alt="MUKMIN Future Leaders Scholarship Pledge">
-                        </div>
-                        <div class="news-detail-header">
-                            <div class="news-detail-title-wrap">
-                                <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">MUKMIN Future Leaders Scholarship Pledge</h4>
-                            </div>
-                            <div class="news-detail-meta">
-                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 24 January 2026</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Dewan Tun Abdul Razak, Menara Bank Rakyat, KL</span>
-                            </div>
-                        </div>
-                        <div class="news-detail-description">
-                            <p>Five universities — UNITAR, MAHSA, BAC Group, UOC, and Binary College — have collectively pledged higher education scholarships as part of a shared commitment to expanding access to quality education and strengthening future talent development.</p>
-                            <p>This initiative not only opens greater pathways for students to pursue their educational aspirations, but also helps alleviate financial barriers that often limit access to higher learning. To date, RM5 million in scholarships has been committed, representing a significant investment in human capital development and the future of the next generation.</p>
-                            <p>In parallel, ongoing efforts are being undertaken to further expand scholarship opportunities through strategic collaborations and institutional partnerships leading into 2026.</p>
-                        </div>
-                        <div class="news-detail-cta-wrap">
-                            <button class="news-detail-cta scroll-to-gallery">
-                                View Gallery <i class="fas fa-images" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </article>
-
-                    <!-- Detail 7 (Global Forum) -->
-                    <article class="news-card-detail" id="event-tab-7" role="tabpanel" aria-labelledby="tab-7">
-                        <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&auto=format&fit=crop&q=80" alt="SIRAT Global Forum 2026">
-                        </div>
-                        <div class="news-detail-header">
-                            <div class="news-detail-title-wrap">
-                                <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">SIRAT Global Forum 2026</h4>
-                            </div>
-                            <div class="news-detail-meta">
-                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 23 – 25 January 2026</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Dewan Tun Abdul Razak, Menara Bank Rakyat, KL</span>
-                            </div>
-                        </div>
-                        <div class="news-detail-description">
-                            <p>SIRAT Global Forum 2026 marked a significant milestone as a premier international forum bringing together business leaders, professionals, innovators and Tamil Muslim youths from more than 20 countries, with approximately 500 participants gathered on a global platform.</p>
-                            <p>Held over three days, the forum aimed to strengthen cross-border collaboration, unlock global economic opportunities and drive inclusive and sustainable growth. Guided by the SIRAT vision — Strengthening Indian Muslim Roots & Aspiration Together — the forum focused on strategic areas including global collaboration, entrepreneurship and innovation, Islamic finance, education and talent development, as well as social impact.</p>
-                            <p>The forum further strengthened international networks while advancing community aspirations towards a more competitive, inclusive and sustainable future within the global ecosystem.</p>
+                            <p>The Kembara Ramadan MUKMIN programme successfully distributed 5,000 food baskets to communities in need across the country. Contributions were channeled through mosques, madrasahs, suraus and NGOs nationwide.</p>
+                            <p>This initiative reflects MUKMIN’s continued commitment to easing the burden of vulnerable communities while fostering compassion, unity and solidarity throughout the month of Ramadan.</p>
                         </div>
                         <div class="news-detail-cta-wrap">
                             <button class="news-detail-cta scroll-to-gallery">
@@ -880,24 +829,25 @@
                         </div>
                     </article>
 
-                    <!-- Detail 9 (Kembara Ramadhan) -->
-                    <article class="news-card-detail" id="event-tab-9" role="tabpanel" aria-labelledby="tab-9">
+                    <!-- Detail 7 (Global Forum) -->
+                    <article class="news-card-detail" id="event-tab-7" role="tabpanel" aria-labelledby="tab-7">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&auto=format&fit=crop&q=80" alt="Kembara Ramadhan MUKMIN">
+                            <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&auto=format&fit=crop&q=80" alt="SIRAT Global Forum 2026">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">Kembara Ramadhan MUKMIN</h4>
+                                <h4 class="news-detail-title">SIRAT Global Forum 2026</h4>
                             </div>
                             <div class="news-detail-meta">
-                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 28 February – 17 March 2026</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Nationwide, Malaysia</span>
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 23 – 25 January 2026</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Dewan Tun Abdul Razak, Menara Bank Rakyat, KL</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
-                            <p>The Kembara Ramadan MUKMIN programme successfully distributed 5,000 food baskets to communities in need across the country. Contributions were channeled through mosques, madrasahs, suraus and NGOs nationwide.</p>
-                            <p>This initiative reflects MUKMIN’s continued commitment to easing the burden of vulnerable communities while fostering compassion, unity and solidarity throughout the month of Ramadan.</p>
+                            <p>SIRAT Global Forum 2026 marked a significant milestone as a premier international forum bringing together business leaders, professionals, innovators and Tamil Muslim youths from more than 20 countries, with approximately 500 participants gathered on a global platform.</p>
+                            <p>Held over three days, the forum aimed to strengthen cross-border collaboration, unlock global economic opportunities and drive inclusive and sustainable growth. Guided by the SIRAT vision — Strengthening Indian Muslim Roots & Aspiration Together — the forum focused on strategic areas including global collaboration, entrepreneurship and innovation, Islamic finance, education and talent development, as well as social impact.</p>
+                            <p>The forum further strengthened international networks while advancing community aspirations towards a more competitive, inclusive and sustainable future within the global ecosystem.</p>
                         </div>
                         <div class="news-detail-cta-wrap">
                             <button class="news-detail-cta scroll-to-gallery">
@@ -906,25 +856,25 @@
                         </div>
                     </article>
 
-                    <!-- Detail 10 (Kembara Penang) -->
-                    <article class="news-card-detail" id="event-tab-10" role="tabpanel" aria-labelledby="tab-10">
+                    <!-- Detail 6 (Scholarship Pledge) -->
+                    <article class="news-card-detail" id="event-tab-6" role="tabpanel" aria-labelledby="tab-6">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&auto=format&fit=crop&q=80" alt="Kembara Ramadhan MUKMIN Penang">
+                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&auto=format&fit=crop&q=80" alt="MUKMIN Future Leaders Scholarship Pledge">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">Majlis Berbuka Puasa & Kembara Ramadhan MUKMIN Penang</h4>
+                                <h4 class="news-detail-title">MUKMIN Future Leaders Scholarship Pledge</h4>
                             </div>
                             <div class="news-detail-meta">
-                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 7 March 2026</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Chinese Town Hall, Georgetown, Pulau Pinang</span>
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 24 January 2026</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Dewan Tun Abdul Razak, Menara Bank Rakyat, KL</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
-                            <p>The Majlis Berbuka Puasa & Kembara Ramadhan MUKMIN Contribution Ceremony was successfully held with the presence of YB Tuan Steven Sim Chee Keong.</p>
-                            <p>During the programme, a total of RM230,000 in contributions was channeled to NGOs, mosques and madrasahs, alongside the distribution of 50 food baskets and Ramadan aid for orphans and tahfiz students.</p>
-                            <p>The event hosted approximately 400 guests, further fostering the spirit of togetherness, compassion and community solidarity during the month of Ramadan.</p>
+                            <p>Five universities — UNITAR, MAHSA, BAC Group, UOC, and Binary College — have collectively pledged higher education scholarships as part of a shared commitment to expanding access to quality education and strengthening future talent development.</p>
+                            <p>This initiative not only opens greater pathways for students to pursue their educational aspirations, but also helps alleviate financial barriers that often limit access to higher learning. To date, RM5 million in scholarships has been committed, representing a significant investment in human capital development and the future of the next generation.</p>
+                            <p>In parallel, ongoing efforts are being undertaken to further expand scholarship opportunities through strategic collaborations and institutional partnerships leading into 2026.</p>
                         </div>
                         <div class="news-detail-cta-wrap">
                             <button class="news-detail-cta scroll-to-gallery">
@@ -933,24 +883,24 @@
                         </div>
                     </article>
 
-                    <!-- Detail 11 (Ustaz Assistance) -->
-                    <article class="news-card-detail" id="event-tab-11" role="tabpanel" aria-labelledby="tab-11">
+                    <!-- Detail 5 (FIKRAH Roundtable) -->
+                    <article class="news-card-detail" id="event-tab-5" role="tabpanel" aria-labelledby="tab-5">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1579621970795-87faff3f68b8?w=800&auto=format&fit=crop&q=80" alt="Ramadhan Assistance for Religious Scholars & Ustaz">
+                            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop&q=80" alt="FIKRAH Global Roundtable">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">Ramadhan Assistance for Religious Scholars & Ustaz</h4>
+                                <h4 class="news-detail-title">FIKRAH Global Roundtable</h4>
                             </div>
                             <div class="news-detail-meta">
-                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 11 March 2026</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Madrasah Kampung Pandan, Kuala Lumpur</span>
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 23 January 2026</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> MAHSA Avenue, Kuala Lumpur</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
-                            <p>The Ramadhan Assistance Programme for Religious Scholars & Ustaz was carried out to support religious scholars and ustaz across Selangor and Kuala Lumpur through food basket contributions and financial assistance.</p>
-                            <p>As part of the initiative, 175 ustaz were also registered to receive complimentary medical protection cards in appreciation of their service and contributions to the community.</p>
+                            <p>The FIKRAH Global Roundtable, held in conjunction with the SIRAT Global Forum, brought together more than 50 international industry leaders in a high-impact strategic discussion session.</p>
+                            <p>The roundtable focused on collective impact initiatives, emphasising cross-border collaboration, strategic investments and sustainable community empowerment. Discussions also explored potential partnerships and joint initiatives, further strengthening FIKRAH’s role as a strategic connector in advancing inclusive and globally competitive community development.</p>
                         </div>
                         <div class="news-detail-cta-wrap">
                             <button class="news-detail-cta scroll-to-gallery">
@@ -959,26 +909,24 @@
                         </div>
                     </article>
 
-                    <!-- Detail 12 (Kembara KL) -->
-                    <article class="news-card-detail" id="event-tab-12" role="tabpanel" aria-labelledby="tab-12">
+                    <!-- Detail 4 (FIKRAH Launch) -->
+                    <article class="news-card-detail" id="event-tab-4" role="tabpanel" aria-labelledby="tab-4">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80" alt="Kembara Ramadhan MUKMIN Kuala Lumpur">
+                            <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&auto=format&fit=crop&q=80" alt="FIKRAH Launch">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">Majlis Berbuka Puasa & Kembara Ramadhan MUKMIN Kuala Lumpur</h4>
+                                <h4 class="news-detail-title">FIKRAH Launch</h4>
                             </div>
                             <div class="news-detail-meta">
-                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 17 March 2026</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Kuala Lumpur Golf & Country Club (KLGCC)</span>
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> PICCA Convention Centre</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
-                            <p>The Majlis Berbuka Puasa & Kembara Ramadhan MUKMIN Contribution Ceremony Kuala Lumpur was successfully held with the presence of YB Khairy Jamaluddin.</p>
-                            <p>The programme featured a Fireside Chat session that brought together more than 100 community leaders on a constructive dialogue platform to discuss current issues, strengthen networks and explore collaborative approaches towards more structured and sustainable community development.</p>
-                            <p>In addition, food basket contributions were distributed to single mothers, while duit raya contributions were presented to tahfiz students as a gesture of care and support.</p>
-                            <p>Overall, the programme reflected a balance between strategic discourse and community welfare efforts in strengthening social well-being, unity and collective progress.</p>
+                            <p>The official launch of FIKRAH was officiated by YB Tuan Steven Sim Chee Keong. Spearheaded by MUKMIN’s women leadership, FIKRAH is a strategic think tank that convenes cross-sector experts, leaders, and practitioners to drive impactful ideas, research, innovation, and collaborative solutions.</p>
+                            <p>Representing the Foundation for Innovation, Knowledge and Research in Advancing Humanity, FIKRAH serves as a strategic platform for shaping discourse, developing policy frameworks, and advancing community development towards meaningful and sustainable societal progress.</p>
                         </div>
                         <div class="news-detail-cta-wrap">
                             <button class="news-detail-cta scroll-to-gallery">
@@ -987,24 +935,77 @@
                         </div>
                     </article>
 
-                    <!-- Detail 13 (Takbir Raya) -->
-                    <article class="news-card-detail" id="event-tab-13" role="tabpanel" aria-labelledby="tab-13">
+                    <!-- Detail 3 (Youth Summit) -->
+                    <article class="news-card-detail" id="event-tab-3" role="tabpanel" aria-labelledby="tab-3">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1519817650390-64a93db51149?w=800&auto=format&fit=crop&q=80" alt="Takbir Raya MUKMIN">
+                            <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&auto=format&fit=crop&q=80" alt="SIRAT Youth Summit & Youth Icon Awards">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">Takbir Raya MUKMIN</h4>
+                                <h4 class="news-detail-title">SIRAT Youth Summit & Youth Icon Awards</h4>
                             </div>
                             <div class="news-detail-meta">
-                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 17 March 2026</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Masjid Negara, Kuala Lumpur</span>
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> PICCA Convention Centre</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
-                            <p>The MUKMIN Takbir Raya Initiative, organised in conjunction with the Aidilfitri celebrations, was among the organisation’s key community engagement programmes, bringing together NGO leaders from across Malaysia, including presidents and senior representatives from Indian Muslim organisations nationwide.</p>
-                            <p>Approximately 50 community leaders participated in the recording, which was subsequently published across MUKMIN’s official social media platforms and YouTube channel. The initiative received overwhelmingly positive feedback and was widely appreciated for fostering unity, strengthening community bonds, and celebrating a shared sense of identity and togetherness within the Indian Muslim community.</p>
+                            <p>The SIRAT Youth Summit & Youth Icon Awards brought together more than 1,000 youths, making it one of the largest Indian Muslim youth gatherings in Malaysia.</p>
+                            <p>Featuring inspirational talks, panel discussions, fireside chats and pitching sessions, the programme provided a platform for youths to showcase ideas, build networks and explore future opportunities. The event also celebrated outstanding young individuals through the Youth Icon Awards, strengthening the spirit of youth leadership and empowerment.</p>
+                            <p>In recognition of its scale and impact, the programme was also recorded in the Malaysian Book of Records for the largest participation in an Indian Muslim youth gathering.</p>
+                        </div>
+                        <div class="news-detail-cta-wrap">
+                            <button class="news-detail-cta scroll-to-gallery">
+                                View Gallery <i class="fas fa-images" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Detail 2 (SIRAT Leaders Forum) -->
+                    <article class="news-card-detail" id="event-tab-2" role="tabpanel" aria-labelledby="tab-2">
+                        <div class="news-detail-image-wrap">
+                            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=80" alt="SIRAT Leaders Forum">
+                        </div>
+                        <div class="news-detail-header">
+                            <div class="news-detail-title-wrap">
+                                <span class="news-detail-accent"></span>
+                                <h4 class="news-detail-title">SIRAT Leaders Forum (Strengthening India Muslim Roots & Aspiration Together)</h4>
+                            </div>
+                            <div class="news-detail-meta">
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 29 – 31 August 2025</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> The Chateau Resort, Bukit Tinggi, Pahang</span>
+                            </div>
+                        </div>
+                        <div class="news-detail-description">
+                            <p>The SIRAT Leaders Forum brought together NGO leaders, religious institutions, policymakers and professionals from across the country on a strategic platform aimed at strengthening collaboration and shaping a more structured, inclusive and sustainable community development agenda.</p>
+                            <p>Throughout the three-day programme, six panel sessions were held featuring experts in education, youth and politics, women empowerment, economics, religion and social development. These sessions focused on addressing current challenges and developing strategic solutions for the progress of the Indian Muslim community.</p>
+                            <p>The programme also gathered approximately 250 delegates and panelists, further strengthening collaborative networks and fostering a stronger spirit of unity among participants.</p>
+                        </div>
+                        <div class="news-detail-cta-wrap">
+                            <button class="news-detail-cta scroll-to-gallery">
+                                View Gallery <i class="fas fa-images" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Detail 1 (Hari Raya) -->
+                    <article class="news-card-detail" id="event-tab-1" role="tabpanel" aria-labelledby="tab-1">
+                        <div class="news-detail-image-wrap">
+                            <img src="https://images.unsplash.com/photo-1581078426770-6d336e5de7bf?w=800&auto=format&fit=crop&q=80" alt="Majlis Rumah Terbuka MUKMIN Sempena Hari Raya Aidilfitri">
+                        </div>
+                        <div class="news-detail-header">
+                            <div class="news-detail-title-wrap">
+                                <span class="news-detail-accent"></span>
+                                <h4 class="news-detail-title">Majlis Rumah Terbuka MUKMIN Sempena Hari Raya Aidilfitri</h4>
+                            </div>
+                            <div class="news-detail-meta">
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 12 April 2025</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> IDCC, Shah Alam</span>
+                            </div>
+                        </div>
+                        <div class="news-detail-description">
+                            <p>The MUKMIN Hari Raya Aidilfitri Open House 2025 brought together representatives from NGOs, mosque, madrasah, surau and tahfiz institutions from across the country in a spirit of unity and togetherness. The event was attended by approximately 2,000 guests, including more than 200 religious scholars. As a gesture of appreciation and concern for their well-being, medical protection cards were also presented to the scholars during the event.</p>
                         </div>
                         <div class="news-detail-cta-wrap">
                             <button class="news-detail-cta scroll-to-gallery">
@@ -1028,8 +1029,9 @@
             <!-- Filter Controls -->
             <div class="gallery-filter-bar">
                 <button class="gallery-filter-btn active" data-filter="all">All Photos</button>
-                <button class="gallery-filter-btn" data-filter="kembara-ramadhan-mukmin">Kembara Ramadhan MUKMIN</button>
-                <button class="gallery-filter-btn" data-filter="sirat-series">SIRAT Series</button>
+                @foreach(config('welfare_gallery.categories', []) as $category)
+                <button class="gallery-filter-btn" data-filter="{{ $category['slug'] }}">{{ $category['label'] }}</button>
+                @endforeach
             </div>
 
             <!-- Image Grid -->
@@ -1048,7 +1050,7 @@
                 </div>
                 @empty
                 <p style="grid-column: 1 / -1; text-align: center; color: #666; font-size: 14px; padding: 24px 0;">
-                    Photos will appear here once images are uploaded to the Kembara Ramadhan MUKMIN or SIRAT Series gallery folders.
+                    Photos will appear here once images are uploaded to the gallery folders.
                 </p>
                 @endforelse
             </div>

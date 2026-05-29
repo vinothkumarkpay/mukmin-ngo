@@ -27,7 +27,8 @@ class NewsMomentsGalleryTest extends TestCase
         $response->assertSee('Moments of MUKMIN', false);
         $response->assertSee('All Photos', false);
         $response->assertSee('Kembara Ramadhan MUKMIN', false);
-        $response->assertSee('SIRAT Series', false);
+        $response->assertSee('SIRAT Leaders Forum', false);
+        $response->assertSee('FIKRAH Launch', false);
         $response->assertDontSee('Ramadhan Aid', false);
         $response->assertDontSee('Forums &amp; Summits', false);
     }

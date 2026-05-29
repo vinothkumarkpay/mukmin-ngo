@@ -8,27 +8,27 @@ class PageController extends Controller
 {
     public function about()
     {
-        return redirect()->route('welfare.about.who-we-are');
-    }
-
-    public function whoWeAre()
-    {
-        return view('welfare.pages.about.who-we-are');
-    }
-
-    public function presidentNote()
-    {
-        return view('welfare.pages.about.president-note');
-    }
-
-    public function leadership()
-    {
         $coa = $this->resolveImages(config('welfare_team.coa', []), 'coa');
         $cec = $this->resolveImages(config('welfare_team.cec', []), 'cec');
         $exco = $this->resolveImages(config('welfare_team.exco', []), 'exco');
         $bureau = $this->resolveImages(config('welfare_team.bureau', []), 'bureau');
 
-        return view('welfare.pages.about.leadership', compact('coa', 'cec', 'exco', 'bureau'));
+        return view('welfare.pages.about', compact('coa', 'cec', 'exco', 'bureau'));
+    }
+
+    public function whoWeAre()
+    {
+        return redirect()->to(route('welfare.about') . '#who-we-are');
+    }
+
+    public function presidentNote()
+    {
+        return redirect()->to(route('welfare.about') . '#president-note');
+    }
+
+    public function leadership()
+    {
+        return redirect()->to(route('welfare.about') . '#leadership');
     }
 
     private function resolveImages(array $members, string $category): array

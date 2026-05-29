@@ -3,69 +3,74 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Council of Advisors (COA) - 12 members
+    | Council of Wisdom (formerly COA) - 13 members
     |--------------------------------------------------------------------------
     */
     'coa' => [
         [
-            'name' => 'Prof. Tan Sri Datuk Dr. Haji Mohamed Haniffa bin Haji Abdullah',
+            'name' => 'Prof. Tan Sri Datuk Dr. Haji Mohamed Haniffa Haji Abdullah',
             'role' => 'Advisor',
-            'org' => 'Council of Advisors'
+            'org' => 'Council of Wisdom'
         ],
         [
-            'name' => 'YA Dato\' Seri Vazeer Alam Mydin Meera',
+            'name' => 'YA Dato’ Seri Vazeer Alam Mydin Meera',
             'role' => 'Advisor',
-            'org' => 'Council of Advisors'
-        ],
-        [
-            'name' => 'Datuk Seri Vaseehar Hassan',
-            'role' => 'Advisor',
-            'org' => 'Council of Advisors'
-        ],
-        [
-            'name' => 'Dato\' Haji Jawahar Ali Taib Khan',
-            'role' => 'Advisor',
-            'org' => 'Council of Advisors'
-        ],
-        [
-            'name' => 'Dato\' Fazilah Binti Shaik Allaudin',
-            'role' => 'Advisor',
-            'org' => 'Council of Advisors'
-        ],
-        [
-            'name' => 'Dato\' Akbar bin Moidunny',
-            'role' => 'Advisor',
-            'org' => 'Council of Advisors'
-        ],
-        [
-            'name' => 'Tan Sri Dato\' Seri Nor Mohamed Yackop',
-            'role' => 'Advisor',
-            'org' => 'Council of Advisors'
+            'org' => 'Council of Wisdom'
         ],
         [
             'name' => 'Datuk Seri Haji Mohamed Iqbal',
             'role' => 'Advisor',
-            'org' => 'Council of Advisors'
+            'org' => 'Council of Wisdom'
         ],
         [
-            'name' => 'Dato\' Dr. Noorul Ameen Mohamed Ishack',
+            'name' => 'Datuk Seri Vaseehar Hassan',
             'role' => 'Advisor',
-            'org' => 'Council of Advisors'
+            'org' => 'Council of Wisdom'
         ],
         [
-            'name' => 'Dato\' Haji Jamarulkhan Haji M.S Kadir',
+            'name' => 'Dato’ Haji Jamarulkhan Haji M.S. Kadir',
             'role' => 'Advisor',
-            'org' => 'Council of Advisors'
+            'org' => 'Council of Wisdom'
         ],
         [
-            'name' => 'Dato\' Shahira Ahmed Bazari',
+            'name' => 'Dato’ Haji Jawahar Ali Taib Khan',
             'role' => 'Advisor',
-            'org' => 'Council of Advisors'
+            'org' => 'Council of Wisdom'
         ],
         [
-            'name' => 'Tuan Rafee Haneef',
+            'name' => 'Dato’ Dr. Noorul Ameen Mohamed Ishack',
             'role' => 'Advisor',
-            'org' => 'Council of Advisors'
+            'org' => 'Council of Wisdom'
+        ],
+        [
+            'name' => 'Dr Jasmine Begum',
+            'role' => 'Advisor',
+            'org' => 'Council of Wisdom'
+        ],
+        [
+            'name' => 'Dato’ Akbar bin Moidunny',
+            'role' => 'Advisor',
+            'org' => 'Council of Wisdom'
+        ],
+        [
+            'name' => 'Dato’ Fazilah binti Shaik Allaudin',
+            'role' => 'Advisor',
+            'org' => 'Council of Wisdom'
+        ],
+        [
+            'name' => 'Dato’ Shahira Ahmed Bazari',
+            'role' => 'Advisor',
+            'org' => 'Council of Wisdom'
+        ],
+        [
+            'name' => 'Datuk Haji Mohamed Sirajudeen bin Mohamed Salahudeen',
+            'role' => 'Advisor',
+            'org' => 'Council of Wisdom'
+        ],
+        [
+            'name' => 'Datuk Seri Dr. Jahaberdeen Mohamed Yunoos',
+            'role' => 'Advisor',
+            'org' => 'Council of Wisdom'
         ]
     ],
 
@@ -82,37 +87,37 @@ return [
         ],
         [
             'name' => 'Dato Seri Shaik Aqmal Bin Shaik Allaudin',
-            'role' => 'Deputy President 1',
+            'role' => 'Deputy President',
             'org' => 'Central Executive Committee'
         ],
         [
             'name' => 'Encik Mohamed Azrin Bin Anver Ali',
-            'role' => 'Deputy President 2',
+            'role' => 'Deputy President',
             'org' => 'Central Executive Committee'
         ],
         [
             'name' => 'Datuk Wira Naina Mohamed Bin Sultan Abdul Kadir',
-            'role' => 'Vice President 1',
+            'role' => 'Vice President',
             'org' => 'Central Executive Committee'
         ],
         [
             'name' => 'Dato’ KK Shabutheen Bin Kirudu Mohamed',
-            'role' => 'Vice President 2',
+            'role' => 'Vice President',
             'org' => 'Central Executive Committee'
         ],
         [
             'name' => 'Datuk Mohamed Ali Jinnah Bin Masthan Gani',
-            'role' => 'Vice President 3',
+            'role' => 'Vice President',
             'org' => 'Central Executive Committee'
         ],
         [
             'name' => 'Datuk Sayed Kadi',
-            'role' => 'Vice President 4',
+            'role' => 'Vice President',
             'org' => 'Central Executive Committee'
         ],
         [
             'name' => 'Cik Ruzainishah Abu Bakkar',
-            'role' => 'Vice President 5',
+            'role' => 'Vice President',
             'org' => 'Central Executive Committee'
         ],
         [
@@ -132,12 +137,12 @@ return [
         ],
         [
             'name' => 'Encik Dailan Bin Muhammad Ravi',
-            'role' => 'Assistant Secretary General 1',
+            'role' => 'Assistant Secretary General',
             'org' => 'Central Executive Committee'
         ],
         [
             'name' => 'Puan Nur Aisyah Binti Said Ali',
-            'role' => 'Assistant Secretary General 2',
+            'role' => 'Assistant Secretary General',
             'org' => 'Central Executive Committee'
         ],
         [
@@ -146,7 +151,7 @@ return [
             'org' => 'Central Executive Committee'
         ],
         [
-            'name' => 'TBC',
+            'name' => 'Abdul',
             'role' => 'Assistant Head of Information',
             'org' => 'Central Executive Committee'
         ]
@@ -159,217 +164,17 @@ return [
     */
     'exco' => [
         [
-            'name' => 'Faruk Bin V Raju Mohamed',
+            'name' => 'Datuk Dr. Muhammad Ismail bin Abu Bakar',
             'role' => 'EXCO Member',
             'tag' => 'Executive Committee'
         ],
         [
-            'name' => 'Datuk Haji Mohammed Mosin',
+            'name' => 'Datuk Haji Mohammed Mosin bin Abdul Razak',
             'role' => 'EXCO Member',
             'tag' => 'Executive Committee'
         ],
         [
-            'name' => 'Dato\' Fardul Idris Bin M.Zakaria',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Mohamed Rifaie Bin Shaik Alaudeen',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Abdul Alim Bin Abdul Hassan',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Zabarulla Bin Hanifah',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Mohd Anuar Ali Bin Mohamed Jalali',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Bhurhanuddeen Bin M. Abdullah',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Mohamed Asri Bin Seeni Mohamed',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Munower Sadiq Bin M.K.E Kader Sultan',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Mohamed Hasan Bin Othuman',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Dato\' Abdul Hakim Bin Noor Mohamed',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Mohamed Shariff Bin Ahmad Aji',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Fadzil Bin Jamaludeen',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Saleem Bin Abd Rashid',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Abdul Kadir Bin M.E. Sikkandar',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Mohamed Nasir Bin M. Shahabudin',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Nur Amalina Binti Kamaruddin',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Dato\' Hj. Abdul Hamid PV Abdu',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Noor Mohamd Bin Spk M. Abdullah',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Syed Mohamed Buhari',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Wahidah Binti Ibrahim',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Mohamed Arib Bin Aliah',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Dato\' Mohamad Nazri Bin Osman',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Mohd Faizal Bin Abdullah',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Mohd Kassim Bin Aliah',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Abdul Rahman bin M. Abdul Kader',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Rajaludin Bin Abdul Aziz',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Muhammad Najib Bin Kalifullah',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Muhammad Nizam Bin Hajanajimudeen',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Norfazilah Binti Km Ameer Sultan',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Siti Sabariah Binti Buhari',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Siti Fatimah Binti Alimuddin',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Syed Niyaz Hasan Bin Syed Ali Maricar',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Abdul Kadir Bin Abdul Rahman',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Datuk Dr. Haji Mohamed Nizam',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Syed Fazil Bin Saidu',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Mohamed Firdaus Bin S. Abdul Khader',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Ayoob Khan Bin Muhamad Yakub',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Mohd Ibrahim Bin Ali',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Datuk Syed Abthair Bin Badrus Zahan',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Jehabar Sadiq Bin M. Nizamuddin',
-            'role' => 'EXCO Member',
-            'tag' => 'Executive Committee'
-        ],
-        [
-            'name' => 'Mohammed Hafiz Bin M. Abu Bakar',
+            'name' => 'Datuk Syed Abthair bin Badrus Zahan',
             'role' => 'EXCO Member',
             'tag' => 'Executive Committee'
         ],
@@ -379,7 +184,207 @@ return [
             'tag' => 'Executive Committee'
         ],
         [
-            'name' => 'Muhammad Ismail bin Abu Bakar',
+            'name' => 'Dato’ Dr. Haji Mohamed Nizam bin Abdullah',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Dato’ Haji Faruk bin V. Raju Mohamed',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Dato’ Abdul Hamid P.V. Abdu',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Dato’ Abdul Hakim bin Noor Mohamed',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Dato’ Fardul Idris bin M. Zakaria',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Dato’ Mohamed Nazri bin Osman',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Dato’ Is Mohd Kassim bin Aliah',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Haji Mohamed Hasan bin Othuman',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Haji Munower Sadiq bin M.K.E. Kader Sultan',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Haji Syed Mohamed Buhari',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Haji Mohamed Nasir bin Mohamed Shahabudin',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Haji Ayoob Khan bin Muhamad',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Puan Siti Sabariah binti Buhari',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Puan Norfazilah binti K.M. Ameer Sultan',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Puan Siti Fatimah binti Alimuddin',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Puan Wahidah binti Ibrahim',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Cik Nur Amalina binti Kamaruddin',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Syed Niyaz Hasan bin Syed Ali Maricar',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Syed Fazil bin Saidu',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Abdul Kadir bin M.E. Sikkandar',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Abdul Kadir bin Abdul Rahman',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Abdul Rahman bin Mohamed Abdul Kader',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Abdul Alim bin Abdul Hassan',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Mohd Faizal bin Abdullah',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Mohd Ibrahim bin Ali',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Mohd Anuar Ali bin Mohamed Jalali',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Mohamed Firdaus bin Sultan Abdul Khader',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Mohamed Arib bin Aliah',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Mohammed Hafiz bin Mohamed Abu Bakar',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Mohamed Asri bin Seeni Mohamed',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Muhammad Najib bin Kalifullah',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Mohamed Shariff bin Ahmad Aji',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Fadzil bin Jamaludeen',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Bhurhanuddeen bin Mohamed Abdullah',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Jaleeludeen bin Abu Baker',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Noor Mohamad bin SPK Mohd Abdullah',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Saleem bin Abd Rashid',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Rajaludin bin Abdul Aziz',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Zabarullah bin Hanifah',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Mohamed Rifaie bin Shaik Alaudeen',
+            'role' => 'EXCO Member',
+            'tag' => 'Executive Committee'
+        ],
+        [
+            'name' => 'Tuan Mohamed Nazri bin Prem Nasir',
             'role' => 'EXCO Member',
             'tag' => 'Executive Committee'
         ]
@@ -394,7 +399,7 @@ return [
         [
             'name' => 'Datuk Wira Naina Mohamed Bin Sultan Abdul Kadir',
             'role' => 'Chairman',
-            'tag' => 'Entrepreneurship Development'
+            'tag' => 'Entrepreneurship and SME Development'
         ],
         [
             'name' => 'Dato\' (Is) Mohd Kassim Bin Aliah',
@@ -412,19 +417,19 @@ return [
             'tag' => 'Social Development'
         ],
         [
-            'name' => 'TBC',
+            'name' => 'Siti Sabariah Binti Buhari',
             'role' => 'Chairman',
             'tag' => 'Women Development'
         ],
         [
-            'name' => 'Jaleel Abu Baker',
+            'name' => 'Jehabar Sadiq Bin M. Nizamuddin',
             'role' => 'Chairman',
             'tag' => 'Education & Talent Development'
         ],
         [
-            'name' => 'Datuk Jake Abdullah',
+            'name' => 'Jaleel Abu Baker',
             'role' => 'Chairman',
-            'tag' => 'Leadership & Skills Development'
+            'tag' => 'Leadership & Skill'
         ],
         [
             'name' => 'Dato\' Seri Shaik Aqmal Bin Shaik Allaudin',
@@ -444,7 +449,7 @@ return [
         [
             'name' => 'Datuk Dr. Haji Mohamed Nizam',
             'role' => 'Chairman',
-            'tag' => 'Professional'
+            'tag' => 'Professional Bureau'
         ],
         [
             'name' => 'Datuk Haji Mohammed Mosin',
@@ -464,7 +469,7 @@ return [
         [
             'name' => 'Encik Mohamed Azrin Bin Anver Ali',
             'role' => 'Chairman',
-            'tag' => 'Affiliate Relations'
+            'tag' => 'Affiliate'
         ]
     ]
 ];

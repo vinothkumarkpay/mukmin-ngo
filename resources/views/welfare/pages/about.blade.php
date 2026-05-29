@@ -319,7 +319,7 @@
 
 
 <!-- Sub Block 1: Who We Are -->
-<section class="section-padding bg-white">
+<section id="who-we-are" class="section-padding bg-white">
     <div class="container">
         <div class="who-we-are-grid">
             <div class="who-body">
@@ -340,13 +340,13 @@
 </section>
 
 <!-- Sub Block 2: President's Note -->
-<section class="section-padding bg-warm" style="border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+<section id="president-note" class="section-padding bg-warm" style="border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
     <div class="container">
         <div class="president-grid">
             <div class="president-img-container">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80" alt="Datuk Dr. Mohd Gazali Haji Mohd Abas">
+                <img src="{{ asset('welfare/img/about/president-shahul-hameed.png') }}" alt="Datuk Wira Shahul Dawood">
                 <div class="president-title-overlay">
-                    <h4>Datuk Dr. Mohd Gazali Haji Mohd Abas</h4>
+                    <h4>Datuk Wira Shahul Dawood</h4>
                     <span>President, Pertubuhan Gabungan MUKMIN Nasional</span>
                 </div>
             </div>
@@ -360,7 +360,7 @@
                 <p>Thank you and Wassalam.</p>
                 
                 <div class="president-signature">
-                    <h5>Datuk Dr. Mohd Gazali Haji Mohd Abas</h5>
+                    <h5>Datuk Wira Shahul Dawood</h5>
                     <p>President, Pertubuhan Gabungan MUKMIN Nasional</p>
                 </div>
             </div>
@@ -369,7 +369,7 @@
 </section>
 
 <!-- Sub Block 3: Leadership & Governance (Dynamic Tabs) -->
-<section class="section-padding bg-white">
+<section id="leadership" class="section-padding bg-white">
     <div class="container">
         <!-- Header -->
         <div class="leadership-header">
@@ -380,7 +380,7 @@
 
         <!-- Tab Navigation -->
         <div class="leadership-tabs">
-            <button class="leadership-tab-btn active" data-target="tab-coa">Council of Advisors (COA)</button>
+            <button class="leadership-tab-btn active" data-target="tab-coa">COUNCIL OF WISDOM</button>
             <button class="leadership-tab-btn" data-target="tab-cec">Central Executive Committee (CEC)</button>
             <button class="leadership-tab-btn" data-target="tab-exco">Executive Committee (EXCO)</button>
             <button class="leadership-tab-btn" data-target="tab-bureau">Bureau Chairs</button>
@@ -402,7 +402,6 @@
                     </div>
                     <h4 class="member-name">{{ $member['name'] }}</h4>
                     <span class="member-role">{{ $member['role'] }}</span>
-                    <span class="member-org">{{ $member['org'] }}</span>
                 </div>
                 @endforeach
             </div>
@@ -422,7 +421,6 @@
                     </div>
                     <h4 class="member-name">{{ $member['name'] }}</h4>
                     <span class="member-role">{{ $member['role'] }}</span>
-                    <span class="member-org">{{ $member['org'] }}</span>
                 </div>
                 @endforeach
             </div>
@@ -442,7 +440,6 @@
                     </div>
                     <h4 class="member-name">{{ $member['name'] }}</h4>
                     <span class="member-role">{{ $member['role'] }}</span>
-                    <span class="member-tag">{{ $member['tag'] }}</span>
                 </div>
                 @endforeach
             </div>
@@ -461,7 +458,6 @@
                         <img src="{{ $member['image'] }}" alt="{{ $member['name'] }}">
                     </div>
                     <h4 class="member-name">{{ $member['name'] }}</h4>
-                    <span class="member-role">{{ $member['role'] }}</span>
                     <span class="member-tag">{{ $member['tag'] }}</span>
                 </div>
                 @endforeach

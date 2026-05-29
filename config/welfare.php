@@ -45,9 +45,9 @@ return [
             'label' => 'About Us',
             'route' => 'welfare.about',
             'children' => [
-                ['label' => 'Who We Are', 'route' => 'welfare.about.who-we-are'],
-                ['label' => "President's Note", 'route' => 'welfare.about.president-note'],
-                ['label' => 'Leadership & Governance', 'route' => 'welfare.about.leadership'],
+                ['label' => 'Who We Are', 'route' => 'welfare.about', 'hash' => 'who-we-are'],
+                ['label' => "President's Note", 'route' => 'welfare.about', 'hash' => 'president-note'],
+                ['label' => 'Leadership & Governance', 'route' => 'welfare.about', 'hash' => 'leadership'],
             ]
         ],
         [

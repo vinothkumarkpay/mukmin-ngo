@@ -670,10 +670,8 @@
                         <p>Ordinary Members form the core membership structure of MUKMIN and play an active role in contributing towards the organisation's direction, initiatives, and ecosystem development.</p>
                         <h4>Eligibility</h4>
                         <ul class="membership-list">
-                            <li>Registered NGOs and civil society organisations</li>
-                            <li>Chambers of commerce and industry associations</li>
-                            <li>Institutions, foundations, and community-based organisations</li>
-                            <li>Mosques, Madrasah and Surau across Malaysia</li>
+                            <li>Registered NGOs and Civil Society Organisations</li>
+                            <li>Chambers of Commerce and Industry Associations</li>
                         </ul>
                         <h4>Member Rights &amp; Participation</h4>
                         <ul class="membership-list">

@@ -166,11 +166,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 80px;
+    height: 120px;
 }
 /* Brand Logo Images */
 .brand-mark-logo img {
-    height: 80px;
+    height: 120px;
     width: auto;
     max-width: 100%;
     object-fit: contain;
@@ -181,10 +181,10 @@
         height: 180px;
     }
     .brand-mark-logo {
-        height: 70px;
+        height: 100px;
     }
     .brand-mark-logo img {
-        height: 70px;
+        height: 100px;
     }
 }
 
@@ -347,7 +347,7 @@
                     </div>
                     <div class="card-logo-header">
                         <div class="brand-mark-logo">
-                            <img src="{{ asset('welfare/img/fikrah_logo.png') }}" alt="FIKRAH Logo">
+                            <img src="{{ asset('welfare/img/fikrah_logo.jpg') }}" alt="FIKRAH Logo">
                         </div>
                     </div>
                     <div class="card-body-wrap">
@@ -408,7 +408,7 @@
                     </div>
                     <div class="card-logo-header">
                         <div class="brand-mark-logo">
-                            <img src="{{ asset('welfare/img/mukmin_ecosystem_logo.png') }}" alt="MUKMIN Logo">
+                            <img src="{{ asset('welfare/img/mukmin_ecosystem_logo.jpg') }}" alt="MUKMIN Logo">
                         </div>
                     </div>
                     <div class="card-body-wrap">
@@ -469,7 +469,7 @@
                     </div>
                     <div class="card-logo-header">
                         <div class="brand-mark-logo">
-                            <img src="{{ asset('welfare/img/yayasan_logo.png') }}" alt="Yayasan MUKMIN Logo">
+                            <img src="{{ asset('welfare/img/yayasan_logo.jpg') }}" alt="Yayasan MUKMIN Logo">
                         </div>
                     </div>
                     <div class="card-body-wrap">
