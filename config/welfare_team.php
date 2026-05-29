@@ -132,7 +132,7 @@ return [
         ],
         [
             'name' => 'Encik Mohammed Azmi Bin Sathakutulah',
-            'role' => 'Assistant Treasurer',
+            'role' => 'Deputy Treasurer',
             'org' => 'Central Executive Committee'
         ],
         [
@@ -142,12 +142,12 @@ return [
         ],
         [
             'name' => 'Encik Dailan Bin Muhammad Ravi',
-            'role' => 'Assistant Secretary General',
+            'role' => 'Deputy Secretary General 1',
             'org' => 'Central Executive Committee'
         ],
         [
             'name' => 'Puan Nur Aisyah Binti Said Ali',
-            'role' => 'Assistant Secretary General',
+            'role' => 'Deputy Secretary General 2',
             'org' => 'Central Executive Committee'
         ],
         [
@@ -156,8 +156,8 @@ return [
             'org' => 'Central Executive Committee'
         ],
         [
-            'name' => 'Abdul',
-            'role' => 'Assistant Head of Information',
+            'name' => 'Encik Abdunnoor Bin Mohamed Ariff',
+            'role' => 'Deputy Head of Information',
             'org' => 'Central Executive Committee'
         ]
     ],
