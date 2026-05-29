@@ -5,6 +5,17 @@
 
     RewriteEngine On
 
+    # Coming soon landing page (uncomment to show before launch)
+    # RewriteCond %{REQUEST_URI} !^/coming-soon\.html$ [NC]
+    # RewriteCond %{REQUEST_URI} !^/welfare/ [NC]
+    # RewriteCond %{REQUEST_URI} !^/css/ [NC]
+    # RewriteCond %{REQUEST_URI} !^/js/ [NC]
+    # RewriteCond %{REQUEST_URI} !^/favicon [NC]
+    # RewriteCond %{REQUEST_URI} !^/apple-touch-icon [NC]
+    # RewriteCond %{REQUEST_URI} !^/site\.webmanifest$ [NC]
+    # RewriteCond %{REQUEST_URI} !^/android-chrome- [NC]
+    # RewriteRule ^ coming-soon.html [L]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

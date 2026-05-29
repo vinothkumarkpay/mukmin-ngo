@@ -479,7 +479,8 @@ h6 { font-size: 13px; line-height: 20px; }
 .slide.active { display: flex; }
 .slide-content {
     width: 100%;
-    padding: 80px 0;
+    padding: 80px 74px;
+    box-sizing: border-box;
 }
 .slide-text { max-width: 620px; }
 .slide-text h1 {
@@ -1046,6 +1047,7 @@ section { padding: 60px 0; }
 
     .slide-text h1 { font-size: 28px; line-height: 36px; }
     .slide-text p { font-size: 15px; line-height: 22px; }
+    .slide-content { padding: 60px 64px; }
     .welcome-grid { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
     .campaigns-grid { grid-template-columns: 1fr; }
@@ -1070,6 +1072,7 @@ section { padding: 60px 0; }
     .team-grid { grid-template-columns: 1fr; }
     .partners-grid { grid-template-columns: repeat(2, 1fr); }
     .slide { min-height: 400px; }
+    .slide-content { padding: 48px 58px; }
     .slide-text h1 { font-size: 22px; line-height: 30px; }
     section { padding: 40px 0; }
 }

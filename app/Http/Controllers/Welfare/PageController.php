@@ -172,4 +172,9 @@ class PageController extends Controller
     {
         return view('welfare.pages.donate');
     }
+
+    public function comingSoon()
+    {
+        return view('welfare.pages.coming-soon');
+    }
 }

@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 | */
 
 Route::name('welfare.')->group(function () {
+    Route::get('/coming-soon', [PageController::class, 'comingSoon'])->name('coming-soon');
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/about', [PageController::class, 'about'])->name('about');
     Route::get('/about/who-we-are', [PageController::class, 'whoWeAre'])->name('about.who-we-are');
