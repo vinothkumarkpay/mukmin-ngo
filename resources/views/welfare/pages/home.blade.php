@@ -1340,7 +1340,7 @@
                                     <h4 class="update-item-title">MUKMIN Future Leaders Scholarship (MFLS)</h4>
                                     <p class="update-item-desc"><strong>Two Pathways. One Future.</strong><br>Access TVET and academic programmes. From Foundation to Master level. Designed to develop future-ready talent.</p>
                                     <div style="margin-top: 12px;">
-                                        <a href="{{ route('welfare.impact.mfls') }}" class="btn btn-primary" style="padding: 6px 15px; font-size: 11.5px; border-radius: 3px; display: inline-block;">MFLS Page</a>
+                                        <a href="{{ route('welfare.impact.mfls') }}" class="btn btn-primary" style="padding: 6px 15px; font-size: 11.5px; border-radius: 3px; display: inline-block;">View More</a>
                                     </div>
                                 </li>
                                 <li>
@@ -1348,7 +1348,7 @@
                                     <h4 class="update-item-title">SIRAT Series</h4>
                                     <p class="update-item-desc">Building leadership, connection and collaboration across youth, leaders and diaspora.</p>
                                     <div style="margin-top: 12px;">
-                                        <a href="{{ route('welfare.impact.sirat') }}" class="btn btn-primary" style="padding: 6px 15px; font-size: 11.5px; border-radius: 3px; display: inline-block;">SIRAT Series Page</a>
+                                        <a href="{{ route('welfare.impact.sirat') }}" class="btn btn-primary" style="padding: 6px 15px; font-size: 11.5px; border-radius: 3px; display: inline-block;">View More</a>
                                     </div>
                                 </li>
                             </ul>

@@ -1,0 +1,22 @@
+---
+description: Keep mukmin1 and mukmin-ngo in sync after code changes
+alwaysApply: true
+---
+
+# Sync mukmin1 and mukmin-ngo
+
+After making any file changes in this workspace, sync the local dev copy to the git repo copy:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File "C:\Code\mukmin1\scripts\sync-from-mukmin1.ps1"
+```
+
+- **Source:** `C:\Code\mukmin1` (local dev)
+- **Target:** `C:\Code\mukmin-ngo` (git repo / server copy)
+- **Direction:** always mukmin1 → mukmin-ngo (never reverse unless the user explicitly asks)
+
+Run the sync at the end of tasks that modify project files. Do not skip because the user said "always sync."
+
+Do not commit or push to `mukmin-ngo` unless the user explicitly asks.
+
+If sync fails (exit code ≥ 8), report the error and retry or fix before finishing.

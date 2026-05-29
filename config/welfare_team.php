@@ -3,75 +3,80 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Council of Wisdom (formerly COA) - 13 members
+    | Council of Advisor (COA) - 14 members
     |--------------------------------------------------------------------------
     */
     'coa' => [
         [
-            'name' => 'Prof. Tan Sri Datuk Dr. Haji Mohamed Haniffa Haji Abdullah',
-            'role' => 'Advisor',
-            'org' => 'Council of Wisdom'
-        ],
-        [
             'name' => 'YA Dato’ Seri Vazeer Alam Mydin Meera',
             'role' => 'Advisor',
-            'org' => 'Council of Wisdom'
+            'org' => 'Council of Advisor',
         ],
         [
             'name' => 'Datuk Seri Haji Mohamed Iqbal',
             'role' => 'Advisor',
-            'org' => 'Council of Wisdom'
+            'org' => 'Council of Advisor',
         ],
         [
-            'name' => 'Datuk Seri Vaseehar Hassan',
+            'name' => 'Datuk Seri Vaseeharr Hassan',
             'role' => 'Advisor',
-            'org' => 'Council of Wisdom'
-        ],
-        [
-            'name' => 'Dato’ Haji Jamarulkhan Haji M.S. Kadir',
-            'role' => 'Advisor',
-            'org' => 'Council of Wisdom'
-        ],
-        [
-            'name' => 'Dato’ Haji Jawahar Ali Taib Khan',
-            'role' => 'Advisor',
-            'org' => 'Council of Wisdom'
-        ],
-        [
-            'name' => 'Dato’ Dr. Noorul Ameen Mohamed Ishack',
-            'role' => 'Advisor',
-            'org' => 'Council of Wisdom'
-        ],
-        [
-            'name' => 'Dr Jasmine Begum',
-            'role' => 'Advisor',
-            'org' => 'Council of Wisdom'
-        ],
-        [
-            'name' => 'Dato’ Akbar bin Moidunny',
-            'role' => 'Advisor',
-            'org' => 'Council of Wisdom'
-        ],
-        [
-            'name' => 'Dato’ Fazilah binti Shaik Allaudin',
-            'role' => 'Advisor',
-            'org' => 'Council of Wisdom'
-        ],
-        [
-            'name' => 'Dato’ Shahira Ahmed Bazari',
-            'role' => 'Advisor',
-            'org' => 'Council of Wisdom'
-        ],
-        [
-            'name' => 'Datuk Haji Mohamed Sirajudeen bin Mohamed Salahudeen',
-            'role' => 'Advisor',
-            'org' => 'Council of Wisdom'
+            'org' => 'Council of Advisor',
         ],
         [
             'name' => 'Datuk Seri Dr. Jahaberdeen Mohamed Yunoos',
             'role' => 'Advisor',
-            'org' => 'Council of Wisdom'
-        ]
+            'org' => 'Council of Advisor',
+        ],
+        [
+            'name' => 'Dato’ Dr. Noorul Ameen Mohamed Ishac',
+            'role' => 'Advisor',
+            'org' => 'Council of Advisor',
+        ],
+        [
+            'name' => 'Dato’ Haji Jamarulkhan Haji M.S. Kadir',
+            'role' => 'Advisor',
+            'org' => 'Council of Advisor',
+        ],
+        [
+            'name' => 'Dato’ Haji Jawahar Ali Taib Khan',
+            'role' => 'Advisor',
+            'org' => 'Council of Advisor',
+        ],
+        [
+            'name' => 'Datuk Haji Mohamed Sirajudeen Mohamed Salahudeen',
+            'role' => 'Advisor',
+            'org' => 'Council of Advisor',
+        ],
+        [
+            'name' => 'Dato Kadar Shah Abdul Razak',
+            'role' => 'Advisor',
+            'org' => 'Council of Advisor',
+        ],
+        [
+            'name' => 'Dato’ Akbar Moidunny',
+            'role' => 'Advisor',
+            'org' => 'Council of Advisor',
+        ],
+        [
+            'name' => 'Dato’ Shahira Ahmed Bazari',
+            'role' => 'Advisor',
+            'org' => 'Council of Advisor',
+        ],
+        [
+            'name' => 'Dato’ Dr Fazilah Shaik Allaudin',
+            'role' => 'Advisor',
+            'org' => 'Council of Advisor',
+        ],
+        [
+            'name' => 'Dr Jasmine Begum',
+            'role' => 'Advisor',
+            'org' => 'Council of Advisor',
+        ],
+        [
+            'name' => 'Professor Dr. Ainul Jaria Maidin',
+            'role' => 'Advisor',
+            'org' => 'Council of Advisor',
+        ],
     ],
 
     /*
