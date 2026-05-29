@@ -34,6 +34,7 @@
 <body class="@yield('body-class', '')">
 
     <!-- TOP BAR -->
+    {{--
     <div class="top-bar">
         <div class="container">
             <div class="top-bar-inner">
@@ -62,6 +63,7 @@
             </div>
         </div>
     </div>
+    --}}
 
     <!-- HEADER -->
     <header class="site-header" id="site-header">
@@ -171,19 +173,35 @@
     <footer class="site-footer">
         <div class="footer-bottom" style="padding: 25px 0; border-top: 1px solid rgba(255,255,255,0.08); font-size: 13.5px; color: rgba(255,255,255,0.7);">
             <div class="container">
-                <div class="footer-content-inline" style="display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; line-height: 1.6;">
-                    <div class="footer-left" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-                        <span>&copy; 2026 Pertubuhan Gabungan MUKMIN Nasional (PPM-019-10-15042026)</span>
-                        <span style="color: rgba(255,255,255,0.25);">|</span>
-                        <a href="{{ route('welfare.legal-disclaimer') }}" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">Legal Disclaimer</a>
+                <div class="footer-content-inline" style="display: flex; flex-direction: column; align-items: center; gap: 15px; line-height: 1.6;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 15px;">
+                        <div class="footer-left" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                            <span>&copy; 2026 Pertubuhan Gabungan MUKMIN Nasional (PPM-019-10-15042026)</span>
+                            <span style="color: rgba(255,255,255,0.25);">|</span>
+                            <a href="{{ route('welfare.legal-disclaimer') }}" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">Legal Disclaimer</a>
+                        </div>
+                        <div class="footer-right" style="display: flex; align-items: center; gap: 18px;">
+                            <a href="https://x.com/Mukminmy" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="X / Twitter" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                            <a href="https://web.facebook.com/profile.php?id=61590435118262" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/mukmin.malaysia" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/in/mukminofficial/" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://www.tiktok.com/@mukminnasional?is_from_webapp=1&sender_device=pc" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="TikTok" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+                            <a href="https://youtube.com/@mukmin-i7l?si=ZDB9eyr679HET6Ew" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="YouTube" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+                        </div>
                     </div>
-                    <div class="footer-right" style="display: flex; align-items: center; gap: 18px;">
-                        <a href="https://x.com/Mukminmy" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="X / Twitter" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
-                        <a href="https://web.facebook.com/profile.php?id=61590435118262" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com/mukmin.malaysia" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.linkedin.com/in/mukminofficial/" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://www.tiktok.com/@mukminnasional?is_from_webapp=1&sender_device=pc" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="TikTok" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://youtube.com/@mukmin-i7l?si=ZDB9eyr679HET6Ew" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="YouTube" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+                    <div class="footer-info" style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 10px;">
+                        <span class="top-info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            {{ config('welfare.address_short') }}
+                        </span>
+                        <span class="top-info-item">
+                            <i class="fas fa-phone"></i>
+                            {{ config('welfare.phone') }}
+                        </span>
+                        <span class="top-info-item">
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:{{ config('welfare.email') }}" style="color: rgba(255,255,255,0.7); text-decoration: none;">{{ config('welfare.email') }}</a>
+                        </span>
                     </div>
                 </div>
             </div>

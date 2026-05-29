@@ -20,6 +20,17 @@
             @endif
             @include('welfare.partials.social')
             <span class="footer_copyright copyright">{{ $t['footer_copyright'] ?? '' }}</span>
+            <div class="footer_info meta_wrap" style="text-align: center; padding-top: 10px;">
+                <span class="cmsms-icon-location-3" style="display:inline-block; margin: 0 10px;">
+                    <span class="locality">{{ config('welfare.address') }}</span>,
+                    <span class="country-name">{{ config('welfare.country') }}</span> - 
+                    <span class="postal-code">{{ config('welfare.postal') }}</span>
+                </span>
+                <span class="cmsms-icon-phone-4" style="display:inline-block; margin: 0 10px;">{{ config('welfare.phone') }}</span>
+                <span class="cmsms-icon-mail-3" style="display:inline-block; margin: 0 10px;">
+                    <a href="mailto:{{ config('welfare.email') }}">{{ config('welfare.email') }}</a>
+                </span>
+            </div>
         </div>
     </div>
 </footer>

@@ -3,42 +3,6 @@
     $w = config('welfare.assets');
 @endphp
 <header id="header">
-    @if($t['header_top_line'] ?? true)
-    <div class="header_top" data-height="{{ $t['header_top_height'] ?? 35 }}">
-        <div class="header_top_outer">
-            <div class="header_top_inner">
-                <div class="header_top_left">
-                    <div class="header_top_aligner"></div>
-                    <div class="meta_wrap">
-                        <div class="adr cmsms-icon-location-3">
-                            <span class="locality">{{ config('welfare.address') }}</span>,
-                            <span class="postal-code">{{ config('welfare.postal') }}</span>,
-                            <span class="country-name">{{ config('welfare.country') }}</span>
-                        </div>
-                        <div class="tel cmsms-icon-phone-4">{{ config('welfare.phone') }}</div>
-                        <div class="email cmsms-icon-mail-3">
-                            <a href="mailto:{{ config('welfare.email') }}">{{ config('welfare.email') }}</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="header_top_right">
-                    <div class="header_top_aligner"></div>
-                    @include('welfare.partials.social')
-                    @if($t['header_top_donations_but'] ?? true)
-                    <a href="{{ route('welfare.donate') }}" class="header_top_donation_but">
-                        <span>{{ $t['header_top_donations_text'] ?? 'Donate Now!' }}</span>
-                    </a>
-                    @endif
-                </div>
-                <div class="cl"></div>
-            </div>
-        </div>
-        <div class="header_top_but closed">
-            <span class="cmsms_bot_arrow_pixel"><span></span></span>
-        </div>
-    </div>
-    @endif
-
     <div class="header_mid" data-height="{{ $t['header_mid_height'] ?? 110 }}">
         <div class="header_mid_outer">
             <div class="header_mid_inner">

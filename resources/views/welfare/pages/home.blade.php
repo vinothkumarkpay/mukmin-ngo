@@ -773,7 +773,7 @@
                     <div class="container">
                         <div class="slide-text">
                             <h1>One Identity.<br>One Vision.<br>One Community.</h1>
-                            <p>Advancing inclusive communities through collaboration, opportunity, and shared purpose. MUKMIN brings together communities, organisations, institutions, and stakeholders to unlock opportunities, strengthen leadership, and drive sustainable socio-economic impact across Malaysia.</p>
+                            <p>MUKMIN brings together communities, organisations and institutions under one unified ecosystem dedicated to strengthening leadership, expanding opportunities and driving sustainable national impact.</p>
                             <div class="slide-buttons">
                                 <a href="{{ route('welfare.about') }}" class="btn btn-primary">Learn more about MUKMIN</a>
                             </div>
@@ -801,7 +801,7 @@
                     <div class="container">
                         <div class="slide-text">
                             <h1>Our Ecosystem</h1>
-                            <p><strong>Developing Solutions. Connecting Communities. Driving Impact.</strong><br>A structured and integrated approach that transforms ideas into action through three complementary roles.</p>
+                            <p>A structured and integrated approach that transforms ideas into action through three complementary roles.</p>
                             <div class="slide-buttons">
                                 <a href="{{ route('welfare.ecosystem') }}" class="btn btn-primary">Find out more</a>
                             </div>
@@ -815,7 +815,7 @@
                     <div class="container">
                         <div class="slide-text">
                             <h1>We Are Here For You</h1>
-                            <p><strong>Compassion in Action. Unity in Giving.</strong><br>Strengthening communities through service, dignity, and shared blessings.</p>
+                            <p>Strengthening communities through service, dignity, and shared blessings.</p>
                             <div class="slide-buttons">
                                 <a href="#aid-programs" class="btn btn-primary">Find out more</a>
                             </div>
@@ -837,7 +837,7 @@
     </section>
 
     <!-- SUB BLOCK 1 (CARDS & POPUPS) -->
-    <section class="section-welcome bg-white" style="padding-top: 80px; padding-bottom: 80px;">
+    <section class="section-welcome bg-white" style="padding-top: 80px; padding-bottom: 20px;">
         <div class="container">
             <div class="subtabs-grid">
                 <!-- Card 1: Vision -->
@@ -991,31 +991,31 @@
                     MUKMIN operates through three complementary engines to strengthen collaboration, align stakeholders, and drive meaningful community impact at scale.
                 </p>
                 <div class="modal-grid-3">
-                    <!-- Engine 1 -->
+                    <!-- Engine 1: Yayasan MUKMIN -->
                     <div class="engine-modal-card">
                         <div class="engine-modal-logo">
-                            <img src="{{ asset('welfare/img/fikrah_logo.png') }}" alt="FIKRAH Logo">
+                            <img src="{{ asset('welfare/img/yayasan_logo.jpg') }}" alt="Yayasan MUKMIN Logo">
+                        </div>
+                        <span>Impact Foundation</span>
+                        <p>Transforming ideas into measurable outcomes through education, outreach and community-driven initiatives.</p>
+                    </div>
+
+                    <!-- Engine 2: FIKRAH -->
+                    <div class="engine-modal-card">
+                        <div class="engine-modal-logo">
+                            <img src="{{ asset('welfare/img/fikrah_logo.jpg') }}" alt="FIKRAH Logo">
                         </div>
                         <span>Think Tank</span>
                         <p>Driving policy, research and long-term strategy to shape stronger communities and future-ready institutions.</p>
                     </div>
 
-                    <!-- Engine 2 -->
+                    <!-- Engine 3: MUKMIN -->
                     <div class="engine-modal-card">
                         <div class="engine-modal-logo">
-                            <img src="{{ asset('welfare/img/mukmin_ecosystem_logo.png') }}" alt="MUKMIN Logo">
+                            <img src="{{ asset('welfare/img/mukmin_ecosystem_logo.jpg') }}" alt="MUKMIN Logo">
                         </div>
                         <span>Coordination Platform</span>
                         <p>Uniting organisations, aligning stakeholders and coordinating collective action for nationwide impact.</p>
-                    </div>
-
-                    <!-- Engine 3 -->
-                    <div class="engine-modal-card">
-                        <div class="engine-modal-logo">
-                            <img src="{{ asset('welfare/img/yayasan_logo.png') }}" alt="Yayasan MUKMIN Logo">
-                        </div>
-                        <span>Impact Foundation</span>
-                        <p>Transforming ideas into measurable outcomes through education, outreach and community-driven initiatives.</p>
                     </div>
                 </div>
             </div>
@@ -1132,6 +1132,7 @@
         </div>
     </div>
 
+    {{--
     <!-- SUB BLOCK 2 (ADOPT A GRADUATE) -->
     <section class="section-welcome bg-light" style="border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
         <div class="container">
@@ -1174,9 +1175,10 @@
             </div>
         </div>
     </section>
+    --}}
 
     <!-- SUB BLOCK 3 (CAUSES LIST / TABBED OR CARDS) -->
-    <section id="aid-programs" class="section-campaigns bg-white" style="padding-top: 80px; padding-bottom: 80px;">
+    <section id="aid-programs" class="section-campaigns bg-white" style="padding-top: 20px; padding-bottom: 80px;">
         <div class="container">
             <div class="section-header text-center" style="margin-bottom: 50px;">
                 <h2>Our Aid Programs</h2>
@@ -1334,14 +1336,20 @@
                         <div class="updates-tab-pane" id="programme-updates">
                             <ul class="updates-pane-list">
                                 <li>
-                                    <span class="update-date">17 Mar 2026</span>
-                                    <h4 class="update-item-title">Ramadan Food Basket Completed</h4>
-                                    <p class="update-item-desc">MUKMIN successfully distributed 5,000 food baskets nationwide through mosques and local NGOs.</p>
+                                    <span class="update-date">Coming Soon</span>
+                                    <h4 class="update-item-title">MUKMIN Future Leaders Scholarship (MFLS)</h4>
+                                    <p class="update-item-desc"><strong>Two Pathways. One Future.</strong><br>Access TVET and academic programmes. From Foundation to Master level. Designed to develop future-ready talent.</p>
+                                    <div style="margin-top: 12px;">
+                                        <a href="{{ route('welfare.impact.mfls') }}" class="btn btn-primary" style="padding: 6px 15px; font-size: 11.5px; border-radius: 3px; display: inline-block;">MFLS Page</a>
+                                    </div>
                                 </li>
                                 <li>
-                                    <span class="update-date">01 May 2026</span>
-                                    <h4 class="update-item-title">Adopt A Graduate Programme Onboarding</h4>
-                                    <p class="update-item-desc">Over 25 corporate partners are currently being engaged to onboard our next Q3 cohort of graduates.</p>
+                                    <span class="update-date">Programme</span>
+                                    <h4 class="update-item-title">SIRAT Series</h4>
+                                    <p class="update-item-desc">Building leadership, connection and collaboration across youth, leaders and diaspora.</p>
+                                    <div style="margin-top: 12px;">
+                                        <a href="{{ route('welfare.impact.sirat') }}" class="btn btn-primary" style="padding: 6px 15px; font-size: 11.5px; border-radius: 3px; display: inline-block;">SIRAT Series Page</a>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -1350,14 +1358,9 @@
                         <div class="updates-tab-pane" id="official-notices" style="display: none;">
                             <ul class="updates-pane-list">
                                 <li>
-                                    <span class="update-date">15 May 2026</span>
-                                    <h4 class="update-item-title">MUKMIN AGM Registration Open</h4>
-                                    <p class="update-item-desc">Members are requested to register for the Annual General Meeting by 25 May 2026 via the online portal.</p>
-                                </li>
-                                <li>
-                                    <span class="update-date">11 May 2026</span>
-                                    <h4 class="update-item-title">EGM Minutes Published</h4>
-                                    <p class="update-item-desc">The official minutes for the Extraordinary General Meeting held on 11 May 2026 are now available for download.</p>
+                                    <span class="update-date">Official Notices</span>
+                                    <h4 class="update-item-title">Coming Soon</h4>
+                                    <p class="update-item-desc">Announcements and official notices will be posted here.</p>
                                 </li>
                             </ul>
                         </div>
@@ -1366,14 +1369,12 @@
                         <div class="updates-tab-pane" id="media-highlights" style="display: none;">
                             <ul class="updates-pane-list">
                                 <li>
-                                    <span class="update-date">22 Nov 2025</span>
-                                    <h4 class="update-item-title">SIRAT Youth Summit Highlights Video</h4>
-                                    <p class="update-item-desc">Watch the recap video from Malaysia's largest community youth gathering and the Youth Icon Awards ceremony.</p>
-                                </li>
-                                <li>
-                                    <span class="update-date">12 Apr 2025</span>
-                                    <h4 class="update-item-title">Hari Raya Open House Photo Gallery</h4>
-                                    <p class="update-item-desc">Browse through the photos from the Hari Raya Aidilfitri Open House with over 2,000 guests in Shah Alam.</p>
+                                    <span class="update-date">Media</span>
+                                    <h4 class="update-item-title">News & Gallery</h4>
+                                    <p class="update-item-desc">Browse our collection of event galleries, highlights, news reports, and community insights.</p>
+                                    <div style="margin-top: 12px;">
+                                        <a href="{{ route('welfare.news') }}" class="btn btn-primary" style="padding: 6px 15px; font-size: 11.5px; border-radius: 3px; display: inline-block;">News & Gallery Page</a>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -1411,16 +1412,22 @@
                 @php
                 $activities = [
                     [
-                        'title' => 'MUKMIN Hari Raya Aidilfitri Open House 2025',
-                        'meta' => '12 April 2025 | IDCC, Shah Alam',
-                        'desc' => 'MUKMIN’s Hari Raya Aidilfitri Open House gathered NGOs, mosques, madrasahs, suraus and tahfiz institutions from across Malaysia in a celebration of unity and community spirit, welcoming approximately 2,000 guests including more than 200 religious scholars.',
-                        'image' => asset('welfare/img/news/mukmin-open-house-2025.png')
+                        'title' => 'Kembara Ramadan MUKMIN – Food Basket Initiative',
+                        'meta' => '28 February – 17 March 2026',
+                        'desc' => 'MUKMIN successfully distributed 5,000 food baskets nationwide through mosque, madrasah, surau and NGO networks to support communities in need during Ramadan.',
+                        'image' => asset('welfare/img/news/sirat-global-forum-2026.png')
                     ],
                     [
-                        'title' => 'SIRAT Leaders Forum',
-                        'meta' => '29 – 31 August 2025 | Pahang',
-                        'desc' => 'The SIRAT Leaders Forum convened 250 NGO leaders, policymakers, professionals and religious institutions in a strategic platform focused on collaboration, leadership and sustainable community development.',
-                        'image' => asset('welfare/img/news/sirat-leaders-forum.png')
+                        'title' => 'Ramadan Assistance for Religious Scholars & Ustaz',
+                        'meta' => '11 March 2026 | Kuala Lumpur',
+                        'desc' => 'Ramadan assistance initiatives were carried out to support religious scholars and ustaz through food aid, financial assistance and complimentary medical protection coverage.',
+                        'image' => asset('welfare/img/news/ramadan-assistance-ustaz.png')
+                    ],
+                    [
+                        'title' => 'SIRAT Global Forum 2026',
+                        'meta' => '23 – 25 January 2026 | Kuala Lumpur',
+                        'desc' => 'An international platform bringing together business leaders, professionals, innovators and youths from over 20 countries to strengthen global collaboration and future community development.',
+                        'image' => asset('welfare/img/news/kembara-ramadan-mukmin.png')
                     ],
                     [
                         'title' => 'Official Launch of FIKRAH',
@@ -1435,22 +1442,16 @@
                         'image' => asset('welfare/img/news/sirat-youth-summit-awards.png')
                     ],
                     [
-                        'title' => 'Kembara Ramadan MUKMIN – Food Basket Initiative',
-                        'meta' => '28 February – 17 March 2026',
-                        'desc' => 'MUKMIN successfully distributed 5,000 food baskets nationwide through mosque, madrasah, surau and NGO networks to support communities in need during Ramadan.',
-                        'image' => asset('welfare/img/news/kembara-ramadan-mukmin.png')
+                        'title' => 'SIRAT Leaders Forum',
+                        'meta' => '29 – 31 August 2025 | Pahang',
+                        'desc' => 'The SIRAT Leaders Forum convened 250 NGO leaders, policymakers, professionals and religious institutions in a strategic platform focused on collaboration, leadership and sustainable community development.',
+                        'image' => asset('welfare/img/news/sirat-leaders-forum.png')
                     ],
                     [
-                        'title' => 'SIRAT Global Forum 2026',
-                        'meta' => '23 – 25 January 2026 | Kuala Lumpur',
-                        'desc' => 'An international platform bringing together business leaders, professionals, innovators and youths from over 20 countries to strengthen global collaboration and future community development.',
-                        'image' => asset('welfare/img/news/sirat-global-forum-2026.png')
-                    ],
-                    [
-                        'title' => 'Ramadan Assistance for Religious Scholars & Ustaz',
-                        'meta' => '11 March 2026 | Kuala Lumpur',
-                        'desc' => 'Ramadan assistance initiatives were carried out to support religious scholars and ustaz through food aid, financial assistance and complimentary medical protection coverage.',
-                        'image' => asset('welfare/img/news/ramadan-assistance-ustaz.png')
+                        'title' => 'MUKMIN Hari Raya Aidilfitri Open House 2025',
+                        'meta' => '12 April 2025 | IDCC, Shah Alam',
+                        'desc' => 'MUKMIN’s Hari Raya Aidilfitri Open House gathered NGOs, mosques, madrasahs, suraus and tahfiz institutions from across Malaysia in a celebration of unity and community spirit, welcoming approximately 2,000 guests including more than 200 religious scholars.',
+                        'image' => asset('welfare/img/news/mukmin-open-house-2025.png')
                     ]
                 ];
                 @endphp
