@@ -104,32 +104,6 @@
     accent-color: #d43c18;
     cursor: pointer;
 }
-.important-notes {
-    background: #fffcfb;
-    border-left: 4px solid #d43c18;
-    padding: 20px;
-    border-radius: 0 8px 8px 0;
-    margin-bottom: 30px;
-}
-.important-notes h4 {
-    color: #b83210;
-    font-size: 14px;
-    font-weight: 700;
-    margin: 0 0 10px 0;
-}
-.important-notes ul {
-    margin: 0;
-    padding-left: 18px;
-}
-.important-notes li {
-    font-size: 13px;
-    color: #666;
-    margin-bottom: 6px;
-    line-height: 18px;
-}
-.important-notes li:last-child {
-    margin-bottom: 0;
-}
 .btn-submit {
     background: #d43c18;
     color: #ffffff;
@@ -472,14 +446,7 @@
                     </label>
                 </div>
 
-                <div class="important-notes">
-                    <h4>IMPORTANT NOTES</h4>
-                    <ul>
-                        <li>All information submitted is confidential and used solely for aid assessment.</li>
-                        <li>Please make sure all supporting files are clearly legible.</li>
-                        <li>Providing false information will lead to immediate rejection of the aid request.</li>
-                    </ul>
-                </div>
+                @include('welfare.partials.important-notes')
 
                 <button type="submit" class="btn-submit">Submit Aid Request</button>
             </form>

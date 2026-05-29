@@ -115,29 +115,6 @@
     accent-color: #d43c18;
     flex-shrink: 0;
 }
-.important-notes {
-    background: #fffcfb;
-    border-left: 4px solid #d43c18;
-    padding: 20px;
-    border-radius: 0 8px 8px 0;
-    margin-bottom: 30px;
-}
-.important-notes h4 {
-    color: #b83210;
-    font-size: 14px;
-    font-weight: 700;
-    margin: 0 0 10px 0;
-}
-.important-notes ul {
-    margin: 0;
-    padding-left: 18px;
-}
-.important-notes li {
-    font-size: 13px;
-    color: #666;
-    margin-bottom: 6px;
-    line-height: 18px;
-}
 .btn-submit {
     background: #d43c18;
     color: #ffffff;
@@ -470,6 +447,8 @@
                         I understand that submission of this form does not guarantee placement and is subject to MUKMIN’s volunteer requirements and availability.
                     </label>
                 </div>
+
+                @include('welfare.partials.important-notes')
 
                 <button type="submit" class="btn-submit">Submit Volunteer Registration</button>
             </form>

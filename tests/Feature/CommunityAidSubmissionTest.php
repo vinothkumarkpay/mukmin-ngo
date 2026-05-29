@@ -41,7 +41,7 @@ class CommunityAidSubmissionTest extends TestCase
 
         $formData = [
             'full_name' => 'Jane Smith',
-            'nric_passport' => '950202-10-5432',
+            'nric_passport' => '950202105432',
             'gender' => 'Female',
             'dob' => '1995-02-02',
             'nationality' => 'Malaysian',
@@ -85,9 +85,13 @@ class CommunityAidSubmissionTest extends TestCase
             Storage::disk('public')->assertExists($filePath);
         }
 
-        // Verify emails: Should NOT send to the applicant (janesmith@example.com)
-        Mail::assertNotSent(FormSubmissionMail::class, function ($mail) {
-            return $mail->hasTo('janesmith@example.com');
+        // Verify emails: Should send to the applicant (janesmith@example.com)
+        Mail::assertSent(FormSubmissionMail::class, function ($mail) {
+            $mail->build();
+            return $mail->hasTo('janesmith@example.com') &&
+                   $mail->hasFrom('noreply@mukmin.org') &&
+                   $mail->subject === 'Application Received : MUKMIN Community Aid & Assistance Request' &&
+                   !$mail->isForSupport;
         });
 
         // Verify email to support: Should be sent, should contain attachments
@@ -108,7 +112,7 @@ class CommunityAidSubmissionTest extends TestCase
         // Create an aid request
         $submission = CommunityAidSubmission::create([
             'full_name' => 'Jane Smith',
-            'nric_passport' => '950202-10-5432',
+            'nric_passport' => '950202105432',
             'gender' => 'Female',
             'dob' => '1995-02-02',
             'nationality' => 'Malaysian',

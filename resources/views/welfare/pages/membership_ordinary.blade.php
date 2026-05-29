@@ -117,29 +117,6 @@
     margin-top: 3px;
     accent-color: #d43c18;
 }
-.important-notes {
-    background: #fffcfb;
-    border-left: 4px solid #d43c18;
-    padding: 20px;
-    border-radius: 0 8px 8px 0;
-    margin-bottom: 30px;
-}
-.important-notes h4 {
-    color: #b83210;
-    font-size: 14px;
-    font-weight: 700;
-    margin: 0 0 10px 0;
-}
-.important-notes ul {
-    margin: 0;
-    padding-left: 18px;
-}
-.important-notes li {
-    font-size: 13px;
-    color: #666;
-    margin-bottom: 6px;
-    line-height: 18px;
-}
 .btn-submit {
     background: #d43c18;
     color: #ffffff;
@@ -270,7 +247,7 @@
         <div class="form-card">
             <div class="form-header">
                 <h2>MUKMIN Organisation Membership Registration</h2>
-                <p><strong>Ordinary Member (Ahli Biasa)</strong><br><br>Open to legally registered organisations that align with the mission, vision, and values of MUKMIN, including NGOs, civil society organisations, chambers of commerce, industry associations, institutions, foundations, community-based organisations, as well as mosques, madrasah, and surau throughout Malaysia.</p>
+                <p><strong>Ordinary Member (Ahli Biasa)</strong><br><br>Open to legally registered organisations that align with the mission, vision, and values of MUKMIN, including NGOs, Civil Society Organisations, Chambers of Commerce, Industry Associations, Institutions, Foundations, Community-Based Organisations, as well as Mosques, Madrasah and Surau throughout Malaysia.</p>
             </div>
 
             <!-- ELIGIBILITY SECTION -->
@@ -418,40 +395,8 @@
                     <input type="text" id="primary_activities_other" name="primary_activities_other" class="form-control" value="{{ old('primary_activities_other') }}">
                 </div>
 
-                <!-- SECTION D: GOVERNANCE & LEGAL -->
-                <div class="form-section-title">Section D: Governance & Legal</div>
-                
-                <div class="form-group">
-                    <label>Is your organisation registered with ROS / Religious Authority?</label>
-                    <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="is_registered_ros" value="1" {{ old('is_registered_ros') === '1' ? 'checked' : '' }} required>
-                            Yes
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="is_registered_ros" value="0" {{ old('is_registered_ros') === '0' ? 'checked' : '' }}>
-                            No
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Attach Supporting Documents</label>
-                    <div style="background: #fdf6f4; border: 1px dashed #ccc; padding: 20px; border-radius: 6px; display: flex; flex-direction: column; gap: 15px;">
-                        <div>
-                            <label style="font-weight: 500; font-size: 13px; margin-bottom: 5px; display: block;">Copy of Registration Certificate (ROS / JAIS / relevant authority)</label>
-                            <input type="file" name="registration_certificate" class="form-control" required style="font-size: 13px;">
-                        </div>
-                        <div>
-                            <label style="font-weight: 500; font-size: 13px; margin-bottom: 5px; display: block;">List of Committee Members (Optional)</label>
-                            <input type="file" name="committee_members" class="form-control" style="font-size: 13px;">
-                        </div>
-                        <span style="display: block; font-size: 11.5px; color: #666;">* Accepted file types: PDF, Images (JPG, PNG), Word (DOC, DOCX) - Max 10MB per file</span>
-                    </div>
-                </div>
-
-                <!-- SECTION E: KEY OFFICE BEARERS -->
-                <div class="form-section-title">Section E: Key Office Bearers</div>
+                <!-- SECTION D: KEY OFFICE BEARERS -->
+                <div class="form-section-title">Section D: Key Office Bearers</div>
                 
                 <!-- President -->
                 <div class="bearer-row">
@@ -510,8 +455,8 @@
                     </div>
                 </div>
 
-                <!-- SECTION F: DECLARATION -->
-                <div class="form-section-title">Section F: Declaration</div>
+                <!-- SECTION E: DECLARATION -->
+                <div class="form-section-title">Section E: Declaration</div>
 
                 <div class="declaration-box">
                     <label>
@@ -520,14 +465,7 @@
                     </label>
                 </div>
 
-                <div class="important-notes">
-                    <h4>IMPORTANT NOTES</h4>
-                    <ul>
-                        <li>Incomplete forms may not be processed.</li>
-                        <li>MUKMIN reserves the right to approve or reject any application.</li>
-                        <li>Additional supporting documents may be requested if necessary.</li>
-                    </ul>
-                </div>
+                @include('welfare.partials.important-notes')
 
                 <button type="submit" class="btn-submit">Submit Membership Application</button>
             </form>

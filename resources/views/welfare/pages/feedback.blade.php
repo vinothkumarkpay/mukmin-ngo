@@ -99,32 +99,6 @@
     margin-top: 3px;
     accent-color: #d43c18;
 }
-.important-notes {
-    background: #fffcfb;
-    border-left: 4px solid #d43c18;
-    padding: 20px;
-    border-radius: 0 8px 8px 0;
-    margin-bottom: 30px;
-}
-.important-notes h4 {
-    color: #b83210;
-    font-size: 14px;
-    font-weight: 700;
-    margin: 0 0 10px 0;
-}
-.important-notes ul {
-    margin: 0;
-    padding-left: 18px;
-}
-.important-notes li {
-    font-size: 13px;
-    color: #666;
-    margin-bottom: 6px;
-    line-height: 18px;
-}
-.important-notes li:last-child {
-    margin-bottom: 0;
-}
 .btn-submit {
     background: #d43c18;
     color: #ffffff;
@@ -401,14 +375,7 @@
                     </label>
                 </div>
 
-                <div class="important-notes">
-                    <h4>IMPORTANT NOTES</h4>
-                    <ul>
-                        <li>Incomplete forms may not be processed.</li>
-                        <li>MUKMIN reserves the right to approve or reject any suggestions.</li>
-                        <li>Additional supporting documents may be requested if necessary.</li>
-                    </ul>
-                </div>
+                @include('welfare.partials.important-notes')
 
                 <button type="submit" class="btn-submit">Submit Feedback & Suggestion</button>
             </form>

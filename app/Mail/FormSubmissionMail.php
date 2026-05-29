@@ -144,11 +144,25 @@ class FormSubmissionMail extends Mailable
         $this->isForSupport = $isForSupport;
         $this->recipientName = $recipientName;
         
-        $this->subject = $isForSupport 
-            ? "New Submission: {$formName}" 
-            : "Acknowledgement: {$formName}";
+        $this->subject = $isForSupport
+            ? "New Submission: {$formName}"
+            : self::applicantAcknowledgementSubject($formName);
             
         $this->formattedData = $this->formatData($formData);
+    }
+
+    protected static function applicantAcknowledgementSubject(string $formName): string
+    {
+        $subjects = [
+            'Ordinary Member Registration' => 'Application Received : MUKMIN Ordinary Member Registration',
+            'Volunteer Registration' => 'Application Received : MUKMIN Volunteer Registration',
+            'Mentor Registration' => 'Application Received : MUKMIN Mentor Registration',
+            'Partnership & Collaboration Proposal' => 'Application Received : MUKMIN Partnership & Collaboration',
+            'Feedback & Suggestion' => 'Feedback Received : MUKMIN Community Feedback & Suggestion',
+            'Community Aid & Assistance Request' => 'Application Received : MUKMIN Community Aid & Assistance Request',
+        ];
+
+        return $subjects[$formName] ?? "Acknowledgement: {$formName}";
     }
 
     /**

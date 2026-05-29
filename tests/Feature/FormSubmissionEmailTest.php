@@ -24,7 +24,7 @@ class FormSubmissionEmailTest extends TestCase
     {
         $formData = [
             'full_name' => 'John Doe',
-            'nric_number' => '900101-14-1234',
+            'nric_number' => '900101141234',
             'organisation' => 'Tech Corp',
             'position' => 'Developer',
             'state_residency' => 'Selangor',
@@ -46,6 +46,7 @@ class FormSubmissionEmailTest extends TestCase
             $mail->build();
             return $mail->hasTo('johndoe@example.com') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
+                   $mail->subject === 'Feedback Received : MUKMIN Community Feedback & Suggestion' &&
                    !$mail->isForSupport;
         });
 
@@ -57,11 +58,8 @@ class FormSubmissionEmailTest extends TestCase
         });
     }
 
-    public function test_ordinary_member_submission_sends_emails_with_attachments()
+    public function test_ordinary_member_submission_sends_emails()
     {
-        $regCert = UploadedFile::fake()->create('reg_cert.pdf', 100);
-        $committeeList = UploadedFile::fake()->create('committee.docx', 200);
-
         $formData = [
             'name_of_organisation' => 'Ordinary Org',
             'org_reg_number' => 'REG-11111',
@@ -76,12 +74,9 @@ class FormSubmissionEmailTest extends TestCase
             'contact_number' => '+60123456789',
             'org_type' => ['NGO'],
             'primary_activities' => ['Welfare / Charity'],
-            'is_registered_ros' => '1',
-            'registration_certificate' => $regCert,
-            'committee_members' => $committeeList,
             'key_office_bearers' => [
-                'president' => ['name' => 'President Name', 'email' => 'pres@example.com', 'phone' => '12345'],
-                'secretary' => ['name' => 'Sec Name', 'email' => 'sec@example.com', 'phone' => '67890'],
+                'president' => ['name' => 'President Name', 'email' => 'pres@example.com', 'phone' => '+60123456789'],
+                'secretary' => ['name' => 'Sec Name', 'email' => 'sec@example.com', 'phone' => '+60123456780'],
             ],
             'declaration_confirmed' => '1',
         ];
@@ -94,19 +89,17 @@ class FormSubmissionEmailTest extends TestCase
             $mail->build();
             return $mail->hasTo('ordinary@example.com') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
+                   $mail->subject === 'Application Received : MUKMIN Ordinary Member Registration' &&
                    !$mail->isForSupport;
         });
 
-        // Check support email and that attachments are present
+        // Check support email
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
-            $mail->build(); // Build email to process attachments
-            
-            $hasAttachments = count($mail->diskAttachments) === 2 || count($mail->attachments) === 2;
-            
+            $mail->build();
             return $mail->hasTo('support@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
-                   $mail->isForSupport &&
-                   $hasAttachments;
+                   $mail->subject === 'New Submission: Ordinary Member Registration' &&
+                   $mail->isForSupport;
         });
     }
 
@@ -115,7 +108,7 @@ class FormSubmissionEmailTest extends TestCase
         $formData = [
             'entity_type' => 'Individual',
             'ind_name' => 'Friend Ind',
-            'ind_nric' => '900202-14-1111',
+            'ind_nric' => '900202141111',
             'ind_state' => 'Johor',
             'ind_address' => 'Friend Address',
             'ind_email' => 'friend_ind@example.com',
@@ -175,7 +168,7 @@ class FormSubmissionEmailTest extends TestCase
     {
         $formData = [
             'full_name' => 'Mentor Jane',
-            'nric_passport' => '850505-10-1234',
+            'nric_passport' => '850505101234',
             'gender' => 'Female',
             'occupation' => 'Professor',
             'organisation' => 'University',
@@ -200,6 +193,7 @@ class FormSubmissionEmailTest extends TestCase
             $mail->build();
             return $mail->hasTo('mentor@example.com') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
+                   $mail->subject === 'Application Received : MUKMIN Mentor Registration' &&
                    !$mail->isForSupport;
         });
 
@@ -240,6 +234,7 @@ class FormSubmissionEmailTest extends TestCase
             $mail->build();
             return $mail->hasTo('partner@corp.com') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
+                   $mail->subject === 'Application Received : MUKMIN Partnership & Collaboration' &&
                    !$mail->isForSupport;
         });
 
@@ -259,7 +254,7 @@ class FormSubmissionEmailTest extends TestCase
     {
         $formData = [
             'full_name' => 'Vol Jack',
-            'nric_passport' => '950606-14-9999',
+            'nric_passport' => '950606149999',
             'gender' => 'Male',
             'occupation_study' => 'Student',
             'state_residency' => 'Melaka',
@@ -284,6 +279,7 @@ class FormSubmissionEmailTest extends TestCase
             $mail->build();
             return $mail->hasTo('vol@example.com') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
+                   $mail->subject === 'Application Received : MUKMIN Volunteer Registration' &&
                    !$mail->isForSupport;
         });
 

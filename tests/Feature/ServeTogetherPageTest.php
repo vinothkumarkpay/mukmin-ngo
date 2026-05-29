@@ -23,5 +23,9 @@ class ServeTogetherPageTest extends TestCase
         $response->assertSee('Volunteer Now');
         $response->assertSee('Be A Mentor');
         $response->assertSee('Partner With Us');
+        $response->assertSee('Be a MUKMIN Member');
+        $response->assertSee('Is your organisation registered with ROS / Religious Authority?');
+        $response->assertSee('membership-modal-overlay');
+        $response->assertSee('mukmin-member-trigger');
     }
 }

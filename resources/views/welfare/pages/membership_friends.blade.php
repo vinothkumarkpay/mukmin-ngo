@@ -99,29 +99,6 @@
     margin-top: 3px;
     accent-color: #d43c18;
 }
-.important-notes {
-    background: #fffcfb;
-    border-left: 4px solid #d43c18;
-    padding: 20px;
-    border-radius: 0 8px 8px 0;
-    margin-bottom: 30px;
-}
-.important-notes h4 {
-    color: #b83210;
-    font-size: 14px;
-    font-weight: 700;
-    margin: 0 0 10px 0;
-}
-.important-notes ul {
-    margin: 0;
-    padding-left: 18px;
-}
-.important-notes li {
-    font-size: 13px;
-    color: #666;
-    margin-bottom: 6px;
-    line-height: 18px;
-}
 .btn-submit {
     background: #d43c18;
     color: #ffffff;
@@ -374,14 +351,13 @@
                     </label>
                 </div>
 
-                <div class="important-notes">
-                    <h4>IMPORTANT NOTES</h4>
-                    <ul>
-                        <li>Incomplete forms may not be processed.</li>
-                        <li>MUKMIN reserves the right to approve or reject any application.</li>
-                        <li>Friends of MUKMIN do not possess voting rights and are not eligible to hold positions within the Executive Committee.</li>
-                    </ul>
-                </div>
+                @include('welfare.partials.important-notes', [
+                    'items' => [
+                        'Incomplete forms may not be processed.',
+                        'MUKMIN reserves the right to approve or reject any application.',
+                        'Friends of MUKMIN do not possess voting rights and are not eligible to hold positions within the Executive Committee.',
+                    ],
+                ])
 
                 <button type="submit" class="btn-submit">Submit Registration</button>
             </form>

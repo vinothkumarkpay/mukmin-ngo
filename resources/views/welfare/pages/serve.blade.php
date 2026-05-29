@@ -385,6 +385,92 @@
     background: var(--color-primary-dk, #b83210);
     color: #ffffff !important;
 }
+button.card-btn {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* Membership registration modal */
+.membership-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 9999;
+}
+.membership-modal-overlay[hidden] {
+    display: none;
+}
+.membership-modal {
+    background: #ffffff;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 520px;
+    padding: 32px 28px 28px;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+}
+.membership-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    border: none;
+    background: transparent;
+    font-size: 24px;
+    line-height: 1;
+    color: #888;
+    cursor: pointer;
+}
+.membership-modal-close:hover {
+    color: #333;
+}
+.membership-modal h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 18px;
+    color: var(--color-heading);
+    padding-right: 24px;
+}
+.membership-modal-question {
+    font-size: 15px;
+    line-height: 24px;
+    color: #444;
+    margin: 0 0 18px;
+    font-weight: 600;
+}
+.membership-modal-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+.membership-modal-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+.membership-modal-option:hover {
+    border-color: var(--color-primary, #d43c18);
+    background: #fff9f7;
+}
+.membership-modal-option input[type="radio"] {
+    accent-color: var(--color-primary, #d43c18);
+    flex-shrink: 0;
+}
+.membership-modal-submit {
+    margin-top: 0;
+}
 
 /* SUB BLOCK 4 shared lists */
 .process-steps {
@@ -680,7 +766,13 @@
                             <li>Participation in programmes, platforms, and ecosystem initiatives</li>
                             <li>Opportunity to nominate organisational representatives subject to constitutional provisions and approvals</li>
                         </ul>
-                        <a href="{{ route('welfare.membership.ordinary') }}" class="card-btn">Be a MUKMIN Member</a>
+                        <button
+                            type="button"
+                            class="card-btn"
+                            id="mukmin-member-trigger"
+                            data-ordinary-url="{{ route('welfare.membership.ordinary') }}"
+                            data-friends-url="{{ route('welfare.membership.friends') }}"
+                        >Be a MUKMIN Member</button>
                     </div>
                     <div class="vtab-panel" id="vtab-friends" role="tabpanel" aria-labelledby="vtab-btn-friends" hidden>
                         <h3>Community &amp; Supporter Network</h3>
@@ -780,6 +872,27 @@
     </section>
 </div>
 
+<div class="membership-modal-overlay" id="membership-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="membership-modal-title" hidden>
+    <div class="membership-modal">
+        <button type="button" class="membership-modal-close" id="membership-modal-close" aria-label="Close">&times;</button>
+        <h3 id="membership-modal-title">Membership Registration</h3>
+        <form id="membership-ros-form">
+            <p class="membership-modal-question">Is your organisation registered with ROS / Religious Authority?</p>
+            <div class="membership-modal-options">
+                <label class="membership-modal-option">
+                    <input type="radio" name="ros_registered" value="yes" required>
+                    <span>Yes</span>
+                </label>
+                <label class="membership-modal-option">
+                    <input type="radio" name="ros_registered" value="no">
+                    <span>No</span>
+                </label>
+            </div>
+            <button type="submit" class="card-btn membership-modal-submit">Continue</button>
+        </form>
+    </div>
+</div>
+
 @push('scripts')
 <script>
 (function () {
@@ -807,6 +920,64 @@
     }
     initTabs('#membership-vertical-tabs', '.vtab-btn', '.vtab-panel');
     initTabs('#process-horizontal-tabs', '.htab-btn', '.htab-panel');
+
+    var memberTrigger = document.getElementById('mukmin-member-trigger');
+    var membershipModal = document.getElementById('membership-modal-overlay');
+    var membershipModalClose = document.getElementById('membership-modal-close');
+    var membershipRosForm = document.getElementById('membership-ros-form');
+
+    function openMembershipModal() {
+        if (!membershipModal) return;
+        membershipModal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        if (membershipRosForm) {
+            membershipRosForm.reset();
+        }
+    }
+
+    function closeMembershipModal() {
+        if (!membershipModal) return;
+        membershipModal.hidden = true;
+        document.body.style.overflow = '';
+    }
+
+    if (memberTrigger && membershipModal) {
+        memberTrigger.addEventListener('click', openMembershipModal);
+    }
+
+    if (membershipModalClose) {
+        membershipModalClose.addEventListener('click', closeMembershipModal);
+    }
+
+    if (membershipModal) {
+        membershipModal.addEventListener('click', function (event) {
+            if (event.target === membershipModal) {
+                closeMembershipModal();
+            }
+        });
+    }
+
+    if (membershipRosForm && memberTrigger) {
+        membershipRosForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            var selected = membershipRosForm.querySelector('input[name="ros_registered"]:checked');
+            if (!selected) return;
+
+            var destination = selected.value === 'yes'
+                ? memberTrigger.getAttribute('data-ordinary-url')
+                : memberTrigger.getAttribute('data-friends-url');
+
+            if (destination) {
+                window.location.href = destination;
+            }
+        });
+    }
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && membershipModal && !membershipModal.hidden) {
+            closeMembershipModal();
+        }
+    });
 
     function handleServeHashes(hash) {
         if (!hash) return;
