@@ -401,7 +401,6 @@
                         <img src="{{ $member['image'] }}" alt="{{ $member['name'] }}">
                     </div>
                     <h4 class="member-name">{{ $member['name'] }}</h4>
-                    <span class="member-role">{{ $member['role'] }}</span>
                 </div>
                 @endforeach
             </div>
@@ -439,7 +438,6 @@
                         <img src="{{ $member['image'] }}" alt="{{ $member['name'] }}">
                     </div>
                     <h4 class="member-name">{{ $member['name'] }}</h4>
-                    <span class="member-role">{{ $member['role'] }}</span>
                 </div>
                 @endforeach
             </div>
