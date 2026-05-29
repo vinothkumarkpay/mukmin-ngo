@@ -56,7 +56,9 @@
 
 .news-split-pane {
     display: flex;
-    height: 650px;
+    min-height: 650px;
+    height: auto;
+    align-items: stretch;
 }
 
 /* Left Sidebar Tabs */
@@ -130,12 +132,11 @@
     width: 62%;
     padding: 30px;
     background: #ffffff;
-    overflow-y: auto;
+    overflow-y: visible;
 }
 
 .news-card-detail {
     display: none;
-    height: 100%;
 }
 
 .news-card-detail.active {
@@ -151,21 +152,25 @@
 
 .news-detail-image-wrap {
     width: 100%;
-    height: 280px;
+    flex-shrink: 0;
     border-radius: 8px;
     overflow: hidden;
     margin-bottom: 22px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    background: #f3f4f6;
+    line-height: 0;
 }
 
 .news-detail-image-wrap img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
+    display: block;
+    max-width: 100%;
 }
 
 .news-detail-header {
     margin-bottom: 15px;
+    flex-shrink: 0;
 }
 
 .news-detail-title-wrap {
@@ -217,7 +222,6 @@
     line-height: 1.65;
     color: #475569;
     margin-bottom: 25px;
-    flex-grow: 1;
 }
 
 .news-detail-description ul {
@@ -230,6 +234,7 @@
 }
 
 .news-detail-cta-wrap {
+    flex-shrink: 0;
     margin-top: auto;
     padding-top: 15px;
 }
@@ -523,10 +528,6 @@
         height: auto;
     }
     
-    .news-detail-image-wrap {
-        height: 230px;
-    }
-    
     .gallery-masonry-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -667,7 +668,7 @@
                     <!-- Detail 13 (Takbir Raya) -->
                     <article class="news-card-detail active" id="event-tab-13" role="tabpanel" aria-labelledby="tab-13">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1519817650390-64a93db51149?w=800&auto=format&fit=crop&q=80" alt="Takbir Raya MUKMIN">
+                            <img src="{{ asset('welfare/img/news/insights/1.png') }}" alt="Takbir Raya MUKMIN">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
@@ -693,7 +694,7 @@
                     <!-- Detail 12 (Kembara KL) -->
                     <article class="news-card-detail" id="event-tab-12" role="tabpanel" aria-labelledby="tab-12">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80" alt="Kembara Ramadhan MUKMIN Kuala Lumpur">
+                            <img src="{{ asset('welfare/img/news/insights/2.png') }}" alt="Kembara Ramadhan MUKMIN Kuala Lumpur">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
@@ -721,7 +722,7 @@
                     <!-- Detail 11 (Ustaz Assistance) -->
                     <article class="news-card-detail" id="event-tab-11" role="tabpanel" aria-labelledby="tab-11">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1579621970795-87faff3f68b8?w=800&auto=format&fit=crop&q=80" alt="Ramadhan Assistance for Religious Scholars & Ustaz">
+                            <img src="{{ asset('welfare/img/news/insights/3.png') }}" alt="Ramadhan Assistance for Religious Scholars & Ustaz">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
@@ -747,7 +748,7 @@
                     <!-- Detail 10 (Kembara Penang) -->
                     <article class="news-card-detail" id="event-tab-10" role="tabpanel" aria-labelledby="tab-10">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&auto=format&fit=crop&q=80" alt="Kembara Ramadhan MUKMIN Penang">
+                            <img src="{{ asset('welfare/img/news/insights/4.png') }}" alt="Kembara Ramadhan MUKMIN Penang">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
@@ -774,7 +775,7 @@
                     <!-- Detail 9 (Kembara Ramadhan) -->
                     <article class="news-card-detail" id="event-tab-9" role="tabpanel" aria-labelledby="tab-9">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&auto=format&fit=crop&q=80" alt="Kembara Ramadhan MUKMIN">
+                            <img src="{{ asset('welfare/img/news/insights/5.png') }}" alt="Kembara Ramadhan MUKMIN">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
@@ -800,7 +801,7 @@
                     <!-- Detail 8 (KL Declaration) -->
                     <article class="news-card-detail" id="event-tab-8" role="tabpanel" aria-labelledby="tab-8">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1450133064473-71024230f91b?w=800&auto=format&fit=crop&q=80" alt="The KL Declaration">
+                            <img src="{{ asset('welfare/img/news/insights/6.png') }}" alt="The KL Declaration">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
@@ -832,7 +833,7 @@
                     <!-- Detail 7 (Global Forum) -->
                     <article class="news-card-detail" id="event-tab-7" role="tabpanel" aria-labelledby="tab-7">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&auto=format&fit=crop&q=80" alt="SIRAT Global Forum 2026">
+                            <img src="{{ asset('welfare/img/news/insights/7.png') }}" alt="SIRAT Global Forum 2026">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
@@ -859,7 +860,7 @@
                     <!-- Detail 6 (Scholarship Pledge) -->
                     <article class="news-card-detail" id="event-tab-6" role="tabpanel" aria-labelledby="tab-6">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&auto=format&fit=crop&q=80" alt="MUKMIN Future Leaders Scholarship Pledge">
+                            <img src="{{ asset('welfare/img/news/insights/8.png') }}" alt="MUKMIN Future Leaders Scholarship Pledge">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
@@ -886,7 +887,7 @@
                     <!-- Detail 5 (FIKRAH Roundtable) -->
                     <article class="news-card-detail" id="event-tab-5" role="tabpanel" aria-labelledby="tab-5">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop&q=80" alt="FIKRAH Global Roundtable">
+                            <img src="{{ asset('welfare/img/news/insights/9.png') }}" alt="FIKRAH Global Roundtable">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
@@ -912,7 +913,7 @@
                     <!-- Detail 4 (FIKRAH Launch) -->
                     <article class="news-card-detail" id="event-tab-4" role="tabpanel" aria-labelledby="tab-4">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&auto=format&fit=crop&q=80" alt="FIKRAH Launch">
+                            <img src="{{ asset('welfare/img/news/insights/10.png') }}" alt="FIKRAH Launch">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
@@ -938,7 +939,7 @@
                     <!-- Detail 3 (Youth Summit) -->
                     <article class="news-card-detail" id="event-tab-3" role="tabpanel" aria-labelledby="tab-3">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&auto=format&fit=crop&q=80" alt="SIRAT Youth Summit & Youth Icon Awards">
+                            <img src="{{ asset('welfare/img/news/insights/11.png') }}" alt="SIRAT Youth Summit & Youth Icon Awards">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
@@ -965,7 +966,7 @@
                     <!-- Detail 2 (SIRAT Leaders Forum) -->
                     <article class="news-card-detail" id="event-tab-2" role="tabpanel" aria-labelledby="tab-2">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=80" alt="SIRAT Leaders Forum">
+                            <img src="{{ asset('welfare/img/news/insights/SIRAT.png') }}" alt="SIRAT Leaders Forum">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
@@ -992,7 +993,7 @@
                     <!-- Detail 1 (Hari Raya) -->
                     <article class="news-card-detail" id="event-tab-1" role="tabpanel" aria-labelledby="tab-1">
                         <div class="news-detail-image-wrap">
-                            <img src="https://images.unsplash.com/photo-1581078426770-6d336e5de7bf?w=800&auto=format&fit=crop&q=80" alt="Majlis Rumah Terbuka MUKMIN Sempena Hari Raya Aidilfitri">
+                            <img src="{{ asset('welfare/img/news/insights/13.png') }}" alt="Majlis Rumah Terbuka MUKMIN Sempena Hari Raya Aidilfitri">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
