@@ -1321,6 +1321,7 @@ document.addEventListener('DOMContentLoaded', function() {
     filterBtns.forEach(btn => {
         btn.addEventListener('click', function() {
             applyGalleryFilter(this.getAttribute('data-filter'));
+            scrollToGalleryImages();
         });
     });
 
