@@ -657,15 +657,27 @@
         height: 54px;
     }
 }
-#insights, #moments {
+#insights, #moments, #gallery-grid {
     scroll-margin-top: 160px;
 }
 @media (max-width: 991px) {
-    #insights, #moments {
+    #insights, #moments, #gallery-grid {
         scroll-margin-top: 90px;
     }
 }
+
+#gallery-grid:focus {
+    outline: none;
+}
 </style>
+
+@php
+    use Illuminate\Support\Str;
+
+    $newsGallerySlugs = collect(config('welfare_gallery.news_folders', []))
+        ->map(fn ($folder) => Str::slug($folder))
+        ->all();
+@endphp
 
 <div class="news-gallery-page">
     <div class="container">
@@ -776,7 +788,7 @@
                 <main class="news-content-display">
                     
                     <!-- Detail 13 (Takbir Raya) -->
-                    <article class="news-card-detail active" id="event-tab-13" role="tabpanel" aria-labelledby="tab-13">
+                    <article class="news-card-detail active" id="event-tab-13" role="tabpanel" aria-labelledby="tab-13" data-gallery-filter="{{ $newsGallerySlugs[13] ?? '' }}">
                         <div class="news-detail-image-wrap">
                             <img src="{{ asset('welfare/img/news/insights/1.png') }}" alt="Takbir Raya MUKMIN">
                         </div>
@@ -802,7 +814,7 @@
                     </article>
 
                     <!-- Detail 12 (Kembara KL) -->
-                    <article class="news-card-detail" id="event-tab-12" role="tabpanel" aria-labelledby="tab-12">
+                    <article class="news-card-detail" id="event-tab-12" role="tabpanel" aria-labelledby="tab-12" data-gallery-filter="{{ $newsGallerySlugs[12] ?? '' }}">
                         <div class="news-detail-image-wrap">
                             <img src="{{ asset('welfare/img/news/insights/2.png') }}" alt="Kembara Ramadhan MUKMIN Kuala Lumpur">
                         </div>
@@ -830,7 +842,7 @@
                     </article>
 
                     <!-- Detail 11 (Ustaz Assistance) -->
-                    <article class="news-card-detail" id="event-tab-11" role="tabpanel" aria-labelledby="tab-11">
+                    <article class="news-card-detail" id="event-tab-11" role="tabpanel" aria-labelledby="tab-11" data-gallery-filter="{{ $newsGallerySlugs[11] ?? '' }}">
                         <div class="news-detail-image-wrap">
                             <img src="{{ asset('welfare/img/news/insights/3.png') }}" alt="Ramadhan Assistance for Religious Scholars & Ustaz">
                         </div>
@@ -856,7 +868,7 @@
                     </article>
 
                     <!-- Detail 10 (Kembara Penang) -->
-                    <article class="news-card-detail" id="event-tab-10" role="tabpanel" aria-labelledby="tab-10">
+                    <article class="news-card-detail" id="event-tab-10" role="tabpanel" aria-labelledby="tab-10" data-gallery-filter="{{ $newsGallerySlugs[10] ?? '' }}">
                         <div class="news-detail-image-wrap">
                             <img src="{{ asset('welfare/img/news/insights/4.png') }}" alt="Kembara Ramadhan MUKMIN Penang">
                         </div>
@@ -883,7 +895,7 @@
                     </article>
 
                     <!-- Detail 9 (Kembara Ramadhan) -->
-                    <article class="news-card-detail" id="event-tab-9" role="tabpanel" aria-labelledby="tab-9">
+                    <article class="news-card-detail" id="event-tab-9" role="tabpanel" aria-labelledby="tab-9" data-gallery-filter="{{ $newsGallerySlugs[9] ?? '' }}">
                         <div class="news-detail-image-wrap">
                             <img src="{{ asset('welfare/img/news/insights/5.png') }}" alt="Kembara Ramadhan MUKMIN">
                         </div>
@@ -909,7 +921,7 @@
                     </article>
 
                     <!-- Detail 8 (KL Declaration) -->
-                    <article class="news-card-detail" id="event-tab-8" role="tabpanel" aria-labelledby="tab-8">
+                    <article class="news-card-detail" id="event-tab-8" role="tabpanel" aria-labelledby="tab-8" data-gallery-filter="{{ $newsGallerySlugs[8] ?? '' }}">
                         <div class="news-detail-image-wrap">
                             <img src="{{ asset('welfare/img/news/insights/6.png') }}" alt="The KL Declaration">
                         </div>
@@ -941,7 +953,7 @@
                     </article>
 
                     <!-- Detail 7 (Global Forum) -->
-                    <article class="news-card-detail" id="event-tab-7" role="tabpanel" aria-labelledby="tab-7">
+                    <article class="news-card-detail" id="event-tab-7" role="tabpanel" aria-labelledby="tab-7" data-gallery-filter="{{ $newsGallerySlugs[7] ?? '' }}">
                         <div class="news-detail-image-wrap">
                             <img src="{{ asset('welfare/img/news/insights/7.png') }}" alt="SIRAT Global Forum 2026">
                         </div>
@@ -968,7 +980,7 @@
                     </article>
 
                     <!-- Detail 6 (Scholarship Pledge) -->
-                    <article class="news-card-detail" id="event-tab-6" role="tabpanel" aria-labelledby="tab-6">
+                    <article class="news-card-detail" id="event-tab-6" role="tabpanel" aria-labelledby="tab-6" data-gallery-filter="{{ $newsGallerySlugs[6] ?? '' }}">
                         <div class="news-detail-image-wrap">
                             <img src="{{ asset('welfare/img/news/insights/8.png') }}" alt="MUKMIN Future Leaders Scholarship Pledge">
                         </div>
@@ -995,7 +1007,7 @@
                     </article>
 
                     <!-- Detail 5 (FIKRAH Roundtable) -->
-                    <article class="news-card-detail" id="event-tab-5" role="tabpanel" aria-labelledby="tab-5">
+                    <article class="news-card-detail" id="event-tab-5" role="tabpanel" aria-labelledby="tab-5" data-gallery-filter="{{ $newsGallerySlugs[5] ?? '' }}">
                         <div class="news-detail-image-wrap">
                             <img src="{{ asset('welfare/img/news/insights/9.png') }}" alt="FIKRAH Global Roundtable">
                         </div>
@@ -1021,7 +1033,7 @@
                     </article>
 
                     <!-- Detail 4 (FIKRAH Launch) -->
-                    <article class="news-card-detail" id="event-tab-4" role="tabpanel" aria-labelledby="tab-4">
+                    <article class="news-card-detail" id="event-tab-4" role="tabpanel" aria-labelledby="tab-4" data-gallery-filter="{{ $newsGallerySlugs[4] ?? '' }}">
                         <div class="news-detail-image-wrap">
                             <img src="{{ asset('welfare/img/news/insights/10.png') }}" alt="FIKRAH Launch">
                         </div>
@@ -1047,7 +1059,7 @@
                     </article>
 
                     <!-- Detail 3 (Youth Summit) -->
-                    <article class="news-card-detail" id="event-tab-3" role="tabpanel" aria-labelledby="tab-3">
+                    <article class="news-card-detail" id="event-tab-3" role="tabpanel" aria-labelledby="tab-3" data-gallery-filter="{{ $newsGallerySlugs[3] ?? '' }}">
                         <div class="news-detail-image-wrap">
                             <img src="{{ asset('welfare/img/news/insights/11.png') }}" alt="SIRAT Youth Summit & Youth Icon Awards">
                         </div>
@@ -1074,7 +1086,7 @@
                     </article>
 
                     <!-- Detail 2 (SIRAT Leaders Forum) -->
-                    <article class="news-card-detail" id="event-tab-2" role="tabpanel" aria-labelledby="tab-2">
+                    <article class="news-card-detail" id="event-tab-2" role="tabpanel" aria-labelledby="tab-2" data-gallery-filter="{{ $newsGallerySlugs[2] ?? '' }}">
                         <div class="news-detail-image-wrap">
                             <img src="{{ asset('welfare/img/news/insights/SIRAT.png') }}" alt="SIRAT Leaders Forum">
                         </div>
@@ -1101,7 +1113,7 @@
                     </article>
 
                     <!-- Detail 1 (Hari Raya) -->
-                    <article class="news-card-detail" id="event-tab-1" role="tabpanel" aria-labelledby="tab-1">
+                    <article class="news-card-detail" id="event-tab-1" role="tabpanel" aria-labelledby="tab-1" data-gallery-filter="{{ $newsGallerySlugs[1] ?? '' }}">
                         <div class="news-detail-image-wrap">
                             <img src="{{ asset('welfare/img/news/insights/13.png') }}" alt="Majlis Rumah Terbuka MUKMIN Sempena Hari Raya Aidilfitri">
                         </div>
@@ -1146,7 +1158,7 @@
             </div>
 
             <!-- Image Grid -->
-            <div class="gallery-masonry-grid">
+            <div class="gallery-masonry-grid" id="gallery-grid" tabindex="-1">
                 @forelse($momentsGallery as $image)
                 <div class="gallery-card"
                      data-category="{{ $image['category'] }}"
@@ -1229,53 +1241,86 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // -------------------------------------------------------------
-    // 2. Smooth Scroll CTA to Moments of MUKMIN
+    // 2. View Gallery — filter by event folder & scroll to images
     // -------------------------------------------------------------
     const scrollCtaBtns = document.querySelectorAll('.scroll-to-gallery');
-    const momentsSection = document.getElementById('moments');
-    
+    const galleryGrid = document.getElementById('gallery-grid');
+    const filterBtns = document.querySelectorAll('.gallery-filter-btn');
+    const galleryCards = document.querySelectorAll('.gallery-card');
+
+    function applyGalleryFilter(filterValue) {
+        filterBtns.forEach(b => b.classList.remove('active'));
+
+        const targetBtn = Array.from(filterBtns).find(
+            btn => btn.getAttribute('data-filter') === filterValue
+        );
+
+        if (targetBtn) {
+            targetBtn.classList.add('active');
+            targetBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        } else if (filterValue === 'all' && filterBtns.length) {
+            filterBtns[0].classList.add('active');
+        }
+
+        galleryCards.forEach(card => {
+            const cardCategory = card.getAttribute('data-category');
+
+            if (filterValue === 'all' || cardCategory === filterValue) {
+                card.style.display = 'block';
+                void card.offsetWidth;
+                card.style.opacity = '1';
+                card.style.transform = 'scale(1)';
+            } else {
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    if (card.style.opacity === '0') {
+                        card.style.display = 'none';
+                    }
+                }, 300);
+            }
+        });
+    }
+
+    function scrollToGalleryImages() {
+        if (!galleryGrid) {
+            return;
+        }
+
+        galleryGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        window.setTimeout(() => {
+            galleryGrid.focus({ preventScroll: true });
+
+            const firstVisibleCard = Array.from(galleryCards).find(card => {
+                return window.getComputedStyle(card).display !== 'none';
+            });
+
+            if (firstVisibleCard) {
+                firstVisibleCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }, 450);
+    }
+
     scrollCtaBtns.forEach(btn => {
         btn.addEventListener('click', function() {
-            if (momentsSection) {
-                momentsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const article = this.closest('.news-card-detail');
+            const filterValue = article ? article.getAttribute('data-gallery-filter') : '';
+
+            if (filterValue) {
+                applyGalleryFilter(filterValue);
             }
+
+            scrollToGalleryImages();
         });
     });
 
     // -------------------------------------------------------------
     // 3. Moments of MUKMIN Gallery Category Filters
     // -------------------------------------------------------------
-    const filterBtns = document.querySelectorAll('.gallery-filter-btn');
-    const galleryCards = document.querySelectorAll('.gallery-card');
-    
     filterBtns.forEach(btn => {
         btn.addEventListener('click', function() {
-            // Remove active class
-            filterBtns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            
-            const filterValue = this.getAttribute('data-filter');
-            
-            galleryCards.forEach(card => {
-                const cardCategory = card.getAttribute('data-category');
-                
-                if (filterValue === 'all' || cardCategory === filterValue) {
-                    card.style.display = 'block';
-                    // Trigger reflow for animation
-                    void card.offsetWidth;
-                    card.style.opacity = '1';
-                    card.style.transform = 'scale(1)';
-                } else {
-                    card.style.opacity = '0';
-                    card.style.transform = 'scale(0.95)';
-                    // Delay hiding until fade transition completes
-                    setTimeout(() => {
-                        if (card.style.opacity === '0') {
-                            card.style.display = 'none';
-                        }
-                    }, 300);
-                }
-            });
+            applyGalleryFilter(this.getAttribute('data-filter'));
         });
     });
 
