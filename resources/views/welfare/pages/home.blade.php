@@ -8,6 +8,18 @@
 
 <style>
 /* Page Specific Styling */
+/* Slider 3 — light background, dark text */
+.slide.slide-light-text {
+    background-position: left center;
+}
+.slide.slide-light-text .slide-text h1 {
+    color: #1e1e1e;
+    text-shadow: none;
+}
+.slide.slide-light-text .slide-text p {
+    color: #333333;
+}
+
 /* Card & Modal specific styles */
 .subtabs-grid, .subtabs-grid-4 {
     display: grid;
@@ -796,7 +808,7 @@
                 </div>
             </div>
             <!-- Slide 3 -->
-            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1600');">
+            <div class="slide slide-light-text" style="background-image: url('{{ asset('welfare/img/slider3.jpg') }}');">
                 <div class="slide-content">
                     <div class="container">
                         <div class="slide-text">
