@@ -35,54 +35,58 @@
     font-weight: 400;
 }
 
-/* 2. Top Intro Featured Block */
-.featured-row {
-    padding: 50px 0 25px;
-}
-.featured-block {
-    display: flex;
-    background: #ffffff;
-    border: 1px solid #e5e5e5;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-}
-.featured-left {
-    width: 48%;
+/* 2. Full-width Hero */
+.ecosystem-hero {
     position: relative;
     overflow: hidden;
+    padding: 0;
 }
-.featured-left img {
+
+.ecosystem-hero-image {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
     display: block;
-    min-height: 300px;
 }
-.featured-right {
-    width: 52%;
-    background: #1e1e1e;
-    color: #ffffff;
-    padding: 40px 50px;
+
+.ecosystem-hero-overlay {
+    position: absolute;
+    inset: 0;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
 }
-.featured-right h2 {
-    color: #ffffff;
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 18px;
-    line-height: 1.3;
+
+.ecosystem-hero .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
 }
-.featured-right p {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 14px;
-    line-height: 22px;
+
+.ecosystem-hero-content {
+    max-width: none;
+    text-align: left;
+}
+
+.ecosystem-hero-content h2 {
+    color: #1e1e1e;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 18px;
+    line-height: 1.35;
+    white-space: nowrap;
+}
+
+.ecosystem-hero-content p {
+    color: #1e1e1e;
+    font-size: 15px;
+    line-height: 1.7;
     margin: 0;
+    max-width: 520px;
 }
 
 /* 3. Three Columns Section */
 .cards-row {
-    padding: 25px 0 60px;
+    padding: 24px 0 40px;
 }
 .cards-grid {
     display: grid;
@@ -269,12 +273,19 @@
         gap: 8px;
         text-align: center;
     }
-    .featured-block {
-        flex-direction: column;
+    .ecosystem-hero .container {
+        padding: 0 24px;
     }
-    .featured-left, .featured-right {
-        width: 100%;
+
+    .ecosystem-hero-content h2 {
+        font-size: 22px;
+        white-space: normal;
     }
+
+    .ecosystem-hero-content p {
+        max-width: 100%;
+    }
+
     .cards-grid {
         grid-template-columns: 1fr;
         gap: 35px;
@@ -283,20 +294,22 @@
 </style>
 
 <div class="ecosystem-page">
-    <!-- 2. Top Intro Featured Block -->
-    <div class="featured-row">
-        <div class="container">
-            <div class="featured-block">
-                <div class="featured-left">
-                    <img src="https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=600&h=450&q=80" alt="Featured Boy Portrait">
-                </div>
-                <div class="featured-right">
+    <!-- Full-width Hero -->
+    <section class="ecosystem-hero">
+        <img
+            class="ecosystem-hero-image"
+            src="{{ asset('welfare/img/ecosystem/hero.jpg') }}"
+            alt="MUKMIN Ecosystem — FIKRAH, Gabungan MUKMIN Nasional, and Yayasan MUKMIN"
+        >
+        <div class="ecosystem-hero-overlay">
+            <div class="container">
+                <div class="ecosystem-hero-content">
                     <h2>One Ecosystem. Three Engines of Impact.</h2>
                     <p>A structured and integrated ecosystem that transforms ideas into action through strategy, coordination, and implementation.</p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- 3. Three Vertical Cards Section -->
     <div class="cards-row">

@@ -624,7 +624,7 @@ button.card-btn {
         <div class="container">
             <div class="featured-block">
                 <div class="featured-left">
-                    <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=600&h=450&q=80" alt="Community collaboration and collective action">
+                    <img src="{{ asset('welfare/img/serve/featured.png') }}" alt="Community collaboration and collective action">
                 </div>
                 <div class="featured-right">
                     <span class="category-tag">Join Our Ecosystem</span>

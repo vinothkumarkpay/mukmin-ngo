@@ -283,7 +283,7 @@
         <div class="container">
             <div class="featured-block">
                 <div class="featured-left">
-                    <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&h=450&q=80" alt="Community impact and giving">
+                    <img src="{{ asset('welfare/img/changing/featured.png') }}" alt="Children celebrating together in community">
                 </div>
                 <div class="featured-right">
                     <span class="category-tag">Changing Lives</span>
@@ -307,7 +307,7 @@
                 <!-- Sub Tab 1: Philanthropic Funds -->
                 <article class="column-card" id="funds">
                     <div class="column-card-image">
-                        <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=600&h=400&q=80" alt="Philanthropic Funds">
+                        <img src="{{ asset('welfare/img/changing/community-support.png') }}" alt="Volunteers united in community support">
                     </div>
                     <div class="column-card-body">
                         <div class="column-card-title-wrap">
@@ -322,7 +322,7 @@
                 <!-- Sub Tab 2: Faith & Giving -->
                 <article class="column-card" id="giving">
                     <div class="column-card-image">
-                        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&h=400&q=80" alt="Faith and Giving">
+                        <img src="{{ asset('welfare/img/changing/faith-giving.png') }}" alt="Children celebrating with the Malaysian flag">
                     </div>
                     <div class="column-card-body">
                         <div class="column-card-title-wrap">
