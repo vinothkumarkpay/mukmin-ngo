@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Welfare;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
@@ -90,26 +91,51 @@ class PageController extends Controller
 
     public function news()
     {
+        $moments = $this->buildMomentsGallery();
+
         return view('welfare.pages.news', [
-            'momentsGallery' => $this->buildMomentsGallery(),
+            'momentsCategories' => $moments['categories'],
+            'momentsGallery' => $moments['images'],
         ]);
     }
 
     /**
-     * Load Moments of MUKMIN images from configured public folders.
+     * Load Moments of MUKMIN images from public/welfare/img/moments subfolders.
+     * Each subfolder name becomes a gallery filter category.
      */
     private function buildMomentsGallery(): array
     {
+        $categories = [];
         $images = [];
         $extensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
         $basePath = public_path(config('welfare_gallery.moments_path'));
 
-        foreach (config('welfare_gallery.categories', []) as $category) {
-            $folderPath = $basePath . DIRECTORY_SEPARATOR . $category['folder'];
+        if (! is_dir($basePath)) {
+            return ['categories' => [], 'images' => []];
+        }
 
+        $folders = scandir($basePath);
+        if ($folders === false) {
+            return ['categories' => [], 'images' => []];
+        }
+
+        foreach ($folders as $folder) {
+            if ($folder === '.' || $folder === '..') {
+                continue;
+            }
+
+            $folderPath = $basePath . DIRECTORY_SEPARATOR . $folder;
             if (! is_dir($folderPath)) {
                 continue;
             }
+
+            $slug = Str::slug($folder);
+            $category = [
+                'folder' => $folder,
+                'slug' => $slug,
+                'label' => $folder,
+            ];
+            $categories[] = $category;
 
             $files = scandir($folderPath);
             if ($files === false) {
@@ -132,25 +158,34 @@ class PageController extends Controller
                 }
 
                 $relative = config('welfare_gallery.moments_path')
-                    . '/' . $category['folder']
+                    . '/' . $folder
                     . '/' . $file;
-
-                $title = ucwords(str_replace(['-', '_'], ' ', pathinfo($file, PATHINFO_FILENAME)));
 
                 $images[] = [
                     'src' => asset($relative),
-                    'title' => $title,
-                    'category' => $category['slug'],
-                    'category_label' => $category['label'],
+                    'title' => $folder,
+                    'file' => $file,
+                    'category' => $slug,
+                    'category_label' => $folder,
                 ];
             }
         }
 
+        usort($categories, fn ($a, $b) => strcasecmp($a['label'], $b['label']));
+
         usort($images, function ($a, $b) {
-            return strcmp($a['title'], $b['title']);
+            $categoryCompare = strcasecmp($a['category_label'], $b['category_label']);
+            if ($categoryCompare !== 0) {
+                return $categoryCompare;
+            }
+
+            return strnatcasecmp($a['file'], $b['file']);
         });
 
-        return $images;
+        return [
+            'categories' => $categories,
+            'images' => $images,
+        ];
     }
 
     public function changing()
