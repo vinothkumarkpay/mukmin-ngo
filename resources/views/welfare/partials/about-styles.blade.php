@@ -99,11 +99,12 @@
     padding-bottom: 8px;
     display: inline-block;
 }
-.president-letter p {
+.president-letter > p {
     font-size: 14.5px;
     line-height: 24px;
     color: #444;
     margin-bottom: 15px;
+    text-align: justify;
 }
 .president-signature {
     margin-top: 25px;
