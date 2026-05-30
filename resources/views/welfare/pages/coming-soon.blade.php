@@ -203,7 +203,7 @@
             <div class="coming-soon-logo-wrap">
                 <img
                     class="coming-soon-logo"
-                    src="{{ asset('welfare/img/mukmin_logo.png') }}"
+                    src="{{ asset('coming-soon-logo.png') }}"
                     alt="MUKMIN Logo"
                 >
             </div>
