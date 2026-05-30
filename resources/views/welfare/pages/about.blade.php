@@ -334,7 +334,7 @@
                 <p>More than a movement, MUKMIN represents a coordinated national effort to build resilient communities, unlock opportunities, and create sustainable progress for future generations.</p>
             </div>
             <div class="who-image">
-                <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800" alt="MUKMIN Community Transformation Ecosystem">
+                <img src="{{ asset('welfare/img/about/who-we-are.jpg') }}" alt="Federal Territory Mosque, Kuala Lumpur — MUKMIN community transformation ecosystem">
             </div>
         </div>
     </div>
