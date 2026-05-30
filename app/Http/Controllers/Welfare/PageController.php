@@ -210,6 +210,21 @@ class PageController extends Controller
 
     public function comingSoon()
     {
-        return view('welfare.pages.coming-soon');
+        $logoSrc = $this->comingSoonLogoSrc();
+
+        return view('welfare.pages.coming-soon', compact('logoSrc'));
+    }
+
+    private function comingSoonLogoSrc(): string
+    {
+        foreach (['coming-soon-logo.png', 'welfare/img/mukmin_logo.png'] as $relativePath) {
+            $path = public_path($relativePath);
+
+            if (is_file($path)) {
+                return 'data:image/png;base64,' . base64_encode(file_get_contents($path));
+            }
+        }
+
+        return asset('coming-soon-logo.png');
     }
 }
