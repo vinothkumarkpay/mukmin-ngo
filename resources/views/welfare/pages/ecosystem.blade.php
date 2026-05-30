@@ -63,7 +63,7 @@
 }
 
 .ecosystem-hero-content {
-    max-width: none;
+    max-width: 520px;
     text-align: left;
 }
 
@@ -273,22 +273,63 @@
         gap: 8px;
         text-align: center;
     }
+
+    .ecosystem-hero {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .ecosystem-hero-image {
+        order: 1;
+        width: 100%;
+        height: auto;
+    }
+
+    .ecosystem-hero-overlay {
+        position: static;
+        order: 2;
+        background: #1e1e1e;
+    }
+
     .ecosystem-hero .container {
-        padding: 0 24px;
+        padding: 32px 24px;
+    }
+
+    .ecosystem-hero-content {
+        max-width: none;
     }
 
     .ecosystem-hero-content h2 {
+        color: #ffffff;
         font-size: 22px;
         white-space: normal;
+        margin-bottom: 14px;
     }
 
     .ecosystem-hero-content p {
-        max-width: 100%;
+        color: rgba(255, 255, 255, 0.8);
+        max-width: none;
+        font-size: 14px;
+        line-height: 1.65;
     }
 
     .cards-grid {
         grid-template-columns: 1fr;
         gap: 35px;
+    }
+}
+
+@media (max-width: 575px) {
+    .ecosystem-hero .container {
+        padding: 28px 20px;
+    }
+
+    .ecosystem-hero-content h2 {
+        font-size: 20px;
+    }
+
+    .ecosystem-hero-content p {
+        font-size: 13px;
     }
 }
 </style>
