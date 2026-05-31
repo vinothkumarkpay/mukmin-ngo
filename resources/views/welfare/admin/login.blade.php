@@ -27,7 +27,7 @@
             
             <div class="admin-input-group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" class="admin-input" placeholder="admin@mukmin.com" value="{{ old('email', 'admin@mukmin.com') }}" required autofocus>
+                <input type="email" id="email" name="email" class="admin-input" placeholder="Enter your email address" value="{{ old('email') }}" required autofocus>
                 @error('email')
                     <span style="color: #b91c1c; font-size: 12px; margin-top: 4px; display: block;">{{ $message }}</span>
                 @enderror
@@ -35,7 +35,7 @@
 
             <div class="admin-input-group" style="margin-bottom: 25px;">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" class="admin-input" placeholder="••••••••" value="admin123" required>
+                <input type="password" id="password" name="password" class="admin-input" placeholder="Enter your password" required>
             </div>
 
             <button type="submit" class="btn-admin btn-admin-primary" style="width: 100%; justify-content: center; padding: 12px; font-size: 14.5px;">

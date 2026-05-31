@@ -165,9 +165,8 @@ class CommunityAidSubmissionTest extends TestCase
 
     private function actingAsAdmin()
     {
-        // Bind an admin auth middleware bypass or configure session as authenticated
-        // In this Laravel project, middleware is 'admin.auth'. Let's verify how it handles authentication.
-        // Let's check session variables or use session mocks if needed.
-        $this->withSession(['admin_logged_in' => true]);
+        $user = \App\Models\User::factory()->create();
+
+        $this->actingAs($user);
     }
 }
