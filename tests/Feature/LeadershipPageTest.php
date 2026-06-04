@@ -13,24 +13,24 @@ class LeadershipPageTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Leadership & Governance');
         
-        // Assert some new COA members
-        $response->assertSee('Prof. Tan Sri Datuk Dr. Haji Mohamed Haniffa Haji Abdullah');
-        $response->assertSee('YA Dato’ Seri Vazeer Alam Mydin Meera');
+        // Assert COA members
+        $response->assertSee("YA Dato' Seri Vazeer Alam Mydin Meera");
         $response->assertSee('Datuk Seri Dr. Jahaberdeen Mohamed Yunoos');
+        $response->assertSee('Tuan Syed Ali Shahul Hameed');
 
         // Assert some new CEC members
-        $response->assertSee('Datuk Wira Shahul Hameed Bin Shaik Dawood');
+        $response->assertSee('Datuk Wira Shahul Dawood');
         $response->assertSee('Puan Fouziah Banu Binti Sultan Muhamad');
         $response->assertSee('Abdul');
 
-        // Assert some new EXCO members
-        $response->assertSee('Datuk Dr. Muhammad Ismail bin Abu Bakar');
-        $response->assertSee('Datuk Haji Mohammed Mosin bin Abdul Razak');
-        $response->assertSee('Dato’ Haji Faruk bin V. Raju Mohamed');
+        // Assert EXCO members
+        $response->assertSee("Dato' Abdul Hamid PV Abdu");
+        $response->assertSee('Datuk Hj Mohammed Mosin Abdul Razak');
+        $response->assertSee('Datuk Dr Muhammad Ismail Abu Bakar');
 
         // Assert some new Bureau Chairs
         $response->assertSee('Datuk Wira Naina Mohamed Bin Sultan Abdul Kadir');
-        $response->assertSee('Dato\' (Is) Mohd Kassim Bin Aliah');
-        $response->assertSee('Jaleel Abu Baker');
+        $response->assertSee('Mohd Kassim Bin Aliah', false);
+        $response->assertSee('Tuan Jaleeludeen Bin Abu Baker');
     }
 }

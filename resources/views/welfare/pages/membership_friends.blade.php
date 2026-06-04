@@ -207,7 +207,7 @@
         <div class="form-card">
             <div class="form-header">
                 <h2>Friends of MUKMIN Registration Form</h2>
-                <p><strong>Community & Supporter Network</strong> - Open to individuals, informal groups, suraus, madrasahs, and organizations that wish to support MUKMIN's grassroots community and volunteer initiatives.</p>
+                <p><strong>Community & Supporter Network</strong> - Open to individuals, informal groups, suraus, madrasahs, non-registered NGOs, and organizations that wish to support MUKMIN's grassroots community and volunteer initiatives.</p>
             </div>
 
             <!-- ELIGIBILITY SECTION -->

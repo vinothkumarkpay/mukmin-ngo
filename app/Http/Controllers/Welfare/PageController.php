@@ -109,6 +109,7 @@ class PageController extends Controller
         $images = [];
         $extensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
         $basePath = public_path(config('welfare_gallery.moments_path'));
+        $hiddenFolders = config('welfare_gallery.moments_hidden_folders', []);
 
         if (! is_dir($basePath)) {
             return ['categories' => [], 'images' => []];
@@ -121,6 +122,10 @@ class PageController extends Controller
 
         foreach ($folders as $folder) {
             if ($folder === '.' || $folder === '..') {
+                continue;
+            }
+
+            if (in_array($folder, $hiddenFolders, true)) {
                 continue;
             }
 

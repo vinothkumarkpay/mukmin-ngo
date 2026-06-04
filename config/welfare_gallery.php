@@ -14,6 +14,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Moments gallery folders to hide
+    |--------------------------------------------------------------------------
+    |
+    | Subfolder names under moments_path that should not appear in the
+    | "Moments of MUKMIN" filter bar or image grid (files may remain on disk).
+    |
+    */
+    'moments_hidden_folders' => [
+        'Kembara Ramadhan MUKMIN',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Impact Insights news tab → Moments gallery folder
     |--------------------------------------------------------------------------
     |

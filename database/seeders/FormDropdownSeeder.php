@@ -35,7 +35,7 @@ class FormDropdownSeeder extends Seeder
                 'Youth Development', 'Women Programmes', 'Community Services', 'Others'
             ],
             'friends_category' => [
-                'Individual', 'Surau', 'Madrasah', 'Others'
+                'Individual', 'Surau', 'Madrasah', 'Non-registered NGO', 'Others'
             ],
             'mentor_expertise' => [
                 'Leadership & Governance', 'Business & Entrepreneurship', 'Education & Youth Development',
