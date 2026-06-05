@@ -21,7 +21,7 @@ $targets = [
     'coa_tuan_syed_ali_shahul_hameed.jpg',
 ];
 
-$files = glob($src . '/*.jpeg') ?: [];
+$files = glob($src . '/*.{jpeg,jpg,JPEG,JPG}', GLOB_BRACE) ?: [];
 natsort($files);
 $files = array_values($files);
 
@@ -41,5 +41,5 @@ foreach ($files as $i => $file) {
         fwrite(STDERR, "Failed to copy {$file} to {$out}" . PHP_EOL);
         exit(1);
     }
-    echo basename($out) . PHP_EOL;
+    echo basename($out) . ' (' . filesize($out) . " bytes)\n";
 }
