@@ -124,6 +124,10 @@
     background: linear-gradient(90deg, #ff6b4a, #d43c18);
     border-radius: 3px;
 }
+/* Temporarily hide aid target progress in Our Aid Programs */
+#aid-programs .aid-card-progress {
+    display: none;
+}
 .subtab-card .read-more-btn {
     display: inline-block;
     background: #a5a5a5;
@@ -690,6 +694,15 @@
 .updates-tab-btn.active::after {
     transform: scaleX(1);
 }
+/* Temporarily hide Notices & Media tabs in MUKMIN Updates */
+.updates-tab-nav .updates-tab-btn:nth-child(2),
+.updates-tab-nav .updates-tab-btn:nth-child(3) {
+    display: none;
+}
+#official-notices,
+#media-highlights {
+    display: none !important;
+}
 .updates-pane-list {
     list-style: none;
     padding: 0;
@@ -826,10 +839,10 @@
                 <div class="slide-content">
                     <div class="container">
                         <div class="slide-text">
-                            <h1>We Are Here For You</h1>
-                            <p>Strengthening communities through service, dignity, and shared blessings.</p>
+                            <h1>Empowering Future Leaders. Unlocking Potential.</h1>
+                            <p>Supporting deserving students through educational opportunities, leadership development and pathways towards a brighter future.</p>
                             <div class="slide-buttons">
-                                <a href="#aid-programs" class="btn btn-primary">Find out more</a>
+                                <a href="{{ route('welfare.impact.mfls') }}" class="btn btn-primary">Find out more</a>
                             </div>
                         </div>
                     </div>
@@ -1400,7 +1413,7 @@
     <section class="section-donate-cta" style="background-image: linear-gradient(rgba(30,30,30,0.85), rgba(30,30,30,0.85)), url('https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=1600'); background-size: cover; background-position: center; background-attachment: fixed; text-align: center; padding: 80px 0;">
         <div class="container" style="max-width: 800px;">
             <i class="fas fa-quote-left" style="font-size: 40px; color: white; opacity: 0.3; margin-bottom: 20px;"></i>
-            <h2 style="color: white; font-size: 32px; line-height: 42px; font-weight: 700; margin-bottom: 20px; font-style: italic;">"No one has ever become poor by giving"</h2>
+            <h2 style="color: white; font-size: 42px; line-height: 52px; font-weight: 700; margin-bottom: 20px;">"No one has ever become poor by giving"</h2>
             <p style="color: rgba(255,255,255,0.9); font-size: 15px; line-height: 26px; margin-bottom: 30px;">
                 Your contribution supports more than a single programme — it strengthens a wider ecosystem dedicated to community development, leadership growth, education access and long-term social impact. Through strategic collaboration and community-driven initiatives, every contribution helps MUKMIN and its ecosystem partners create meaningful change across communities, institutions and future generations.
             </p>
@@ -1448,7 +1461,7 @@
                         'image' => asset('welfare/img/news/fikrah-launch.png')
                     ],
                     [
-                        'title' => 'SIRAT Youth Summit & Youth Icon Awards',
+                        'title' => 'SIRAT Youth Summit',
                         'meta' => '22 November 2025 | PICCA Convention Centre',
                         'desc' => 'Malaysia’s largest community youth gatherings, the programme brought together over 1,000 changemakers through leadership sessions, panel discussions, pitching sessions and the Youth Icon Awards.',
                         'image' => asset('welfare/img/news/sirat-youth-summit-awards.png')
@@ -1458,12 +1471,6 @@
                         'meta' => '29 – 31 August 2025 | Pahang',
                         'desc' => 'The SIRAT Leaders Forum convened 250 NGO leaders, policymakers, professionals and religious institutions in a strategic platform focused on collaboration, leadership and sustainable community development.',
                         'image' => asset('welfare/img/news/sirat-leaders-forum.png')
-                    ],
-                    [
-                        'title' => 'MUKMIN Hari Raya Aidilfitri Open House 2025',
-                        'meta' => '12 April 2025 | IDCC, Shah Alam',
-                        'desc' => 'MUKMIN’s Hari Raya Aidilfitri Open House gathered NGOs, mosques, madrasahs, suraus and tahfiz institutions from across Malaysia in a celebration of unity and community spirit, welcoming approximately 2,000 guests including more than 200 religious scholars.',
-                        'image' => asset('welfare/img/news/mukmin-open-house-2025.png')
                     ]
                 ];
                 @endphp

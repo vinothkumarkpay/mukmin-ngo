@@ -765,7 +765,7 @@
                         
                         <!-- Tab 3 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-3" id="tab-3" data-index="3">
-                            <span class="news-tab-title">SIRAT Youth Summit & Youth Icon Awards</span>
+                            <span class="news-tab-title">SIRAT Youth Summit</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
                         </button>
                         
@@ -1061,12 +1061,12 @@
                     <!-- Detail 3 (Youth Summit) -->
                     <article class="news-card-detail" id="event-tab-3" role="tabpanel" aria-labelledby="tab-3" data-gallery-filter="{{ $newsGallerySlugs[3] ?? '' }}">
                         <div class="news-detail-image-wrap">
-                            <img src="{{ asset('welfare/img/news/insights/11.png') }}" alt="SIRAT Youth Summit & Youth Icon Awards">
+                            <img src="{{ asset('welfare/img/news/insights/11.png') }}" alt="SIRAT Youth Summit">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">SIRAT Youth Summit & Youth Icon Awards</h4>
+                                <h4 class="news-detail-title">SIRAT Youth Summit</h4>
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
@@ -1074,7 +1074,7 @@
                             </div>
                         </div>
                         <div class="news-detail-description">
-                            <p>The SIRAT Youth Summit & Youth Icon Awards brought together more than 1,000 youths, making it one of the largest Indian Muslim youth gatherings in Malaysia.</p>
+                            <p>The SIRAT Youth Summit brought together more than 1,000 youths, making it one of the largest Indian Muslim youth gatherings in Malaysia.</p>
                             <p>Featuring inspirational talks, panel discussions, fireside chats and pitching sessions, the programme provided a platform for youths to showcase ideas, build networks and explore future opportunities. The event also celebrated outstanding young individuals through the Youth Icon Awards, strengthening the spirit of youth leadership and empowerment.</p>
                             <p>In recognition of its scale and impact, the programme was also recorded in the Malaysian Book of Records for the largest participation in an Indian Muslim youth gathering.</p>
                         </div>
