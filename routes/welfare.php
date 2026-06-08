@@ -89,6 +89,8 @@ Route::name('welfare.')->group(function () {
         Route::get('/admin/submissions/{type}/{id}', [AdminDashboardController::class, 'showSubmission'])->name('admin.submission.detail');
         Route::post('/admin/submissions/{type}/{id}/status', [AdminDashboardController::class, 'updateStatus'])->name('admin.submission.status');
         Route::get('/admin/export/{type}', [AdminDashboardController::class, 'exportCsv'])->name('admin.export');
+        Route::get('/admin/import/{type}/template', [AdminDashboardController::class, 'downloadImportTemplate'])->name('admin.import.template');
+        Route::post('/admin/import/{type}', [AdminDashboardController::class, 'importSubmissions'])->name('admin.import');
         
         // Option management routes
         Route::post('/admin/options/add', [AdminDashboardController::class, 'addOption'])->name('admin.options.add');

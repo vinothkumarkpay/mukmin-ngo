@@ -67,6 +67,13 @@
                         <strong>Email:</strong>
                         <a href="mailto:{{ config('welfare.email') }}" style="color: var(--color-primary);">{{ config('welfare.email') }}</a>
                     </p>
+                    @if(config('welfare.whatsapp_url'))
+                    <p style="margin-bottom: 12px;">
+                        <i class="fab fa-whatsapp" style="color: #25D366; margin-right: 10px; width: 15px;"></i>
+                        <strong>WhatsApp:</strong>
+                        <a href="{{ config('welfare.whatsapp_url') }}" style="color: var(--color-primary);" target="_blank" rel="noopener noreferrer">Chat with Support</a>
+                    </p>
+                    @endif
                 </div>
 
                 <h4 style="margin-bottom: 15px; font-size: 16px; color: var(--color-heading);">Follow Us</h4>
@@ -77,6 +84,9 @@
                     <a href="https://www.tiktok.com/@mukminnasional?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer" style="width: 36px; height: 36px; border: 1px solid var(--color-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-text); transition: all var(--transition);" onmouseover="this.style.background='var(--color-primary)';this.style.color='white';this.style.borderColor='var(--color-primary)';" onmouseout="this.style.background='none';this.style.color='var(--color-text)';this.style.borderColor='var(--color-border)';" title="TikTok"><i class="fab fa-tiktok"></i></a>
                     <a href="https://x.com/Mukminmy" target="_blank" rel="noopener noreferrer" style="width: 36px; height: 36px; border: 1px solid var(--color-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-text); transition: all var(--transition);" onmouseover="this.style.background='var(--color-primary)';this.style.color='white';this.style.borderColor='var(--color-primary)';" onmouseout="this.style.background='none';this.style.color='var(--color-text)';this.style.borderColor='var(--color-border)';" title="X / Twitter"><i class="fab fa-twitter"></i></a>
                     <a href="https://youtube.com/@mukmin-i7l?si=ZDB9eyr679HET6Ew" target="_blank" rel="noopener noreferrer" style="width: 36px; height: 36px; border: 1px solid var(--color-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-text); transition: all var(--transition);" onmouseover="this.style.background='var(--color-primary)';this.style.color='white';this.style.borderColor='var(--color-primary)';" onmouseout="this.style.background='none';this.style.color='var(--color-text)';this.style.borderColor='var(--color-border)';" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    @if(config('welfare.whatsapp_url'))
+                    <a href="{{ config('welfare.whatsapp_url') }}" target="_blank" rel="noopener noreferrer" style="width: 36px; height: 36px; border: 1px solid var(--color-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-text); transition: all var(--transition);" onmouseover="this.style.background='#25D366';this.style.color='white';this.style.borderColor='#25D366';" onmouseout="this.style.background='none';this.style.color='var(--color-text)';this.style.borderColor='var(--color-border)';" title="WhatsApp Support"><i class="fab fa-whatsapp"></i></a>
+                    @endif
                 </div>
             </div>
         </div>

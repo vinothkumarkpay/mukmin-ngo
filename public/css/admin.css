@@ -288,6 +288,36 @@ a:hover {
 .card-actions {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+}
+.admin-import-form {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.admin-import-file-label {
+    position: relative;
+    display: inline-flex;
+    margin: 0;
+}
+.admin-import-file-input {
+    position: absolute;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+.admin-import-file-btn {
+    cursor: pointer;
+    white-space: nowrap;
+}
+.admin-import-form .admin-import-file-input:focus + .admin-import-file-btn {
+    outline: 2px solid var(--admin-primary);
+    outline-offset: 2px;
 }
 .card-body {
     padding: 24px;

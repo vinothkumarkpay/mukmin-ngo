@@ -187,6 +187,9 @@
                             <a href="https://www.linkedin.com/in/mukminofficial/" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
                             <a href="https://www.tiktok.com/@mukminnasional?is_from_webapp=1&sender_device=pc" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="TikTok" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
                             <a href="https://youtube.com/@mukmin-i7l?si=ZDB9eyr679HET6Ew" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="YouTube" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+                            @if(config('welfare.whatsapp_url'))
+                            <a href="{{ config('welfare.whatsapp_url') }}" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 15px;" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color='rgba(255,255,255,0.6)'" title="WhatsApp Support" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+                            @endif
                         </div>
                     </div>
                     <div class="footer-info" style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 10px;">
@@ -202,11 +205,19 @@
                             <i class="fas fa-envelope"></i>
                             <a href="mailto:{{ config('welfare.email') }}" style="color: rgba(255,255,255,0.7); text-decoration: none;">{{ config('welfare.email') }}</a>
                         </span>
+                        @if(config('welfare.whatsapp_url'))
+                        <span class="top-info-item">
+                            <i class="fab fa-whatsapp"></i>
+                            <a href="{{ config('welfare.whatsapp_url') }}" style="color: rgba(255,255,255,0.7); text-decoration: none;" target="_blank" rel="noopener noreferrer">WhatsApp Support</a>
+                        </span>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </footer>
+
+    @include('welfare.partials.whatsapp-support')
 
     <script src="{{ asset('js/welfare.js') }}"></script>
     @stack('scripts')

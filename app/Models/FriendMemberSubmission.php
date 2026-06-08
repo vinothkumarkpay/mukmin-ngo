@@ -8,7 +8,7 @@ class FriendMemberSubmission extends Model
 {
     protected $fillable = [
         'entity_type', 'others_specify', 'org_name', 'org_state', 'org_address',
-        'org_email', 'org_phone', 'org_website', 'ind_name', 'ind_nric', 'ind_state',
+        'org_email', 'org_phone', 'org_website', 'ind_name', 'ind_nric', 'ind_state', 'ind_address',
         'ind_email', 'ind_phone', 'ind_area_of_interest', 'declaration_confirmed', 'status'
     ];
 

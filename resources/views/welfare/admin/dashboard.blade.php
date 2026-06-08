@@ -97,6 +97,24 @@
                     <i class="fas fa-check-circle"></i> {{ session('success') }}
                 </div>
             @endif
+            @if(session('error'))
+                <div class="alert-admin alert-admin-error">
+                    <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
+                </div>
+            @endif
+            @if(session('import_errors'))
+                <div class="alert-admin alert-admin-error">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <strong>Import issues:</strong>
+                        <ul style="margin: 8px 0 0 18px; padding: 0;">
+                            @foreach(session('import_errors') as $importError)
+                                <li>{{ $importError }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
 
             <!-- 1. OVERVIEW PANEL -->
             <div class="dashboard-panel active" id="panel-overview">
@@ -171,7 +189,7 @@
                         <h3>Welcome to the MUKMIN Administrative Portal</h3>
                     </div>
                     <div class="card-body">
-                        <p style="margin-bottom: 15px;">Use the left navigation sidebar to view individual form submissions, download CSV reports, approve/reject applications, and configure form dropdown option items dynamically.</p>
+                        <p style="margin-bottom: 15px;">Use the left navigation sidebar to view individual form submissions, download CSV reports, import bulk records from Excel templates, approve/reject applications, and configure form dropdown option items dynamically.</p>
                         <div class="important-notes" style="margin-bottom: 0;">
                             <h4>SYSTEM NOTE</h4>
                             <p style="font-size: 13.5px; color: #555;">All data changes (like changing approval status, deleting dropdown lists, or submitting new forms) will take effect instantly in the database.</p>
@@ -189,6 +207,7 @@
                             <a href="{{ route('welfare.admin.export', 'feedback') }}" class="btn-admin btn-admin-secondary">
                                 <i class="fas fa-download"></i> Export CSV
                             </a>
+                            @include('welfare.admin.partials.import-actions', ['type' => 'feedback'])
                         </div>
                     </div>
                     <div class="card-body">
@@ -245,6 +264,7 @@
                             <a href="{{ route('welfare.admin.export', 'ordinary') }}" class="btn-admin btn-admin-secondary">
                                 <i class="fas fa-download"></i> Export CSV
                             </a>
+                            @include('welfare.admin.partials.import-actions', ['type' => 'ordinary'])
                         </div>
                     </div>
                     <div class="card-body">
@@ -301,6 +321,7 @@
                             <a href="{{ route('welfare.admin.export', 'friends') }}" class="btn-admin btn-admin-secondary">
                                 <i class="fas fa-download"></i> Export CSV
                             </a>
+                            @include('welfare.admin.partials.import-actions', ['type' => 'friends'])
                         </div>
                     </div>
                     <div class="card-body">
@@ -371,6 +392,7 @@
                             <a href="{{ route('welfare.admin.export', 'mentor') }}" class="btn-admin btn-admin-secondary">
                                 <i class="fas fa-download"></i> Export CSV
                             </a>
+                            @include('welfare.admin.partials.import-actions', ['type' => 'mentor'])
                         </div>
                     </div>
                     <div class="card-body">
@@ -423,6 +445,7 @@
                             <a href="{{ route('welfare.admin.export', 'partner') }}" class="btn-admin btn-admin-secondary">
                                 <i class="fas fa-download"></i> Export CSV
                             </a>
+                            @include('welfare.admin.partials.import-actions', ['type' => 'partner'])
                         </div>
                     </div>
                     <div class="card-body">
@@ -481,6 +504,7 @@
                             <a href="{{ route('welfare.admin.export', 'volunteer') }}" class="btn-admin btn-admin-secondary">
                                 <i class="fas fa-download"></i> Export CSV
                             </a>
+                            @include('welfare.admin.partials.import-actions', ['type' => 'volunteer'])
                         </div>
                     </div>
                     <div class="card-body">
@@ -535,6 +559,7 @@
                             <a href="{{ route('welfare.admin.export', 'contact') }}" class="btn-admin btn-admin-secondary">
                                 <i class="fas fa-download"></i> Export CSV
                             </a>
+                            @include('welfare.admin.partials.import-actions', ['type' => 'contact'])
                         </div>
                     </div>
                     <div class="card-body">
@@ -583,6 +608,7 @@
                             <a href="{{ route('welfare.admin.export', 'aid') }}" class="btn-admin btn-admin-secondary">
                                 <i class="fas fa-download"></i> Export CSV
                             </a>
+                            @include('welfare.admin.partials.import-actions', ['type' => 'aid'])
                         </div>
                     </div>
                     <div class="card-body">
@@ -647,6 +673,7 @@
                             <a href="{{ route('welfare.admin.export', 'mfls') }}" class="btn-admin btn-admin-secondary">
                                 <i class="fas fa-download"></i> Export CSV
                             </a>
+                            @include('welfare.admin.partials.import-actions', ['type' => 'mfls'])
                         </div>
                     </div>
                     <div class="card-body">
@@ -1022,6 +1049,22 @@
         if (event.key === 'Escape') {
             closeModal();
         }
+    });
+
+    @if(session('import_tab'))
+    switchTab(@json(session('import_tab')));
+    @endif
+
+    document.querySelectorAll('.admin-import-file-input').forEach(function(input) {
+        input.addEventListener('change', function() {
+            const label = this.closest('.admin-import-file-label');
+            const button = label ? label.querySelector('.admin-import-file-btn') : null;
+            if (!button) return;
+
+            if (this.files && this.files.length > 0) {
+                button.innerHTML = '<i class="fas fa-file-excel"></i> ' + this.files[0].name;
+            }
+        });
     });
 </script>
 @endpush

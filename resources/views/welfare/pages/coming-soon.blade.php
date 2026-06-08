@@ -172,6 +172,31 @@
             transform: translateY(-2px);
         }
 
+        .whatsapp-support-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 999;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #25D366;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .whatsapp-support-fab:hover {
+            color: #fff;
+            transform: scale(1.08);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+        }
+
         .coming-soon-footer {
             padding: 18px 24px 24px;
             border-top: 1px solid #edf2f7;
@@ -193,6 +218,14 @@
                 width: 100%;
                 justify-content: center;
                 flex-wrap: wrap;
+            }
+
+            .whatsapp-support-fab {
+                bottom: 16px;
+                right: 16px;
+                width: 52px;
+                height: 52px;
+                font-size: 26px;
             }
         }
     </style>
@@ -225,6 +258,13 @@
                     <span>{{ config('welfare.email') }}</span>
                 </a>
 
+                @if(config('welfare.whatsapp_url'))
+                <a class="coming-soon-contact" href="{{ config('welfare.whatsapp_url') }}" target="_blank" rel="noopener noreferrer" style="margin-top: 12px;">
+                    <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                    <span>WhatsApp Support</span>
+                </a>
+                @endif
+
                 <div class="coming-soon-social">
                     <a href="https://web.facebook.com/profile.php?id=61590435118262" title="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://www.instagram.com/mukmin.malaysia" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
@@ -232,6 +272,9 @@
                     <a href="https://x.com/Mukminmy" title="X / Twitter" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
                     <a href="https://www.tiktok.com/@mukminnasional?is_from_webapp=1&sender_device=pc" title="TikTok" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
                     <a href="https://youtube.com/@mukmin-i7l?si=ZDB9eyr679HET6Ew" title="YouTube" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+                    @if(config('welfare.whatsapp_url'))
+                    <a href="{{ config('welfare.whatsapp_url') }}" title="WhatsApp Support" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+                    @endif
                 </div>
             </div>
 
@@ -240,5 +283,6 @@
             </div>
         </div>
     </main>
+    @include('welfare.partials.whatsapp-support')
 </body>
 </html>

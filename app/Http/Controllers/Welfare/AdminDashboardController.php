@@ -14,6 +14,8 @@ use App\Models\VolunteerSubmission;
 use App\Models\ContactSubmission;
 use App\Models\CommunityAidSubmission;
 use App\Models\MflsScholarshipSubmission;
+use App\Services\Welfare\SubmissionImportRegistry;
+use App\Services\Welfare\SubmissionImporter;
 use Response;
 
 class AdminDashboardController extends Controller
@@ -457,5 +459,58 @@ class AdminDashboardController extends Controller
         };
 
         return Response::stream($callback, 200, $headers);
+    }
+
+    public function downloadImportTemplate($type, SubmissionImporter $importer)
+    {
+        if (!in_array($type, SubmissionImportRegistry::TYPES, true)) {
+            abort(404);
+        }
+
+        return $importer->downloadTemplate($type);
+    }
+
+    public function importSubmissions(Request $request, $type, SubmissionImporter $importer)
+    {
+        if (!in_array($type, SubmissionImportRegistry::TYPES, true)) {
+            abort(404);
+        }
+
+        $request->validate([
+            'import_file' => 'required|file|mimes:csv,txt,xlsx,xls|max:10240',
+        ]);
+
+        $result = $importer->import($type, $request->file('import_file'));
+
+        if ($result['imported'] === 0 && !empty($result['errors'])) {
+            return redirect()
+                ->route('welfare.admin.dashboard')
+                ->with('import_tab', $request->input('import_tab', 'panel-' . $type))
+                ->with('import_errors', $result['errors'])
+                ->with('error', 'Import failed. No records were imported.');
+        }
+
+        $message = "Successfully imported {$result['imported']} record(s).";
+        if ($this->hasStatus($type)) {
+            $message .= ' All imported records are set to pending status.';
+        }
+
+        if (!empty($result['errors'])) {
+            return redirect()
+                ->route('welfare.admin.dashboard')
+                ->with('import_tab', $request->input('import_tab', 'panel-' . $type))
+                ->with('success', $message)
+                ->with('import_errors', $result['errors']);
+        }
+
+        return redirect()
+            ->route('welfare.admin.dashboard')
+            ->with('import_tab', $request->input('import_tab', 'panel-' . $type))
+            ->with('success', $message);
+    }
+
+    private function hasStatus(string $type): bool
+    {
+        return in_array($type, ['ordinary', 'friends', 'partner', 'aid', 'mfls'], true);
     }
 }
