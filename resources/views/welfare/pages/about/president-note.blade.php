@@ -16,6 +16,7 @@
                 <div class="president-title-overlay">
                     <h4>Datuk Wira Shahul Dawood</h4>
                     <span>President, Pertubuhan Gabungan MUKMIN Nasional</span>
+                    <a href="mailto:president@mukmin.org">president@mukmin.org</a>
                 </div>
             </div>
             <div class="president-letter">

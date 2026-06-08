@@ -46,6 +46,7 @@
     line-height: 24px;
     color: #555;
     margin-bottom: 18px;
+    text-align: justify;
 }
 .who-image img {
     width: 100%;
@@ -87,8 +88,20 @@
     font-weight: 700;
 }
 .president-title-overlay span {
+    display: block;
     font-size: 12px;
     opacity: 0.9;
+}
+.president-title-overlay a {
+    display: block;
+    font-size: 12px;
+    opacity: 0.9;
+    color: #fff;
+    text-decoration: none;
+    margin-top: 3px;
+}
+.president-title-overlay a:hover {
+    text-decoration: underline;
 }
 .president-letter {
     background: #fff;
@@ -325,13 +338,13 @@
         <div class="who-we-are-grid">
             <div class="who-body">
                 <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--color-primary); font-weight: 700; display: block; margin-bottom: 6px;">Who We Are</span>
-                <h2 class="who-headline">A National Ecosystem for Community Transformation</h2>
-                <h3 class="who-subheadline">Uniting communities, organisations, and partners to drive inclusive and sustainable socio-economic development across Malaysia.</h3>
+                <h2 class="who-headline">The Strength Behind MUKMIN</h2>
+                <h3 class="who-subheadline">A Collective Ecosystem of Communities, Institutions and Leaders</h3>
                 
-                <p>MUKMIN is a national coordinating ecosystem that brings together NGOs, civil society organisations, chambers of commerce, institutions, global think tanks and impact organisations, alongside grassroots community networks including surau, madrasah and mosques across Malaysia under a shared mission to advance inclusive and sustainable development.</p>
-                <p>Anchored in collaboration and collective action, MUKMIN serves as a connector between communities, institutions, industry, and ecosystem partners — aligning ideas, mobilising partnerships, and transforming community-driven efforts into scalable initiatives with long-term impact.</p>
-                <p>Through a structured ecosystem approach, MUKMIN strengthens pathways for socio-economic mobility, education and talent development, leadership, entrepreneurship, innovation, and community cohesion.</p>
-                <p>More than a movement, MUKMIN represents a coordinated national effort to build resilient communities, unlock opportunities, and create sustainable progress for future generations.</p>
+                <p>MUKMIN is strengthened by a growing ecosystem of NGOs, community organisations, chambers of commerce, institutions, professional networks, mosques, surau, madrasah, tahfiz centres and strategic partners across Malaysia.</p>
+                <p>Together, these organisations represent a diverse network of community leaders, professionals, educators, entrepreneurs, religious institutions and changemakers united by a shared commitment towards community advancement and sustainable development.</p>
+                <p>By bringing together expertise, resources, networks and grassroots reach under one coordinated platform, MUKMIN transforms individual efforts into collective impact, creating stronger opportunities for collaboration, empowerment and long-term community transformation.</p>
+                <p>Today, MUKMIN's strength lies not in any single organisation, but in the collective power of its ecosystem and the communities it serves.</p>
             </div>
             <div class="who-image">
                 <img src="{{ asset('welfare/img/about/who-we-are.jpg') }}" alt="Federal Territory Mosque, Kuala Lumpur — MUKMIN community transformation ecosystem">
@@ -349,6 +362,7 @@
                 <div class="president-title-overlay">
                     <h4>Datuk Wira Shahul Dawood</h4>
                     <span>President, Pertubuhan Gabungan MUKMIN Nasional</span>
+                    <a href="mailto:president@mukmin.org">president@mukmin.org</a>
                 </div>
             </div>
             <div class="president-letter">

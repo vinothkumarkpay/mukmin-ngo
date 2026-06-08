@@ -40,6 +40,7 @@
     line-height: 24px;
     color: #555;
     margin-bottom: 18px;
+    text-align: justify;
 }
 .who-image img {
     width: 100%;
@@ -81,8 +82,20 @@
     font-weight: 700;
 }
 .president-title-overlay span {
+    display: block;
     font-size: 12px;
     opacity: 0.9;
+}
+.president-title-overlay a {
+    display: block;
+    font-size: 12px;
+    opacity: 0.9;
+    color: #fff;
+    text-decoration: none;
+    margin-top: 3px;
+}
+.president-title-overlay a:hover {
+    text-decoration: underline;
 }
 .president-letter {
     background: #fff;
