@@ -122,6 +122,27 @@ class FormSubmissionController extends Controller
         return ['required', 'regex:/^\d{1,12}$/'];
     }
 
+    private function malaysianNricRule(): array
+    {
+        return ['required', 'digits:12'];
+    }
+
+    private function malaysianPhoneRule(): string
+    {
+        return 'required|regex:/^(\+?6?01)[0-9][0-9\s\-()]{7,11}$/';
+    }
+
+    private function wordCountBetweenRule(int $min, int $max): \Closure
+    {
+        return function (string $attribute, $value, \Closure $fail) use ($min, $max) {
+            $count = str_word_count(strip_tags((string) $value));
+            if ($count < $min || $count > $max) {
+                $label = str_replace('_', ' ', $attribute);
+                $fail("The {$label} must be between {$min} and {$max} words.");
+            }
+        };
+    }
+
     private function requiredNricOrPassportRule(): array
     {
         return ['required', 'regex:/^(?:\d{1,12}|(?=.*[A-Za-z])[A-Za-z0-9]{6,20})$/'];
@@ -511,51 +532,59 @@ class FormSubmissionController extends Controller
 
     public function submitMflsScholarship(Request $request)
     {
-        $wordCountRule = function (int $min, int $max) {
-            return function (string $attribute, $value, \Closure $fail) use ($min, $max) {
-                $count = str_word_count(strip_tags((string) $value));
-                if ($count < $min || $count > $max) {
-                    $fail("The {$attribute} must be between {$min} and {$max} words.");
-                }
-            };
-        };
-
         $validated = $request->validate([
             'email' => $this->requiredEmailRule(),
-            'full_name' => 'required|string|max:255',
-            'nric_passport' => $this->requiredNricRule(),
-            'dob' => 'required|date',
+            'full_name' => ['required', 'string', 'min:2', 'max:255', 'regex:/^[\p{L}\s\'\-\.@]+$/u'],
+            'nric_passport' => $this->malaysianNricRule(),
+            'dob' => 'required|date|before_or_equal:today|after:1950-01-01',
             'gender' => 'required|string|in:Male,Female',
             'marital_status' => 'required|string|in:Single,Married,Divorced,Other',
-            'marital_status_other' => 'required_if:marital_status,Other|nullable|string|max:255',
-            'contact_number' => $this->requiredPhoneRule(),
-            'full_address' => 'required|string',
+            'marital_status_other' => 'required_if:marital_status,Other|nullable|string|min:2|max:255',
+            'contact_number' => $this->malaysianPhoneRule(),
+            'full_address' => 'required|string|min:10|max:1000',
             'current_qualification' => 'required|string|in:SPM,STPM,Foundation,Diploma,Degree',
-            'institution_name' => 'required|string|max:255',
-            'current_cgpa_result' => 'required|string|max:255',
+            'institution_name' => 'required|string|min:2|max:255',
+            'current_cgpa_result' => 'required|string|min:1|max:255',
             'academic_transcript' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
-            'programme_course_applied' => 'required|string|max:255',
+            'programme_course_applied' => 'required|string|min:2|max:255',
             'applied_to_university' => 'required|boolean',
             'received_offer_letter' => 'nullable|boolean',
             'offer_letter' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
             'household_income' => ['required', 'string', Rule::in(['< RM2,000', 'RM2,001 – RM4,000', 'RM4,001 – RM8,000', '> RM8,000'])],
-            'father_guardian_name' => 'required|string|max:255',
-            'father_guardian_occupation' => 'required|string|max:255',
-            'mother_guardian_name' => 'required|string|max:255',
-            'mother_guardian_occupation' => 'required|string|max:255',
+            'father_guardian_name' => ['required', 'string', 'min:2', 'max:255', 'regex:/^[\p{L}\s\'\-\.@]+$/u'],
+            'father_guardian_occupation' => 'required|string|min:2|max:255',
+            'mother_guardian_name' => ['required', 'string', 'min:2', 'max:255', 'regex:/^[\p{L}\s\'\-\.@]+$/u'],
+            'mother_guardian_occupation' => 'required|string|min:2|max:255',
             'proof_of_income' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
             'number_of_dependents' => 'required|integer|min:0|max:20',
-            'other_scholarship_details' => 'required|string',
-            'leadership_roles' => 'required|string',
+            'other_scholarship_details' => 'required|string|min:2|max:2000',
+            'leadership_roles' => 'required|string|min:10|max:2000',
             'involvement_level' => 'required|string|in:Leader,Active,Occasional,None',
-            'community_service_involvement' => 'required|string',
-            'community_contribution' => ['required', 'string', $wordCountRule(150, 200)],
-            'leadership_experience_statement' => ['required', 'string', $wordCountRule(150, 200)],
-            'scholar_selection_statement' => ['required', 'string', $wordCountRule(150, 200)],
+            'community_service_involvement' => 'required|string|min:10|max:2000',
+            'community_contribution' => ['required', 'string', 'max:5000', $this->wordCountBetweenRule(150, 200)],
+            'leadership_experience_statement' => ['required', 'string', 'max:5000', $this->wordCountBetweenRule(150, 200)],
+            'scholar_selection_statement' => ['required', 'string', 'max:5000', $this->wordCountBetweenRule(150, 200)],
             'recommendation_letter' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
-            'relevant_certificates' => 'nullable|array',
+            'relevant_certificates' => 'nullable|array|max:10',
             'relevant_certificates.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
             'declaration_confirmed' => 'required|accepted',
+        ], [
+            'email.required' => 'Please enter your email address.',
+            'email.email' => 'Please enter a valid email address.',
+            'full_name.required' => 'Please enter your full name.',
+            'full_name.regex' => 'Full name may only contain letters, spaces, and common punctuation.',
+            'nric_passport.required' => 'Please enter your NRIC number.',
+            'nric_passport.digits' => 'NRIC must be exactly 12 digits without dashes (e.g. 900101145555).',
+            'dob.required' => 'Please enter your date of birth.',
+            'dob.before_or_equal' => 'Date of birth cannot be in the future.',
+            'dob.after' => 'Please enter a valid date of birth.',
+            'contact_number.required' => 'Please enter your phone number.',
+            'contact_number.regex' => 'Please enter a valid Malaysian mobile number (e.g. 0123456789 or +60123456789).',
+            'full_address.min' => 'Please enter your complete residential address.',
+            'academic_transcript.required' => 'Please upload your academic transcript.',
+            'academic_transcript.mimes' => 'Academic transcript must be a PDF, JPG, PNG, DOC, or DOCX file.',
+            'academic_transcript.max' => 'Academic transcript must not exceed 20MB.',
+            'declaration_confirmed.accepted' => 'You must agree to the declaration before submitting.',
         ]);
 
         $fileFields = [

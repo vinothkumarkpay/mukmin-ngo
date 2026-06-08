@@ -168,6 +168,25 @@
     margin-top: 5px;
     font-size: 12.5px;
 }
+.field-error {
+    color: #b83210;
+    font-size: 12.5px;
+    margin-top: 6px;
+    display: block;
+}
+.form-control.is-invalid {
+    border-color: #e57373;
+    background: #fffafa;
+}
+.word-count {
+    color: #666;
+    font-size: 12px;
+    margin-top: 6px;
+}
+.word-count.invalid {
+    color: #b83210;
+    font-weight: 600;
+}
 @media (max-width: 768px) {
     .grid-2 {
         grid-template-columns: 1fr;
@@ -205,29 +224,35 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('welfare.mfls-scholarship.submit') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('welfare.mfls-scholarship.submit') }}" enctype="multipart/form-data" id="mfls-form" novalidate>
                 @csrf
 
                 <div class="form-section-title">Section 1: Personal Information</div>
 
                 <div class="form-group">
                     <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" value="{{ old('email') }}" required>
+                    <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="name@example.com" value="{{ old('email') }}" maxlength="255" autocomplete="email" required>
+                    <small class="field-hint">Use a valid email address you check regularly.</small>
+                    @error('email')<span class="field-error">{{ $message }}</span>@enderror
                 </div>
 
                 <div class="form-group">
                     <label for="full_name">Full Name *</label>
-                    <input type="text" id="full_name" name="full_name" class="form-control" value="{{ old('full_name') }}" required>
+                    <input type="text" id="full_name" name="full_name" class="form-control @error('full_name') is-invalid @enderror" value="{{ old('full_name') }}" minlength="2" maxlength="255" autocomplete="name" required>
+                    @error('full_name')<span class="field-error">{{ $message }}</span>@enderror
                 </div>
 
                 <div class="grid-2">
                     <div class="form-group">
                         <label for="nric_passport">NRIC Number *</label>
-                        <input type="text" id="nric_passport" name="nric_passport" class="form-control" placeholder="e.g. 900101145555" value="{{ old('nric_passport') }}" required>
+                        <input type="text" id="nric_passport" name="nric_passport" class="form-control @error('nric_passport') is-invalid @enderror" placeholder="e.g. 900101145555" value="{{ old('nric_passport') }}" inputmode="numeric" pattern="[0-9]{12}" minlength="12" maxlength="12" title="Enter 12-digit NRIC without dashes" required>
+                        <small class="field-hint">12 digits only, without dashes.</small>
+                        @error('nric_passport')<span class="field-error">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group">
                         <label for="dob">Date of Birth *</label>
-                        <input type="date" id="dob" name="dob" class="form-control" value="{{ old('dob') }}" required>
+                        <input type="date" id="dob" name="dob" class="form-control @error('dob') is-invalid @enderror" value="{{ old('dob') }}" min="1950-01-01" max="{{ date('Y-m-d') }}" required>
+                        @error('dob')<span class="field-error">{{ $message }}</span>@enderror
                     </div>
                 </div>
 
@@ -264,12 +289,15 @@
 
                 <div class="form-group">
                     <label for="contact_number">Phone Number *</label>
-                    <input type="tel" id="contact_number" name="contact_number" class="form-control" placeholder="e.g. +60123456789" value="{{ old('contact_number') }}" required>
+                    <input type="tel" id="contact_number" name="contact_number" class="form-control @error('contact_number') is-invalid @enderror" placeholder="e.g. 0123456789 or +60123456789" value="{{ old('contact_number') }}" pattern="(\+?6?01)[0-9][0-9\s\-()]{7,11}" minlength="10" maxlength="16" autocomplete="tel" title="Malaysian mobile number" required>
+                    <small class="field-hint">Malaysian mobile number starting with 01 (e.g. 0123456789).</small>
+                    @error('contact_number')<span class="field-error">{{ $message }}</span>@enderror
                 </div>
 
                 <div class="form-group">
                     <label for="full_address">Current Residential Address *</label>
-                    <textarea id="full_address" name="full_address" rows="3" class="form-control" style="font-family: inherit;" required>{{ old('full_address') }}</textarea>
+                    <textarea id="full_address" name="full_address" rows="3" class="form-control @error('full_address') is-invalid @enderror" style="font-family: inherit;" minlength="10" maxlength="1000" required>{{ old('full_address') }}</textarea>
+                    @error('full_address')<span class="field-error">{{ $message }}</span>@enderror
                 </div>
 
                 <div class="form-section-title">Section 2: Academic Information</div>
@@ -415,22 +443,25 @@
 
                 <div class="form-group">
                     <label for="community_contribution">Describe your contribution to community (150–200 words) *</label>
-                    <textarea id="community_contribution" name="community_contribution" rows="6" class="form-control" style="font-family: inherit;" required>{{ old('community_contribution') }}</textarea>
-                    <small class="field-hint">Please write between 150 and 200 words.</small>
+                    <textarea id="community_contribution" name="community_contribution" rows="6" class="form-control @error('community_contribution') is-invalid @enderror word-count-field" style="font-family: inherit;" data-min-words="150" data-max-words="200" maxlength="5000" required>{{ old('community_contribution') }}</textarea>
+                    <div class="word-count" id="community_contribution_count">0 words (required: 150–200)</div>
+                    @error('community_contribution')<span class="field-error">{{ $message }}</span>@enderror
                 </div>
 
                 <div class="form-section-title">Section 5: Personal Statement</div>
 
                 <div class="form-group">
                     <label for="leadership_experience_statement">Describe one leadership experience where you made an impact (150–200 words) *</label>
-                    <textarea id="leadership_experience_statement" name="leadership_experience_statement" rows="6" class="form-control" style="font-family: inherit;" required>{{ old('leadership_experience_statement') }}</textarea>
-                    <small class="field-hint">Please write between 150 and 200 words.</small>
+                    <textarea id="leadership_experience_statement" name="leadership_experience_statement" rows="6" class="form-control @error('leadership_experience_statement') is-invalid @enderror word-count-field" style="font-family: inherit;" data-min-words="150" data-max-words="200" maxlength="5000" required>{{ old('leadership_experience_statement') }}</textarea>
+                    <div class="word-count" id="leadership_experience_statement_count">0 words (required: 150–200)</div>
+                    @error('leadership_experience_statement')<span class="field-error">{{ $message }}</span>@enderror
                 </div>
 
                 <div class="form-group">
                     <label for="scholar_selection_statement">Why should you be selected as a MUKMIN-FIKRAH Scholar, and how will you contribute to society? (150–200 words) *</label>
-                    <textarea id="scholar_selection_statement" name="scholar_selection_statement" rows="6" class="form-control" style="font-family: inherit;" required>{{ old('scholar_selection_statement') }}</textarea>
-                    <small class="field-hint">Please write between 150 and 200 words.</small>
+                    <textarea id="scholar_selection_statement" name="scholar_selection_statement" rows="6" class="form-control @error('scholar_selection_statement') is-invalid @enderror word-count-field" style="font-family: inherit;" data-min-words="150" data-max-words="200" maxlength="5000" required>{{ old('scholar_selection_statement') }}</textarea>
+                    <div class="word-count" id="scholar_selection_statement_count">0 words (required: 150–200)</div>
+                    @error('scholar_selection_statement')<span class="field-error">{{ $message }}</span>@enderror
                 </div>
 
                 <div class="form-section-title">Section 6: Supporting Documents</div>
@@ -485,6 +516,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
     maritalRadios.forEach(radio => radio.addEventListener('change', toggleMaritalOther));
     toggleMaritalOther();
+
+    const nricInput = document.getElementById('nric_passport');
+    if (nricInput) {
+        nricInput.addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '').slice(0, 12);
+        });
+    }
+
+    function countWords(text) {
+        return text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+    }
+
+    document.querySelectorAll('.word-count-field').forEach(function (field) {
+        const counter = document.getElementById(field.id + '_count');
+        const minWords = parseInt(field.dataset.minWords, 10);
+        const maxWords = parseInt(field.dataset.maxWords, 10);
+
+        function updateCount() {
+            const total = countWords(field.value);
+            counter.textContent = total + ' words (required: ' + minWords + '–' + maxWords + ')';
+            counter.classList.toggle('invalid', total < minWords || total > maxWords);
+        }
+
+        field.addEventListener('input', updateCount);
+        updateCount();
+    });
 });
 </script>
 @endpush

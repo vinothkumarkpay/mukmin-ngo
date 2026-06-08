@@ -345,4 +345,63 @@ class FormSubmissionEmailTest extends TestCase
                    $mail->isForSupport;
         });
     }
+
+    public function test_mfls_scholarship_rejects_invalid_nric_phone_and_email()
+    {
+        $wordParagraph = implode(' ', array_fill(0, 160, 'leadership'));
+
+        $baseData = [
+            'full_name' => 'Ahmad Student',
+            'dob' => '2001-01-01',
+            'gender' => 'Male',
+            'marital_status' => 'Single',
+            'full_address' => '123 Jalan Pendidikan, Kuala Lumpur',
+            'current_qualification' => 'SPM',
+            'institution_name' => 'SMK Contoh',
+            'current_cgpa_result' => '7A 2B',
+            'academic_transcript' => UploadedFile::fake()->create('transcript.pdf', 100, 'application/pdf'),
+            'programme_course_applied' => 'Foundation in Law',
+            'applied_to_university' => '0',
+            'household_income' => '< RM2,000',
+            'father_guardian_name' => 'Father Name',
+            'father_guardian_occupation' => 'Driver',
+            'mother_guardian_name' => 'Mother Name',
+            'mother_guardian_occupation' => 'Homemaker',
+            'number_of_dependents' => '4',
+            'other_scholarship_details' => 'None',
+            'leadership_roles' => 'School prefect, club president, NGO volunteer',
+            'involvement_level' => 'Leader',
+            'community_service_involvement' => 'Weekly tutoring for underprivileged students.',
+            'community_contribution' => $wordParagraph,
+            'leadership_experience_statement' => $wordParagraph,
+            'scholar_selection_statement' => $wordParagraph,
+            'declaration_confirmed' => '1',
+        ];
+
+        $this->from(route('welfare.mfls-scholarship'))
+            ->post(route('welfare.mfls-scholarship.submit'), array_merge($baseData, [
+                'email' => 'mfls@example.com',
+                'nric_passport' => '12345',
+                'contact_number' => '+60123456789',
+            ]))
+            ->assertSessionHasErrors(['nric_passport']);
+
+        $this->from(route('welfare.mfls-scholarship'))
+            ->post(route('welfare.mfls-scholarship.submit'), array_merge($baseData, [
+                'email' => 'not-an-email',
+                'nric_passport' => '010101011234',
+                'contact_number' => '+60123456789',
+            ]))
+            ->assertSessionHasErrors(['email']);
+
+        $this->from(route('welfare.mfls-scholarship'))
+            ->post(route('welfare.mfls-scholarship.submit'), array_merge($baseData, [
+                'email' => 'mfls@example.com',
+                'nric_passport' => '010101011234',
+                'contact_number' => '999999',
+            ]))
+            ->assertSessionHasErrors(['contact_number']);
+
+        Mail::assertNothingSent();
+    }
 }
