@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Welfare;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Models\FormDropdownOption;
 use App\Models\FeedbackSubmission;
 use App\Models\OrdinaryMemberSubmission;
@@ -12,6 +13,7 @@ use App\Models\MentorSubmission;
 use App\Models\PartnerSubmission;
 use App\Models\VolunteerSubmission;
 use App\Models\ContactSubmission;
+use App\Models\MflsScholarshipSubmission;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\FormSubmissionMail;
@@ -217,7 +219,21 @@ class FormSubmissionController extends Controller
     public function membershipFriends()
     {
         $categories = $this->getOptions('friends_category');
-        return view('welfare.pages.membership_friends', compact('categories'));
+        $areaOfInterestOptions = $this->friendsAreaOfInterestOptions();
+
+        return view('welfare.pages.membership_friends', compact('categories', 'areaOfInterestOptions'));
+    }
+
+    private function friendsAreaOfInterestOptions(): array
+    {
+        return [
+            'General Community Development',
+            'Socio-Economic Mobility',
+            'Education & Future Readiness',
+            'Entrepreneurship & Innovation',
+            'Faith, Identity & Ukhwah',
+            'Leadership & Capacity Building',
+        ];
     }
 
     public function submitFriends(Request $request)
@@ -237,6 +253,7 @@ class FormSubmissionController extends Controller
                 'ind_address' => 'required|string',
                 'ind_email' => $this->requiredEmailRule(),
                 'ind_phone' => $this->requiredPhoneRule(),
+                'ind_area_of_interest' => ['required', 'string', Rule::in($this->friendsAreaOfInterestOptions())],
             ]);
         } else {
             $rules = array_merge($rules, [
@@ -484,6 +501,96 @@ class FormSubmissionController extends Controller
         return view('welfare.pages.form_success', [
             'title' => 'Request Submitted Successfully',
             'message' => 'Your request for MUKMIN Community Aid & Assistance has been received. Our welfare department will review your details and contact you or your emergency contact if additional verification is required.',
+        ]);
+    }
+
+    public function mflsScholarship()
+    {
+        return view('welfare.pages.mfls_scholarship');
+    }
+
+    public function submitMflsScholarship(Request $request)
+    {
+        $wordCountRule = function (int $min, int $max) {
+            return function (string $attribute, $value, \Closure $fail) use ($min, $max) {
+                $count = str_word_count(strip_tags((string) $value));
+                if ($count < $min || $count > $max) {
+                    $fail("The {$attribute} must be between {$min} and {$max} words.");
+                }
+            };
+        };
+
+        $validated = $request->validate([
+            'email' => $this->requiredEmailRule(),
+            'full_name' => 'required|string|max:255',
+            'nric_passport' => $this->requiredNricRule(),
+            'dob' => 'required|date',
+            'gender' => 'required|string|in:Male,Female',
+            'marital_status' => 'required|string|in:Single,Married,Divorced,Other',
+            'marital_status_other' => 'required_if:marital_status,Other|nullable|string|max:255',
+            'contact_number' => $this->requiredPhoneRule(),
+            'full_address' => 'required|string',
+            'current_qualification' => 'required|string|in:SPM,STPM,Foundation,Diploma,Degree',
+            'institution_name' => 'required|string|max:255',
+            'current_cgpa_result' => 'required|string|max:255',
+            'academic_transcript' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
+            'programme_course_applied' => 'required|string|max:255',
+            'applied_to_university' => 'required|boolean',
+            'received_offer_letter' => 'nullable|boolean',
+            'offer_letter' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
+            'household_income' => ['required', 'string', Rule::in(['< RM2,000', 'RM2,001 – RM4,000', 'RM4,001 – RM8,000', '> RM8,000'])],
+            'father_guardian_name' => 'required|string|max:255',
+            'father_guardian_occupation' => 'required|string|max:255',
+            'mother_guardian_name' => 'required|string|max:255',
+            'mother_guardian_occupation' => 'required|string|max:255',
+            'proof_of_income' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
+            'number_of_dependents' => 'required|integer|min:0|max:20',
+            'other_scholarship_details' => 'required|string',
+            'leadership_roles' => 'required|string',
+            'involvement_level' => 'required|string|in:Leader,Active,Occasional,None',
+            'community_service_involvement' => 'required|string',
+            'community_contribution' => ['required', 'string', $wordCountRule(150, 200)],
+            'leadership_experience_statement' => ['required', 'string', $wordCountRule(150, 200)],
+            'scholar_selection_statement' => ['required', 'string', $wordCountRule(150, 200)],
+            'recommendation_letter' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
+            'relevant_certificates' => 'nullable|array',
+            'relevant_certificates.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
+            'declaration_confirmed' => 'required|accepted',
+        ]);
+
+        $fileFields = [
+            'academic_transcript',
+            'offer_letter',
+            'proof_of_income',
+            'recommendation_letter',
+        ];
+
+        foreach ($fileFields as $field) {
+            if ($request->hasFile($field)) {
+                $validated[$field] = $request->file($field)->store('documents', 'public');
+            }
+        }
+
+        if ($request->hasFile('relevant_certificates')) {
+            $certificatePaths = [];
+            foreach ($request->file('relevant_certificates') as $file) {
+                $certificatePaths[] = $file->store('documents', 'public');
+            }
+            $validated['relevant_certificates'] = $certificatePaths;
+        }
+
+        MflsScholarshipSubmission::create($validated);
+
+        $this->sendFormSubmissionEmails(
+            'MFLS Scholarship Application',
+            $validated,
+            $validated['email'],
+            $validated['full_name']
+        );
+
+        return view('welfare.pages.form_success', [
+            'title' => 'Application Submitted Successfully',
+            'message' => 'Your MFLS Scholarship Application has been received. The MFLS Secretariat will review your application and supporting documents within 3–5 working days. You will be contacted via email or phone regarding the next steps.',
         ]);
     }
 }

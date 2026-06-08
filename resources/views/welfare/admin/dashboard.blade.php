@@ -51,6 +51,11 @@
                 </div>
             </li>
             <li>
+                <div class="sidebar-link" data-tab="panel-mfls">
+                    <i class="fas fa-graduation-cap"></i> MFLS Scholarship Applications
+                </div>
+            </li>
+            <li>
                 <div class="sidebar-link" data-tab="panel-contact">
                     <i class="fas fa-envelope"></i> Contact Messages
                 </div>
@@ -143,6 +148,13 @@
                         <div class="stat-info">
                             <h3>{{ $stats['aid'] }}</h3>
                             <p>Community Aid Requests</p>
+                        </div>
+                    </div>
+                    <div class="stat-card" onclick="switchTab('panel-mfls')">
+                        <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <div class="stat-info">
+                            <h3>{{ $stats['mfls'] }}</h3>
+                            <p>MFLS Scholarship Applications</p>
                         </div>
                     </div>
                     <div class="stat-card" onclick="switchTab('panel-contact')">
@@ -626,7 +638,67 @@
                 </div>
             </div>
 
-            <!-- 8. OPTIONS MANAGER PANEL -->
+            <!-- 8. MFLS SCHOLARSHIP PANEL -->
+            <div class="dashboard-panel" id="panel-mfls">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>MFLS Scholarship Applications</h3>
+                        <div class="card-actions">
+                            <a href="{{ route('welfare.admin.export', 'mfls') }}" class="btn-admin btn-admin-secondary">
+                                <i class="fas fa-download"></i> Export CSV
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Date</th>
+                                        <th>Full Name</th>
+                                        <th>Email</th>
+                                        <th>Qualification</th>
+                                        <th>Programme</th>
+                                        <th>Household Income</th>
+                                        <th>Status</th>
+                                        <th style="text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($mfls as $item)
+                                        <tr id="row-mfls-{{ $item->id }}">
+                                            <td>#{{ $item->id }}</td>
+                                            <td>{{ $item->created_at->format('d M Y') }}</td>
+                                            <td><strong>{{ $item->full_name }}</strong></td>
+                                            <td>{{ $item->email }}</td>
+                                            <td>{{ $item->current_qualification }}</td>
+                                            <td>{{ $item->programme_course_applied }}</td>
+                                            <td>{{ $item->household_income }}</td>
+                                            <td>
+                                                <span class="badge badge-{{ $item->status }}" id="badge-mfls-{{ $item->id }}">
+                                                    {{ $item->status }}
+                                                </span>
+                                            </td>
+                                            <td style="text-align: right; display: flex; gap: 5px; justify-content: flex-end;">
+                                                <button onclick="viewDetail('mfls', {{ $item->id }})" class="btn-admin btn-admin-primary">View</button>
+                                                <button onclick="updateStatus('mfls', {{ $item->id }}, 'approved')" class="btn-admin btn-admin-secondary" style="color: #059669;" title="Approve"><i class="fas fa-check"></i></button>
+                                                <button onclick="updateStatus('mfls', {{ $item->id }}, 'rejected')" class="btn-admin btn-admin-danger" style="padding: 8px 12px;" title="Reject"><i class="fas fa-times"></i></button>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="9" style="text-align: center; color: var(--admin-text-muted);">No MFLS scholarship applications found.</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. OPTIONS MANAGER PANEL -->
             <div class="dashboard-panel" id="panel-options">
                 <div class="options-grid">
                     <!-- Dropdown types sidebar -->
@@ -839,9 +911,9 @@
                         val = '-';
                     } else if (typeof val === 'boolean') {
                         val = val ? 'Yes' : 'No';
-                    } else if (key === 'registration_certificate' || key === 'committee_members') {
+                    } else if (['registration_certificate', 'committee_members', 'academic_transcript', 'offer_letter', 'proof_of_income', 'recommendation_letter'].includes(key)) {
                         val = getFileLinkHtml(val);
-                    } else if (key === 'supporting_documents') {
+                    } else if (key === 'supporting_documents' || key === 'relevant_certificates') {
                         if (Array.isArray(val)) {
                             let linksHtml = '<div style="display:flex; flex-direction:column; gap:6px;">';
                             val.forEach(file => {

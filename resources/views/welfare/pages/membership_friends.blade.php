@@ -298,6 +298,18 @@
                             <input type="tel" id="ind_phone" name="ind_phone" class="form-control" placeholder="e.g. +60123456789" value="{{ old('ind_phone') }}">
                         </div>
                     </div>
+
+                    <div class="form-section-title">Section C: Area of Interest</div>
+
+                    <div class="form-group">
+                        <label for="ind_area_of_interest">Area of Interest *</label>
+                        <select id="ind_area_of_interest" name="ind_area_of_interest" class="form-control">
+                            <option value="">-- Choose Area of Interest --</option>
+                            @foreach($areaOfInterestOptions as $option)
+                                <option value="{{ $option }}" {{ old('ind_area_of_interest') == $option ? 'selected' : '' }}>{{ $option }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
 
                 <!-- SECTION C: ORGANISATION DETAILS (IF ORGANISATION) -->
@@ -417,6 +429,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('ind_address').setAttribute('required', 'required');
                 document.getElementById('ind_email').setAttribute('required', 'required');
                 document.getElementById('ind_phone').setAttribute('required', 'required');
+                document.getElementById('ind_area_of_interest').setAttribute('required', 'required');
             } else {
                 indSection.style.display = 'none';
                 orgSection.style.display = 'block';

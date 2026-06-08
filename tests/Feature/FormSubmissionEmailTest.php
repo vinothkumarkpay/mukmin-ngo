@@ -113,6 +113,7 @@ class FormSubmissionEmailTest extends TestCase
             'ind_address' => 'Friend Address',
             'ind_email' => 'friend_ind@example.com',
             'ind_phone' => '+60111222333',
+            'ind_area_of_interest' => 'Education & Future Readiness',
             'declaration_confirmed' => '1',
         ];
 
@@ -280,6 +281,60 @@ class FormSubmissionEmailTest extends TestCase
             return $mail->hasTo('vol@example.com') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->subject === 'Application Received : MUKMIN Volunteer Registration' &&
+                   !$mail->isForSupport;
+        });
+
+        Mail::assertSent(FormSubmissionMail::class, function ($mail) {
+            $mail->build();
+            return $mail->hasTo('support@mukmin.org') &&
+                   $mail->hasFrom('noreply@mukmin.org') &&
+                   $mail->isForSupport;
+        });
+    }
+
+    public function test_mfls_scholarship_submission_sends_emails()
+    {
+        $wordParagraph = implode(' ', array_fill(0, 160, 'leadership'));
+
+        $formData = [
+            'email' => 'mfls@example.com',
+            'full_name' => 'Ahmad Student',
+            'nric_passport' => '010101011234',
+            'dob' => '2001-01-01',
+            'gender' => 'Male',
+            'marital_status' => 'Single',
+            'contact_number' => '+60123456789',
+            'full_address' => '123 Jalan Pendidikan',
+            'current_qualification' => 'SPM',
+            'institution_name' => 'SMK Contoh',
+            'current_cgpa_result' => '7A 2B',
+            'academic_transcript' => UploadedFile::fake()->create('transcript.pdf', 100, 'application/pdf'),
+            'programme_course_applied' => 'Foundation in Law',
+            'applied_to_university' => '0',
+            'household_income' => '< RM2,000',
+            'father_guardian_name' => 'Father Name',
+            'father_guardian_occupation' => 'Driver',
+            'mother_guardian_name' => 'Mother Name',
+            'mother_guardian_occupation' => 'Homemaker',
+            'number_of_dependents' => '4',
+            'other_scholarship_details' => 'None',
+            'leadership_roles' => 'School prefect, club president, NGO volunteer',
+            'involvement_level' => 'Leader',
+            'community_service_involvement' => 'Weekly tutoring for underprivileged students.',
+            'community_contribution' => $wordParagraph,
+            'leadership_experience_statement' => $wordParagraph,
+            'scholar_selection_statement' => $wordParagraph,
+            'declaration_confirmed' => '1',
+        ];
+
+        $response = $this->post(route('welfare.mfls-scholarship.submit'), $formData);
+        $response->assertStatus(200);
+
+        Mail::assertSent(FormSubmissionMail::class, function ($mail) {
+            $mail->build();
+            return $mail->hasTo('mfls@example.com') &&
+                   $mail->hasFrom('noreply@mukmin.org') &&
+                   $mail->subject === 'Application Received : MUKMIN Future Leaders Scholarship (MFLS)' &&
                    !$mail->isForSupport;
         });
 

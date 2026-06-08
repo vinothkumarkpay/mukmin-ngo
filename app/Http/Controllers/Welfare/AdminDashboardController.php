@@ -13,6 +13,7 @@ use App\Models\PartnerSubmission;
 use App\Models\VolunteerSubmission;
 use App\Models\ContactSubmission;
 use App\Models\CommunityAidSubmission;
+use App\Models\MflsScholarshipSubmission;
 use Response;
 
 class AdminDashboardController extends Controller
@@ -29,6 +30,7 @@ class AdminDashboardController extends Controller
             'volunteer' => VolunteerSubmission::count(),
             'contact' => ContactSubmission::count(),
             'aid' => CommunityAidSubmission::count(),
+            'mfls' => MflsScholarshipSubmission::count(),
         ];
 
         // 2. Fetch all submissions
@@ -40,6 +42,7 @@ class AdminDashboardController extends Controller
         $volunteer = VolunteerSubmission::orderBy('created_at', 'desc')->get();
         $contact = ContactSubmission::orderBy('created_at', 'desc')->get();
         $aid = CommunityAidSubmission::orderBy('created_at', 'desc')->get();
+        $mfls = MflsScholarshipSubmission::orderBy('created_at', 'desc')->get();
 
         // 3. Fetch dropdown options grouped by form_type
         $options = FormDropdownOption::orderBy('form_type')
@@ -66,7 +69,7 @@ class AdminDashboardController extends Controller
         ];
 
         return view('welfare.admin.dashboard', compact(
-            'stats', 'feedback', 'ordinary', 'friends', 'mentor', 'partner', 'volunteer', 'contact', 'aid', 'options', 'formTypesMap'
+            'stats', 'feedback', 'ordinary', 'friends', 'mentor', 'partner', 'volunteer', 'contact', 'aid', 'mfls', 'options', 'formTypesMap'
         ));
     }
 
@@ -98,6 +101,9 @@ class AdminDashboardController extends Controller
             case 'aid':
                 $submission = CommunityAidSubmission::find($id);
                 break;
+            case 'mfls':
+                $submission = MflsScholarshipSubmission::find($id);
+                break;
         }
 
         if (!$submission) {
@@ -126,6 +132,9 @@ class AdminDashboardController extends Controller
                 break;
             case 'aid':
                 $submission = CommunityAidSubmission::findOrFail($id);
+                break;
+            case 'mfls':
+                $submission = MflsScholarshipSubmission::findOrFail($id);
                 break;
         }
 
@@ -253,7 +262,7 @@ class AdminDashboardController extends Controller
                     break;
 
                 case 'friends':
-                    fputcsv($file, ['ID', 'Date', 'Type', 'Others Specify', 'Org Name', 'Org State', 'Org Address', 'Org Email', 'Org Phone', 'Org Website', 'Ind Name', 'Ind NRIC', 'Ind State', 'Ind Address', 'Ind Email', 'Ind Phone', 'Status']);
+                    fputcsv($file, ['ID', 'Date', 'Type', 'Others Specify', 'Org Name', 'Org State', 'Org Address', 'Org Email', 'Org Phone', 'Org Website', 'Ind Name', 'Ind NRIC', 'Ind State', 'Ind Address', 'Ind Email', 'Ind Phone', 'Ind Area of Interest', 'Status']);
                     foreach (FriendMemberSubmission::all() as $item) {
                         fputcsv($file, [
                             $item->id,
@@ -272,6 +281,7 @@ class AdminDashboardController extends Controller
                             $item->ind_address,
                             $item->ind_email,
                             $item->ind_phone,
+                            $item->ind_area_of_interest,
                             ucfirst($item->status)
                         ]);
                     }
@@ -403,6 +413,41 @@ class AdminDashboardController extends Controller
                             $item->number_of_beneficiaries,
                             $item->received_aid_before ? 'Yes' : 'No',
                             $item->received_aid_before_details,
+                            ucfirst($item->status)
+                        ]);
+                    }
+                    break;
+
+                case 'mfls':
+                    fputcsv($file, ['ID', 'Date', 'Email', 'Full Name', 'NRIC', 'DOB', 'Gender', 'Marital Status', 'Phone', 'Address', 'Current Qualification', 'Institution', 'CGPA/Result', 'Programme Applied', 'Applied to University', 'Offer Letter Received', 'Household Income', 'Father Name', 'Father Occupation', 'Mother Name', 'Mother Occupation', 'Dependents', 'Other Scholarship', 'Leadership Roles', 'Involvement Level', 'Community Service', 'Status']);
+                    foreach (MflsScholarshipSubmission::all() as $item) {
+                        fputcsv($file, [
+                            $item->id,
+                            $item->created_at,
+                            $item->email,
+                            $item->full_name,
+                            $item->nric_passport,
+                            $item->dob ? $item->dob->format('Y-m-d') : '',
+                            $item->gender,
+                            $item->marital_status === 'Other' ? 'Other: ' . $item->marital_status_other : $item->marital_status,
+                            $item->contact_number,
+                            $item->full_address,
+                            $item->current_qualification,
+                            $item->institution_name,
+                            $item->current_cgpa_result,
+                            $item->programme_course_applied,
+                            $item->applied_to_university ? 'Yes' : 'No',
+                            $item->received_offer_letter === null ? '' : ($item->received_offer_letter ? 'Yes' : 'No'),
+                            $item->household_income,
+                            $item->father_guardian_name,
+                            $item->father_guardian_occupation,
+                            $item->mother_guardian_name,
+                            $item->mother_guardian_occupation,
+                            $item->number_of_dependents,
+                            $item->other_scholarship_details,
+                            $item->leadership_roles,
+                            $item->involvement_level,
+                            $item->community_service_involvement,
                             ucfirst($item->status)
                         ]);
                     }

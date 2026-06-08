@@ -73,6 +73,9 @@ Route::name('welfare.')->group(function () {
     Route::get('/community-aid', [FormSubmissionController::class, 'communityAid'])->name('community-aid');
     Route::post('/community-aid/submit', [FormSubmissionController::class, 'submitCommunityAid'])->name('community-aid.submit');
 
+    Route::get('/mfls-scholarship-application', [FormSubmissionController::class, 'mflsScholarship'])->name('mfls-scholarship');
+    Route::post('/mfls-scholarship-application/submit', [FormSubmissionController::class, 'submitMflsScholarship'])->name('mfls-scholarship.submit');
+
     // Admin Section
     Route::get('/admin', function () {
         return redirect()->route('welfare.admin.login');

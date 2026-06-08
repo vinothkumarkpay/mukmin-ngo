@@ -81,7 +81,11 @@ class PageController extends Controller
 
     public function mfls()
     {
-        return view('welfare.pages.mfls');
+        return view('welfare.pages.mfls', [
+            'partners' => config('mfls_partners.institutions'),
+            'mflsApplyUrl' => route('welfare.mfls-scholarship'),
+            'faqs' => config('mfls_partners.faqs'),
+        ]);
     }
 
     public function sirat()

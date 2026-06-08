@@ -66,6 +66,7 @@ class FormSubmissionMail extends Mailable
         'ind_address' => 'Individual Address',
         'ind_email' => 'Individual Email',
         'ind_phone' => 'Individual Phone',
+        'ind_area_of_interest' => 'Area of Interest',
         'org_name' => 'Organisation Name',
         'org_state' => 'Organisation State',
         'org_address' => 'Organisation Address',
@@ -127,6 +128,34 @@ class FormSubmissionMail extends Mailable
         'number_of_beneficiaries' => 'Number of Beneficiaries',
         'received_aid_before' => 'Has Received Aid Before',
         'received_aid_before_details' => 'Previous Aid Details',
+
+        // MFLS Scholarship
+        'marital_status' => 'Marital Status',
+        'marital_status_other' => 'Marital Status (Other)',
+        'current_qualification' => 'Current Qualification (Year 2025/2026)',
+        'institution_name' => 'Institution Name',
+        'current_cgpa_result' => 'Current CGPA / Final Result',
+        'academic_transcript' => 'Academic Transcript',
+        'programme_course_applied' => 'Programme / Course Applied',
+        'applied_to_university' => 'Applied to Participating University?',
+        'received_offer_letter' => 'Received Offer Letter?',
+        'offer_letter' => 'Offer Letter Upload',
+        'household_income' => 'Household Income',
+        'father_guardian_name' => 'Father/Guardian Name',
+        'father_guardian_occupation' => 'Father/Guardian Occupation',
+        'mother_guardian_name' => 'Mother/Guardian Name',
+        'mother_guardian_occupation' => 'Mother/Guardian Occupation',
+        'proof_of_income' => 'Proof of Income',
+        'number_of_dependents' => 'Number of Dependents in Household',
+        'other_scholarship_details' => 'Other Scholarship Details',
+        'leadership_roles' => 'Leadership Roles',
+        'involvement_level' => 'Level of Involvement',
+        'community_service_involvement' => 'Community Service Involvement',
+        'community_contribution' => 'Community Contribution (150–200 words)',
+        'leadership_experience_statement' => 'Leadership Experience Statement',
+        'scholar_selection_statement' => 'MUKMIN-FIKRAH Scholar Selection Statement',
+        'recommendation_letter' => 'Recommendation Letter',
+        'relevant_certificates' => 'Relevant Certificates',
     ];
 
     /**
@@ -160,6 +189,7 @@ class FormSubmissionMail extends Mailable
             'Partnership & Collaboration Proposal' => 'Application Received : MUKMIN Partnership & Collaboration',
             'Feedback & Suggestion' => 'Feedback Received : MUKMIN Community Feedback & Suggestion',
             'Community Aid & Assistance Request' => 'Application Received : MUKMIN Community Aid & Assistance Request',
+            'MFLS Scholarship Application' => 'Application Received : MUKMIN Future Leaders Scholarship (MFLS)',
         ];
 
         return $subjects[$formName] ?? "Acknowledgement: {$formName}";
@@ -203,6 +233,20 @@ class FormSubmissionMail extends Mailable
                     }
                 }
             }
+
+            foreach (['academic_transcript', 'offer_letter', 'proof_of_income', 'recommendation_letter'] as $fileField) {
+                if (!empty($this->formData[$fileField]) && Storage::disk('public')->exists($this->formData[$fileField])) {
+                    $email->attach(Storage::disk('public')->path($this->formData[$fileField]));
+                }
+            }
+
+            if (!empty($this->formData['relevant_certificates']) && is_array($this->formData['relevant_certificates'])) {
+                foreach ($this->formData['relevant_certificates'] as $path) {
+                    if (Storage::disk('public')->exists($path)) {
+                        $email->attach(Storage::disk('public')->path($path));
+                    }
+                }
+            }
         }
 
         return $email;
@@ -222,8 +266,8 @@ class FormSubmissionMail extends Mailable
                 continue;
             }
             
-            // Format files as HTML link
-            if ($key === 'registration_certificate' || $key === 'committee_members') {
+            // Format single uploaded files as HTML link
+            if (in_array($key, ['registration_certificate', 'committee_members', 'academic_transcript', 'offer_letter', 'proof_of_income', 'recommendation_letter'], true)) {
                 $url = $value ? asset('storage/' . $value) : 'Not provided';
                 $formatted[] = [
                     'label' => self::$labels[$key] ?? ucwords(str_replace('_', ' ', $key)),
@@ -233,8 +277,8 @@ class FormSubmissionMail extends Mailable
                 continue;
             }
             
-            // Format supporting documents as list of HTML links
-            if ($key === 'supporting_documents') {
+            // Format uploaded document lists as HTML links
+            if ($key === 'supporting_documents' || $key === 'relevant_certificates') {
                 $links = [];
                 if (is_array($value)) {
                     foreach ($value as $index => $path) {
