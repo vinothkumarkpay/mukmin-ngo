@@ -148,19 +148,19 @@
     margin: 0 auto 40px;
 }
 .leadership-header h2 {
-    font-size: 30px;
+    font-size: 34px;
     margin-bottom: 10px;
     color: var(--color-heading);
 }
 .leadership-header .subtitle {
-    font-size: 17px;
+    font-size: 19px;
     color: var(--color-primary);
     font-weight: 600;
     margin-bottom: 15px;
 }
 .leadership-header .intro-text {
-    font-size: 14.5px;
-    line-height: 22px;
+    font-size: 16px;
+    line-height: 26px;
     color: #666;
 }
 
@@ -177,11 +177,11 @@
     background: none;
     border: none;
     font-family: var(--font-main);
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 600;
     color: var(--color-text);
     cursor: pointer;
-    padding: 10px 18px;
+    padding: 12px 20px;
     position: relative;
     transition: color var(--transition);
 }
@@ -213,12 +213,12 @@
     text-align: center;
     max-width: 750px;
     margin: 0 auto 35px;
-    font-size: 14px;
-    line-height: 22px;
+    font-size: 16px;
+    line-height: 26px;
     color: #555;
     font-style: italic;
     background: #fcfcfc;
-    padding: 12px 20px;
+    padding: 14px 22px;
     border-left: 3px solid var(--color-primary);
     border-radius: 0 4px 4px 0;
     box-shadow: 0 1px 3px rgba(0,0,0,0.02);
@@ -239,28 +239,36 @@
 .member-card {
     background: #ffffff;
     border: 1px solid var(--color-border);
-    border-radius: 6px;
-    padding: 22px 18px;
+    border-radius: 8px;
+    padding: 26px 20px;
     text-align: center;
     transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
     position: relative;
     overflow: hidden;
+    width: 100%;
+    cursor: pointer;
+    font-family: inherit;
+    appearance: none;
+    -webkit-appearance: none;
 }
-.member-card:hover {
+.member-card:hover,
+.member-card:focus-visible {
     transform: translateY(-5px);
     box-shadow: var(--shadow-hover);
     border-color: var(--color-primary);
+    outline: none;
 }
 .member-avatar {
-    width: 85px;
-    height: 85px;
+    width: 105px;
+    height: 105px;
     border-radius: 50%;
-    margin: 0 auto 12px;
+    margin: 0 auto 14px;
     overflow: hidden;
     border: 3px solid #f3f3f3;
     transition: border-color var(--transition);
 }
-.member-card:hover .member-avatar {
+.member-card:hover .member-avatar,
+.member-card:focus-visible .member-avatar {
     border-color: var(--color-primary);
 }
 .member-avatar img {
@@ -269,40 +277,207 @@
     object-fit: cover;
 }
 .member-name {
-    font-size: 14.5px;
+    font-size: 17px;
     font-weight: 700;
     color: var(--color-heading);
-    margin-bottom: 5px;
-    line-height: 1.35;
+    margin-bottom: 6px;
+    line-height: 1.4;
 }
 .member-role {
-    font-size: 12.5px;
+    font-size: 15px;
     font-weight: 600;
     color: var(--color-primary);
-    margin-bottom: 4px;
+    margin-bottom: 5px;
     display: block;
 }
 .member-org {
-    font-size: 11.5px;
+    font-size: 14px;
     color: #666;
-    line-height: 1.35;
+    line-height: 1.4;
     display: block;
 }
 .member-tag {
     display: inline-block;
     background: #f1f5f9;
     color: #475569;
-    font-size: 10.5px;
+    font-size: 13px;
     font-weight: 600;
-    padding: 3px 9px;
-    border-radius: 12px;
+    padding: 5px 11px;
+    border-radius: 14px;
     margin-top: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.2px;
+    line-height: 1.35;
 }
-.member-card:hover .member-tag {
+.member-card:hover .member-tag,
+.member-card:focus-visible .member-tag {
     background: var(--color-primary);
     color: #fff;
+}
+.member-card-hint {
+    display: block;
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-primary);
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity var(--transition), transform var(--transition);
+}
+.member-card:hover .member-card-hint,
+.member-card:focus-visible .member-card-hint {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Leadership hover preview */
+.member-hover-preview {
+    position: fixed;
+    z-index: 1200;
+    width: min(320px, calc(100vw - 24px));
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+}
+.member-hover-preview.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+.member-hover-preview-photo {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    background: #f3f4f6;
+}
+.member-hover-preview-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.member-hover-preview-body {
+    padding: 16px 18px 18px;
+}
+.member-hover-preview-committee,
+.leadership-member-modal-committee {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+}
+.member-hover-preview-name {
+    margin: 0 0 8px;
+    font-size: 18px;
+    line-height: 1.35;
+    color: var(--color-heading);
+}
+.member-hover-preview-role,
+.leadership-member-modal-role {
+    margin: 0 0 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-primary);
+}
+.member-hover-preview-meta,
+.leadership-member-modal-meta {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* Leadership profile modal */
+.leadership-member-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+.leadership-member-modal.open {
+    opacity: 1;
+    visibility: visible;
+}
+.leadership-member-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.72);
+}
+.leadership-member-modal-panel {
+    position: relative;
+    width: min(760px, 100%);
+    max-height: calc(100vh - 40px);
+    overflow: auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+    transform: translateY(16px) scale(0.98);
+    transition: transform 0.25s ease;
+}
+.leadership-member-modal.open .leadership-member-modal-panel {
+    transform: translateY(0) scale(1);
+}
+.leadership-member-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: #334155;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+}
+.leadership-member-modal-close:hover {
+    background: #fff;
+    color: var(--color-primary);
+}
+.leadership-member-modal-content {
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+}
+.leadership-member-modal-photo {
+    min-height: 320px;
+    background: #f3f4f6;
+}
+.leadership-member-modal-photo img {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    object-fit: cover;
+    display: block;
+}
+.leadership-member-modal-details {
+    padding: 34px 30px;
+}
+.leadership-member-modal-details h3 {
+    margin: 0 0 12px;
+    font-size: 28px;
+    line-height: 1.3;
+    color: var(--color-heading);
+}
+body.leadership-modal-open {
+    overflow: hidden;
 }
 
 @keyframes fadeInTab {
@@ -327,6 +502,15 @@
 @media (max-width: 575px) {
     .members-grid, .members-grid.exco-grid {
         grid-template-columns: 1fr;
+    }
+    .leadership-member-modal-content {
+        grid-template-columns: 1fr;
+    }
+    .leadership-member-modal-details {
+        padding: 24px 20px 28px;
+    }
+    .leadership-member-modal-details h3 {
+        font-size: 22px;
     }
 }
 </style>
@@ -385,128 +569,9 @@
     </div>
 </section>
 
-<!-- Sub Block 3: Leadership & Governance (Dynamic Tabs) -->
-<section id="leadership" class="section-padding bg-white">
-    <div class="container">
-        <!-- Header -->
-        <div class="leadership-header">
-            <h2>Leadership & Governance</h2>
-            <div class="subtitle">Guided by Experience. Driven by Purpose.</div>
-            <p class="intro-text">MUKMIN is led by a structured leadership ecosystem comprising experienced advisors, organisational leaders and strategic committees committed to advancing sustainable community development and national collaboration.</p>
-        </div>
-
-        <!-- Tab Navigation -->
-        <div class="leadership-tabs">
-            <button class="leadership-tab-btn active" data-target="tab-coa">Council of Advisor</button>
-            <button class="leadership-tab-btn" data-target="tab-cec">Central Executive Committee (CEC)</button>
-            <button class="leadership-tab-btn" data-target="tab-exco">Executive Committee (EXCO)</button>
-            <button class="leadership-tab-btn" data-target="tab-bureau">Bureau Chairs</button>
-        </div>
-
-        <!-- Tab Contents -->
-        
-        <!-- Tab 1: Council of Advisor (COA) -->
-        <div class="leadership-tab-content active" id="tab-coa">
-            <div class="tab-intro">
-                Providing strategic counsel, institutional guidance and long-term direction to strengthen MUKMIN’s vision, governance and national impact.
-            </div>
-            
-            <div class="members-grid">
-                @foreach($coa as $member)
-                <div class="member-card">
-                    <div class="member-avatar">
-                        <img src="{{ $member['image'] }}" alt="{{ $member['name'] }}">
-                    </div>
-                    <h4 class="member-name">{{ $member['name'] }}</h4>
-                </div>
-                @endforeach
-            </div>
-        </div>
-
-        <!-- Tab 2: Central Executive Committee (CEC) -->
-        <div class="leadership-tab-content" id="tab-cec">
-            <div class="tab-intro">
-                Leading national coordination, organisational governance and strategic decision-making across the MUKMIN ecosystem.
-            </div>
-            
-            <div class="members-grid">
-                @foreach($cec as $member)
-                <div class="member-card">
-                    <div class="member-avatar">
-                        <img src="{{ $member['image'] }}" alt="{{ $member['name'] }}">
-                    </div>
-                    <h4 class="member-name">{{ $member['name'] }}</h4>
-                    <span class="member-role">{{ $member['role'] }}</span>
-                </div>
-                @endforeach
-            </div>
-        </div>
-
-        <!-- Tab 3: Executive Committee (EXCO) -->
-        <div class="leadership-tab-content" id="tab-exco">
-            <div class="tab-intro">
-                Overseeing operational leadership, programme execution and cross-functional coordination to drive impactful initiatives and organisational growth.
-            </div>
-            
-            <div class="members-grid exco-grid">
-                @foreach($exco as $member)
-                <div class="member-card">
-                    <div class="member-avatar">
-                        <img src="{{ $member['image'] }}" alt="{{ $member['name'] }}">
-                    </div>
-                    <h4 class="member-name">{{ $member['name'] }}</h4>
-                </div>
-                @endforeach
-            </div>
-        </div>
-
-        <!-- Tab 4: Bureau Chairs -->
-        <div class="leadership-tab-content" id="tab-bureau">
-            <div class="tab-intro">
-                Leading specialised focus areas and strategic portfolios that support MUKMIN’s mission, programmes and community engagement efforts.
-            </div>
-            
-            <div class="members-grid">
-                @foreach($bureau as $member)
-                <div class="member-card">
-                    <div class="member-avatar">
-                        <img src="{{ $member['image'] }}" alt="{{ $member['name'] }}">
-                    </div>
-                    <h4 class="member-name">{{ $member['name'] }}</h4>
-                    <span class="member-tag">{{ $member['tag'] }}</span>
-                </div>
-                @endforeach
-            </div>
-        </div>
-
-    </div>
-</section>
+@include('welfare.partials.leadership-section')
 @endsection
 
 @push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Leadership Tabs Switching Logic
-    var tabBtns = document.querySelectorAll('.leadership-tab-btn');
-    var tabContents = document.querySelectorAll('.leadership-tab-content');
-
-    tabBtns.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            // Remove active class from all buttons and contents
-            tabBtns.forEach(function (b) { b.classList.remove('active'); });
-            tabContents.forEach(function (c) { c.classList.remove('active'); });
-
-            // Add active class to clicked button
-            this.classList.add('active');
-
-            // Show targeted content
-            var targetId = this.getAttribute('data-target');
-            var targetContent = document.getElementById(targetId);
-            if (targetContent) {
-                targetContent.classList.add('active');
-            }
-        });
-    });
-});
-</script>
+    @include('welfare.partials.leadership-scripts')
 @endpush
