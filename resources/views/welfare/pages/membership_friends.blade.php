@@ -284,6 +284,21 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="ind_profession">Profession / Occupation *</label>
+                        <select id="ind_profession" name="ind_profession" class="form-control">
+                            <option value="">-- Choose Profession / Occupation --</option>
+                            @foreach($professionOptions as $option)
+                                <option value="{{ $option }}" {{ old('ind_profession') == $option ? 'selected' : '' }}>{{ $option }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="ind-profession-other-group" style="display: none;">
+                        <label for="ind_profession_other">Please specify profession / occupation *</label>
+                        <input type="text" id="ind_profession_other" name="ind_profession_other" class="form-control" value="{{ old('ind_profession_other') }}">
+                    </div>
+
+                    <div class="form-group">
                         <label for="ind_address">Full Address *</label>
                         <textarea id="ind_address" name="ind_address" rows="3" class="form-control" style="font-family: inherit;">{{ old('ind_address') }}</textarea>
                     </div>
@@ -348,6 +363,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="org_contact_person_name">Official Contact Person Name *</label>
+                        <input type="text" id="org_contact_person_name" name="org_contact_person_name" class="form-control" value="{{ old('org_contact_person_name') }}">
+                    </div>
+
+                    <div class="form-group">
                         <label for="org_website">Website / Social Media (if any)</label>
                         <input type="text" id="org_website" name="org_website" class="form-control" value="{{ old('org_website') }}">
                     </div>
@@ -391,17 +411,40 @@ document.addEventListener('DOMContentLoaded', function () {
         dropdown.classList.toggle('open');
     });
 
+    function toggleProfessionOther() {
+        const professionSelect = document.getElementById('ind_profession');
+        const professionOtherGroup = document.getElementById('ind-profession-other-group');
+        const professionOtherInput = document.getElementById('ind_profession_other');
+
+        if (!professionSelect || !professionOtherGroup || !professionOtherInput) {
+            return;
+        }
+
+        if (professionSelect.value === 'Other (Please Specify)') {
+            professionOtherGroup.style.display = 'block';
+            professionOtherInput.setAttribute('required', 'required');
+        } else {
+            professionOtherGroup.style.display = 'none';
+            professionOtherInput.removeAttribute('required');
+        }
+    }
+
     function toggleFormSections() {
         const checkedRadio = dropdown.querySelector('input[type="radio"]:checked');
         const indSection = document.getElementById('individual-details-section');
         const orgSection = document.getElementById('org-details-section');
         const othersSpecifyGroup = document.getElementById('others-specify-group');
         const othersSpecifyInput = document.getElementById('others_specify');
+        const professionOtherInput = document.getElementById('ind_profession_other');
 
         // Reset required attributes
         indSection.querySelectorAll('input, select, textarea').forEach(el => el.removeAttribute('required'));
         orgSection.querySelectorAll('input, select, textarea').forEach(el => el.removeAttribute('required'));
         othersSpecifyInput.removeAttribute('required');
+        if (professionOtherInput) {
+            professionOtherInput.removeAttribute('required');
+        }
+        document.getElementById('ind-profession-other-group').style.display = 'none';
 
         if (checkedRadio) {
             triggerText.textContent = checkedRadio.parentNode.textContent.trim();
@@ -426,10 +469,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('ind_name').setAttribute('required', 'required');
                 document.getElementById('ind_nric').setAttribute('required', 'required');
                 document.getElementById('ind_state').setAttribute('required', 'required');
+                document.getElementById('ind_profession').setAttribute('required', 'required');
                 document.getElementById('ind_address').setAttribute('required', 'required');
                 document.getElementById('ind_email').setAttribute('required', 'required');
                 document.getElementById('ind_phone').setAttribute('required', 'required');
                 document.getElementById('ind_area_of_interest').setAttribute('required', 'required');
+                toggleProfessionOther();
             } else {
                 indSection.style.display = 'none';
                 orgSection.style.display = 'block';
@@ -440,6 +485,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('org_address').setAttribute('required', 'required');
                 document.getElementById('org_email').setAttribute('required', 'required');
                 document.getElementById('org_phone').setAttribute('required', 'required');
+                document.getElementById('org_contact_person_name').setAttribute('required', 'required');
             }
         } else {
             triggerText.textContent = trigger.getAttribute('data-placeholder') || 'Choose category...';
@@ -464,6 +510,11 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function () {
         dropdown.classList.remove('open');
     });
+
+    const professionSelect = document.getElementById('ind_profession');
+    if (professionSelect) {
+        professionSelect.addEventListener('change', toggleProfessionOther);
+    }
 
     // Run on load to restore state
     toggleFormSections();

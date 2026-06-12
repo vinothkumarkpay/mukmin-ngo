@@ -5,7 +5,7 @@ return [
         [
             'id' => 'bac',
             'name' => 'BAC',
-            'logo' => 'welfare/img/mfls/partners/bac.svg',
+            'logo' => 'welfare/img/mfls/partners/bac.webp',
             'info' => 'Foundation and law programmes aligned with professional pathways in legal and business studies.',
             'programmes' => [
                 'FIL (Foundation in Law)',
@@ -18,7 +18,7 @@ return [
         [
             'id' => 'iact',
             'name' => 'IACT',
-            'logo' => 'welfare/img/mfls/partners/iact.svg',
+            'logo' => 'welfare/img/mfls/partners/iact.webp',
             'info' => 'Creative media programmes focused on digital communications, broadcasting and film.',
             'programmes' => [
                 'Diploma Digital Media & Communications',
@@ -28,7 +28,7 @@ return [
         [
             'id' => 'unimy',
             'name' => 'UNIMY',
-            'logo' => 'welfare/img/mfls/partners/unimy.svg',
+            'logo' => 'welfare/img/mfls/partners/unimy.webp',
             'info' => 'Technology-focused foundation and diploma pathways in IT, cybersecurity, robotics and game development.',
             'programmes' => [
                 'FCE',
@@ -40,7 +40,7 @@ return [
         [
             'id' => 'veritas',
             'name' => 'Veritas University College',
-            'logo' => 'welfare/img/mfls/partners/veritas.svg',
+            'logo' => 'welfare/img/mfls/partners/veritas.webp',
             'info' => 'Flexible ODL and conventional programmes in business, accounting and early childhood education.',
             'programmes' => [
                 'FIA (ODL)',
@@ -53,7 +53,7 @@ return [
         [
             'id' => 'reliance',
             'name' => 'Reliance College',
-            'logo' => 'welfare/img/mfls/partners/reliance.svg',
+            'logo' => 'welfare/img/mfls/partners/reliance.webp',
             'info' => 'Hospitality and business diploma programmes with industry-oriented training.',
             'programmes' => [
                 'Diploma in Hotel Management',
@@ -64,7 +64,7 @@ return [
         [
             'id' => 'binary',
             'name' => 'Binary University',
-            'logo' => 'welfare/img/mfls/partners/binary.svg',
+            'logo' => 'welfare/img/mfls/partners/binary.webp',
             'info' => 'Business, tourism, accounting and administration programmes from certificate to honours degree level.',
             'programmes' => [
                 'BA (Hons) Business Management',
@@ -77,7 +77,7 @@ return [
         [
             'id' => 'unitar',
             'name' => 'UNITAR',
-            'logo' => 'welfare/img/mfls/partners/unitar.svg',
+            'logo' => 'welfare/img/mfls/partners/unitar.webp',
             'info' => 'Wide-ranging foundation, diploma and degree programmes across business, education, hospitality and logistics.',
             'programmes' => [
                 'Foundation in Art',
@@ -96,7 +96,7 @@ return [
         [
             'id' => 'uoc',
             'name' => 'UOC',
-            'logo' => 'welfare/img/mfls/partners/uoc.svg',
+            'logo' => 'welfare/img/mfls/partners/uoc.webp',
             'info' => 'Programmes spanning health sciences, design, business, pharmacy and mass communication.',
             'programmes' => [
                 'Foundation in Science (Medicine/Pharmacy)',
@@ -121,7 +121,7 @@ return [
         [
             'id' => 'mahsa',
             'name' => 'MAHSA University',
-            'logo' => 'welfare/img/mfls/partners/mahsa.svg',
+            'logo' => 'welfare/img/mfls/partners/mahsa.webp',
             'info' => 'Comprehensive pathways across health sciences, engineering, business, hospitality and professional degrees.',
             'programmes' => [
                 'Foundation in Science',
@@ -155,6 +155,17 @@ return [
                 'Degree in Medicine (MBBS)',
                 'Degree in Dentistry (DDS)',
                 'Degree in Pharmacy',
+            ],
+        ],
+        [
+            'id' => 'sg-academy',
+            'name' => 'SG Academy',
+            'logo' => 'welfare/img/mfls/partners/sg-academy.webp',
+            'info' => 'Industry-certified training programmes in drone operations, EV competency and artificial intelligence.',
+            'programmes' => [
+                'Drone Training (Certified by Civil Aviation)',
+                'EV Competency Training (Certified by Autotronics EV Center)',
+                'Artificial Intelligence Proficiency (Certified by SG AI Academy)',
             ],
         ],
     ],

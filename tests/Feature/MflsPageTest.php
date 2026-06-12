@@ -23,7 +23,9 @@ class MflsPageTest extends TestCase
         $response->assertSee('Begin Your Learning Journey', false);
         $response->assertSee('Partner Institutions', false);
         $response->assertSee('Programmes', false);
-        $response->assertSee('MAHSA University', false);
+        $response->assertSee('SG Academy', false);
+        $response->assertSee('Drone Training (Certified by Civil Aviation)', false);
+        $response->assertSee('assess eligibility and shortlist qualified candidates', false);
         $response->assertSee('Apply Now', false);
         $response->assertSee(route('welfare.mfls-scholarship'), false);
         $response->assertSee('Frequently Asked Questions', false);
@@ -40,7 +42,7 @@ class MflsPageTest extends TestCase
         $response->assertSee('dual pathway model', false);
         $response->assertSee('Facilitated by FIKRAH', false);
         $response->assertSee('Apply Now. Lead the Future.', false);
-        $response->assertSee('Applications close on 20th June 2026', false);
+        $response->assertSee('Applications close on 15th July 2026', false);
         $response->assertSee('Section 1: Personal Information', false);
         $response->assertSee('Section 2: Academic Information', false);
         $response->assertSee('Section 3: Financial Background', false);

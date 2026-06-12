@@ -120,8 +120,8 @@
             <header class="section-header">
                 <span class="section-tag">Impact Areas &rsaquo; Leadership &amp; Capacity Building</span>
                 <h1>SIRAT Series</h1>
-                <p class="headline">Building leadership, connection and collaboration across youth, leaders and diaspora.</p>
-                <p class="subheadline">The SIRAT Series serves as MUKMIN&rsquo;s flagship capacity-building platform, designed to develop leadership, strengthen networks and catalyse collaboration across national, regional and global levels.</p>
+                <p class="headline">Strengthening India Muslim Roots &amp; Aspiration Together</p>
+                <p class="subheadline">Building leadership, connection and collaboration across youth, leaders and diaspora. The SIRAT Series serves as MUKMIN&rsquo;s flagship capacity-building platform, designed to develop leadership, strengthen networks and catalyse collaboration across national, regional and global levels.</p>
             </header>
             <div class="intro-copy">
                 <p>Bringing together youth, leaders and diaspora communities, the series creates a dynamic ecosystem for dialogue, knowledge exchange and collective action, driving both community impact and cross-border collaboration.</p>
@@ -144,7 +144,7 @@
                         <p>A future-focused youth platform dedicated to empowering the next generation through leadership development, innovation, entrepreneurship, capacity-building and meaningful civic engagement.</p>
                     </article>
                     <article class="sirat-platform">
-                        <h3>SIRAT Global Forum 2026</h3>
+                        <h3>SIRAT Global Forum</h3>
                         <p>An international platform connecting diaspora communities, global leaders, strategic partners and institutions to foster cross-border collaboration, investment opportunities, knowledge exchange and global community engagement.</p>
                     </article>
                 </div>

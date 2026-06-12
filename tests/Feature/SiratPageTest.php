@@ -15,7 +15,9 @@ class SiratPageTest extends TestCase
         $response->assertSee('The SIRAT Platforms', false);
         $response->assertSee('SIRAT Leaders Forum', false);
         $response->assertSee('SIRAT Youth Summit', false);
-        $response->assertSee('SIRAT Global Forum 2026', false);
+        $response->assertSee('Strengthening India Muslim Roots &amp; Aspiration Together', false);
+        $response->assertSee('SIRAT Global Forum', false);
+        $response->assertDontSee('SIRAT Global Forum 2026', false);
     }
 
     public function test_impact_page_read_more_links_to_sirat()

@@ -264,7 +264,7 @@ class AdminDashboardController extends Controller
                     break;
 
                 case 'friends':
-                    fputcsv($file, ['ID', 'Date', 'Type', 'Others Specify', 'Org Name', 'Org State', 'Org Address', 'Org Email', 'Org Phone', 'Org Website', 'Ind Name', 'Ind NRIC', 'Ind State', 'Ind Address', 'Ind Email', 'Ind Phone', 'Ind Area of Interest', 'Status']);
+                    fputcsv($file, ['ID', 'Date', 'Type', 'Others Specify', 'Org Name', 'Org State', 'Org Address', 'Org Email', 'Org Phone', 'Official Contact Person Name', 'Org Website', 'Ind Name', 'Ind NRIC', 'Ind State', 'Ind Profession', 'Ind Profession Other', 'Ind Address', 'Ind Email', 'Ind Phone', 'Ind Area of Interest', 'Status']);
                     foreach (FriendMemberSubmission::all() as $item) {
                         fputcsv($file, [
                             $item->id,
@@ -276,10 +276,13 @@ class AdminDashboardController extends Controller
                             $item->org_address,
                             $item->org_email,
                             $item->org_phone,
+                            $item->org_contact_person_name,
                             $item->org_website,
                             $item->ind_name,
                             $item->ind_nric,
                             $item->ind_state,
+                            $item->ind_profession,
+                            $item->ind_profession_other,
                             $item->ind_address,
                             $item->ind_email,
                             $item->ind_phone,

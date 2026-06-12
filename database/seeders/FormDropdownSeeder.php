@@ -139,6 +139,7 @@ class FormDropdownSeeder extends Seeder
             'ind_name' => 'Mariam Sulaiman',
             'ind_nric' => '920815-10-5412',
             'ind_state' => 'Johor',
+            'ind_profession' => 'Homemaker',
             'ind_address' => 'No 45, Jalan Bakri, Muar, 84000 Johor',
             'ind_email' => 'mariam@example.com',
             'ind_phone' => '+6017-8899001',

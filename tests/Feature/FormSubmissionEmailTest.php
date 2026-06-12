@@ -110,6 +110,7 @@ class FormSubmissionEmailTest extends TestCase
             'ind_name' => 'Friend Ind',
             'ind_nric' => '900202141111',
             'ind_state' => 'Johor',
+            'ind_profession' => 'NGO / Community Leader',
             'ind_address' => 'Friend Address',
             'ind_email' => 'friend_ind@example.com',
             'ind_phone' => '+60111222333',
@@ -144,6 +145,7 @@ class FormSubmissionEmailTest extends TestCase
             'org_address' => 'Org Address',
             'org_email' => 'friend_org@example.com',
             'org_phone' => '+60111222334',
+            'org_contact_person_name' => 'Ali bin Abu',
             'declaration_confirmed' => '1',
         ];
 

@@ -254,10 +254,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
     width: 100%;
-    min-height: 120px;
-    padding: 16px 12px;
+    min-height: 180px;
+    padding: 24px 18px;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     background: #ffffff;
@@ -273,12 +273,12 @@
 }
 .mfls-partner-logo-btn img {
     width: 100%;
-    max-width: 160px;
-    height: 56px;
+    max-width: 260px;
+    height: 104px;
     object-fit: contain;
 }
 .mfls-partner-logo-btn span {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     color: #666;
     text-align: center;
@@ -401,6 +401,14 @@
     .mfls-partner-logos {
         grid-template-columns: repeat(2, 1fr);
     }
+    .mfls-partner-logo-btn {
+        min-height: 150px;
+        padding: 18px 14px;
+    }
+    .mfls-partner-logo-btn img {
+        max-width: 200px;
+        height: 84px;
+    }
     .mfls-programme-list {
         grid-template-columns: 1fr;
     }
@@ -470,7 +478,7 @@
                         <span class="mfls-step-num">2</span>
                         <div class="mfls-step-content">
                             <h3>Eligibility Review</h3>
-                            <p>The MFLS Secretariat reviews all applications and supporting documents within 3&ndash;5 working days to assess eligibility and shortlist qualified candidates.</p>
+                            <p>The MFLS Secretariat reviews all applications and supporting documents to assess eligibility and shortlist qualified candidates.</p>
                         </div>
                     </li>
                     <li>
@@ -512,9 +520,9 @@
                     @foreach($partners as $partner)
                         <button
                             type="button"
-                            class="mfls-partner-logo-btn"
+                            class="mfls-partner-logo-btn{{ $loop->first ? ' is-active' : '' }}"
                             data-partner-id="{{ $partner['id'] }}"
-                            aria-expanded="false"
+                            aria-expanded="{{ $loop->first ? 'true' : 'false' }}"
                             aria-controls="partner-detail-{{ $partner['id'] }}"
                         >
                             <img src="{{ asset($partner['logo']) }}" alt="{{ $partner['name'] }} logo">
@@ -526,10 +534,10 @@
                 <div class="mfls-partner-details">
                     @foreach($partners as $partner)
                         <article
-                            class="mfls-partner-detail"
+                            class="mfls-partner-detail{{ $loop->first ? ' is-open' : '' }}"
                             id="partner-detail-{{ $partner['id'] }}"
                             data-partner-detail
-                            hidden
+                            @unless($loop->first) hidden @endunless
                         >
                             <h3>{{ $partner['name'] }}</h3>
                             <p>{{ $partner['info'] }}</p>

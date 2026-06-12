@@ -210,7 +210,7 @@
             </div>
 
             <div class="deadline-banner">
-                Applications close on 20th June 2026.
+                Applications close on 15th July 2026.
             </div>
 
             @if ($errors->any())

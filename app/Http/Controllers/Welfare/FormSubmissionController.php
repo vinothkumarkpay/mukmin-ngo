@@ -241,8 +241,9 @@ class FormSubmissionController extends Controller
     {
         $categories = $this->getOptions('friends_category');
         $areaOfInterestOptions = $this->friendsAreaOfInterestOptions();
+        $professionOptions = $this->friendsProfessionOptions();
 
-        return view('welfare.pages.membership_friends', compact('categories', 'areaOfInterestOptions'));
+        return view('welfare.pages.membership_friends', compact('categories', 'areaOfInterestOptions', 'professionOptions'));
     }
 
     private function friendsAreaOfInterestOptions(): array
@@ -254,6 +255,29 @@ class FormSubmissionController extends Controller
             'Entrepreneurship & Innovation',
             'Faith, Identity & Ukhwah',
             'Leadership & Capacity Building',
+        ];
+    }
+
+    private function friendsProfessionOptions(): array
+    {
+        return [
+            'Student',
+            'Academic / Educator',
+            'Doctor / Medical Professional',
+            'Lawyer / Legal Professional',
+            'Accountant / Finance Professional',
+            'Engineer / Technical Professional',
+            'IT / Technology Professional',
+            'Business Owner / Entrepreneur',
+            'Corporate Executive / Management',
+            'Civil Servant / Government Officer',
+            'NGO / Community Leader',
+            'Shariah / Islamic Affairs',
+            'Creative / Media / Communications',
+            'Self-Employed / Freelancer',
+            'Retired',
+            'Homemaker',
+            'Other (Please Specify)',
         ];
     }
 
@@ -271,6 +295,8 @@ class FormSubmissionController extends Controller
                 'ind_name' => 'required|string|max:255',
                 'ind_nric' => $this->requiredNricRule(),
                 'ind_state' => 'required|string|max:50',
+                'ind_profession' => ['required', 'string', Rule::in($this->friendsProfessionOptions())],
+                'ind_profession_other' => 'nullable|required_if:ind_profession,Other (Please Specify)|string|max:255',
                 'ind_address' => 'required|string',
                 'ind_email' => $this->requiredEmailRule(),
                 'ind_phone' => $this->requiredPhoneRule(),
@@ -283,6 +309,7 @@ class FormSubmissionController extends Controller
                 'org_address' => 'required|string',
                 'org_email' => $this->requiredEmailRule(),
                 'org_phone' => $this->requiredPhoneRule(),
+                'org_contact_person_name' => 'required|string|max:255',
                 'org_website' => 'nullable|string|max:255',
             ]);
         }
