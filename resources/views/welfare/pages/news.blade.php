@@ -771,7 +771,7 @@
                         
                         <!-- Tab 2 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-2" id="tab-2" data-index="2">
-                            <span class="news-tab-title">SIRAT Leaders Forum (Strengthening India Muslim Roots)</span>
+                            <span class="news-tab-title">SIRAT Leaders Forum (Strengthening Indian Muslim Roots)</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 29 – 31 August 2025</span>
                         </button>
                         
@@ -1093,7 +1093,7 @@
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">SIRAT Leaders Forum (Strengthening India Muslim Roots & Aspiration Together)</h4>
+                                <h4 class="news-detail-title">SIRAT Leaders Forum (Strengthening Indian Muslim Roots & Aspiration Together)</h4>
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 29 – 31 August 2025</span>

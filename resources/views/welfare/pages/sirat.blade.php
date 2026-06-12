@@ -120,7 +120,7 @@
             <header class="section-header">
                 <span class="section-tag">Impact Areas &rsaquo; Leadership &amp; Capacity Building</span>
                 <h1>SIRAT Series</h1>
-                <p class="headline">Strengthening India Muslim Roots &amp; Aspiration Together</p>
+                <p class="headline">Strengthening Indian Muslim Roots &amp; Aspiration Together</p>
                 <p class="subheadline">Building leadership, connection and collaboration across youth, leaders and diaspora. The SIRAT Series serves as MUKMIN&rsquo;s flagship capacity-building platform, designed to develop leadership, strengthen networks and catalyse collaboration across national, regional and global levels.</p>
             </header>
             <div class="intro-copy">
@@ -136,7 +136,7 @@
                 <div class="sirat-platforms">
                     <article class="sirat-platform">
                         <h3>SIRAT Leaders Forum</h3>
-                        <p class="platform-tagline">Strengthening India Muslim Roots &amp; Aspiration Together</p>
+                        <p class="platform-tagline">Strengthening Indian Muslim Roots &amp; Aspiration Together</p>
                         <p>A strategic leadership platform bringing together community leaders, institutions, professionals and stakeholders to discuss critical issues, strengthen collaboration and advance sustainable socio-economic development within the ecosystem.</p>
                     </article>
                     <article class="sirat-platform">
