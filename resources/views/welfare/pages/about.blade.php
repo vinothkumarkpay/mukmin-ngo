@@ -253,7 +253,6 @@
 }
 .member-card:hover,
 .member-card:focus-visible {
-    transform: translateY(-5px);
     box-shadow: var(--shadow-hover);
     border-color: var(--color-primary);
     outline: none;
@@ -342,13 +341,11 @@
     pointer-events: none;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(8px);
-    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 .member-hover-preview.visible {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
     pointer-events: auto;
 }
 .member-hover-preview-photo {

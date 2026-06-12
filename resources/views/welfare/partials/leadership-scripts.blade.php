@@ -4,9 +4,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var tabContents = document.querySelectorAll('.leadership-tab-content');
     var memberCards = document.querySelectorAll('.member-card[data-member-name]');
     var hoverPreview = document.getElementById('memberHoverPreview');
+    var hoverPreviewImage = document.getElementById('memberHoverPreviewImage');
     var modal = document.getElementById('leadershipMemberModal');
     var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    var hoverTimer = null;
+    var showTimer = null;
+    var hideTimer = null;
     var activeCard = null;
 
     tabBtns.forEach(function (btn) {
@@ -20,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 targetContent.classList.add('active');
             }
 
-            hideHoverPreview();
+            hideHoverPreview(true);
         });
     });
 
@@ -47,8 +49,16 @@ document.addEventListener('DOMContentLoaded', function () {
         return '';
     }
 
+    function setImageSrc(img, src) {
+        if (!img || !src || img.getAttribute('src') === src) {
+            return;
+        }
+
+        img.setAttribute('src', src);
+    }
+
     function fillProfileTargets(data, targets) {
-        targets.image.src = data.image;
+        setImageSrc(targets.image, data.image);
         targets.image.alt = data.name;
         targets.committee.textContent = data.committee;
         targets.name.textContent = data.name;
@@ -83,32 +93,44 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function showHoverPreview(card, data) {
-        if (!hoverPreview || !canHover) {
+        if (!hoverPreview || !canHover || activeCard === card) {
             return;
         }
 
         fillProfileTargets(data, {
-            image: document.getElementById('memberHoverPreviewImage'),
+            image: hoverPreviewImage,
             committee: document.getElementById('memberHoverPreviewCommittee'),
             name: document.getElementById('memberHoverPreviewName'),
             role: document.getElementById('memberHoverPreviewRole'),
             meta: document.getElementById('memberHoverPreviewMeta')
         });
 
-        hoverPreview.classList.add('visible');
-        hoverPreview.setAttribute('aria-hidden', 'false');
         activeCard = card;
         positionHoverPreview(card);
+        hoverPreview.classList.add('visible');
+        hoverPreview.setAttribute('aria-hidden', 'false');
     }
 
-    function hideHoverPreview() {
+    function hideHoverPreview(immediate) {
         if (!hoverPreview) {
             return;
         }
 
-        hoverPreview.classList.remove('visible');
-        hoverPreview.setAttribute('aria-hidden', 'true');
-        activeCard = null;
+        clearTimeout(showTimer);
+        clearTimeout(hideTimer);
+
+        if (immediate) {
+            hoverPreview.classList.remove('visible');
+            hoverPreview.setAttribute('aria-hidden', 'true');
+            activeCard = null;
+            return;
+        }
+
+        hideTimer = setTimeout(function () {
+            hoverPreview.classList.remove('visible');
+            hoverPreview.setAttribute('aria-hidden', 'true');
+            activeCard = null;
+        }, 120);
     }
 
     function openMemberModal(data) {
@@ -116,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        hideHoverPreview();
+        hideHoverPreview(true);
 
         fillProfileTargets(data, {
             image: document.getElementById('leadershipMemberModalImage'),
@@ -149,32 +171,32 @@ document.addEventListener('DOMContentLoaded', function () {
         if (canHover) {
             card.addEventListener('mouseenter', function () {
                 var currentCard = card;
-                clearTimeout(hoverTimer);
-                hoverTimer = setTimeout(function () {
+                clearTimeout(hideTimer);
+                clearTimeout(showTimer);
+
+                if (activeCard === currentCard && hoverPreview.classList.contains('visible')) {
+                    return;
+                }
+
+                showTimer = setTimeout(function () {
                     showHoverPreview(currentCard, readMemberData(currentCard));
-                }, 220);
+                }, 280);
             });
 
             card.addEventListener('mouseleave', function () {
-                clearTimeout(hoverTimer);
-                hideHoverPreview();
-            });
-
-            card.addEventListener('mousemove', function () {
-                if (activeCard === card && hoverPreview.classList.contains('visible')) {
-                    positionHoverPreview(card);
-                }
+                clearTimeout(showTimer);
+                hideHoverPreview(false);
             });
         }
     });
 
     if (hoverPreview && canHover) {
         hoverPreview.addEventListener('mouseenter', function () {
-            clearTimeout(hoverTimer);
+            clearTimeout(hideTimer);
         });
 
         hoverPreview.addEventListener('mouseleave', function () {
-            hideHoverPreview();
+            hideHoverPreview(false);
         });
 
         hoverPreview.addEventListener('click', function () {
@@ -195,11 +217,16 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('keydown', function (event) {
         if (event.key === 'Escape') {
             closeMemberModal();
-            hideHoverPreview();
+            hideHoverPreview(true);
         }
     });
 
-    window.addEventListener('scroll', hideHoverPreview, true);
-    window.addEventListener('resize', hideHoverPreview);
+    window.addEventListener('scroll', function () {
+        hideHoverPreview(true);
+    }, true);
+
+    window.addEventListener('resize', function () {
+        hideHoverPreview(true);
+    });
 });
 </script>
