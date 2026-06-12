@@ -38,6 +38,11 @@ class HomeController extends Controller
             ['title' => 'SIRAT Youth Summit', 'excerpt' => 'Malaysia’s largest community youth gatherings, the programme brought together over 1,000 changemakers through leadership sessions, panel discussions, pitching sessions and the Youth Icon Awards.', 'date' => '2025-11-22', 'image' => 'https://images.unsplash.com/photo-1523580494112-071d283626e6?w=580&q=80', 'slug' => 'youth-summit'],
         ];
 
-        return view('welfare.pages.home', compact('iconBoxes', 'featuredCampaign', 'campaigns', 'posts'));
+        $engagements = collect([
+            ['date' => '2026-05-11', 'day' => '11', 'month_year' => 'May 2026', 'title' => 'MUKMIN Extraordinary General Meeting (EGM)'],
+            ['date' => '2026-05-31', 'day' => '31', 'month_year' => 'May 2026', 'title' => 'MUKMIN Annual General Meeting (AGM)'],
+        ])->sortByDesc('date')->values()->all();
+
+        return view('welfare.pages.home', compact('iconBoxes', 'featuredCampaign', 'campaigns', 'posts', 'engagements'));
     }
 }

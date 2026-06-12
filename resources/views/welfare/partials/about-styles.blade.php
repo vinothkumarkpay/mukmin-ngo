@@ -19,7 +19,7 @@
     display: grid;
     grid-template-columns: 1.15fr 0.85fr;
     gap: 50px;
-    align-items: center;
+    align-items: stretch;
 }
 .who-headline {
     font-size: 30px;
@@ -42,8 +42,15 @@
     margin-bottom: 18px;
     text-align: justify;
 }
+.who-image {
+    height: 100%;
+    min-height: 0;
+}
 .who-image img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
     border-radius: 6px;
     box-shadow: var(--shadow);
 }
@@ -483,6 +490,13 @@ body.leadership-modal-open {
     .who-we-are-grid, .president-grid {
         grid-template-columns: 1fr;
         gap: 30px;
+    }
+    .who-image {
+        height: auto;
+    }
+    .who-image img {
+        height: auto;
+        max-height: 480px;
     }
     .members-grid, .members-grid.exco-grid {
         grid-template-columns: repeat(2, 1fr);

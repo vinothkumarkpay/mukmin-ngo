@@ -8,18 +8,6 @@
 
 <style>
 /* Page Specific Styling */
-/* Slider 3 — light background, dark text */
-.slide.slide-light-text {
-    background-position: left center;
-}
-.slide.slide-light-text .slide-text h1 {
-    color: #1e1e1e;
-    text-shadow: none;
-}
-.slide.slide-light-text .slide-text p {
-    color: #333333;
-}
-
 /* Card & Modal specific styles */
 .subtabs-grid, .subtabs-grid-4 {
     display: grid;
@@ -792,62 +780,18 @@
     <!-- HERO SLIDER SECTION -->
     <section class="hero-slider">
         <div class="slider-container">
-            <!-- Slide 1 -->
-            <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('{{ asset('welfare/img/slider1.jpg') }}');">
-                <div class="slide-content">
-                    <div class="container">
-                        <div class="slide-text">
-                            <h1>One Identity.<br>One Vision.<br>One Community.</h1>
-                            <p>MUKMIN brings together communities, organisations and institutions under one unified ecosystem dedicated to strengthening leadership, expanding opportunities and driving sustainable national impact.</p>
-                            <div class="slide-buttons">
-                                <a href="{{ route('welfare.about') }}" class="btn btn-primary">Learn more about MUKMIN</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Slide 2 -->
-            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('{{ asset('welfare/img/slider2.jpg') }}');">
-                <div class="slide-content">
-                    <div class="container">
-                        <div class="slide-text">
-                            <h1>Join Us</h1>
-                            <p>Be part of a national movement connecting communities, empowering people, and shaping a stronger, more inclusive future.</p>
-                            <div class="slide-buttons">
-                                <a href="{{ route('welfare.serve') }}#membership-vertical-tabs" class="btn btn-primary">Register as Member</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Slide 3 -->
-            <div class="slide slide-light-text" style="background-image: url('{{ asset('welfare/img/slider3.jpg') }}');">
-                <div class="slide-content">
-                    <div class="container">
-                        <div class="slide-text">
-                            <h1>Our Ecosystem</h1>
-                            <p>A structured and integrated approach that transforms ideas into action through three complementary roles.</p>
-                            <div class="slide-buttons">
-                                <a href="{{ route('welfare.ecosystem') }}" class="btn btn-primary">Find out more</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Slide 4 -->
-            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('{{ asset('welfare/img/slider4.jpg') }}');">
-                <div class="slide-content">
-                    <div class="container">
-                        <div class="slide-text">
-                            <h1>Empowering Future Leaders. Unlocking Potential.</h1>
-                            <p>Supporting deserving students through educational opportunities, leadership development and pathways towards a brighter future.</p>
-                            <div class="slide-buttons">
-                                <a href="{{ route('welfare.impact.mfls') }}" class="btn btn-primary">Find out more</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <a href="{{ route('welfare.about') }}" class="slide active">
+                <img src="{{ asset('welfare/img/banner-1.jpeg') }}" alt="One Identity. One Vision. One Community.">
+            </a>
+            <a href="{{ route('welfare.serve') }}#membership-vertical-tabs" class="slide">
+                <img src="{{ asset('welfare/img/banner-2.png') }}" alt="Join Us">
+            </a>
+            <a href="{{ route('welfare.ecosystem') }}" class="slide">
+                <img src="{{ asset('welfare/img/banner-3.png') }}" alt="Our Ecosystem">
+            </a>
+            <a href="{{ route('welfare.impact.mfls') }}" class="slide">
+                <img src="{{ asset('welfare/img/banner-4.png') }}" alt="Empowering Future Leaders. Unlocking Potential.">
+            </a>
 
             <!-- Slider Controls -->
             <button class="slider-prev" id="slider-prev"><i class="fas fa-chevron-left"></i></button>
@@ -1314,25 +1258,17 @@
                         <span style="position: absolute; bottom: 0; left: 0; width: 50px; height: 3px; background: var(--color-primary);"></span>
                     </h2>
                     
+                    @foreach ($engagements as $engagement)
                     <div class="engagement-item">
                         <div class="engagement-date">
-                            <span class="day">11</span>
-                            <span class="month-year">May 2026</span>
+                            <span class="day">{{ $engagement['day'] }}</span>
+                            <span class="month-year">{{ $engagement['month_year'] }}</span>
                         </div>
                         <div class="engagement-title">
-                            MUKMIN Extraordinary General Meeting (EGM)
+                            {{ $engagement['title'] }}
                         </div>
                     </div>
-
-                    <div class="engagement-item">
-                        <div class="engagement-date">
-                            <span class="day">31</span>
-                            <span class="month-year">May 2026</span>
-                        </div>
-                        <div class="engagement-title">
-                            MUKMIN Annual General Meeting (AGM)
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
 
                 <!-- Right: MUKMIN Updates (Horizontal Tabs) -->
@@ -1410,7 +1346,7 @@
     </section>
 
     <!-- SUB BLOCK 5 (QUOTE PARALLAX / CTA BANNER) -->
-    <section class="section-donate-cta" style="background-image: linear-gradient(rgba(30,30,30,0.85), rgba(30,30,30,0.85)), url('https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=1600'); background-size: cover; background-position: center; background-attachment: fixed; text-align: center; padding: 80px 0;">
+    <section class="section-donate-cta" style="background-image: url('{{ asset('welfare/img/donate-cta-bg.png') }}'); background-size: cover; background-position: center; background-attachment: fixed; text-align: center; padding: 80px 0;">
         <div class="container" style="max-width: 800px;">
             <i class="fas fa-quote-left" style="font-size: 40px; color: white; opacity: 0.3; margin-bottom: 20px;"></i>
             <h2 style="color: white; font-size: 42px; line-height: 52px; font-weight: 700; margin-bottom: 20px;">"No one has ever become poor by giving"</h2>
@@ -1440,19 +1376,21 @@
                         'title' => 'Kembara Ramadan MUKMIN – Food Basket Initiative',
                         'meta' => '28 February – 17 March 2026',
                         'desc' => 'MUKMIN successfully distributed 5,000 food baskets nationwide through mosque, madrasah, surau and NGO networks to support communities in need during Ramadan.',
-                        'image' => asset('welfare/img/news/sirat-global-forum-2026.png')
+                        'image' => asset('welfare/img/news/kembara-ramadan-mukmin.png')
                     ],
+                    /*
                     [
                         'title' => 'Ramadan Assistance for Religious Scholars & Ustaz',
                         'meta' => '11 March 2026 | Kuala Lumpur',
                         'desc' => 'Ramadan assistance initiatives were carried out to support religious scholars and ustaz through food aid, financial assistance and complimentary medical protection coverage.',
                         'image' => asset('welfare/img/news/ramadan-assistance-ustaz.png')
                     ],
+                    */
                     [
                         'title' => 'SIRAT Global Forum 2026',
-                        'meta' => '23 – 25 January 2026 | Kuala Lumpur',
+                        'meta' => '23 – 25 January 2026 | Bank Rakyat Convention Centre',
                         'desc' => 'An international platform bringing together business leaders, professionals, innovators and youths from over 20 countries to strengthen global collaboration and future community development.',
-                        'image' => asset('welfare/img/news/kembara-ramadan-mukmin.png')
+                        'image' => asset('welfare/img/news/sirat-global-forum-2026.png')
                     ],
                     [
                         'title' => 'Official Launch of FIKRAH',
@@ -1468,9 +1406,15 @@
                     ],
                     [
                         'title' => 'SIRAT Leaders Forum',
-                        'meta' => '29 – 31 August 2025 | Pahang',
+                        'meta' => '29 – 31 August 2025 | The Chateau Resort, Bukit Tinggi, Pahang',
                         'desc' => 'The SIRAT Leaders Forum convened 250 NGO leaders, policymakers, professionals and religious institutions in a strategic platform focused on collaboration, leadership and sustainable community development.',
                         'image' => asset('welfare/img/news/sirat-leaders-forum.png')
+                    ],
+                    [
+                        'title' => 'MUKMIN Hari Raya Aidilfitri Open House 2025',
+                        'meta' => '12 April 2025 | IDCC, Shah Alam',
+                        'desc' => 'MUKMIN’s Hari Raya Aidilfitri Open House gathered NGOs, mosques, madrasahs, suraus and tahfiz institutions from across Malaysia in a celebration of unity and community spirit, welcoming approximately 2,000 guests including more than 200 religious scholars.',
+                        'image' => asset('welfare/img/news/hari-raya-open-house-2025.png')
                     ]
                 ];
                 @endphp

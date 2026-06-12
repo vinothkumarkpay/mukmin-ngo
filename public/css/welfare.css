@@ -471,12 +471,17 @@ h6 { font-size: 13px; line-height: 20px; }
 .slider-container { position: relative; }
 .slide {
     display: none;
-    background-size: cover;
-    background-position: center;
-    min-height: 560px;
-    align-items: center;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
 }
-.slide.active { display: flex; }
+.slide.active { display: block; }
+.slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
 .slide-content {
     width: 100%;
     padding: 80px 74px;

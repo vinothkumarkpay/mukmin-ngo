@@ -7,7 +7,7 @@ return [
     'org_name' => env('WELFARE_ORG_NAME', 'PERTUBUHAN GABUNGAN MUKMIN NASIONAL (PPM-019-10-15042026)'),
     'email' => env('WELFARE_EMAIL', 'support@mukmin.org'),
     'phone' => env('WELFARE_PHONE', '+6014 302 1800'),
-    'whatsapp_url' => env('WELFARE_WHATSAPP_URL', 'https://wa.me/60143021800?text=Hello%20MUKMIN%20Support'),
+    'whatsapp_url' => env('WELFARE_WHATSAPP_URL', 'https://wa.me/60143021800?text=Salam.%20I%20would%20like%20to%20enquire%20about%20MUKMIN.%20Kindly%20assist%20me.'),
     'address' => env('WELFARE_ADDRESS', 'No 73, Jalan TPK 2/8, Taman Perindustrian Kinrara, Puchong'),
     'address_short' => env('WELFARE_ADDRESS_SHORT', 'Petaling, Selangor, Malaysia - 47180'),
     'postal' => env('WELFARE_POSTAL', '47180 Petaling, Selangor'),

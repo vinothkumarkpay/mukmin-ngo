@@ -323,17 +323,9 @@
     <section class="ecosystem-hero">
         <img
             class="ecosystem-hero-image"
-            src="{{ asset('welfare/img/ecosystem/hero.jpg') }}"
-            alt="MUKMIN Ecosystem — FIKRAH, Gabungan MUKMIN Nasional, and Yayasan MUKMIN"
+            src="{{ asset('welfare/img/ecosystem/hero.png') }}"
+            alt="Our Ecosystem — MUKMIN, FIKRAH, and Yayasan MUKMIN"
         >
-        <div class="ecosystem-hero-overlay">
-            <div class="container">
-                <div class="ecosystem-hero-content">
-                    <h2>One Ecosystem. Three Engines of Impact.</h2>
-                    <p>A structured and integrated ecosystem that transforms ideas into action through strategy, coordination, and implementation.</p>
-                </div>
-            </div>
-        </div>
     </section>
 
     <!-- 3. Three Vertical Cards Section -->
@@ -394,7 +386,7 @@
                     </div>
                     <div class="card-logo-header">
                         <div class="brand-mark-logo">
-                            <img src="{{ asset('welfare/img/yayasan_logo.jpg') }}" alt="Yayasan MUKMIN Logo">
+                            <img src="{{ asset('welfare/img/yayasan_logo.png') }}" alt="Yayasan MUKMIN Logo">
                         </div>
                     </div>
                     <div class="card-body-wrap">

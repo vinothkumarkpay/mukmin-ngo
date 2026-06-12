@@ -22,7 +22,7 @@
                 <p>Today, MUKMIN's strength lies not in any single organisation, but in the collective power of its ecosystem and the communities it serves.</p>
             </div>
             <div class="who-image">
-                <img src="{{ asset('welfare/img/about/who-we-are.jpg') }}" alt="Federal Territory Mosque, Kuala Lumpur — MUKMIN community transformation ecosystem">
+                <img src="{{ asset('welfare/img/about/who-we-are.png') }}" alt="MUKMIN Pledge of Commitment ceremony">
             </div>
         </div>
     </div>

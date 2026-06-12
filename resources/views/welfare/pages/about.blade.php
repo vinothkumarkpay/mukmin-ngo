@@ -25,7 +25,7 @@
     display: grid;
     grid-template-columns: 1.15fr 0.85fr;
     gap: 50px;
-    align-items: center;
+    align-items: stretch;
 }
 .who-headline {
     font-size: 30px;
@@ -48,8 +48,15 @@
     margin-bottom: 18px;
     text-align: justify;
 }
+.who-image {
+    height: 100%;
+    min-height: 0;
+}
 .who-image img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
     border-radius: 6px;
     box-shadow: var(--shadow);
 }
@@ -492,6 +499,13 @@ body.leadership-modal-open {
         grid-template-columns: 1fr;
         gap: 30px;
     }
+    .who-image {
+        height: auto;
+    }
+    .who-image img {
+        height: auto;
+        max-height: 480px;
+    }
     .members-grid, .members-grid.exco-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -528,7 +542,7 @@ body.leadership-modal-open {
                 <p>Today, MUKMIN's strength lies not in any single organisation, but in the collective power of its ecosystem and the communities it serves.</p>
             </div>
             <div class="who-image">
-                <img src="{{ asset('welfare/img/about/who-we-are.jpg') }}" alt="Federal Territory Mosque, Kuala Lumpur — MUKMIN community transformation ecosystem">
+                <img src="{{ asset('welfare/img/about/who-we-are.png') }}" alt="MUKMIN Pledge of Commitment ceremony">
             </div>
         </div>
     </div>
