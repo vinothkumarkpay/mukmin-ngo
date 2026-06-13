@@ -3,7 +3,8 @@
     'use strict';
 
     /* ---- HERO SLIDER ---- */
-    var slides = document.querySelectorAll('.slide');
+    var heroSlider = document.querySelector('.hero-slider');
+    var slides = heroSlider ? heroSlider.querySelectorAll('.slide') : [];
     var dots   = document.querySelectorAll('#slider-dots .dot');
     var current = 0;
     var autoplay;
@@ -28,7 +29,7 @@
         dots.forEach(function (dot) {
             dot.addEventListener('click', function () {
                 clearInterval(autoplay);
-                goToSlide(parseInt(this.dataset.index));
+                goToSlide(parseInt(this.dataset.index, 10));
                 startAutoplay();
             });
         });

@@ -468,19 +468,36 @@ h6 { font-size: 13px; line-height: 20px; }
 
 /* --- HERO SLIDER --- */
 .hero-slider { position: relative; overflow: hidden; padding: 0; }
-.slider-container { position: relative; }
-.slide {
-    display: none;
+.hero-slider .slider-container {
+    position: relative;
+    line-height: 0;
+}
+.hero-slider .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 1;
     text-decoration: none;
     color: inherit;
     cursor: pointer;
 }
-.slide.active { display: block; }
-.slide img {
+.hero-slider .slide.active {
+    position: relative;
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    z-index: 2;
+}
+.hero-slider .slide img {
     width: 100%;
     height: auto;
     display: block;
+    vertical-align: top;
 }
 .slide-content {
     width: 100%;
@@ -1075,6 +1092,15 @@ section { padding: 60px 0; }
     .search-box-inline { width: min(180px, 42vw); }
     .header-top-actions { gap: 6px; }
 
+    .hero-slider .slider-prev,
+    .hero-slider .slider-next {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+    .hero-slider .slider-prev { left: 8px; }
+    .hero-slider .slider-next { right: 8px; }
+    .hero-slider .slider-dots { bottom: 10px; }
     .slide-text h1 { font-size: 28px; line-height: 36px; }
     .slide-text p { font-size: 15px; line-height: 22px; }
     .slide-content { padding: 60px 64px; }
@@ -1108,8 +1134,6 @@ section { padding: 60px 0; }
     .stats-grid { grid-template-columns: 1fr; }
     .team-grid { grid-template-columns: 1fr; }
     .partners-grid { grid-template-columns: repeat(2, 1fr); }
-    .slide { min-height: 400px; }
-    .slide-content { padding: 48px 58px; }
     .slide-text h1 { font-size: 22px; line-height: 30px; }
     section { padding: 40px 0; }
 }
