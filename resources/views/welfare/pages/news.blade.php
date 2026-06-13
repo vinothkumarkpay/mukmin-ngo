@@ -396,69 +396,73 @@
     height: 100dvh;
     opacity: 0;
     transition: opacity 0.3s ease;
-    padding: 48px 0 0;
+    padding: 0;
     box-sizing: border-box;
     overflow: hidden;
 }
 
 .custom-lightbox.show {
-    display: flex;
+    display: block;
     opacity: 1;
 }
 
 .lightbox-viewport {
-    position: relative;
-    flex: 1 1 0;
-    min-height: 0;
+    position: absolute;
+    inset: 0;
     width: 100%;
+    height: 100%;
 }
 
 .lightbox-image-wrap {
     position: absolute;
-    inset: 0 56px;
+    inset: 0;
+    display: block;
+    overflow: hidden;
+    overscroll-behavior: contain;
+}
+
+.lightbox-image-stage {
+    min-height: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
 }
 
 .custom-lightbox .lightbox-image {
     display: block;
     object-fit: contain;
-    border-radius: 4px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    border-radius: 0;
+    box-shadow: none;
 }
 
 .lightbox-meta {
     position: absolute;
-    left: 56px;
-    right: 56px;
-    bottom: 12px;
-    z-index: 12;
-    padding: 10px 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 118px;
+    z-index: 31;
+    width: auto;
+    padding: 6px 14px;
     text-align: center;
-    background: rgba(15, 23, 42, 0.72);
-    border-radius: 8px;
+    background: rgba(15, 23, 42, 0.82);
+    border-radius: 999px;
     pointer-events: none;
-}
-
-.lightbox-title {
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 700;
-    margin: 0;
+    backdrop-filter: blur(6px);
 }
 
 .lightbox-counter {
-    color: rgba(255, 255, 255, 0.75);
-    margin-top: 4px;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
     font-size: 12px;
     font-weight: 600;
 }
 
 .lightbox-close-btn {
-    position: absolute;
-    top: 10px;
-    right: 16px;
+    position: fixed;
+    top: 16px;
+    right: 20px;
     color: #ffffff;
     font-size: 36px;
     line-height: 1;
@@ -467,7 +471,7 @@
     border: none;
     opacity: 0.85;
     transition: opacity 0.2s;
-    z-index: 20;
+    z-index: 25;
 }
 
 .lightbox-close-btn:hover {
@@ -475,10 +479,10 @@
 }
 
 .lightbox-arrow {
-    position: absolute;
+    position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 15;
+    z-index: 25;
     color: #ffffff;
     font-size: 32px;
     line-height: 1;
@@ -507,18 +511,23 @@
 }
 
 .lightbox-thumbs-wrap {
-    flex-shrink: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
     width: 100%;
-    padding: 10px 16px 16px;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(15, 23, 42, 0.98);
+    padding: 28px 20px 16px;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.96) 0%, rgba(15, 23, 42, 0.82) 50%, transparent 100%);
+    border-top: none;
+    pointer-events: auto;
 }
 
 .lightbox-thumbs {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     overflow-x: auto;
-    padding: 6px 4px 4px;
+    padding: 4px 2px 6px;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
 }
@@ -533,9 +542,9 @@
 }
 
 .lightbox-thumb {
-    flex: 0 0 88px;
-    width: 88px;
-    height: 66px;
+    flex: 0 0 104px;
+    width: 104px;
+    height: 72px;
     border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
@@ -622,41 +631,89 @@
     .gallery-masonry-grid {
         grid-template-columns: 1fr;
     }
-
-    .custom-lightbox {
-        padding-top: 44px;
-    }
-
-    .lightbox-image-wrap {
-        inset: 0 44px;
-    }
-
-    .lightbox-meta {
-        left: 44px;
-        right: 44px;
-        bottom: 8px;
-    }
-
-    .lightbox-arrow {
-        width: 40px;
-        height: 40px;
-        font-size: 26px;
-    }
-
-    .lightbox-arrow-left {
-        left: 8px;
-    }
-
-    .lightbox-arrow-right {
-        right: 8px;
-    }
-
-    .lightbox-thumb {
-        flex-basis: 72px;
-        width: 72px;
-        height: 54px;
-    }
 }
+
+.custom-lightbox.is-mobile {
+    padding: 0;
+    overflow: hidden;
+}
+
+.custom-lightbox.is-mobile .lightbox-thumbs-wrap {
+    display: none !important;
+}
+
+.custom-lightbox.is-mobile .lightbox-viewport {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.custom-lightbox.is-mobile .lightbox-image-wrap {
+    position: absolute;
+    inset: 0;
+    display: block;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding: 0;
+}
+
+.custom-lightbox.is-mobile .lightbox-image-stage {
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 48px 0 104px;
+}
+
+.custom-lightbox.is-mobile .lightbox-image {
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: unset !important;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.custom-lightbox.is-mobile .lightbox-close-btn {
+    position: fixed;
+    top: max(10px, env(safe-area-inset-top));
+    right: max(12px, env(safe-area-inset-right));
+    z-index: 25;
+}
+
+.custom-lightbox.is-mobile .lightbox-arrow {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 25;
+    width: 40px;
+    height: 40px;
+    font-size: 26px;
+}
+
+.custom-lightbox.is-mobile .lightbox-arrow-left {
+    left: max(8px, env(safe-area-inset-left));
+}
+
+.custom-lightbox.is-mobile .lightbox-arrow-right {
+    right: max(8px, env(safe-area-inset-right));
+}
+
+.custom-lightbox.is-mobile .lightbox-meta {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    transform: none;
+    width: auto;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    z-index: 25;
+}
+
 #insights, #moments, #gallery-grid {
     scroll-margin-top: 160px;
 }
@@ -702,93 +759,196 @@
                 <!-- Left Sidebar: Event Selector -->
                 <aside class="news-sidebar">
                     <div class="news-tab-list" role="tablist" aria-label="Impact Events">
-                        
+
+                        <!-- Tab 15 -->
+                        <button class="news-tab-item active" role="tab" aria-selected="true" aria-controls="event-tab-15" id="tab-15" data-index="15">
+                            <span class="news-tab-title">MUKMIN's 1st Inaugural AGM</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 31 May 2026</span>
+                        </button>
+
+                        <!-- Tab 16 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-16" id="tab-16" data-index="16">
+                            <span class="news-tab-title">India High Commissioner Felicitation Ceremony</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 25 May 2026</span>
+                        </button>
+
                         <!-- Tab 13 -->
-                        <button class="news-tab-item active" role="tab" aria-selected="true" aria-controls="event-tab-13" id="tab-13" data-index="13">
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-13" id="tab-13" data-index="13">
                             <span class="news-tab-title">Takbir Raya MUKMIN</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 17 March 2026</span>
                         </button>
-                        
+
                         <!-- Tab 12 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-12" id="tab-12" data-index="12">
                             <span class="news-tab-title">Kembara Ramadhan MUKMIN Kuala Lumpur</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 17 March 2026</span>
                         </button>
-                        
+
                         <!-- Tab 11 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-11" id="tab-11" data-index="11">
                             <span class="news-tab-title">Ramadhan Assistance for Scholars & Ustaz</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 11 March 2026</span>
                         </button>
-                        
+
                         <!-- Tab 10 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-10" id="tab-10" data-index="10">
                             <span class="news-tab-title">Kembara Ramadhan MUKMIN Penang</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 7 March 2026</span>
                         </button>
-                        
+
                         <!-- Tab 9 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-9" id="tab-9" data-index="9">
                             <span class="news-tab-title">Kembara Ramadhan MUKMIN</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 28 Feb – 17 Mar 2026</span>
                         </button>
-                        
+
                         <!-- Tab 8 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-8" id="tab-8" data-index="8">
                             <span class="news-tab-title">The KL Declaration</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 25 January 2026</span>
                         </button>
-                        
-                        <!-- Tab 7 -->
-                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-7" id="tab-7" data-index="7">
-                            <span class="news-tab-title">SIRAT Global Forum 2026</span>
-                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 23 – 25 January 2026</span>
+
+                        <!-- Tab 17 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-17" id="tab-17" data-index="17">
+                            <span class="news-tab-title">Golden Dinar Awards</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 25 January 2026</span>
                         </button>
-                        
+
                         <!-- Tab 6 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-6" id="tab-6" data-index="6">
                             <span class="news-tab-title">MUKMIN Future Leaders Scholarship Pledge</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 24 January 2026</span>
                         </button>
-                        
+
+                        <!-- Tab 7 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-7" id="tab-7" data-index="7">
+                            <span class="news-tab-title">SIRAT Global Forum 2026</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 23 – 25 January 2026</span>
+                        </button>
+
                         <!-- Tab 5 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-5" id="tab-5" data-index="5">
                             <span class="news-tab-title">FIKRAH Global Roundtable</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 23 January 2026</span>
                         </button>
-                        
+
+                        <!-- Tab 20 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-20" id="tab-20" data-index="20">
+                            <span class="news-tab-title">MUKMIN Football Friendly: KL vs Penang</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 23 November 2025</span>
+                        </button>
+
+                        <!-- Tab 14 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-14" id="tab-14" data-index="14">
+                            <span class="news-tab-title">SIRAT Youth Icon Awards</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
+                        </button>
+
                         <!-- Tab 4 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-4" id="tab-4" data-index="4">
                             <span class="news-tab-title">FIKRAH Launch</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
                         </button>
-                        
+
                         <!-- Tab 3 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-3" id="tab-3" data-index="3">
                             <span class="news-tab-title">SIRAT Youth Summit</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
                         </button>
-                        
+
+                        <!-- Tab 18 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-18" id="tab-18" data-index="18">
+                            <span class="news-tab-title">FIKRAH Chai & Chat</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 21 November 2025</span>
+                        </button>
+
+                        <!-- Tab 19 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-19" id="tab-19" data-index="19">
+                            <span class="news-tab-title">MUKMIN Shark Tank Pitching</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 21 November 2025</span>
+                        </button>
+
+                        <!-- Tab 21 -->
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-21" id="tab-21" data-index="21">
+                            <span class="news-tab-title">MUKMIN Official Jersey Launch</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 5 November 2025</span>
+                        </button>
+
                         <!-- Tab 2 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-2" id="tab-2" data-index="2">
                             <span class="news-tab-title">SIRAT Leaders Forum (Strengthening Indian Muslim Roots)</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 29 – 31 August 2025</span>
                         </button>
-                        
+
                         <!-- Tab 1 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-1" id="tab-1" data-index="1">
                             <span class="news-tab-title">Majlis Rumah Terbuka MUKMIN Sempena Hari Raya Aidilfitri</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 12 April 2025</span>
                         </button>
-                        
+
                     </div>
                 </aside>
 
                 <!-- Right Display Area -->
                 <main class="news-content-display">
-                    
+
+                    <!-- Detail 15 (Inaugural AGM) -->
+                    <article class="news-card-detail active" id="event-tab-15" role="tabpanel" aria-labelledby="tab-15" data-gallery-filter="{{ $newsGallerySlugs[15] ?? '' }}">
+                        <div class="news-detail-image-wrap">
+                            <img src="{{ asset('welfare/img/news/insights/15.png') }}" alt="MUKMIN's 1st Inaugural AGM">
+                        </div>
+                        <div class="news-detail-header">
+                            <div class="news-detail-title-wrap">
+                                <span class="news-detail-accent"></span>
+                                <h4 class="news-detail-title">MUKMIN's 1st Inaugural AGM</h4>
+                            </div>
+                            <div class="news-detail-meta">
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 31 May 2026</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Main Hall, UOC</span>
+                            </div>
+                        </div>
+                        <div class="news-detail-description">
+                            <p>The 1st Inaugural Annual General Meeting (AGM) marked a historic milestone in the journey of Pertubuhan Gabungan MUKMIN Nasional (MUKMIN), formally bringing together community leaders, affiliate organisations, strategic partners and members under a shared vision of strengthening and advancing the Indian Muslim community.</p>
+                            <p>Beyond fulfilling a key governance milestone, the AGM symbolised the transition of MUKMIN into a structured national coordinating ecosystem, anchored on collaboration, accountability and long-term community impact. Members came together to endorse the organisation's Constitution, appoint its leadership structure and collectively chart the strategic direction for the years ahead.</p>
+                            <p>The gathering also served as a platform to reaffirm MUKMIN's commitment to building resilient communities through its five strategic pillars—socio-economic mobility, education and future readiness, entrepreneurship and innovation, faith, identity and ukhuwah, as well as leadership and capacity building.</p>
+                            <p>As MUKMIN embarks on this new chapter, the Inaugural AGM stands as a testament to the collective aspiration to build a stronger, more connected and future-ready community for generations to come.</p>
+                        </div>
+                        <div class="news-detail-cta-wrap">
+                            <button class="news-detail-cta scroll-to-gallery">
+                                View Gallery <i class="fas fa-images" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Detail 16 (India High Commissioner Felicitation) -->
+                    <article class="news-card-detail" id="event-tab-16" role="tabpanel" aria-labelledby="tab-16" data-gallery-filter="{{ $newsGallerySlugs[16] ?? '' }}">
+                        <div class="news-detail-image-wrap">
+                            <img src="{{ asset('welfare/img/news/insights/16.png') }}" alt="India High Commissioner to Malaysia Felicitation Ceremony">
+                        </div>
+                        <div class="news-detail-header">
+                            <div class="news-detail-title-wrap">
+                                <span class="news-detail-accent"></span>
+                                <h4 class="news-detail-title">India High Commissioner to Malaysia Felicitation Ceremony</h4>
+                            </div>
+                            <div class="news-detail-meta">
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 25 May 2026</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> India Gate Restaurant, Puchong</span>
+                            </div>
+                        </div>
+                        <div class="news-detail-description">
+                            <p>MUKMIN was honoured to host a special Felicitation Ceremony in appreciation of His Excellency B. N. Reddy, recognising his dedicated service and significant contributions towards strengthening the longstanding friendship and strategic partnership between India and Malaysia.</p>
+                            <p>The event brought together community leaders, professionals, organisations and distinguished guests to celebrate a diplomatic tenure marked by collaboration, mutual respect and the strengthening of people-to-people connections between the two nations. It also served as an opportunity to acknowledge the positive role of diplomacy in fostering greater cooperation across community, education, business and cultural spheres.</p>
+                            <p>On behalf of the MUKMIN ecosystem, we express our deepest appreciation for H.E. B. N. Reddy's visionary leadership, commitment to public service and unwavering efforts in advancing stronger bilateral relations. We extend our heartfelt gratitude and best wishes for continued success in his future endeavours.</p>
+                        </div>
+                        <div class="news-detail-cta-wrap">
+                            <button class="news-detail-cta scroll-to-gallery">
+                                View Gallery <i class="fas fa-images" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </article>
+
                     <!-- Detail 13 (Takbir Raya) -->
-                    <article class="news-card-detail active" id="event-tab-13" role="tabpanel" aria-labelledby="tab-13" data-gallery-filter="{{ $newsGallerySlugs[13] ?? '' }}">
+                    <article class="news-card-detail" id="event-tab-13" role="tabpanel" aria-labelledby="tab-13" data-gallery-filter="{{ $newsGallerySlugs[13] ?? '' }}">
                         <div class="news-detail-image-wrap">
                             <img src="{{ asset('welfare/img/news/insights/1.png') }}" alt="Takbir Raya MUKMIN">
                         </div>
@@ -952,6 +1112,33 @@
                         </div>
                     </article>
 
+                    <!-- Detail 17 (Golden Dinar Awards) -->
+                    <article class="news-card-detail" id="event-tab-17" role="tabpanel" aria-labelledby="tab-17" data-gallery-filter="{{ $newsGallerySlugs[17] ?? '' }}">
+                        <div class="news-detail-image-wrap">
+                            <img src="{{ asset('welfare/img/news/insights/17.png') }}" alt="Golden Dinar Awards">
+                        </div>
+                        <div class="news-detail-header">
+                            <div class="news-detail-title-wrap">
+                                <span class="news-detail-accent"></span>
+                                <h4 class="news-detail-title">Golden Dinar Awards</h4>
+                            </div>
+                            <div class="news-detail-meta">
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 25 January 2026</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Bank Rakyat Convention Centre</span>
+                            </div>
+                        </div>
+                        <div class="news-detail-description">
+                            <p>The Golden Dinar Awards was established to recognise and celebrate individuals whose leadership, achievements and contributions have created meaningful impact within the Indian Muslim community, both in Malaysia and around the world.</p>
+                            <p>The awards honour outstanding business leaders, professionals, entrepreneurs, academics, innovators and distinguished personalities who have demonstrated excellence in their respective fields while contributing towards the advancement and empowerment of the community.</p>
+                            <p>More than an awards ceremony, the Golden Dinar Awards serves as a platform to acknowledge inspiring role models, strengthen community pride and showcase the remarkable achievements of individuals whose dedication and success continue to shape a stronger and more resilient future for generations to come.</p>
+                        </div>
+                        <div class="news-detail-cta-wrap">
+                            <button class="news-detail-cta scroll-to-gallery">
+                                View Gallery <i class="fas fa-images" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </article>
+
                     <!-- Detail 7 (Global Forum) -->
                     <article class="news-card-detail" id="event-tab-7" role="tabpanel" aria-labelledby="tab-7" data-gallery-filter="{{ $newsGallerySlugs[7] ?? '' }}">
                         <div class="news-detail-image-wrap">
@@ -1032,6 +1219,62 @@
                         </div>
                     </article>
 
+                    <!-- Detail 20 (Football Friendly) -->
+                    <article class="news-card-detail" id="event-tab-20" role="tabpanel" aria-labelledby="tab-20" data-gallery-filter="{{ $newsGallerySlugs[20] ?? '' }}">
+                        <div class="news-detail-image-wrap">
+                            <img src="{{ asset('welfare/img/news/insights/20.png') }}" alt="MUKMIN Football Friendly: KL vs Penang">
+                        </div>
+                        <div class="news-detail-header">
+                            <div class="news-detail-title-wrap">
+                                <span class="news-detail-accent"></span>
+                                <h4 class="news-detail-title">MUKMIN Football Friendly: KL vs Penang</h4>
+                            </div>
+                            <div class="news-detail-meta">
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 23 November 2025</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Georgetown, Penang</span>
+                            </div>
+                        </div>
+                        <div class="news-detail-description">
+                            <p>The MUKMIN Football Friendly brought together members of the MUKMIN community for a spirited morning of sportsmanship, camaraderie and healthy competition as MUKMIN KL took on MUKMIN Penang in a friendly football match held in Georgetown.</p>
+                            <p>More than just a sporting event, the programme was organised to strengthen bonds of ukhuwah, encourage youth engagement and foster closer connections between members and communities across different regions. The event reflected MUKMIN's commitment to promoting holistic community development through meaningful social and recreational activities.</p>
+                            <p>The occasion was further elevated by the presence of distinguished representatives from the Football Association of Malaysia (FAM), Football Association of Selangor (FAS) and Football Association of Penang (FAP), who attended to officiate and inaugurate the friendly match, underscoring the significance of the initiative and the value of strategic community partnerships.</p>
+                            <p>Through programmes such as the MUKMIN Football Friendly, the organisation continues to create platforms that bring people together, strengthen relationships and cultivate a vibrant, united and active community.</p>
+                        </div>
+                        <div class="news-detail-cta-wrap">
+                            <button class="news-detail-cta scroll-to-gallery">
+                                View Gallery <i class="fas fa-images" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Detail 14 (SIRAT Youth Icon Awards) -->
+                    <article class="news-card-detail" id="event-tab-14" role="tabpanel" aria-labelledby="tab-14" data-gallery-filter="{{ $newsGallerySlugs[14] ?? '' }}">
+                        <div class="news-detail-image-wrap">
+                            <img src="{{ asset('welfare/img/news/insights/14.png') }}" alt="SIRAT Youth Icon Awards">
+                        </div>
+                        <div class="news-detail-header">
+                            <div class="news-detail-title-wrap">
+                                <span class="news-detail-accent"></span>
+                                <h4 class="news-detail-title">SIRAT Youth Icon Awards</h4>
+                            </div>
+                            <div class="news-detail-meta">
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> PICCA, Penang</span>
+                            </div>
+                        </div>
+                        <div class="news-detail-description">
+                            <p>The SIRAT Youth Icon Awards was established to recognise and celebrate outstanding young individuals who have demonstrated excellence, leadership and meaningful contributions across various fields while inspiring positive change within the community.</p>
+                            <p>Held as a flagship segment of the SIRAT Youth Summit, the awards honoured a new generation of trailblazers, including entrepreneurs, professionals, innovators, academics, creatives and community leaders, whose achievements embody the values of resilience, service and purposeful leadership.</p>
+                            <p>Beyond recognising individual accomplishments, the SIRAT Youth Icon Awards serves as a platform to inspire future generations, showcase positive role models and encourage greater youth participation in nation-building and community development. The initiative reflects MUKMIN's commitment to nurturing future-ready leaders who are equipped to make a lasting impact both locally and globally.</p>
+                            <p>By celebrating excellence and aspiration, the SIRAT Youth Icon Awards reinforces the belief that empowered youth are the foundation of a stronger, more resilient and united community.</p>
+                        </div>
+                        <div class="news-detail-cta-wrap">
+                            <button class="news-detail-cta scroll-to-gallery">
+                                View Gallery <i class="fas fa-images" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </article>
+
                     <!-- Detail 4 (FIKRAH Launch) -->
                     <article class="news-card-detail" id="event-tab-4" role="tabpanel" aria-labelledby="tab-4" data-gallery-filter="{{ $newsGallerySlugs[4] ?? '' }}">
                         <div class="news-detail-image-wrap">
@@ -1077,6 +1320,88 @@
                             <p>The SIRAT Youth Summit brought together more than 1,000 youths, making it one of the largest Indian Muslim youth gatherings in Malaysia.</p>
                             <p>Featuring inspirational talks, panel discussions, fireside chats and pitching sessions, the programme provided a platform for youths to showcase ideas, build networks and explore future opportunities. The event also celebrated outstanding young individuals through the Youth Icon Awards, strengthening the spirit of youth leadership and empowerment.</p>
                             <p>In recognition of its scale and impact, the programme was also recorded in the Malaysian Book of Records for the largest participation in an Indian Muslim youth gathering.</p>
+                        </div>
+                        <div class="news-detail-cta-wrap">
+                            <button class="news-detail-cta scroll-to-gallery">
+                                View Gallery <i class="fas fa-images" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Detail 18 (FIKRAH Chai & Chat) -->
+                    <article class="news-card-detail" id="event-tab-18" role="tabpanel" aria-labelledby="tab-18" data-gallery-filter="{{ $newsGallerySlugs[18] ?? '' }}">
+                        <div class="news-detail-image-wrap">
+                            <img src="{{ asset('welfare/img/news/insights/18.png') }}" alt="FIKRAH Chai & Chat">
+                        </div>
+                        <div class="news-detail-header">
+                            <div class="news-detail-title-wrap">
+                                <span class="news-detail-accent"></span>
+                                <h4 class="news-detail-title">FIKRAH Chai & Chat</h4>
+                            </div>
+                            <div class="news-detail-meta">
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 21 November 2025</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> PICCA, Penang</span>
+                            </div>
+                        </div>
+                        <div class="news-detail-description">
+                            <p>FIKRAH Chai & Chat marked the inaugural roundtable dialogue under the FIKRAH platform, bringing together a diverse group of talented, forward-thinking and future-focused young professionals and community leaders for an open exchange of ideas.</p>
+                            <p>The session served as an introduction to FIKRAH's role as MUKMIN's strategic think tank, creating a space for meaningful conversations on the aspirations, challenges and opportunities facing the Indian Muslim community. Through constructive dialogue and the sharing of perspectives, participants explored how research, innovation and collaborative leadership can contribute towards building stronger and more resilient communities.</p>
+                            <p>The gathering reflects FIKRAH's commitment to fostering thought leadership, nurturing emerging voices and translating ideas into actionable strategies for long-term community impact.</p>
+                        </div>
+                        <div class="news-detail-cta-wrap">
+                            <button class="news-detail-cta scroll-to-gallery">
+                                View Gallery <i class="fas fa-images" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Detail 19 (MUKMIN Shark Tank Pitching) -->
+                    <article class="news-card-detail" id="event-tab-19" role="tabpanel" aria-labelledby="tab-19" data-gallery-filter="{{ $newsGallerySlugs[19] ?? '' }}">
+                        <div class="news-detail-image-wrap">
+                            <img src="{{ asset('welfare/img/news/insights/19.png') }}" alt="MUKMIN Shark Tank Pitching">
+                        </div>
+                        <div class="news-detail-header">
+                            <div class="news-detail-title-wrap">
+                                <span class="news-detail-accent"></span>
+                                <h4 class="news-detail-title">MUKMIN Shark Tank Pitching</h4>
+                            </div>
+                            <div class="news-detail-meta">
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 21 November 2025</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> PICCA, Penang</span>
+                            </div>
+                        </div>
+                        <div class="news-detail-description">
+                            <p>Held in conjunction with the SIRAT Youth Summit, the MUKMIN Shark Tank Pitching session provided a platform for aspiring entrepreneurs to showcase innovative business ideas and connect with experienced industry leaders.</p>
+                            <p>Following a competitive selection process, six dynamic and promising young entrepreneurs were shortlisted to present their ventures before a panel of distinguished business leaders and professionals from the Indian Muslim community, who served as the programme's very own "Sharks."</p>
+                            <p>The session was designed not only as a pitching competition, but also as a valuable opportunity for mentorship, constructive feedback and strategic networking. Participants gained practical insights into business growth, investment readiness and entrepreneurship, while fostering meaningful connections with established leaders and potential collaborators.</p>
+                            <p>As part of MUKMIN's commitment to strengthening entrepreneurship and innovation, the initiative reflects the organisation's broader vision of nurturing future-ready talent, empowering young founders and creating pathways for sustainable socio-economic advancement within the community.</p>
+                        </div>
+                        <div class="news-detail-cta-wrap">
+                            <button class="news-detail-cta scroll-to-gallery">
+                                View Gallery <i class="fas fa-images" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Detail 21 (Official Jersey Launch) -->
+                    <article class="news-card-detail" id="event-tab-21" role="tabpanel" aria-labelledby="tab-21" data-gallery-filter="{{ $newsGallerySlugs[21] ?? '' }}">
+                        <div class="news-detail-image-wrap">
+                            <img src="{{ asset('welfare/img/news/insights/21.png') }}" alt="MUKMIN Official Jersey Launch">
+                        </div>
+                        <div class="news-detail-header">
+                            <div class="news-detail-title-wrap">
+                                <span class="news-detail-accent"></span>
+                                <h4 class="news-detail-title">MUKMIN Official Jersey Launch</h4>
+                            </div>
+                            <div class="news-detail-meta">
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 5 November 2025</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Syed Bistro, Dang Wangi</span>
+                            </div>
+                        </div>
+                        <div class="news-detail-description">
+                            <p>In conjunction with the SIRAT Youth Summit, MUKMIN proudly unveiled its Official MUKMIN Jersey, symbolising unity, identity and a shared commitment towards strengthening community engagement through youth, leadership and collective action.</p>
+                            <p>The launch marked more than the introduction of a new official attire—it represents the spirit of togetherness and collaboration that defines the MUKMIN ecosystem, bringing organisations, leaders and communities together under one shared vision.</p>
+                            <p>The initiative was made possible through the valued support and collaboration of GM Group, MyEvents International, Mahaberjaya and Syed Group, whose partnership reflects the importance of cross-sector collaboration in advancing meaningful community initiatives.</p>
                         </div>
                         <div class="news-detail-cta-wrap">
                             <button class="news-detail-cta scroll-to-gallery">
@@ -1192,19 +1517,20 @@
         <button type="button" class="lightbox-arrow lightbox-arrow-left" id="lightboxPrev" aria-label="Previous image">&lsaquo;</button>
 
         <div class="lightbox-image-wrap">
-            <img src="" alt="" class="lightbox-image" id="lightboxImage">
+            <div class="lightbox-image-stage">
+                <img src="" alt="" class="lightbox-image" id="lightboxImage">
+            </div>
         </div>
 
         <button type="button" class="lightbox-arrow lightbox-arrow-right" id="lightboxNext" aria-label="Next image">&rsaquo;</button>
 
         <div class="lightbox-meta">
-            <div class="lightbox-title" id="lightboxTitle"></div>
             <div class="lightbox-counter" id="lightboxCounter"></div>
         </div>
-    </div>
 
-    <div class="lightbox-thumbs-wrap">
-        <div class="lightbox-thumbs" id="lightboxThumbs"></div>
+        <div class="lightbox-thumbs-wrap">
+            <div class="lightbox-thumbs" id="lightboxThumbs"></div>
+        </div>
     </div>
 </div>
 
@@ -1330,7 +1656,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // -------------------------------------------------------------
     const lightboxModal = document.getElementById('lightboxModal');
     const lightboxImage = document.getElementById('lightboxImage');
-    const lightboxTitle = document.getElementById('lightboxTitle');
     const lightboxCounter = document.getElementById('lightboxCounter');
     const lightboxThumbs = document.getElementById('lightboxThumbs');
     const lightboxClose = document.getElementById('lightboxClose');
@@ -1341,9 +1666,37 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentImageIndex = 0;
     let visibleGalleryItems = [];
 
+    function isMobileLightbox() {
+        return window.matchMedia('(max-width: 991px)').matches;
+    }
+
+    function clearLightboxImageSizing() {
+        lightboxImage.style.removeProperty('width');
+        lightboxImage.style.removeProperty('height');
+        lightboxImage.style.removeProperty('max-width');
+        lightboxImage.style.removeProperty('max-height');
+        lightboxImage.style.removeProperty('object-fit');
+    }
+
+    function updateLightboxMode() {
+        const mobile = isMobileLightbox();
+        lightboxModal.classList.toggle('is-mobile', mobile);
+
+        if (mobile) {
+            clearLightboxImageSizing();
+        } else {
+            fitLightboxImage();
+        }
+    }
+
     function fitLightboxImage() {
         const wrap = lightboxViewport ? lightboxViewport.querySelector('.lightbox-image-wrap') : null;
         if (!wrap || !lightboxImage.getAttribute('src')) {
+            return;
+        }
+
+        if (isMobileLightbox()) {
+            clearLightboxImageSizing();
             return;
         }
 
@@ -1371,9 +1724,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function resetLightboxScroll() {
+        const wrap = lightboxViewport ? lightboxViewport.querySelector('.lightbox-image-wrap') : null;
+        if (wrap) {
+            wrap.scrollTop = 0;
+            wrap.scrollLeft = 0;
+        }
+    }
+
     lightboxImage.addEventListener('load', fitLightboxImage);
     window.addEventListener('resize', function() {
         if (lightboxModal.classList.contains('show')) {
+            updateLightboxMode();
             fitLightboxImage();
         }
     });
@@ -1387,6 +1749,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function buildLightboxThumbs() {
         lightboxThumbs.innerHTML = '';
+
+        if (isMobileLightbox()) {
+            return;
+        }
 
         visibleGalleryItems.forEach((card, index) => {
             const thumb = document.createElement('button');
@@ -1410,6 +1776,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function highlightActiveThumb() {
+        if (isMobileLightbox()) {
+            return;
+        }
+
         const thumbs = lightboxThumbs.querySelectorAll('.lightbox-thumb');
         thumbs.forEach((thumb, index) => {
             thumb.classList.toggle('active', index === currentImageIndex);
@@ -1438,14 +1808,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (activeCard) {
             const imgSrc = activeCard.getAttribute('data-src');
             const imgTitle = activeCard.getAttribute('data-title');
-            
+
             lightboxImage.setAttribute('src', imgSrc);
             lightboxImage.setAttribute('alt', imgTitle);
-            lightboxImage.style.width = '';
-            lightboxImage.style.height = '';
-            lightboxTitle.textContent = imgTitle;
+            clearLightboxImageSizing();
             lightboxCounter.textContent = `${currentImageIndex + 1} / ${visibleGalleryItems.length}`;
             highlightActiveThumb();
+            resetLightboxScroll();
 
             if (lightboxImage.complete) {
                 fitLightboxImage();
@@ -1457,9 +1826,10 @@ document.addEventListener('DOMContentLoaded', function() {
         card.addEventListener('click', function() {
             updateVisibleItems();
             currentImageIndex = visibleGalleryItems.indexOf(this);
+            updateLightboxMode();
             buildLightboxThumbs();
             
-            lightboxModal.style.display = 'flex';
+            lightboxModal.style.display = 'block';
             // Trigger reflow for CSS transition
             void lightboxModal.offsetWidth;
             lightboxModal.classList.add('show');
@@ -1481,6 +1851,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function closeLightbox() {
         lightboxModal.classList.remove('show');
+        lightboxModal.classList.remove('is-mobile');
         setTimeout(() => {
             lightboxModal.style.display = 'none';
             lightboxModal.setAttribute('aria-hidden', 'true');
