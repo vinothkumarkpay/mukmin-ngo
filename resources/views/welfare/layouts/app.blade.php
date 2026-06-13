@@ -91,6 +91,12 @@
                         </div>
                         --}}
                         
+                        <!-- Scholarship Button -->
+                        <a href="{{ route('welfare.impact.mfls') }}" class="btn-scholarship-rounded" aria-label="Scholarship">
+                            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                            <span class="action-text">Scholarship</span>
+                        </a>
+
                         <!-- Register As A Member Button -->
                         <a href="{{ route('welfare.serve') }}#membership-vertical-tabs" class="btn-register-rounded" aria-label="Register as a member">
                             <i class="fas fa-user-plus" aria-hidden="true"></i>
