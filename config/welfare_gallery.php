@@ -23,6 +23,7 @@ return [
     */
     'moments_hidden_folders' => [
         'Kembara Ramadhan MUKMIN',
+        'Sirat Leaders',
     ],
 
     /*
@@ -48,12 +49,12 @@ return [
         12 => 'Majlis Berbuka Puasa & Kembara Ramadhan MUKMIN Kuala Lumpur',
         13 => 'Takbir Raya MUKMIN',
         14 => 'Youth Icon Awards',
-        15 => 'MUKMIN 1st Inaugural AGM',
-        16 => 'India High Commissioner Felicitation Ceremony',
+        15 => 'MUKMIN AGM',
+        16 => 'India High Comm',
         17 => 'Golden Dinar Awards',
         18 => 'FIKRAH Chai & Chat',
-        19 => 'MUKMIN Shark Tank Pitching',
-        20 => 'MUKMIN Football Friendly KL vs Penang',
-        21 => 'MUKMIN Official Jersey Launch',
+        19 => 'Shark Tank pitching',
+        20 => 'Football Match MUKMIN',
+        21 => 'Jersey Launch',
     ],
 ];
