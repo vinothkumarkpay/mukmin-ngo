@@ -92,7 +92,7 @@
                         --}}
                         
                         <!-- Scholarship Button -->
-                        <a href="{{ route('welfare.impact.mfls') }}" class="btn-scholarship-rounded" aria-label="Scholarship">
+                        <a href="{{ route('welfare.mfls-scholarship') }}" class="btn-scholarship-rounded" aria-label="Scholarship">
                             <i class="fas fa-graduation-cap" aria-hidden="true"></i>
                             <span class="action-text">Scholarship</span>
                         </a>
