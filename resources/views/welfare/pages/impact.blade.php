@@ -271,7 +271,7 @@
                 <article class="expand-item is-open" data-expand-item id="socio-economic">
                     <button type="button" class="expand-trigger" aria-expanded="true" aria-controls="expand-socio-economic" id="expand-btn-socio-economic">
                         <span class="expand-icon-wrap" aria-hidden="true"><i class="fas fa-chart-line"></i></span>
-                        <h2>Socio-Economic Mobility</h2>
+                        <h2>Economic Empowerment</h2>
                         <span class="expand-chevron" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <div class="expand-panel" id="expand-socio-economic" role="region" aria-labelledby="expand-btn-socio-economic">
@@ -290,7 +290,7 @@
                 <article class="expand-item" data-expand-item id="education">
                     <button type="button" class="expand-trigger" aria-expanded="false" aria-controls="expand-education" id="expand-btn-education">
                         <span class="expand-icon-wrap" aria-hidden="true"><i class="fas fa-graduation-cap"></i></span>
-                        <h2>Education &amp; Future Readiness</h2>
+                        <h2>Education and Talent Development</h2>
                         <span class="expand-chevron" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <div class="expand-panel" id="expand-education" role="region" aria-labelledby="expand-btn-education" hidden>
@@ -315,7 +315,7 @@
                 <article class="expand-item" data-expand-item id="leadership">
                     <button type="button" class="expand-trigger" aria-expanded="false" aria-controls="expand-leadership" id="expand-btn-leadership">
                         <span class="expand-icon-wrap" aria-hidden="true"><i class="fas fa-users"></i></span>
-                        <h2>Leadership &amp; Capacity Building</h2>
+                        <h2>Leadership and Representation</h2>
                         <span class="expand-chevron" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <div class="expand-panel" id="expand-leadership" role="region" aria-labelledby="expand-btn-leadership" hidden>
@@ -339,17 +339,17 @@
                 <article class="expand-item" data-expand-item id="entrepreneurship">
                     <button type="button" class="expand-trigger" aria-expanded="false" aria-controls="expand-entrepreneurship" id="expand-btn-entrepreneurship">
                         <span class="expand-icon-wrap" aria-hidden="true"><i class="fas fa-lightbulb"></i></span>
-                        <h2>Entrepreneurship &amp; Innovation</h2>
+                        <h2>Community Welfare</h2>
                         <span class="expand-chevron" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <div class="expand-panel" id="expand-entrepreneurship" role="region" aria-labelledby="expand-btn-entrepreneurship" hidden>
-                        <p>We strengthen participation in the innovation and digital economy by empowering entrepreneurs, SMEs, and emerging talent with future-ready capabilities and scalable opportunities.</p>
+                        <p>We strengthen community well-being through sustainable initiatives that support families, uplift vulnerable groups and foster resilient, compassionate communities.</p>
                         <h3>Strategic Focus</h3>
                         <ul class="focus-list">
-                            <li>Strengthening SMEs and micro-entrepreneurs</li>
-                            <li>Expanding participation in the digital economy</li>
-                            <li>Innovation-driven ecosystem collaboration</li>
-                            <li>Entrepreneurship pathways for youth and communities</li>
+                            <li>Community aid and welfare programmes</li>
+                            <li>Supporting vulnerable families and individuals</li>
+                            <li>Building resilient and inclusive communities</li>
+                            <li>Collaborative partnerships for lasting social impact</li>
                         </ul>
                     </div>
                 </article>
@@ -358,7 +358,7 @@
                 <article class="expand-item" data-expand-item id="faith">
                     <button type="button" class="expand-trigger" aria-expanded="false" aria-controls="expand-faith" id="expand-btn-faith">
                         <span class="expand-icon-wrap" aria-hidden="true"><i class="fas fa-hands-helping"></i></span>
-                        <h2>Faith, Identity &amp; Ukhwah</h2>
+                        <h2>Faith, Identity and Ukhwah</h2>
                         <span class="expand-chevron" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
                     </button>
                     <div class="expand-panel" id="expand-faith" role="region" aria-labelledby="expand-btn-faith" hidden>
@@ -381,23 +381,50 @@
 @push('scripts')
 <script>
 (function () {
-    var items = document.querySelectorAll('[data-expand-item]');
-    items.forEach(function (item) {
+    var tabsRoot = document.getElementById('impact-expandable-tabs');
+    if (!tabsRoot) return;
+
+    var items = tabsRoot.querySelectorAll('[data-expand-item]');
+
+    function closeExpandItem(item) {
         var trigger = item.querySelector('.expand-trigger');
         var panel = item.querySelector('.expand-panel');
         if (!trigger || !panel) return;
+        item.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+        panel.hidden = true;
+    }
+
+    function openExpandItem(item) {
+        var trigger = item.querySelector('.expand-trigger');
+        var panel = item.querySelector('.expand-panel');
+        if (!trigger || !panel) return;
+        item.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+        panel.hidden = false;
+    }
+
+    function collapseAllExcept(targetItem) {
+        items.forEach(function (item) {
+            if (item !== targetItem) {
+                closeExpandItem(item);
+            }
+        });
+    }
+
+    items.forEach(function (item) {
+        var trigger = item.querySelector('.expand-trigger');
+        if (!trigger) return;
 
         trigger.addEventListener('click', function () {
             var isOpen = item.classList.contains('is-open');
             if (isOpen) {
-                item.classList.remove('is-open');
-                trigger.setAttribute('aria-expanded', 'false');
-                panel.hidden = true;
-            } else {
-                item.classList.add('is-open');
-                trigger.setAttribute('aria-expanded', 'true');
-                panel.hidden = false;
+                closeExpandItem(item);
+                return;
             }
+
+            collapseAllExcept(item);
+            openExpandItem(item);
         });
     });
 
@@ -405,27 +432,30 @@
         if (!hash) return;
         var cleanHash = hash.replace('#', '');
         var targetItem = document.getElementById(cleanHash);
-        if (targetItem && targetItem.classList.contains('expand-item')) {
-            if (!targetItem.classList.contains('is-open')) {
-                var trigger = targetItem.querySelector('.expand-trigger');
-                var panel = targetItem.querySelector('.expand-panel');
-                if (trigger && panel) {
-                    targetItem.classList.add('is-open');
-                    trigger.setAttribute('aria-expanded', 'true');
-                    panel.hidden = false;
-                }
-            }
-            setTimeout(function () {
-                targetItem.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 50);
-        }
+        if (!targetItem || !tabsRoot.contains(targetItem)) return;
+
+        collapseAllExcept(targetItem);
+        openExpandItem(targetItem);
+
+        window.requestAnimationFrame(function () {
+            targetItem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
     }
-    
+
+    window.mukminFocusImpactSection = handleImpactHashes;
+
     if (window.location.hash) {
         handleImpactHashes(window.location.hash);
     }
+
     window.addEventListener('hashchange', function () {
         handleImpactHashes(window.location.hash);
+    });
+
+    window.addEventListener('popstate', function () {
+        if (window.location.hash) {
+            handleImpactHashes(window.location.hash);
+        }
     });
 })();
 </script>

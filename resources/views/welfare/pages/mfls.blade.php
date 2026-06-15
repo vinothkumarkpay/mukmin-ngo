@@ -278,11 +278,11 @@
     object-fit: contain;
 }
 .mfls-partner-logo-btn span {
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 700;
-    color: #666;
+    color: #444;
     text-align: center;
-    line-height: 1.3;
+    line-height: 1.35;
 }
 .mfls-partner-details {
     display: flex;
@@ -347,6 +347,18 @@
     border-radius: 50%;
     background: var(--color-primary, #d43c18);
 }
+.mfls-programme-group-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-heading);
+    margin: 18px 0 10px;
+}
+.mfls-programme-group-title:first-of-type {
+    margin-top: 0;
+}
+.mfls-programme-groups .mfls-programme-list {
+    margin-bottom: 4px;
+}
 .mfls-apply-btn {
     display: inline-flex;
     align-items: center;
@@ -374,16 +386,6 @@
     color: #555;
     margin: 0;
 }
-.mfls-notice {
-    background: #fdf8f6;
-    border: 1px solid rgba(212, 60, 24, 0.2);
-    border-radius: 6px;
-    padding: 18px 22px;
-    font-size: 14px;
-    line-height: 22px;
-    color: #555;
-    text-align: center;
-}
 .mfls-back {
     display: inline-flex;
     align-items: center;
@@ -408,6 +410,9 @@
     .mfls-partner-logo-btn img {
         max-width: 200px;
         height: 84px;
+    }
+    .mfls-partner-logo-btn span {
+        font-size: 15px;
     }
     .mfls-programme-list {
         grid-template-columns: 1fr;
@@ -542,11 +547,24 @@
                             <h3>{{ $partner['name'] }}</h3>
                             <p>{{ $partner['info'] }}</p>
                             <h4>Available Programmes</h4>
-                            <ul class="mfls-programme-list">
-                                @foreach($partner['programmes'] as $programme)
-                                    <li>{{ $programme }}</li>
-                                @endforeach
-                            </ul>
+                            @if (!empty($partner['programme_groups']))
+                                <div class="mfls-programme-groups">
+                                    @foreach ($partner['programme_groups'] as $group)
+                                        <h5 class="mfls-programme-group-title">{{ $group['title'] }}</h5>
+                                        <ul class="mfls-programme-list">
+                                            @foreach ($group['programmes'] as $programme)
+                                                <li>{{ $programme }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @endforeach
+                                </div>
+                            @else
+                                <ul class="mfls-programme-list">
+                                    @foreach ($partner['programmes'] as $programme)
+                                        <li>{{ $programme }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
                             <a href="{{ $mflsApplyUrl }}" class="mfls-apply-btn">
                                 Apply Now <i class="fas fa-arrow-right" style="font-size: 11px;"></i>
                             </a>
@@ -574,7 +592,6 @@
             </div>
 
             <div class="content-block">
-                <p class="mfls-notice">Further details on MFLS will be shared soon. Stay tuned!</p>
                 <a href="{{ route('welfare.impact') }}#education" class="mfls-back">
                     <i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Impact Areas
                 </a>

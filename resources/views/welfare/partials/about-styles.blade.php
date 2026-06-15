@@ -230,6 +230,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 25px;
+    align-items: stretch;
 }
 .members-grid.exco-grid {
     grid-template-columns: repeat(4, 1fr);
@@ -247,6 +248,10 @@
     position: relative;
     overflow: hidden;
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     cursor: pointer;
     font-family: inherit;
     appearance: none;
@@ -266,6 +271,7 @@
     overflow: hidden;
     border: 3px solid #f3f3f3;
     transition: border-color var(--transition);
+    flex-shrink: 0;
 }
 .member-card:hover .member-avatar,
 .member-card:focus-visible .member-avatar {
@@ -276,52 +282,72 @@
     height: 100%;
     object-fit: cover;
 }
+.member-card-body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 auto;
+}
 .member-name {
+    width: 100%;
     font-size: 17px;
     font-weight: 700;
     color: var(--color-heading);
-    margin-bottom: 6px;
+    margin: 0 0 6px;
     line-height: 1.4;
+    min-height: calc(1.4em * 2);
 }
 .member-role {
+    width: 100%;
     font-size: 15px;
     font-weight: 600;
     color: var(--color-primary);
-    margin-bottom: 5px;
+    margin: 0 0 5px;
+    line-height: 1.4;
+    min-height: calc(1.4em * 2);
     display: block;
 }
 .member-org {
+    width: 100%;
     font-size: 14px;
     color: #666;
     line-height: 1.4;
+    min-height: calc(1.4em * 2);
+    margin: 0;
     display: block;
 }
 .member-tag {
     display: inline-block;
+    width: 100%;
+    max-width: 100%;
     background: #f1f5f9;
     color: #475569;
     font-size: 13px;
     font-weight: 600;
-    padding: 5px 11px;
+    padding: 6px 11px;
     border-radius: 14px;
-    margin-top: 10px;
+    margin: 0;
     letter-spacing: 0.2px;
     line-height: 1.35;
+    box-sizing: border-box;
 }
 .member-card:hover .member-tag,
 .member-card:focus-visible .member-tag {
-    background: var(--color-primary);
-    color: #fff;
+    background: #fdeee9;
+    color: var(--color-primary);
 }
 .member-card-hint {
     display: block;
-    margin-top: 12px;
+    margin-top: auto;
+    padding-top: 12px;
     font-size: 13px;
     font-weight: 600;
     color: var(--color-primary);
     opacity: 0;
     transform: translateY(4px);
     transition: opacity var(--transition), transform var(--transition);
+    flex-shrink: 0;
 }
 .member-card:hover .member-card-hint,
 .member-card:focus-visible .member-card-hint {

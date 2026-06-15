@@ -980,7 +980,7 @@
                         if (key === 'key_office_bearers') {
                             let bearersHtml = '<div style="display:flex; flex-direction:column; gap:8px;">';
                             for (let role in val) {
-                                bearersHtml += `<div><strong>${role.toUpperCase()}:</strong> ${escapeHtml(val[role].name)} (${escapeHtml(val[role].email)} / ${escapeHtml(val[role].phone)})</div>`;
+                                bearersHtml += `<div><strong>${role.toUpperCase()}:</strong> ${escapeHtml([val[role].salutation, val[role].name].filter(Boolean).join(' '))} (${escapeHtml(val[role].nric || 'N/A')} / ${escapeHtml(val[role].email)} / ${escapeHtml(val[role].phone)})</div>`;
                             }
                             bearersHtml += '</div>';
                             val = bearersHtml;

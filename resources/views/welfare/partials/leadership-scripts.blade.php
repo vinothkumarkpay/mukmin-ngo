@@ -37,7 +37,17 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     }
 
+    function shouldHideCommitteeDescriptor(data) {
+        return data.committee === 'Council of Advisor'
+            || data.committee === 'Central Executive Committee (CEC)'
+            || data.committee === 'Executive Committee (EXCO)';
+    }
+
     function buildMetaText(data) {
+        if (shouldHideCommitteeDescriptor(data)) {
+            return '';
+        }
+
         if (data.tag) {
             return data.tag;
         }
@@ -60,7 +70,11 @@ document.addEventListener('DOMContentLoaded', function () {
     function fillProfileTargets(data, targets) {
         setImageSrc(targets.image, data.image);
         targets.image.alt = data.name;
-        targets.committee.textContent = data.committee;
+
+        var showCommittee = data.committee && !shouldHideCommitteeDescriptor(data);
+        targets.committee.textContent = showCommittee ? data.committee : '';
+        targets.committee.style.display = showCommittee ? 'block' : 'none';
+
         targets.name.textContent = data.name;
         targets.role.textContent = data.role;
         targets.role.style.display = data.role ? 'block' : 'none';

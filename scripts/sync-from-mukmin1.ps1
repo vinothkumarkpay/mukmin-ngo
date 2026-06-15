@@ -14,6 +14,15 @@ robocopy $Source $Target /E `
     /XF .env .env.backup `
     /NFL /NDL /NJH /NJS
 
+# Mirror moments gallery folders so renamed/removed categories do not linger in mukmin-ngo.
+$momentsSource = Join-Path $Source 'public\welfare\img\moments'
+$momentsTarget = Join-Path $Target 'public\welfare\img\moments'
+if ((Test-Path $momentsSource) -and (Test-Path $momentsTarget)) {
+    robocopy $momentsSource $momentsTarget /E /MIR `
+        /XF .gitignore `
+        /NFL /NDL /NJH /NJS
+}
+
 # robocopy: 0-7 = success
 if ($LASTEXITCODE -ge 8) {
     Write-Error "Robocopy failed with exit code $LASTEXITCODE"

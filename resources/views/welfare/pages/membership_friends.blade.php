@@ -261,25 +261,20 @@
                 <!-- SECTION B: INDIVIDUAL DETAILS (IF INDIVIDUAL) -->
                 <div id="individual-details-section" style="display: none;">
                     <div class="form-section-title">Section B: Individual Profile Details</div>
-                    
-                    <div class="form-group">
-                        <label for="ind_name">Full Name *</label>
-                        <input type="text" id="ind_name" name="ind_name" class="form-control" value="{{ old('ind_name') }}">
-                    </div>
 
                     <div class="grid-2">
                         <div class="form-group">
-                            <label for="ind_nric">NRIC Number *</label>
-                            <input type="text" id="ind_nric" name="ind_nric" class="form-control" placeholder="e.g. 900101145555" inputmode="numeric" pattern="[0-9]{1,12}" maxlength="12" value="{{ old('ind_nric') }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="ind_state">State *</label>
-                            <select id="ind_state" name="ind_state" class="form-control">
-                                <option value="">-- Choose State --</option>
-                                @foreach(['Johor', 'Kedah', 'Kelantan', 'Melaka', 'Negeri Sembilan', 'Pahang', 'Penang', 'Perak', 'Perlis', 'Sabah', 'Sarawak', 'Selangor', 'Terengganu', 'Wilayah Persekutuan Kuala Lumpur', 'Wilayah Persekutuan Labuan', 'Wilayah Persekutuan Putrajaya'] as $state)
-                                    <option value="{{ $state }}" {{ old('ind_state') == $state ? 'selected' : '' }}>{{ $state }}</option>
+                            <label for="ind_salutation">Salutation *</label>
+                            <select id="ind_salutation" name="ind_salutation" class="form-control">
+                                <option value="">-- Choose Salutation --</option>
+                                @foreach($salutations as $salutation)
+                                    <option value="{{ $salutation }}" {{ old('ind_salutation') == $salutation ? 'selected' : '' }}>{{ $salutation }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ind_name">Full Name *</label>
+                            <input type="text" id="ind_name" name="ind_name" class="form-control" value="{{ old('ind_name') }}">
                         </div>
                     </div>
 
@@ -301,6 +296,27 @@
                     <div class="form-group">
                         <label for="ind_address">Full Address *</label>
                         <textarea id="ind_address" name="ind_address" rows="3" class="form-control" style="font-family: inherit;">{{ old('ind_address') }}</textarea>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="ind_state">State *</label>
+                            <select id="ind_state" name="ind_state" class="form-control">
+                                <option value="">-- Choose State --</option>
+                                @foreach($states as $state)
+                                    <option value="{{ $state }}" {{ old('ind_state') == $state ? 'selected' : '' }}>{{ $state }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ind_postcode">Postcode *</label>
+                            <input type="text" id="ind_postcode" name="ind_postcode" class="form-control" value="{{ old('ind_postcode') }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ind_nric">NRIC *</label>
+                        <input type="text" id="ind_nric" name="ind_nric" class="form-control" placeholder="e.g. 900101145555" inputmode="numeric" maxlength="12" value="{{ old('ind_nric') }}">
                     </div>
 
                     <div class="grid-2">
@@ -329,7 +345,7 @@
 
                 <!-- SECTION C: ORGANISATION DETAILS (IF ORGANISATION) -->
                 <div id="org-details-section" style="display: none;">
-                    <div class="form-section-title">Section B: Organisation Profile Details</div>
+                    <div class="form-section-title">Section B: Organisation Details</div>
 
                     <div class="form-group">
                         <label for="org_name">Name of Organisation *</label>
@@ -337,18 +353,24 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="org_state">State *</label>
-                        <select id="org_state" name="org_state" class="form-control">
-                            <option value="">-- Choose State --</option>
-                            @foreach(['Johor', 'Kedah', 'Kelantan', 'Melaka', 'Negeri Sembilan', 'Pahang', 'Penang', 'Perak', 'Perlis', 'Sabah', 'Sarawak', 'Selangor', 'Terengganu', 'Wilayah Persekutuan Kuala Lumpur', 'Wilayah Persekutuan Labuan', 'Wilayah Persekutuan Putrajaya'] as $state)
-                                <option value="{{ $state }}" {{ old('org_state') == $state ? 'selected' : '' }}>{{ $state }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="form-group">
                         <label for="org_address">Full Address of Organisation *</label>
                         <textarea id="org_address" name="org_address" rows="3" class="form-control" style="font-family: inherit;">{{ old('org_address') }}</textarea>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="org_state">State *</label>
+                            <select id="org_state" name="org_state" class="form-control">
+                                <option value="">-- Choose State --</option>
+                                @foreach($states as $state)
+                                    <option value="{{ $state }}" {{ old('org_state') == $state ? 'selected' : '' }}>{{ $state }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="org_postcode">Postcode *</label>
+                            <input type="text" id="org_postcode" name="org_postcode" class="form-control" value="{{ old('org_postcode') }}">
+                        </div>
                     </div>
 
                     <div class="grid-2">
@@ -362,9 +384,25 @@
                         </div>
                     </div>
 
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="org_contact_person_salutation">Salutation *</label>
+                            <select id="org_contact_person_salutation" name="org_contact_person_salutation" class="form-control">
+                                <option value="">-- Choose Salutation --</option>
+                                @foreach($salutations as $salutation)
+                                    <option value="{{ $salutation }}" {{ old('org_contact_person_salutation') == $salutation ? 'selected' : '' }}>{{ $salutation }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="org_contact_person_name">Official Contact Person Name *</label>
+                            <input type="text" id="org_contact_person_name" name="org_contact_person_name" class="form-control" value="{{ old('org_contact_person_name') }}">
+                        </div>
+                    </div>
+
                     <div class="form-group">
-                        <label for="org_contact_person_name">Official Contact Person Name *</label>
-                        <input type="text" id="org_contact_person_name" name="org_contact_person_name" class="form-control" value="{{ old('org_contact_person_name') }}">
+                        <label for="org_contact_person_nric">NRIC *</label>
+                        <input type="text" id="org_contact_person_nric" name="org_contact_person_nric" class="form-control" placeholder="e.g. 900101145555" inputmode="numeric" maxlength="12" value="{{ old('org_contact_person_nric') }}">
                     </div>
 
                     <div class="form-group">
@@ -466,9 +504,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 orgSection.style.display = 'none';
                 
                 // Add required inputs
+                document.getElementById('ind_salutation').setAttribute('required', 'required');
                 document.getElementById('ind_name').setAttribute('required', 'required');
                 document.getElementById('ind_nric').setAttribute('required', 'required');
                 document.getElementById('ind_state').setAttribute('required', 'required');
+                document.getElementById('ind_postcode').setAttribute('required', 'required');
                 document.getElementById('ind_profession').setAttribute('required', 'required');
                 document.getElementById('ind_address').setAttribute('required', 'required');
                 document.getElementById('ind_email').setAttribute('required', 'required');
@@ -482,10 +522,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Add required inputs
                 document.getElementById('org_name').setAttribute('required', 'required');
                 document.getElementById('org_state').setAttribute('required', 'required');
+                document.getElementById('org_postcode').setAttribute('required', 'required');
                 document.getElementById('org_address').setAttribute('required', 'required');
                 document.getElementById('org_email').setAttribute('required', 'required');
                 document.getElementById('org_phone').setAttribute('required', 'required');
+                document.getElementById('org_contact_person_salutation').setAttribute('required', 'required');
                 document.getElementById('org_contact_person_name').setAttribute('required', 'required');
+                document.getElementById('org_contact_person_nric').setAttribute('required', 'required');
             }
         } else {
             triggerText.textContent = trigger.getAttribute('data-placeholder') || 'Choose category...';

@@ -83,15 +83,8 @@
 .sirat-platform h3 {
     font-size: 17px;
     font-weight: 700;
-    margin: 0 0 6px;
-    color: var(--color-heading);
-}
-.sirat-platform .platform-tagline {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--color-primary, #d43c18);
     margin: 0 0 12px;
-    line-height: 1.4;
+    color: var(--color-heading);
 }
 .sirat-platform p {
     font-size: 14px;
@@ -136,7 +129,6 @@
                 <div class="sirat-platforms">
                     <article class="sirat-platform">
                         <h3>SIRAT Leaders Forum</h3>
-                        <p class="platform-tagline">Strengthening Indian Muslim Roots &amp; Aspiration Together</p>
                         <p>A strategic leadership platform bringing together community leaders, institutions, professionals and stakeholders to discuss critical issues, strengthen collaboration and advance sustainable socio-economic development within the ecosystem.</p>
                     </article>
                     <article class="sirat-platform">

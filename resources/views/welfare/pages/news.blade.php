@@ -808,13 +808,13 @@
 
                         <!-- Tab 13 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-13" id="tab-13" data-index="13">
-                            <span class="news-tab-title">Takbir Raya MUKMIN</span>
+                            <span class="news-tab-title">MUKMIN Takbir Raya</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 17 March 2026</span>
                         </button>
 
                         <!-- Tab 12 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-12" id="tab-12" data-index="12">
-                            <span class="news-tab-title">Kembara Ramadhan MUKMIN Kuala Lumpur</span>
+                            <span class="news-tab-title">MUKMIN Majlis Berbuka Puasa Kuala Lumpur</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 17 March 2026</span>
                         </button>
 
@@ -826,13 +826,13 @@
 
                         <!-- Tab 10 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-10" id="tab-10" data-index="10">
-                            <span class="news-tab-title">Kembara Ramadhan MUKMIN Penang</span>
+                            <span class="news-tab-title">MUKMIN Majlis Berbuka Puasa Penang</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 7 March 2026</span>
                         </button>
 
                         <!-- Tab 9 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-9" id="tab-9" data-index="9">
-                            <span class="news-tab-title">Kembara Ramadhan MUKMIN</span>
+                            <span class="news-tab-title">MUKMIN Ramadan Food Basket Initiative</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 28 Feb – 17 Mar 2026</span>
                         </button>
 
@@ -874,7 +874,7 @@
 
                         <!-- Tab 14 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-14" id="tab-14" data-index="14">
-                            <span class="news-tab-title">SIRAT Youth Icon Awards</span>
+                            <span class="news-tab-title">MUKMIN Youth Icon Awards</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
                         </button>
 
@@ -886,7 +886,7 @@
 
                         <!-- Tab 3 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-3" id="tab-3" data-index="3">
-                            <span class="news-tab-title">SIRAT Youth Summit</span>
+                            <span class="news-tab-title">SIRAT Youth Summit 2026</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
                         </button>
 
@@ -910,13 +910,13 @@
 
                         <!-- Tab 2 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-2" id="tab-2" data-index="2">
-                            <span class="news-tab-title">SIRAT Leaders Forum (Strengthening Indian Muslim Roots)</span>
+                            <span class="news-tab-title">SIRAT Leaders Forum 2025</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 29 – 31 August 2025</span>
                         </button>
 
                         <!-- Tab 1 -->
                         <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-1" id="tab-1" data-index="1">
-                            <span class="news-tab-title">Majlis Rumah Terbuka MUKMIN Sempena Hari Raya Aidilfitri</span>
+                            <span class="news-tab-title">MUKMIN Hari Raya Aidilfitri Open House 2025</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 12 April 2025</span>
                         </button>
 
@@ -938,7 +938,7 @@
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 31 May 2026</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Main Hall, UOC</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Main Hall, University of Cyberjaya, Cyberjaya, Selangor</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
@@ -966,7 +966,7 @@
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 25 May 2026</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> India Gate Restaurant, Puchong</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> India Gate Restaurant, Puchong, Selangor</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
@@ -984,12 +984,12 @@
                     <!-- Detail 13 (Takbir Raya) -->
                     <article class="news-card-detail" id="event-tab-13" role="tabpanel" aria-labelledby="tab-13" data-gallery-filter="{{ $newsGallerySlugs[13] ?? '' }}">
                         <div class="news-detail-image-wrap">
-                            <img src="{{ asset('welfare/img/news/insights/1.png') }}" alt="Takbir Raya MUKMIN">
+                            <img src="{{ asset('welfare/img/news/insights/1.png') }}" alt="MUKMIN Takbir Raya">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">Takbir Raya MUKMIN</h4>
+                                <h4 class="news-detail-title">MUKMIN Takbir Raya</h4>
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 17 March 2026</span>
@@ -1010,16 +1010,16 @@
                     <!-- Detail 12 (Kembara KL) -->
                     <article class="news-card-detail" id="event-tab-12" role="tabpanel" aria-labelledby="tab-12" data-gallery-filter="{{ $newsGallerySlugs[12] ?? '' }}">
                         <div class="news-detail-image-wrap">
-                            <img src="{{ asset('welfare/img/news/insights/2.png') }}" alt="Kembara Ramadhan MUKMIN Kuala Lumpur">
+                            <img src="{{ asset('welfare/img/news/insights/2.png') }}" alt="MUKMIN Majlis Berbuka Puasa Kuala Lumpur">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">Majlis Berbuka Puasa & Kembara Ramadhan MUKMIN Kuala Lumpur</h4>
+                                <h4 class="news-detail-title">MUKMIN Majlis Berbuka Puasa Kuala Lumpur</h4>
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 17 March 2026</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Kuala Lumpur Golf & Country Club (KLGCC)</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Kuala Lumpur Golf & Country Club (KLGCC), Petaling Jaya, Selangor</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
@@ -1047,7 +1047,7 @@
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 11 March 2026</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Madrasah Kampung Pandan, Kuala Lumpur</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Madrasah Kampung Pandan, Kuala Lumpur and Masjid Kapitan Keling, Pulau Pinang</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
@@ -1064,12 +1064,12 @@
                     <!-- Detail 10 (Kembara Penang) -->
                     <article class="news-card-detail" id="event-tab-10" role="tabpanel" aria-labelledby="tab-10" data-gallery-filter="{{ $newsGallerySlugs[10] ?? '' }}">
                         <div class="news-detail-image-wrap">
-                            <img src="{{ asset('welfare/img/news/insights/4.png') }}" alt="Kembara Ramadhan MUKMIN Penang">
+                            <img src="{{ asset('welfare/img/news/insights/4.png') }}" alt="MUKMIN Majlis Berbuka Puasa Penang">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">Majlis Berbuka Puasa & Kembara Ramadhan MUKMIN Penang</h4>
+                                <h4 class="news-detail-title">MUKMIN Majlis Berbuka Puasa Penang</h4>
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 7 March 2026</span>
@@ -1091,12 +1091,12 @@
                     <!-- Detail 9 (Kembara Ramadhan) -->
                     <article class="news-card-detail" id="event-tab-9" role="tabpanel" aria-labelledby="tab-9" data-gallery-filter="{{ $newsGallerySlugs[9] ?? '' }}">
                         <div class="news-detail-image-wrap">
-                            <img src="{{ asset('welfare/img/news/insights/5.png') }}" alt="Kembara Ramadhan MUKMIN">
+                            <img src="{{ asset('welfare/img/news/insights/5.png') }}" alt="MUKMIN Ramadan Food Basket Initiative">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">Kembara Ramadhan MUKMIN</h4>
+                                <h4 class="news-detail-title">MUKMIN Ramadan Food Basket Initiative</h4>
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 28 February – 17 March 2026</span>
@@ -1126,7 +1126,7 @@
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 25 January 2026</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Dewan Tun Abdul Razak, Menara Bank Rakyat, KL</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Dewan Tun Abdul Razak, Menara Bank Rakyat, Kuala Lumpur</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
@@ -1158,7 +1158,7 @@
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 25 January 2026</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Bank Rakyat Convention Centre</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Dewan Tun Abdul Razak, Menara Bank Rakyat, Kuala Lumpur</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
@@ -1185,7 +1185,7 @@
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 23 – 25 January 2026</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Dewan Tun Abdul Razak, Menara Bank Rakyat, KL</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Dewan Tun Abdul Razak, Menara Bank Rakyat, Kuala Lumpur</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
@@ -1212,7 +1212,7 @@
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 24 January 2026</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Dewan Tun Abdul Razak, Menara Bank Rakyat, KL</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Dewan Tun Abdul Razak, Menara Bank Rakyat, Kuala Lumpur</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
@@ -1265,7 +1265,7 @@
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 23 November 2025</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Georgetown, Penang</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Soccer Experience, Jalan Mccalister, Georgetown, Penang</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
@@ -1281,19 +1281,19 @@
                         </div>
                     </article>
 
-                    <!-- Detail 14 (SIRAT Youth Icon Awards) -->
+                    <!-- Detail 14 (MUKMIN Youth Icon Awards) -->
                     <article class="news-card-detail" id="event-tab-14" role="tabpanel" aria-labelledby="tab-14" data-gallery-filter="{{ $newsGallerySlugs[14] ?? '' }}">
                         <div class="news-detail-image-wrap">
-                            <img src="{{ asset('welfare/img/news/insights/14.png') }}" alt="SIRAT Youth Icon Awards">
+                            <img src="{{ asset('welfare/img/news/insights/14.png') }}" alt="MUKMIN Youth Icon Awards">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">SIRAT Youth Icon Awards</h4>
+                                <h4 class="news-detail-title">MUKMIN Youth Icon Awards</h4>
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> PICCA, Penang</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> PICCA Convention Centre, Penang</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
@@ -1321,7 +1321,7 @@
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> PICCA Convention Centre</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> PICCA Convention Centre, Penang</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
@@ -1338,16 +1338,16 @@
                     <!-- Detail 3 (Youth Summit) -->
                     <article class="news-card-detail" id="event-tab-3" role="tabpanel" aria-labelledby="tab-3" data-gallery-filter="{{ $newsGallerySlugs[3] ?? '' }}">
                         <div class="news-detail-image-wrap">
-                            <img src="{{ asset('welfare/img/news/insights/11.png') }}" alt="SIRAT Youth Summit">
+                            <img src="{{ asset('welfare/img/news/insights/11.png') }}" alt="SIRAT Youth Summit 2026">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">SIRAT Youth Summit</h4>
+                                <h4 class="news-detail-title">SIRAT Youth Summit 2026</h4>
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 22 November 2025</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> PICCA Convention Centre</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> PICCA Convention Centre, Penang</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
@@ -1374,7 +1374,7 @@
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 21 November 2025</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> PICCA, Penang</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> PICCA Convention Centre, Penang</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
@@ -1401,7 +1401,7 @@
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 21 November 2025</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> PICCA, Penang</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> PICCA Convention Centre, Penang</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
@@ -1429,7 +1429,7 @@
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 5 November 2025</span>
-                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Syed Bistro, Dang Wangi</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Syed Bistro, Dang Wangi, Kuala Lumpur</span>
                             </div>
                         </div>
                         <div class="news-detail-description">
@@ -1447,12 +1447,12 @@
                     <!-- Detail 2 (SIRAT Leaders Forum) -->
                     <article class="news-card-detail" id="event-tab-2" role="tabpanel" aria-labelledby="tab-2" data-gallery-filter="{{ $newsGallerySlugs[2] ?? '' }}">
                         <div class="news-detail-image-wrap">
-                            <img src="{{ asset('welfare/img/news/insights/SIRAT.png') }}" alt="SIRAT Leaders Forum">
+                            <img src="{{ asset('welfare/img/news/insights/SIRAT.png') }}" alt="SIRAT Leaders Forum 2025">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">SIRAT Leaders Forum (Strengthening Indian Muslim Roots & Aspiration Together)</h4>
+                                <h4 class="news-detail-title">SIRAT Leaders Forum 2025</h4>
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 29 – 31 August 2025</span>
@@ -1474,12 +1474,12 @@
                     <!-- Detail 1 (Hari Raya) -->
                     <article class="news-card-detail" id="event-tab-1" role="tabpanel" aria-labelledby="tab-1" data-gallery-filter="{{ $newsGallerySlugs[1] ?? '' }}">
                         <div class="news-detail-image-wrap">
-                            <img src="{{ asset('welfare/img/news/insights/13.png') }}" alt="Majlis Rumah Terbuka MUKMIN Sempena Hari Raya Aidilfitri">
+                            <img src="{{ asset('welfare/img/news/insights/13.png') }}" alt="MUKMIN Hari Raya Aidilfitri Open House 2025">
                         </div>
                         <div class="news-detail-header">
                             <div class="news-detail-title-wrap">
                                 <span class="news-detail-accent"></span>
-                                <h4 class="news-detail-title">Majlis Rumah Terbuka MUKMIN Sempena Hari Raya Aidilfitri</h4>
+                                <h4 class="news-detail-title">MUKMIN Hari Raya Aidilfitri Open House 2025</h4>
                             </div>
                             <div class="news-detail-meta">
                                 <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 12 April 2025</span>
@@ -1578,28 +1578,77 @@ document.addEventListener('DOMContentLoaded', function() {
     // -------------------------------------------------------------
     const tabs = document.querySelectorAll('.news-tab-item');
     const cards = document.querySelectorAll('.news-card-detail');
-    
+
+    function activateInsightTab(tabIndex) {
+        const tab = document.querySelector('.news-tab-item[data-index="' + tabIndex + '"]');
+        if (!tab) return false;
+
+        tabs.forEach(t => {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
+        });
+        cards.forEach(c => c.classList.remove('active'));
+
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+
+        const targetContent = document.getElementById('event-tab-' + tabIndex);
+        if (targetContent) {
+            targetContent.classList.add('active');
+        }
+
+        return true;
+    }
+
     tabs.forEach(tab => {
         tab.addEventListener('click', function() {
-            // Remove active classes
-            tabs.forEach(t => {
-                t.classList.remove('active');
-                t.setAttribute('aria-selected', 'false');
-            });
-            cards.forEach(c => c.classList.remove('active'));
-            
-            // Set active states
-            this.classList.add('active');
-            this.setAttribute('aria-selected', 'true');
-            
-            const tabIndex = this.getAttribute('data-index');
-            const targetContent = document.getElementById(`event-tab-${tabIndex}`);
-            if (targetContent) {
-                targetContent.classList.add('active');
-            }
-
+            activateInsightTab(this.getAttribute('data-index'));
             this.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         });
+    });
+
+    function handleNewsInsightHash(hash) {
+        if (!hash) return;
+
+        const cleanHash = hash.replace('#', '');
+        const match = cleanHash.match(/^insights-(\d+)$/);
+
+        if (match) {
+            if (activateInsightTab(match[1])) {
+                const insightsSection = document.getElementById('insights');
+                window.requestAnimationFrame(function () {
+                    if (insightsSection) {
+                        insightsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                    const activeTab = document.querySelector('.news-tab-item[data-index="' + match[1] + '"]');
+                    if (activeTab) {
+                        activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                });
+            }
+            return;
+        }
+
+        if (cleanHash === 'insights') {
+            const insightsSection = document.getElementById('insights');
+            if (insightsSection) {
+                insightsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    }
+
+    if (window.location.hash) {
+        handleNewsInsightHash(window.location.hash);
+    }
+
+    window.addEventListener('hashchange', function () {
+        handleNewsInsightHash(window.location.hash);
+    });
+
+    window.addEventListener('popstate', function () {
+        if (window.location.hash) {
+            handleNewsInsightHash(window.location.hash);
+        }
     });
 
     // -------------------------------------------------------------

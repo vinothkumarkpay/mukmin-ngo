@@ -66,6 +66,7 @@ class FormSubmissionEmailTest extends TestCase
             'org_reg_date' => '2025-01-01',
             'registered_state' => 'Selangor',
             'full_address' => '123 Address',
+            'state' => 'Selangor',
             'postcode' => '47300',
             'district_city' => 'Petaling Jaya',
             'year_established' => 2020,
@@ -75,8 +76,8 @@ class FormSubmissionEmailTest extends TestCase
             'org_type' => ['NGO'],
             'primary_activities' => ['Welfare / Charity'],
             'key_office_bearers' => [
-                'president' => ['name' => 'President Name', 'email' => 'pres@example.com', 'phone' => '+60123456789'],
-                'secretary' => ['name' => 'Sec Name', 'email' => 'sec@example.com', 'phone' => '+60123456780'],
+                'president' => ['salutation' => 'Dato\'', 'name' => 'President Name', 'nric' => '900101145555', 'email' => 'pres@example.com', 'phone' => '+60123456789'],
+                'secretary' => ['salutation' => 'Mr.', 'name' => 'Sec Name', 'nric' => '900101145556', 'email' => 'sec@example.com', 'phone' => '+60123456780'],
             ],
             'declaration_confirmed' => '1',
         ];
@@ -107,9 +108,11 @@ class FormSubmissionEmailTest extends TestCase
     {
         $formData = [
             'entity_type' => 'Individual',
+            'ind_salutation' => 'Mrs.',
             'ind_name' => 'Friend Ind',
             'ind_nric' => '900202141111',
             'ind_state' => 'Johor',
+            'ind_postcode' => '84000',
             'ind_profession' => 'NGO / Community Leader',
             'ind_address' => 'Friend Address',
             'ind_email' => 'friend_ind@example.com',
@@ -139,13 +142,16 @@ class FormSubmissionEmailTest extends TestCase
     public function test_friend_member_organisation_submission_sends_emails()
     {
         $formData = [
-            'entity_type' => 'Organisation',
+            'entity_type' => 'Non-registered NGO',
             'org_name' => 'Friend Org',
             'org_state' => 'Johor',
+            'org_postcode' => '84000',
             'org_address' => 'Org Address',
             'org_email' => 'friend_org@example.com',
             'org_phone' => '+60111222334',
+            'org_contact_person_salutation' => 'Mr.',
             'org_contact_person_name' => 'Ali bin Abu',
+            'org_contact_person_nric' => '900101145555',
             'declaration_confirmed' => '1',
         ];
 

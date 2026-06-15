@@ -8,7 +8,7 @@ class OrdinaryMemberSubmission extends Model
 {
     protected $fillable = [
         'name_of_organisation', 'org_reg_number', 'org_reg_date', 'registered_state',
-        'full_address', 'postcode', 'district_city', 'year_established', 'total_members_size',
+        'full_address', 'state', 'postcode', 'district_city', 'year_established', 'total_members_size',
         'email', 'contact_number', 'website', 'org_type', 'org_type_other',
         'primary_activities', 'primary_activities_other', 'is_registered_ros',
         'registration_certificate', 'committee_members',

@@ -35,7 +35,11 @@ class FormDropdownSeeder extends Seeder
                 'Youth Development', 'Women Programmes', 'Community Services', 'Others'
             ],
             'friends_category' => [
-                'Individual', 'Surau', 'Madrasah', 'Non-registered NGO', 'Others'
+                'Individual',
+                'Non-registered NGO',
+                'Non-registered Surau',
+                'Non-registered Madrasah',
+                'Others',
             ],
             'mentor_expertise' => [
                 'Leadership & Governance', 'Business & Entrepreneurship', 'Education & Youth Development',
@@ -114,6 +118,7 @@ class FormDropdownSeeder extends Seeder
             'org_reg_date' => '2021-04-22',
             'registered_state' => 'Wilayah Persekutuan Kuala Lumpur',
             'full_address' => 'Block A-3-5, Menara Kelana, Jalan SS 7/19, Kelana Jaya',
+            'state' => 'Selangor',
             'postcode' => '47301',
             'district_city' => 'Petaling Jaya',
             'year_established' => 2021,
@@ -125,9 +130,9 @@ class FormDropdownSeeder extends Seeder
             'primary_activities' => ['Welfare / Charity', 'Community Services'],
             'is_registered_ros' => true,
             'key_office_bearers' => [
-                'president' => ['name' => 'Dato\' Azman Harun', 'email' => 'azman@kebajikaninsan.org.my', 'phone' => '+6019-2223344'],
-                'secretary' => ['name' => 'Siti Aminah', 'email' => 'siti@kebajikaninsan.org.my', 'phone' => '+6013-4445566'],
-                'treasurer' => ['name' => 'Wong Kar Fai', 'email' => 'wong@kebajikaninsan.org.my', 'phone' => '+6012-7778899']
+                'president' => ['salutation' => "Dato'", 'name' => 'Dato\' Azman Harun', 'nric' => '700101145555', 'email' => 'azman@kebajikaninsan.org.my', 'phone' => '+6019-2223344'],
+                'secretary' => ['salutation' => 'Mrs.', 'name' => 'Siti Aminah', 'nric' => '750101145556', 'email' => 'siti@kebajikaninsan.org.my', 'phone' => '+6013-4445566'],
+                'treasurer' => ['salutation' => 'Mr.', 'name' => 'Wong Kar Fai', 'nric' => '800101145557', 'email' => 'wong@kebajikaninsan.org.my', 'phone' => '+6012-7778899']
             ],
             'declaration_confirmed' => true,
             'status' => 'pending'
@@ -136,9 +141,11 @@ class FormDropdownSeeder extends Seeder
         // 4. Mock Submissions for Friends of MUKMIN
         FriendMemberSubmission::create([
             'entity_type' => 'Individual',
+            'ind_salutation' => 'Mrs.',
             'ind_name' => 'Mariam Sulaiman',
-            'ind_nric' => '920815-10-5412',
+            'ind_nric' => '920815105412',
             'ind_state' => 'Johor',
+            'ind_postcode' => '84000',
             'ind_profession' => 'Homemaker',
             'ind_address' => 'No 45, Jalan Bakri, Muar, 84000 Johor',
             'ind_email' => 'mariam@example.com',

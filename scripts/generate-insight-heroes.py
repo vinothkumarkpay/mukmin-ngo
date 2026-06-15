@@ -13,27 +13,27 @@ MOMENTS = ROOT / "public" / "welfare" / "img" / "moments"
 OUT_DIR = ROOT / "public" / "welfare" / "img" / "news" / "insights"
 
 NEWS_FOLDERS = {
-    1: "Majlis Rumah Terbuka MUKMIN",
-    2: "SIRAT Leaders Forum",
-    3: "SIRAT Youth Summit",
+    1: "MUKMIN Hari Raya Aidilfitri Open House 2025",
+    2: "SIRAT Leaders Forum 2025",
+    3: "SIRAT Youth Summit 2026",
     4: "FIKRAH Launch",
     5: "FIKRAH Global Roundtable",
     6: "MUKMIN Future Leaders Scholarship Pledge",
     7: "SIRAT Global Forum 2026",
     8: "The KL Declaration",
-    9: "Kembara Ramadhan MUKMIN",
-    10: "Majlis Berbuka Puasa & Kembara Ramadhan MUKMIN Penang",
+    9: "MUKMIN Ramadan Food Basket Initiative",
+    10: "MUKMIN Majlis Berbuka Puasa Penang",
     11: "Ramadhan Assistance for Religious Scholars & Ustaz",
-    12: "Majlis Berbuka Puasa & Kembara Ramadhan MUKMIN Kuala Lumpur",
-    13: "Takbir Raya MUKMIN",
-    14: "Youth Icon Awards",
-    15: "MUKMIN AGM",
-    16: "India High Comm",
+    12: "MUKMIN Majlis Berbuka Puasa Kuala Lumpur",
+    13: "MUKMIN Takbir Raya",
+    14: "MUKMIN Youth Icon Awards",
+    15: "MUKMIN's 1st Inaugural AGM",
+    16: "India High Commissioner to Malaysia Felicitation Ceremony",
     17: "Golden Dinar Awards",
     18: "FIKRAH Chai & Chat",
-    19: "Shark Tank pitching",
-    20: "Football Match MUKMIN",
-    21: "Jersey Launch",
+    19: "MUKMIN Shark Tank Pitching",
+    20: "MUKMIN Football Friendly： KL vs Penang",
+    21: "MUKMIN Official Jersey Launch",
 }
 
 HERO_FILES = {
@@ -77,7 +77,12 @@ def find_feature(folder: str) -> Path | None:
     return features[0] if features else None
 
 
-def crop_to_banner(image: Image.Image, width: int, height: int) -> Image.Image:
+def crop_to_banner(
+    image: Image.Image,
+    width: int,
+    height: int,
+    vertical_anchor: float = 0.5,
+) -> Image.Image:
     target_ratio = width / height
     img_width, img_height = image.size
     source_ratio = img_width / img_height
@@ -88,10 +93,17 @@ def crop_to_banner(image: Image.Image, width: int, height: int) -> Image.Image:
         box = (left, 0, left + new_width, img_height)
     else:
         new_height = int(img_width / target_ratio)
-        top = (img_height - new_height) // 2
+        max_top = max(img_height - new_height, 0)
+        top = int(max_top * vertical_anchor)
         box = (0, top, img_width, top + new_height)
 
     return image.crop(box).resize((width, height), Image.Resampling.LANCZOS)
+
+
+CROP_VERTICAL_ANCHOR = {
+    # 0.0 keeps the top of the frame; 0.5 centers (default).
+    16: 0.0,
+}
 
 
 def main() -> int:
@@ -109,7 +121,12 @@ def main() -> int:
             continue
 
         image = Image.open(source).convert("RGB")
-        hero = crop_to_banner(image, target_width, target_height)
+        hero = crop_to_banner(
+            image,
+            target_width,
+            target_height,
+            vertical_anchor=CROP_VERTICAL_ANCHOR.get(tab, 0.5),
+        )
         output = OUT_DIR / HERO_FILES[tab]
         hero.save(output, "PNG", optimize=True)
         print(f"tab {tab:2d} -> {output.name} ({folder}/{source.name})")

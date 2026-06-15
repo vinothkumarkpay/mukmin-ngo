@@ -341,7 +341,7 @@
                             Yes
                         </label>
                         <label class="radio-label">
-                            <input type="radio" name="applied_to_university" value="0" {{ old('applied_to_university', '0') === '0' ? 'checked' : '' }}>
+                            <input type="radio" name="applied_to_university" value="0" {{ old('applied_to_university') === '0' ? 'checked' : '' }}>
                             No
                         </label>
                     </div>

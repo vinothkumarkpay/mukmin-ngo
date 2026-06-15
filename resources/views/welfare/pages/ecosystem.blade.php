@@ -145,34 +145,48 @@
 }
 
 .card-logo-header {
-    padding: 20px 20px;
+    padding: 16px 20px;
+    height: 152px;
+    min-height: 152px;
     text-align: center;
     background: #ffffff;
     border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 }
 .brand-mark-logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 120px;
+    width: 100%;
+    height: 100%;
 }
 /* Brand Logo Images */
 .brand-mark-logo img {
-    height: 120px;
+    max-height: 112px;
     width: auto;
     max-width: 100%;
     object-fit: contain;
+}
+#gabungan .brand-mark-logo img {
+    max-height: 124px;
 }
 
 @media (max-width: 768px) {
     .card-header-banner {
         min-height: 70px;
     }
-    .brand-mark-logo {
-        height: 100px;
+    .card-logo-header {
+        height: 132px;
+        min-height: 132px;
     }
     .brand-mark-logo img {
-        height: 100px;
+        max-height: 96px;
+    }
+    #gabungan .brand-mark-logo img {
+        max-height: 106px;
     }
 }
 
@@ -189,6 +203,8 @@
     margin-bottom: 12px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    line-height: 1.35;
+    min-height: calc(1.35em * 2);
 }
 .card-body-wrap p {
     font-size: 13.5px;
@@ -345,7 +361,7 @@
                     </div>
                     <div class="card-body-wrap">
                         <div class="card-subtitle-tag">Strategic Think Tank</div>
-                        <p>FIKRAH shapes direction through policy thinking, research, strategic frameworks, and thought leadership — helping communities, institutions, and stakeholders move forward with clarity and purpose.</p>
+                        <p>FIKRAH shapes direction through policy thinking, research, strategic frameworks, and thought leadership that help communities, institutions, and stakeholders move forward with clarity and purpose.</p>
                         <p>As the strategic think tank within the ecosystem, FIKRAH develops future-ready frameworks, actionable insights, and collaborative pathways that guide programmes, partnerships, and long-term impact.</p>
                         <p>FIKRAH also serves as a catalyst for dialogue and collective action, translating research and engagement into strategic recommendations that strengthen inclusive community development.</p>
                         <div class="card-footer-wrap">
@@ -369,10 +385,10 @@
                     <div class="card-body-wrap">
                         <div class="card-subtitle-tag">National Coordinating Ecosystem</div>
                         <p>Pertubuhan Gabungan Mukmin Nasional (MUKMIN) serves as the national coordinating platform that convenes NGOs, civil society organisations, institutions, chambers of commerce, and grassroots networks across Malaysia.</p>
-                        <p>By aligning stakeholders and mobilising collaboration, MUKMIN transforms individual efforts into coordinated collective action — strengthening partnerships, accelerating initiatives, and creating scalable impact.</p>
+                        <p>By aligning stakeholders and mobilising collaboration, MUKMIN transforms individual efforts into coordinated collective action by strengthening partnerships, accelerating initiatives, and creating scalable impact.</p>
                         <p>Through strategic coordination, MUKMIN bridges communities with opportunities, resources, expertise, and ecosystem partners.</p>
                         <div class="card-footer-wrap">
-                            <a href="{{ route('welfare.about') }}" class="card-btn-outline">
+                            <a href="{{ route('welfare.about') }}" class="card-btn">
                                 Learn more about MUKMIN <i class="fas fa-arrow-right" style="font-size: 11px;"></i>
                             </a>
                         </div>
@@ -395,7 +411,7 @@
                         <p>Focused on education access, talent development, socio-economic empowerment, and community initiatives, Yayasan MUKMIN delivers impactful programmes that create opportunities and strengthen long-term resilience.</p>
                         <p>Its role ensures that initiatives move beyond planning into meaningful and sustainable impact on the ground.</p>
                         <div class="card-footer-wrap">
-                            <a href="{{ route('welfare.impact') }}" class="card-btn-outline">
+                            <a href="{{ route('welfare.impact') }}" class="card-btn">
                                 Explore Our Impact <i class="fas fa-arrow-right" style="font-size: 11px;"></i>
                             </a>
                         </div>

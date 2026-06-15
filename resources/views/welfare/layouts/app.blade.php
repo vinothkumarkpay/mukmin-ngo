@@ -92,21 +92,21 @@
                         --}}
                         
                         <!-- Scholarship Button -->
-                        <a href="{{ route('welfare.mfls-scholarship') }}" class="btn-scholarship-rounded" aria-label="Scholarship">
+                        <a href="{{ route('welfare.impact.mfls') }}" class="btn-scholarship-rounded" aria-label="Scholarship">
                             <i class="fas fa-graduation-cap" aria-hidden="true"></i>
                             <span class="action-text">Scholarship</span>
                         </a>
 
-                        <!-- Register As A Member Button -->
-                        <a href="{{ route('welfare.serve') }}#membership-vertical-tabs" class="btn-register-rounded" aria-label="Register as a member">
+                        <!-- Register Button -->
+                        <a href="{{ route('welfare.serve') }}#membership-vertical-tabs" class="btn-register-rounded" aria-label="Register">
                             <i class="fas fa-user-plus" aria-hidden="true"></i>
-                            <span class="action-text">Register As A Member</span>
+                            <span class="action-text">Register</span>
                         </a>
                         
                         <!-- Donate Button -->
-                        <a href="{{ route('welfare.donate') }}" class="btn-donate-rounded" aria-label="Donate now">
+                        <a href="{{ route('welfare.donate') }}" class="btn-donate-rounded" aria-label="Donate">
                             <i class="fas fa-hand-holding-heart" aria-hidden="true"></i>
-                            <span class="action-text">Donate Now!</span>
+                            <span class="action-text">Donate</span>
                         </a>
                         
                         {{--
@@ -224,6 +224,7 @@
     </footer>
 
     @include('welfare.partials.whatsapp-support')
+    @include('welfare.partials.membership-registration-gate-modal')
 
     <script src="{{ asset('js/welfare.js') }}"></script>
     @stack('scripts')

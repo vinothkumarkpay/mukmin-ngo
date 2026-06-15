@@ -27,5 +27,12 @@ class ServeTogetherPageTest extends TestCase
         $response->assertSee('Is your organisation registered with ROS / Religious Authority?');
         $response->assertSee('membership-modal-overlay');
         $response->assertSee('mukmin-member-trigger');
+        $response->assertSee('membership-registration-gate-modal', false);
+        $response->assertSee('Are you a registered MUKMIN member?', false);
+        $response->assertSee(route('welfare.feedback'), false);
+        $response->assertSee(route('welfare.volunteer'), false);
+        $response->assertSee(route('welfare.mentor'), false);
+        $response->assertSee(route('welfare.partner'), false);
+        $response->assertSee(route('welfare.membership.friends'), false);
     }
 }

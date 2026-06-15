@@ -322,7 +322,7 @@
                         <label for="registered_state">Registered State</label>
                         <select id="registered_state" name="registered_state" class="form-control" required>
                             <option value="">-- Choose State --</option>
-                            @foreach(['Johor', 'Kedah', 'Kelantan', 'Melaka', 'Negeri Sembilan', 'Pahang', 'Penang', 'Perak', 'Perlis', 'Sabah', 'Sarawak', 'Selangor', 'Terengganu', 'Wilayah Persekutuan Kuala Lumpur', 'Wilayah Persekutuan Labuan', 'Wilayah Persekutuan Putrajaya'] as $state)
+                            @foreach($states as $state)
                                 <option value="{{ $state }}" {{ old('registered_state') == $state ? 'selected' : '' }}>{{ $state }}</option>
                             @endforeach
                         </select>
@@ -338,11 +338,23 @@
                     <textarea id="full_address" name="full_address" rows="3" class="form-control" style="font-family: inherit;" required>{{ old('full_address') }}</textarea>
                 </div>
 
-                <div class="grid-3">
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <select id="state" name="state" class="form-control" required>
+                            <option value="">-- Choose State --</option>
+                            @foreach($states as $stateOption)
+                                <option value="{{ $stateOption }}" {{ old('state') == $stateOption ? 'selected' : '' }}>{{ $stateOption }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="postcode">Postcode</label>
                         <input type="text" id="postcode" name="postcode" class="form-control" value="{{ old('postcode') }}" required>
                     </div>
+                </div>
+
+                <div class="grid-2">
                     <div class="form-group">
                         <label for="year_established">Year Established</label>
                         <input type="number" id="year_established" name="year_established" class="form-control" value="{{ old('year_established') }}" required>
@@ -401,9 +413,24 @@
                 <!-- President -->
                 <div class="bearer-row">
                     <h4>President / Chairman</h4>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Salutation</label>
+                            <select name="key_office_bearers[president][salutation]" class="form-control" required>
+                                <option value="">-- Choose Salutation --</option>
+                                @foreach($salutations as $salutation)
+                                    <option value="{{ $salutation }}" {{ old('key_office_bearers.president.salutation') == $salutation ? 'selected' : '' }}>{{ $salutation }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" name="key_office_bearers[president][name]" class="form-control" value="{{ old('key_office_bearers.president.name') }}" required>
+                        </div>
+                    </div>
                     <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" name="key_office_bearers[president][name]" class="form-control" value="{{ old('key_office_bearers.president.name') }}" required>
+                        <label>NRIC</label>
+                        <input type="text" name="key_office_bearers[president][nric]" class="form-control" placeholder="e.g. 900101145555" maxlength="12" inputmode="numeric" value="{{ old('key_office_bearers.president.nric') }}" required>
                     </div>
                     <div class="grid-2">
                         <div class="form-group">
@@ -420,9 +447,24 @@
                 <!-- Secretary -->
                 <div class="bearer-row">
                     <h4>Secretary General (Optional)</h4>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Salutation</label>
+                            <select name="key_office_bearers[secretary][salutation]" class="form-control">
+                                <option value="">-- Choose Salutation --</option>
+                                @foreach($salutations as $salutation)
+                                    <option value="{{ $salutation }}" {{ old('key_office_bearers.secretary.salutation') == $salutation ? 'selected' : '' }}>{{ $salutation }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" name="key_office_bearers[secretary][name]" class="form-control" value="{{ old('key_office_bearers.secretary.name') }}">
+                        </div>
+                    </div>
                     <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" name="key_office_bearers[secretary][name]" class="form-control" value="{{ old('key_office_bearers.secretary.name') }}">
+                        <label>NRIC</label>
+                        <input type="text" name="key_office_bearers[secretary][nric]" class="form-control" placeholder="e.g. 900101145555" maxlength="12" inputmode="numeric" value="{{ old('key_office_bearers.secretary.nric') }}">
                     </div>
                     <div class="grid-2">
                         <div class="form-group">
@@ -439,9 +481,24 @@
                 <!-- Treasurer -->
                 <div class="bearer-row">
                     <h4>Treasurer (Optional)</h4>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Salutation</label>
+                            <select name="key_office_bearers[treasurer][salutation]" class="form-control">
+                                <option value="">-- Choose Salutation --</option>
+                                @foreach($salutations as $salutation)
+                                    <option value="{{ $salutation }}" {{ old('key_office_bearers.treasurer.salutation') == $salutation ? 'selected' : '' }}>{{ $salutation }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" name="key_office_bearers[treasurer][name]" class="form-control" value="{{ old('key_office_bearers.treasurer.name') }}">
+                        </div>
+                    </div>
                     <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" name="key_office_bearers[treasurer][name]" class="form-control" value="{{ old('key_office_bearers.treasurer.name') }}">
+                        <label>NRIC</label>
+                        <input type="text" name="key_office_bearers[treasurer][nric]" class="form-control" placeholder="e.g. 900101145555" maxlength="12" inputmode="numeric" value="{{ old('key_office_bearers.treasurer.nric') }}">
                     </div>
                     <div class="grid-2">
                         <div class="form-group">

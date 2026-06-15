@@ -236,6 +236,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 25px;
+    align-items: stretch;
 }
 .members-grid.exco-grid {
     grid-template-columns: repeat(4, 1fr);
@@ -253,6 +254,10 @@
     position: relative;
     overflow: hidden;
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     cursor: pointer;
     font-family: inherit;
     appearance: none;
@@ -272,6 +277,7 @@
     overflow: hidden;
     border: 3px solid #f3f3f3;
     transition: border-color var(--transition);
+    flex-shrink: 0;
 }
 .member-card:hover .member-avatar,
 .member-card:focus-visible .member-avatar {
@@ -282,52 +288,72 @@
     height: 100%;
     object-fit: cover;
 }
+.member-card-body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 auto;
+}
 .member-name {
+    width: 100%;
     font-size: 17px;
     font-weight: 700;
     color: var(--color-heading);
-    margin-bottom: 6px;
+    margin: 0 0 6px;
     line-height: 1.4;
+    min-height: calc(1.4em * 2);
 }
 .member-role {
+    width: 100%;
     font-size: 15px;
     font-weight: 600;
     color: var(--color-primary);
-    margin-bottom: 5px;
+    margin: 0 0 5px;
+    line-height: 1.4;
+    min-height: calc(1.4em * 2);
     display: block;
 }
 .member-org {
+    width: 100%;
     font-size: 14px;
     color: #666;
     line-height: 1.4;
+    min-height: calc(1.4em * 2);
+    margin: 0;
     display: block;
 }
 .member-tag {
     display: inline-block;
+    width: 100%;
+    max-width: 100%;
     background: #f1f5f9;
     color: #475569;
     font-size: 13px;
     font-weight: 600;
-    padding: 5px 11px;
+    padding: 6px 11px;
     border-radius: 14px;
-    margin-top: 10px;
+    margin: 0;
     letter-spacing: 0.2px;
     line-height: 1.35;
+    box-sizing: border-box;
 }
 .member-card:hover .member-tag,
 .member-card:focus-visible .member-tag {
-    background: var(--color-primary);
-    color: #fff;
+    background: #fdeee9;
+    color: var(--color-primary);
 }
 .member-card-hint {
     display: block;
-    margin-top: 12px;
+    margin-top: auto;
+    padding-top: 12px;
     font-size: 13px;
     font-weight: 600;
     color: var(--color-primary);
     opacity: 0;
     transform: translateY(4px);
     transition: opacity var(--transition), transform var(--transition);
+    flex-shrink: 0;
 }
 .member-card:hover .member-card-hint,
 .member-card:focus-visible .member-card-hint {
@@ -542,7 +568,7 @@ body.leadership-modal-open {
                 <p>Today, MUKMIN's strength lies not in any single organisation, but in the collective power of its ecosystem and the communities it serves.</p>
             </div>
             <div class="who-image">
-                <img src="{{ asset('welfare/img/about/who-we-are.png') }}" alt="MUKMIN Pledge of Commitment ceremony">
+                <img src="{{ asset('welfare/img/about/strength-behind-mukmin.png') }}" alt="MUKMIN Annual General Meeting 2026 group photo">
             </div>
         </div>
     </div>
@@ -565,7 +591,7 @@ body.leadership-modal-open {
                 <p>At MUKMIN, we believe that the strength of a community is measured not by its numbers alone, but by its unity, shared purpose and ability to create lasting impact for future generations.</p>
                 <p>MUKMIN was established with a clear purpose: to unite organisations, leaders and communities through a coordinated national platform that is structured, accountable, progressive and driven by meaningful action. In a rapidly changing world shaped by technological advancement, economic uncertainty and evolving social challenges, our community cannot afford to move in isolation. We must move forward together, with clarity of purpose and collective strength.</p>
                 <p>MUKMIN is more than an organisation. It is an ecosystem for collaboration and community transformation which brings together NGOs, community associations and strategic partners to align grassroots efforts with national coordination, while creating sustainable opportunities for our people.</p>
-                <p>Guided by our five strategic pillars namely Socio-Economic Mobility; Education &amp; Future Readiness; Entrepreneurship &amp; Innovation; Faith, Identity &amp; Ukhwah; and Leadership &amp; Capacity Building, we seek to build a resilient, empowered and future-ready community.</p>
+                <p>Guided by our five strategic pillars, namely Economic Empowerment, Education and Talent Development, Leadership and Representation, Community Welfare and Faith, Identity and Ukhwah, we seek to build a resilient, empowered and future-ready community.</p>
                 <p>We envision a generation that is economically resilient, intellectually prepared, socially responsible and firmly grounded in values and identity. Our mission is to create platforms that open doors to education, entrepreneurship, leadership development and strategic partnerships, while delivering initiatives that bring measurable and meaningful outcomes to society.</p>
                 <p>The future belongs to communities that are organised, united and willing to evolve. MUKMIN is committed to being a catalyst for that transformation of connecting people, ideas and resources to build a stronger, more sustainable legacy for generations to come.</p>
                 <p>Together, let us lead with purpose, serve with sincerity and build with vision.</p>

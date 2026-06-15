@@ -22,7 +22,7 @@
                 <p>Today, MUKMIN's strength lies not in any single organisation, but in the collective power of its ecosystem and the communities it serves.</p>
             </div>
             <div class="who-image">
-                <img src="{{ asset('welfare/img/about/who-we-are.png') }}" alt="MUKMIN Pledge of Commitment ceremony">
+                <img src="{{ asset('welfare/img/about/strength-behind-mukmin.png') }}" alt="MUKMIN Annual General Meeting 2026 group photo">
             </div>
         </div>
     </div>

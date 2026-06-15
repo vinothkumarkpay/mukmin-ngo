@@ -188,17 +188,24 @@ class FormSubmissionController extends Controller
     {
         $orgTypes = $this->getOptions('ordinary_org_type');
         $activities = $this->getOptions('ordinary_activity');
-        return view('welfare.pages.membership_ordinary', compact('orgTypes', 'activities'));
+        $states = $this->malaysianStateOptions();
+        $salutations = $this->officeBearerSalutationOptions();
+
+        return view('welfare.pages.membership_ordinary', compact('orgTypes', 'activities', 'states', 'salutations'));
     }
 
     public function submitOrdinary(Request $request)
     {
+        $states = $this->malaysianStateOptions();
+        $salutations = $this->officeBearerSalutationOptions();
+
         $validated = $request->validate([
             'name_of_organisation' => 'required|string|max:255',
             'org_reg_number' => 'required|string|max:50',
             'org_reg_date' => 'required|date',
-            'registered_state' => 'required|string|max:50',
+            'registered_state' => ['required', 'string', Rule::in($states)],
             'full_address' => 'required|string',
+            'state' => ['required', 'string', Rule::in($states)],
             'postcode' => 'required|string|max:10',
             'district_city' => 'required|string|max:100',
             'year_established' => 'required|integer|min:1800|max:' . date('Y'),
@@ -211,13 +218,19 @@ class FormSubmissionController extends Controller
             'primary_activities' => 'required|array|min:1',
             'primary_activities_other' => 'nullable|string|max:255',
             'key_office_bearers' => 'required|array',
+            'key_office_bearers.president.salutation' => ['required', 'string', Rule::in($salutations)],
             'key_office_bearers.president.name' => 'required|string|max:255',
+            'key_office_bearers.president.nric' => $this->malaysianNricRule(),
             'key_office_bearers.president.email' => $this->requiredEmailRule(),
             'key_office_bearers.president.phone' => $this->requiredPhoneRule(),
+            'key_office_bearers.secretary.salutation' => ['nullable', 'string', Rule::in($salutations)],
             'key_office_bearers.secretary.name' => 'nullable|string|max:255',
+            'key_office_bearers.secretary.nric' => ['nullable', 'digits:12'],
             'key_office_bearers.secretary.email' => $this->nullableEmailRule(),
             'key_office_bearers.secretary.phone' => $this->nullablePhoneRule(),
+            'key_office_bearers.treasurer.salutation' => ['nullable', 'string', Rule::in($salutations)],
             'key_office_bearers.treasurer.name' => 'nullable|string|max:255',
+            'key_office_bearers.treasurer.nric' => ['nullable', 'digits:12'],
             'key_office_bearers.treasurer.email' => $this->nullableEmailRule(),
             'key_office_bearers.treasurer.phone' => $this->nullablePhoneRule(),
             'declaration_confirmed' => 'required|accepted',
@@ -239,11 +252,19 @@ class FormSubmissionController extends Controller
 
     public function membershipFriends()
     {
-        $categories = $this->getOptions('friends_category');
+        $categories = $this->friendsCategoryOptions();
         $areaOfInterestOptions = $this->friendsAreaOfInterestOptions();
         $professionOptions = $this->friendsProfessionOptions();
+        $states = $this->malaysianStateOptions();
+        $salutations = $this->officeBearerSalutationOptions();
 
-        return view('welfare.pages.membership_friends', compact('categories', 'areaOfInterestOptions', 'professionOptions'));
+        return view('welfare.pages.membership_friends', compact(
+            'categories',
+            'areaOfInterestOptions',
+            'professionOptions',
+            'states',
+            'salutations'
+        ));
     }
 
     private function friendsAreaOfInterestOptions(): array
@@ -283,18 +304,22 @@ class FormSubmissionController extends Controller
 
     public function submitFriends(Request $request)
     {
+        $states = $this->malaysianStateOptions();
+        $salutations = $this->officeBearerSalutationOptions();
+
         $rules = [
-            'entity_type' => 'required|string|max:50',
+            'entity_type' => ['required', 'string', Rule::in($this->friendsCategoryOptions())],
             'others_specify' => 'nullable|string|max:255',
             'declaration_confirmed' => 'required|accepted',
         ];
 
-        // Add conditional rules depending on whether Individual or Organisation
         if ($request->input('entity_type') === 'Individual') {
             $rules = array_merge($rules, [
+                'ind_salutation' => ['required', 'string', Rule::in($salutations)],
                 'ind_name' => 'required|string|max:255',
-                'ind_nric' => $this->requiredNricRule(),
-                'ind_state' => 'required|string|max:50',
+                'ind_nric' => $this->malaysianNricRule(),
+                'ind_state' => ['required', 'string', Rule::in($states)],
+                'ind_postcode' => 'required|string|max:10',
                 'ind_profession' => ['required', 'string', Rule::in($this->friendsProfessionOptions())],
                 'ind_profession_other' => 'nullable|required_if:ind_profession,Other (Please Specify)|string|max:255',
                 'ind_address' => 'required|string',
@@ -305,11 +330,14 @@ class FormSubmissionController extends Controller
         } else {
             $rules = array_merge($rules, [
                 'org_name' => 'required|string|max:255',
-                'org_state' => 'required|string|max:50',
+                'org_state' => ['required', 'string', Rule::in($states)],
+                'org_postcode' => 'required|string|max:10',
                 'org_address' => 'required|string',
                 'org_email' => $this->requiredEmailRule(),
                 'org_phone' => $this->requiredPhoneRule(),
+                'org_contact_person_salutation' => ['required', 'string', Rule::in($salutations)],
                 'org_contact_person_name' => 'required|string|max:255',
+                'org_contact_person_nric' => $this->malaysianNricRule(),
                 'org_website' => 'nullable|string|max:255',
             ]);
         }
@@ -648,5 +676,58 @@ class FormSubmissionController extends Controller
             'title' => 'Application Submitted Successfully',
             'message' => 'Your MFLS Scholarship Application has been received. The MFLS Secretariat will review your application and supporting documents within 3–5 working days. You will be contacted via email or phone regarding the next steps.',
         ]);
+    }
+
+    private function friendsCategoryOptions(): array
+    {
+        return [
+            'Individual',
+            'Non-registered NGO',
+            'Non-registered Surau',
+            'Non-registered Madrasah',
+            'Others',
+        ];
+    }
+
+    private function malaysianStateOptions(): array
+    {
+        return [
+            'Johor',
+            'Kedah',
+            'Kelantan',
+            'Melaka',
+            'Negeri Sembilan',
+            'Pahang',
+            'Perak',
+            'Perlis',
+            'Pulau Pinang',
+            'Sabah',
+            'Sarawak',
+            'Selangor',
+            'Terengganu',
+            'Wilayah Persekutuan Kuala Lumpur',
+            'Wilayah Persekutuan Labuan',
+            'Wilayah Persekutuan Putrajaya',
+        ];
+    }
+
+    private function officeBearerSalutationOptions(): array
+    {
+        return [
+            'Tan Sri',
+            'Puan Sri',
+            'Datuk Seri',
+            "Dato' Seri",
+            'Datin Seri',
+            "Dato' Sri",
+            'Datin Sri',
+            'Datuk',
+            'Datin',
+            "Dato'",
+            'Dr.',
+            'Mr.',
+            'Mrs.',
+            'Ms.',
+        ];
     }
 }

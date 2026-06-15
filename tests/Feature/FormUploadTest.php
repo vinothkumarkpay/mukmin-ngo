@@ -21,6 +21,7 @@ class FormUploadTest extends TestCase
             'org_reg_date' => '2025-01-01',
             'registered_state' => 'Selangor',
             'full_address' => '123 Test Street, Petaling Jaya',
+            'state' => 'Selangor',
             'postcode' => '47300',
             'district_city' => 'Petaling Jaya',
             'year_established' => 2020,
@@ -30,8 +31,8 @@ class FormUploadTest extends TestCase
             'org_type' => ['NGO'],
             'primary_activities' => ['Welfare / Charity'],
             'key_office_bearers' => [
-                'president' => ['name' => 'President Name', 'email' => 'pres@example.com', 'phone' => '+60123456789'],
-                'secretary' => ['name' => 'Sec Name', 'email' => 'sec@example.com', 'phone' => '+60123456780'],
+                'president' => ['salutation' => 'Dato\'', 'name' => 'President Name', 'nric' => '900101145555', 'email' => 'pres@example.com', 'phone' => '+60123456789'],
+                'secretary' => ['salutation' => 'Mr.', 'name' => 'Sec Name', 'nric' => '900101145556', 'email' => 'sec@example.com', 'phone' => '+60123456780'],
             ],
             'declaration_confirmed' => '1',
         ];

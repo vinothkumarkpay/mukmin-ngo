@@ -43,6 +43,7 @@ class FormSubmissionMail extends Mailable
         'org_reg_number' => 'Organisation Registration Number',
         'org_reg_date' => 'Organisation Registration Date',
         'registered_state' => 'Registered State',
+        'state' => 'State',
         'postcode' => 'Postcode',
         'district_city' => 'District / City',
         'year_established' => 'Year Established',
@@ -61,17 +62,23 @@ class FormSubmissionMail extends Mailable
         'entity_type' => 'Entity Type',
         'others_specify' => 'Others Specify',
         'ind_name' => 'Individual Name',
+        'ind_salutation' => 'Individual Salutation',
         'ind_nric' => 'Individual NRIC',
         'ind_state' => 'Individual State',
+        'ind_postcode' => 'Individual Postcode',
         'ind_address' => 'Individual Address',
         'ind_email' => 'Individual Email',
         'ind_phone' => 'Individual Phone',
         'ind_area_of_interest' => 'Area of Interest',
         'org_name' => 'Organisation Name',
         'org_state' => 'Organisation State',
+        'org_postcode' => 'Organisation Postcode',
         'org_address' => 'Organisation Address',
         'org_email' => 'Organisation Email',
         'org_phone' => 'Organisation Phone',
+        'org_contact_person_salutation' => 'Official Contact Person Salutation',
+        'org_contact_person_name' => 'Official Contact Person Name',
+        'org_contact_person_nric' => 'Official Contact Person NRIC',
         'org_website' => 'Organisation Website',
         
         // Mentor
@@ -300,8 +307,14 @@ class FormSubmissionMail extends Mailable
                     if (is_array($info)) {
                         $roleLabel = ucfirst($role);
                         $infoStr = '';
+                        if (!empty($info['salutation'])) {
+                            $infoStr .= '<strong>Salutation:</strong> ' . e($info['salutation']) . '<br>';
+                        }
                         if (!empty($info['name'])) {
                             $infoStr .= '<strong>Name:</strong> ' . e($info['name']) . '<br>';
+                        }
+                        if (!empty($info['nric'])) {
+                            $infoStr .= '<strong>NRIC:</strong> ' . e($info['nric']) . '<br>';
                         }
                         if (!empty($info['email'])) {
                             $infoStr .= '<strong>Email:</strong> ' . e($info['email']) . '<br>';

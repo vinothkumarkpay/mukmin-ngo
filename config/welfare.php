@@ -7,7 +7,7 @@ return [
     'org_name' => env('WELFARE_ORG_NAME', 'PERTUBUHAN GABUNGAN MUKMIN NASIONAL (PPM-019-10-15042026)'),
     'email' => env('WELFARE_EMAIL', 'support@mukmin.org'),
     'phone' => env('WELFARE_PHONE', '+6014 302 1800'),
-    'whatsapp_url' => env('WELFARE_WHATSAPP_URL', 'https://wa.me/60143021800?text=Salam.%20I%20would%20like%20to%20enquire%20about%20MUKMIN.%20Kindly%20assist%20me.'),
+    'whatsapp_url' => env('WELFARE_WHATSAPP_URL', 'https://wa.me/60143021800?text=Salam.%20I%20would%20like%20to%20inquire%20about%20MUKMIN.%20Kindly%20assist%20me.'),
     'address' => env('WELFARE_ADDRESS', 'No 73, Jalan TPK 2/8, Taman Perindustrian Kinrara, Puchong'),
     'address_short' => env('WELFARE_ADDRESS_SHORT', 'Petaling, Selangor, Malaysia - 47180'),
     'postal' => env('WELFARE_POSTAL', '47180 Petaling, Selangor'),
@@ -66,21 +66,21 @@ return [
             'children' => [
                 ['label' => 'Be Affiliate Member', 'route' => 'welfare.serve', 'hash' => 'affiliate'],
                 ['label' => 'Be Friends of MUKMIN', 'route' => 'welfare.serve', 'hash' => 'friends'],
+                ['label' => 'Share Your Ideas', 'route' => 'welfare.serve', 'hash' => 'ideas'],
                 ['label' => 'Let’s Volunteer', 'route' => 'welfare.serve', 'hash' => 'volunteer'],
                 ['label' => 'Be A Mentor', 'route' => 'welfare.serve', 'hash' => 'mentor'],
-                ['label' => 'Partner with Us', 'route' => 'welfare.serve', 'hash' => 'partner'],
-                ['label' => 'Share Your Ideas', 'route' => 'welfare.serve', 'hash' => 'ideas'],
+                ['label' => 'Partner With Us', 'route' => 'welfare.serve', 'hash' => 'partner'],
             ]
         ],
         [
             'label' => 'Impact Areas',
             'route' => 'welfare.impact',
             'children' => [
-                ['label' => 'Socio-economic Mobility', 'route' => 'welfare.impact', 'hash' => 'socio-economic'],
-                ['label' => 'Education & Future Readiness', 'route' => 'welfare.impact.mfls'],
-                ['label' => 'Leadership & Capacity Building', 'route' => 'welfare.impact.sirat'],
-                ['label' => 'Entrepreneurship & Innovation', 'route' => 'welfare.impact', 'hash' => 'entrepreneurship'],
-                ['label' => 'Faith, Identity & Ukhwah', 'route' => 'welfare.impact', 'hash' => 'faith'],
+                ['label' => 'Economic Empowerment', 'route' => 'welfare.impact', 'hash' => 'socio-economic'],
+                ['label' => 'Education and Talent Development', 'route' => 'welfare.impact', 'hash' => 'education'],
+                ['label' => 'Leadership and Representation', 'route' => 'welfare.impact', 'hash' => 'leadership'],
+                ['label' => 'Community Welfare', 'route' => 'welfare.impact', 'hash' => 'entrepreneurship'],
+                ['label' => 'Faith, Identity and Ukhwah', 'route' => 'welfare.impact', 'hash' => 'faith'],
             ]
         ],
         [

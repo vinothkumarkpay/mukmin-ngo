@@ -231,8 +231,22 @@
                     if (mainNav && mainNav.classList.contains('open')) {
                         setMobileNavOpen(false);
                     }
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    history.pushState(null, null, targetHash);
+
+                    var impactTabs = document.getElementById('impact-expandable-tabs');
+                    var isImpactSection = impactTabs && impactTabs.contains(target);
+
+                    if (history.pushState) {
+                        history.pushState(null, null, targetHash);
+                    } else {
+                        window.location.hash = targetHash;
+                    }
+
+                    if (isImpactSection && typeof window.mukminFocusImpactSection === 'function') {
+                        window.mukminFocusImpactSection(targetHash);
+                    } else {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        window.dispatchEvent(new HashChangeEvent('hashchange'));
+                    }
                 }
             });
         }
@@ -257,6 +271,96 @@
                     pbTriggered = true;
                     animateProgressBars();
                 }
+            }
+        });
+    }
+
+    /* ---- MEMBERSHIP REGISTRATION GATE (community aid + serve forms) ---- */
+    var membershipRegistrationGateModal = document.getElementById('membership-registration-gate-modal');
+    var membershipRegistrationGateForm = document.getElementById('membership-registration-gate-form');
+    var membershipRegistrationGateClose = document.getElementById('membership-registration-gate-close');
+
+    if (membershipRegistrationGateModal && membershipRegistrationGateForm) {
+        var friendsUrl = membershipRegistrationGateModal.getAttribute('data-friends-url') || '';
+        var gatedFormUrls = (membershipRegistrationGateModal.getAttribute('data-form-urls') || '')
+            .split('|')
+            .filter(Boolean);
+        var pendingMemberFormUrl = '';
+
+        function normalizePath(path) {
+            return (path || '').replace(/\/$/, '') || '/';
+        }
+
+        function isMembershipGatedFormLink(href) {
+            if (!href || !gatedFormUrls.length) return false;
+
+            try {
+                var linkUrl = new URL(href, window.location.origin);
+                var isGatedForm = gatedFormUrls.some(function (formUrl) {
+                    var gatedUrl = new URL(formUrl, window.location.origin);
+                    return normalizePath(linkUrl.pathname) === normalizePath(gatedUrl.pathname);
+                });
+
+                if (!isGatedForm) {
+                    return false;
+                }
+
+                return normalizePath(window.location.pathname) !== normalizePath(linkUrl.pathname);
+            } catch (err) {
+                return gatedFormUrls.some(function (formUrl) {
+                    return href.indexOf(formUrl) !== -1
+                        && window.location.pathname.indexOf(new URL(formUrl, window.location.origin).pathname) === -1;
+                });
+            }
+        }
+
+        function openMembershipRegistrationGateModal(targetUrl) {
+            pendingMemberFormUrl = targetUrl;
+            membershipRegistrationGateModal.hidden = false;
+            document.body.style.overflow = 'hidden';
+            membershipRegistrationGateForm.reset();
+        }
+
+        function closeMembershipRegistrationGateModal() {
+            pendingMemberFormUrl = '';
+            membershipRegistrationGateModal.hidden = true;
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('a[href]').forEach(function (anchor) {
+            var href = anchor.getAttribute('href');
+            if (!isMembershipGatedFormLink(href)) return;
+
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                openMembershipRegistrationGateModal(anchor.href);
+            });
+        });
+
+        if (membershipRegistrationGateClose) {
+            membershipRegistrationGateClose.addEventListener('click', closeMembershipRegistrationGateModal);
+        }
+
+        membershipRegistrationGateModal.addEventListener('click', function (event) {
+            if (event.target === membershipRegistrationGateModal) {
+                closeMembershipRegistrationGateModal();
+            }
+        });
+
+        membershipRegistrationGateForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            var selected = membershipRegistrationGateForm.querySelector('input[name="is_member"]:checked');
+            if (!selected) return;
+
+            var destination = selected.value === 'yes' ? pendingMemberFormUrl : friendsUrl;
+            if (destination) {
+                window.location.href = destination;
+            }
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && !membershipRegistrationGateModal.hidden) {
+                closeMembershipRegistrationGateModal();
             }
         });
     }

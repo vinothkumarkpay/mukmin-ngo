@@ -9,7 +9,7 @@ class NewsMomentsGalleryTest extends TestCase
 {
     protected function tearDown(): void
     {
-        $testDir = public_path('welfare/img/moments/Kembara Ramadhan MUKMIN');
+        $testDir = public_path('welfare/img/moments/MUKMIN Ramadan Food Basket Initiative');
         $testFile = $testDir . '/test-gallery.jpg';
 
         if (File::exists($testFile)) {
@@ -26,8 +26,8 @@ class NewsMomentsGalleryTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Moments of MUKMIN', false);
         $response->assertSee('All Photos', false);
-        $response->assertSee('Kembara Ramadhan MUKMIN', false);
-        $response->assertSee('SIRAT Leaders Forum', false);
+        $response->assertSee('MUKMIN Ramadan Food Basket Initiative', false);
+        $response->assertSee('SIRAT Leaders Forum 2025', false);
         $response->assertSee('FIKRAH Launch', false);
         $response->assertDontSee('Ramadhan Aid', false);
         $response->assertDontSee('Forums &amp; Summits', false);
@@ -35,14 +35,14 @@ class NewsMomentsGalleryTest extends TestCase
 
     public function test_moments_gallery_loads_images_from_folder()
     {
-        $testDir = public_path('welfare/img/moments/Kembara Ramadhan MUKMIN');
+        $testDir = public_path('welfare/img/moments/MUKMIN Ramadan Food Basket Initiative');
         File::ensureDirectoryExists($testDir);
         File::put($testDir . '/test-gallery.jpg', 'test');
 
         $response = $this->get('/news');
 
         $response->assertStatus(200);
-        $response->assertSee('welfare/img/moments/Kembara Ramadhan MUKMIN/test-gallery.jpg', false);
-        $response->assertSee('Test Gallery', false);
+        $response->assertSee('welfare/img/moments/MUKMIN Ramadan Food Basket Initiative/test-gallery.jpg', false);
+        $response->assertSee('MUKMIN Ramadan Food Basket Initiative', false);
     }
 }

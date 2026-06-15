@@ -391,87 +391,6 @@ button.card-btn {
     font-family: inherit;
 }
 
-/* Membership registration modal */
-.membership-modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.55);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    z-index: 9999;
-}
-.membership-modal-overlay[hidden] {
-    display: none;
-}
-.membership-modal {
-    background: #ffffff;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 520px;
-    padding: 32px 28px 28px;
-    position: relative;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
-}
-.membership-modal-close {
-    position: absolute;
-    top: 14px;
-    right: 16px;
-    border: none;
-    background: transparent;
-    font-size: 24px;
-    line-height: 1;
-    color: #888;
-    cursor: pointer;
-}
-.membership-modal-close:hover {
-    color: #333;
-}
-.membership-modal h3 {
-    font-size: 20px;
-    font-weight: 700;
-    margin: 0 0 18px;
-    color: var(--color-heading);
-    padding-right: 24px;
-}
-.membership-modal-question {
-    font-size: 15px;
-    line-height: 24px;
-    color: #444;
-    margin: 0 0 18px;
-    font-weight: 600;
-}
-.membership-modal-options {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 24px;
-}
-.membership-modal-option {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 16px;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    color: #333;
-    transition: border-color 0.2s ease, background 0.2s ease;
-}
-.membership-modal-option:hover {
-    border-color: var(--color-primary, #d43c18);
-    background: #fff9f7;
-}
-.membership-modal-option input[type="radio"] {
-    accent-color: var(--color-primary, #d43c18);
-    flex-shrink: 0;
-}
-.membership-modal-submit {
-    margin-top: 0;
-}
-
 /* SUB BLOCK 4 shared lists */
 .process-steps {
     list-style: none;
@@ -756,8 +675,8 @@ button.card-btn {
                         <p>Ordinary Members form the core membership structure of MUKMIN and play an active role in contributing towards the organisation's direction, initiatives, and ecosystem development.</p>
                         <h4>Eligibility</h4>
                         <ul class="membership-list">
-                            <li>Registered NGOs and Civil Society Organisations</li>
-                            <li>Chambers of Commerce and Industry Associations</li>
+                            <li>Registered NGOs, Civil Society Organisations, Chambers of Commerce or Industry Associations</li>
+                            <li>Registered Masjid, Surau or Madrasah</li>
                         </ul>
                         <h4>Member Rights &amp; Participation</h4>
                         <ul class="membership-list">
@@ -888,7 +807,7 @@ button.card-btn {
                     <span>No</span>
                 </label>
             </div>
-            <button type="submit" class="card-btn membership-modal-submit">Continue</button>
+            <button type="submit" class="membership-modal-submit">Continue</button>
         </form>
     </div>
 </div>

@@ -31,7 +31,6 @@ class MflsPageTest extends TestCase
         $response->assertSee('Frequently Asked Questions', false);
         $response->assertSee('Can I apply to more than one programme?', false);
         $response->assertSee('Malaysian Qualifications Agency (MQA)', false);
-        $response->assertSee('Further details on MFLS will be shared soon', false);
     }
 
     public function test_mfls_scholarship_form_matches_google_form_sections()

@@ -34,6 +34,18 @@ class CommunityAidSubmissionTest extends TestCase
         ]);
     }
 
+    public function test_home_page_shows_community_aid_membership_gate_modal()
+    {
+        $response = $this->get(route('welfare.home'));
+
+        $response->assertStatus(200);
+        $response->assertSee('membership-registration-gate-modal', false);
+        $response->assertSee('Are you a registered MUKMIN member?', false);
+        $response->assertSee(route('welfare.community-aid'), false);
+        $response->assertSee(route('welfare.membership.friends'), false);
+        $response->assertSee('Talk to us', false);
+    }
+
     public function test_successful_aid_submission_saves_to_database_and_emails_only_support_with_attachments()
     {
         $doc1 = UploadedFile::fake()->create('medical_bill.pdf', 300);

@@ -283,7 +283,7 @@
         <div class="container">
             <div class="featured-block">
                 <div class="featured-left">
-                    <img src="{{ asset('welfare/img/changing/featured.png') }}" alt="Children celebrating together in community">
+                    <img src="{{ asset('welfare/img/changing/featured.png') }}" alt="MUKMIN community programmes supporting families, education, healthcare and collaboration">
                 </div>
                 <div class="featured-right">
                     <span class="category-tag">Changing Lives</span>
@@ -307,7 +307,7 @@
                 <!-- Sub Tab 1: Philanthropic Funds -->
                 <article class="column-card" id="funds">
                     <div class="column-card-image">
-                        <img src="{{ asset('welfare/img/changing/community-support.png') }}" alt="Volunteers united in community support">
+                        <img src="{{ asset('welfare/img/changing/community-support.png') }}" alt="Community leaders collaborating on sustainable community support through education, healthcare, livelihoods and development">
                     </div>
                     <div class="column-card-body">
                         <div class="column-card-title-wrap">
@@ -322,7 +322,7 @@
                 <!-- Sub Tab 2: Faith & Giving -->
                 <article class="column-card" id="giving">
                     <div class="column-card-image">
-                        <img src="{{ asset('welfare/img/changing/faith-giving.png') }}" alt="Children celebrating with the Malaysian flag">
+                        <img src="{{ asset('welfare/img/changing/faith-giving.png') }}" alt="Volunteer handing aid supplies to community members with a mosque in the background">
                     </div>
                     <div class="column-card-body">
                         <div class="column-card-title-wrap">

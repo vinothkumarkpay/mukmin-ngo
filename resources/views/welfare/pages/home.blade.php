@@ -786,11 +786,11 @@
             <a href="{{ route('welfare.serve') }}#membership-vertical-tabs" class="slide">
                 <img src="{{ asset('welfare/img/banner-2.png') }}" alt="Join Us">
             </a>
-            <a href="{{ route('welfare.ecosystem') }}" class="slide">
-                <img src="{{ asset('welfare/img/banner-3.png') }}" alt="Our Ecosystem">
-            </a>
             <a href="{{ route('welfare.impact.mfls') }}" class="slide">
-                <img src="{{ asset('welfare/img/banner-4.png') }}" alt="Empowering Future Leaders. Unlocking Potential.">
+                <img src="{{ asset('welfare/img/banner-3.png') }}" alt="Empowering Future Leaders. Unlocking Potential.">
+            </a>
+            <a href="{{ route('welfare.ecosystem') }}" class="slide">
+                <img src="{{ asset('welfare/img/banner-4.png') }}" alt="Our Ecosystem">
             </a>
 
             <!-- Slider Controls -->
@@ -960,16 +960,7 @@
                     MUKMIN operates through three complementary engines to strengthen collaboration, align stakeholders, and drive meaningful community impact at scale.
                 </p>
                 <div class="modal-grid-3">
-                    <!-- Engine 1: Yayasan MUKMIN -->
-                    <div class="engine-modal-card">
-                        <div class="engine-modal-logo">
-                            <img src="{{ asset('welfare/img/yayasan_logo.jpg') }}" alt="Yayasan MUKMIN Logo">
-                        </div>
-                        <span>Impact Foundation</span>
-                        <p>Transforming ideas into measurable outcomes through education, outreach and community-driven initiatives.</p>
-                    </div>
-
-                    <!-- Engine 2: FIKRAH -->
+                    <!-- Engine 1: FIKRAH -->
                     <div class="engine-modal-card">
                         <div class="engine-modal-logo">
                             <img src="{{ asset('welfare/img/fikrah_logo.jpg') }}" alt="FIKRAH Logo">
@@ -978,13 +969,22 @@
                         <p>Driving policy, research and long-term strategy to shape stronger communities and future-ready institutions.</p>
                     </div>
 
-                    <!-- Engine 3: MUKMIN -->
+                    <!-- Engine 2: MUKMIN -->
                     <div class="engine-modal-card">
                         <div class="engine-modal-logo">
                             <img src="{{ asset('welfare/img/mukmin_ecosystem_logo.jpg') }}" alt="MUKMIN Logo">
                         </div>
                         <span>Coordination Platform</span>
                         <p>Uniting organisations, aligning stakeholders and coordinating collective action for nationwide impact.</p>
+                    </div>
+
+                    <!-- Engine 3: Yayasan MUKMIN -->
+                    <div class="engine-modal-card">
+                        <div class="engine-modal-logo">
+                            <img src="{{ asset('welfare/img/yayasan_logo.jpg') }}" alt="Yayasan MUKMIN Logo">
+                        </div>
+                        <span>Impact Foundation</span>
+                        <p>Transforming ideas into measurable outcomes through education, outreach and community-driven initiatives.</p>
                     </div>
                 </div>
             </div>
@@ -1040,7 +1040,7 @@
                             <i class="fas fa-chart-line"></i>
                         </div>
                         <div>
-                            <h4>Socio-Economic Mobility</h4>
+                            <h4>Economic Empowerment</h4>
                             <span>From Assistance to Sustainable Participation</span>
                             <p>Empowering communities to move beyond dependency through economic participation, enterprise development and sustainable growth opportunities.</p>
                         </div>
@@ -1052,7 +1052,7 @@
                             <i class="fas fa-graduation-cap"></i>
                         </div>
                         <div>
-                            <h4>Education & Future Readiness</h4>
+                            <h4>Education and Talent Development</h4>
                             <span>Building Competitive Human Capital</span>
                             <p>Developing talent through integrated academic, leadership, and skills-based pathways aligned with industry needs and global relevance.</p>
                         </div>
@@ -1064,7 +1064,7 @@
                             <i class="fas fa-crown"></i>
                         </div>
                         <div>
-                            <h4>Leadership & Capacity Building</h4>
+                            <h4>Leadership and Representation</h4>
                             <span>Values-Driven Leaders for Impact</span>
                             <p>Nurturing principled leaders equipped to contribute at community, national and global levels through leadership development and institutional capacity building.</p>
                         </div>
@@ -1076,9 +1076,9 @@
                             <i class="fas fa-lightbulb"></i>
                         </div>
                         <div>
-                            <h4>Entrepreneurship & Innovation</h4>
-                            <span>Enabling Participation in the Future Economy</span>
-                            <p>Strengthening innovation, digital capabilities and entrepreneurial growth to increase participation in the evolving regional and global economy.</p>
+                            <h4>Community Welfare</h4>
+                            <span>Strengthening Communities Through Compassion</span>
+                            <p>Supporting families, uplifting the vulnerable and building caring, resilient communities.</p>
                         </div>
                     </div>
 
@@ -1088,7 +1088,7 @@
                             <i class="fas fa-handshake"></i>
                         </div>
                         <div>
-                            <h4>Faith, Identity & Social Ukhwah</h4>
+                            <h4>Faith, Identity and Ukhwah</h4>
                             <span>Strengthening Communities Through Shared Values</span>
                             <p>Anchoring development in values, identity and unity to build resilient, connected and socially cohesive communities.</p>
                         </div>
@@ -1297,7 +1297,6 @@
                         <div class="updates-tab-pane" id="programme-updates">
                             <ul class="updates-pane-list">
                                 <li>
-                                    <span class="update-date">Coming Soon</span>
                                     <h4 class="update-item-title">MUKMIN Future Leaders Scholarship (MFLS)</h4>
                                     <p class="update-item-desc"><strong>Two Pathways. One Future.</strong><br>Access TVET and academic programmes. From Foundation to Master level. Designed to develop future-ready talent.</p>
                                     <div style="margin-top: 12px;">
@@ -1305,7 +1304,6 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <span class="update-date">Programme</span>
                                     <h4 class="update-item-title">SIRAT Series</h4>
                                     <p class="update-item-desc">Building leadership, connection and collaboration across youth, leaders and diaspora.</p>
                                     <div style="margin-top: 12px;">
@@ -1350,8 +1348,8 @@
         <div class="container" style="max-width: 800px;">
             <i class="fas fa-quote-left" style="font-size: 40px; color: white; opacity: 0.3; margin-bottom: 20px;"></i>
             <h2 style="color: white; font-size: 42px; line-height: 52px; font-weight: 700; margin-bottom: 20px;">"No one has ever become poor by giving"</h2>
-            <p style="color: rgba(255,255,255,0.9); font-size: 15px; line-height: 26px; margin-bottom: 30px;">
-                Your contribution supports more than a single programme — it strengthens a wider ecosystem dedicated to community development, leadership growth, education access and long-term social impact. Through strategic collaboration and community-driven initiatives, every contribution helps MUKMIN and its ecosystem partners create meaningful change across communities, institutions and future generations.
+            <p style="color: rgba(255,255,255,0.9); font-size: 18px; line-height: 30px; margin-bottom: 30px;">
+                Your contribution supports more than a single programme. It strengthens a wider ecosystem dedicated to community development, leadership growth, education access and long-term social impact. Through strategic collaboration and community-driven initiatives, every contribution helps MUKMIN and its ecosystem partners create meaningful change across communities, institutions and future generations.
             </p>
             <div style="margin-bottom: 15px;">
                 <a href="{{ route('welfare.donate') }}" class="btn btn-white" style="font-size: 16px; padding: 12px 35px; border-radius: 25px; font-weight: 700;">Donate Now</a>
@@ -1376,45 +1374,52 @@
                         'title' => 'Kembara Ramadan MUKMIN – Food Basket Initiative',
                         'meta' => '28 February – 17 March 2026',
                         'desc' => 'MUKMIN successfully distributed 5,000 food baskets nationwide through mosque, madrasah, surau and NGO networks to support communities in need during Ramadan.',
-                        'image' => asset('welfare/img/news/kembara-ramadan-mukmin.png')
+                        'image' => asset('welfare/img/news/kembara-ramadan-mukmin.png'),
+                        'insight_tab' => 9,
                     ],
                     /*
                     [
                         'title' => 'Ramadan Assistance for Religious Scholars & Ustaz',
                         'meta' => '11 March 2026 | Kuala Lumpur',
                         'desc' => 'Ramadan assistance initiatives were carried out to support religious scholars and ustaz through food aid, financial assistance and complimentary medical protection coverage.',
-                        'image' => asset('welfare/img/news/ramadan-assistance-ustaz.png')
+                        'image' => asset('welfare/img/news/ramadan-assistance-ustaz.png'),
+                        'insight_tab' => 11,
                     ],
                     */
                     [
                         'title' => 'SIRAT Global Forum 2026',
                         'meta' => '23 – 25 January 2026 | Bank Rakyat Convention Centre',
                         'desc' => 'An international platform bringing together business leaders, professionals, innovators and youths from over 20 countries to strengthen global collaboration and future community development.',
-                        'image' => asset('welfare/img/news/sirat-global-forum-2026.png')
+                        'image' => asset('welfare/img/news/sirat-global-forum-2026.png'),
+                        'insight_tab' => 7,
                     ],
                     [
                         'title' => 'Official Launch of FIKRAH',
                         'meta' => '22 November 2025 | PICCA Convention Centre',
                         'desc' => 'FIKRAH was officially launched as MUKMIN’s strategic think tank focused on innovation, policy thinking, research and long-term community development.',
-                        'image' => asset('welfare/img/news/fikrah-launch.png')
+                        'image' => asset('welfare/img/news/fikrah-launch.png'),
+                        'insight_tab' => 4,
                     ],
                     [
                         'title' => 'SIRAT Youth Summit',
                         'meta' => '22 November 2025 | PICCA Convention Centre',
                         'desc' => 'Malaysia’s largest community youth gatherings, the programme brought together over 1,000 changemakers through leadership sessions, panel discussions, pitching sessions and the Youth Icon Awards.',
-                        'image' => asset('welfare/img/news/sirat-youth-summit-awards.png')
+                        'image' => asset('welfare/img/news/sirat-youth-summit-awards.png'),
+                        'insight_tab' => 3,
                     ],
                     [
                         'title' => 'SIRAT Leaders Forum',
                         'meta' => '29 – 31 August 2025 | The Chateau Resort, Bukit Tinggi, Pahang',
                         'desc' => 'The SIRAT Leaders Forum convened 250 NGO leaders, policymakers, professionals and religious institutions in a strategic platform focused on collaboration, leadership and sustainable community development.',
-                        'image' => asset('welfare/img/news/sirat-leaders-forum.png')
+                        'image' => asset('welfare/img/news/sirat-leaders-forum.png'),
+                        'insight_tab' => 2,
                     ],
                     [
                         'title' => 'MUKMIN Hari Raya Aidilfitri Open House 2025',
                         'meta' => '12 April 2025 | IDCC, Shah Alam',
                         'desc' => 'MUKMIN’s Hari Raya Aidilfitri Open House gathered NGOs, mosques, madrasahs, suraus and tahfiz institutions from across Malaysia in a celebration of unity and community spirit, welcoming approximately 2,000 guests including more than 200 religious scholars.',
-                        'image' => asset('welfare/img/news/hari-raya-open-house-2025.png')
+                        'image' => asset('welfare/img/news/hari-raya-open-house-2025.png'),
+                        'insight_tab' => 1,
                     ]
                 ];
                 @endphp
@@ -1438,7 +1443,7 @@
                         </div>
                     </div>
                     <div style="padding: 0 20px 20px 20px;">
-                        <a href="{{ route('welfare.news') }}" class="read-more" style="font-size: 12px; font-weight: 600;">Read More / View Gallery <i class="fas fa-arrow-right"></i></a>
+                        <a href="{{ route('welfare.news') }}#insights-{{ $act['insight_tab'] }}" class="read-more" style="font-size: 12px; font-weight: 600;">Read More / View Gallery <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 @endforeach
