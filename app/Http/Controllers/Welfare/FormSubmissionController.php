@@ -213,7 +213,7 @@ class FormSubmissionController extends Controller
             'email' => $this->requiredEmailRule(),
             'contact_number' => $this->requiredPhoneRule(),
             'website' => 'nullable|string|max:255',
-            'org_type' => 'required|array|min:1',
+            'org_type' => 'required|string|max:255',
             'org_type_other' => 'nullable|string|max:255',
             'primary_activities' => 'required|array|min:1',
             'primary_activities_other' => 'nullable|string|max:255',
@@ -239,6 +239,7 @@ class FormSubmissionController extends Controller
         $validated['is_registered_ros'] = false;
         $validated['registration_certificate'] = null;
         $validated['committee_members'] = null;
+        $validated['org_type'] = [$validated['org_type']];
 
         OrdinaryMemberSubmission::create($validated);
 

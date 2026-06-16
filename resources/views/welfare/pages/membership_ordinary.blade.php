@@ -198,7 +198,8 @@
 .dropdown-option-item:hover {
     background: #fdf6f4;
 }
-.dropdown-option-item input[type="checkbox"] {
+.dropdown-option-item input[type="checkbox"],
+.dropdown-option-item input[type="radio"] {
     margin-right: 12px;
     width: 16px;
     height: 16px;
@@ -276,16 +277,16 @@
                 <!-- SECTION A: ORGANISATION CATEGORY -->
                 <div class="form-section-title">Section A: Organisation Category</div>
                 <div class="form-group">
-                    <label>Select Category (Dropdown List)</label>
-                    <div class="custom-dropdown-container" id="org-type-dropdown">
-                        <div class="dropdown-trigger" data-placeholder="Choose category types...">
-                            <span class="trigger-text">Choose category types...</span>
+                    <label>Select Category</label>
+                    <div class="custom-dropdown-container" id="org-type-dropdown" data-single-select>
+                        <div class="dropdown-trigger" data-placeholder="Choose category...">
+                            <span class="trigger-text">Choose category...</span>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="dropdown-options-list">
                             @foreach($orgTypes as $type)
                                 <div class="dropdown-option-item">
-                                    <input type="checkbox" name="org_type[]" value="{{ $type }}" id="orgtype-{{ $loop->index }}" {{ is_array(old('org_type')) && in_array($type, old('org_type')) ? 'checked' : '' }}>
+                                    <input type="radio" name="org_type" value="{{ $type }}" id="orgtype-{{ $loop->index }}" {{ old('org_type') == $type ? 'checked' : '' }}>
                                     <span for="orgtype-{{ $loop->index }}">{{ $type }}</span>
                                 </div>
                             @endforeach
@@ -385,7 +386,7 @@
                 <div class="form-section-title">Section C: Organisation Profile</div>
                 
                 <div class="form-group">
-                    <label>Primary Activities (Dropdown List)</label>
+                    <label>Primary Activities</label>
                     <div class="custom-dropdown-container" id="activity-dropdown">
                         <div class="dropdown-trigger" data-placeholder="Choose activities...">
                             <span class="trigger-text">Choose activities...</span>
@@ -538,8 +539,9 @@ document.addEventListener('DOMContentLoaded', function () {
     
     dropdowns.forEach(dropdown => {
         const trigger = dropdown.querySelector('.dropdown-trigger');
-        const list = dropdown.querySelector('.dropdown-options-list');
+        const isSingleSelect = dropdown.hasAttribute('data-single-select');
         const checkboxes = dropdown.querySelectorAll('input[type="checkbox"]');
+        const radios = dropdown.querySelectorAll('input[type="radio"]');
         const triggerText = trigger.querySelector('.trigger-text');
 
         trigger.addEventListener('click', function (e) {
@@ -551,18 +553,26 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         function updateText() {
-            const checked = Array.from(checkboxes).filter(cb => cb.checked);
-            if (checked.length === 0) {
-                triggerText.textContent = trigger.getAttribute('data-placeholder') || 'Select options';
-            } else if (checked.length <= 2) {
-                triggerText.textContent = checked.map(cb => cb.parentNode.textContent.trim()).join(', ');
+            if (isSingleSelect) {
+                const selected = dropdown.querySelector('input[type="radio"]:checked');
+                triggerText.textContent = selected
+                    ? selected.parentNode.textContent.trim()
+                    : (trigger.getAttribute('data-placeholder') || 'Select option');
             } else {
-                triggerText.textContent = checked.length + ' options selected';
+                const checked = Array.from(checkboxes).filter(cb => cb.checked);
+                if (checked.length === 0) {
+                    triggerText.textContent = trigger.getAttribute('data-placeholder') || 'Select options';
+                } else if (checked.length <= 2) {
+                    triggerText.textContent = checked.map(cb => cb.parentNode.textContent.trim()).join(', ');
+                } else {
+                    triggerText.textContent = checked.length + ' options selected';
+                }
             }
 
             // Category "Others" conditional toggle
             if (dropdown.id === 'org-type-dropdown') {
-                const hasOther = checked.some(cb => cb.value.toLowerCase().includes('others'));
+                const selected = dropdown.querySelector('input[type="radio"]:checked');
+                const hasOther = selected && selected.value.toLowerCase().includes('others');
                 const otherGroup = document.getElementById('other-orgtype-group');
                 const otherInput = document.getElementById('org_type_other');
                 if (hasOther) {
@@ -576,6 +586,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Activity "Others" conditional toggle
             if (dropdown.id === 'activity-dropdown') {
+                const checked = Array.from(checkboxes).filter(cb => cb.checked);
                 const hasOther = checked.some(cb => cb.value.toLowerCase().includes('others'));
                 const otherGroup = document.getElementById('other-activity-group');
                 const otherInput = document.getElementById('primary_activities_other');
@@ -593,7 +604,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         dropdown.querySelectorAll('.dropdown-option-item').forEach(item => {
             item.addEventListener('click', function (e) {
-                if (e.target.type !== 'checkbox') {
+                if (isSingleSelect) {
+                    if (e.target.type !== 'radio') {
+                        const radio = item.querySelector('input[type="radio"]');
+                        radio.checked = true;
+                        radio.dispatchEvent(new Event('change', { bubbles: true }));
+                        dropdown.classList.remove('open');
+                    }
+                } else if (e.target.type !== 'checkbox') {
                     const cb = item.querySelector('input[type="checkbox"]');
                     cb.checked = !cb.checked;
                     cb.dispatchEvent(new Event('change', { bubbles: true }));

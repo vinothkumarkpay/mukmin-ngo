@@ -28,7 +28,7 @@ class FormUploadTest extends TestCase
             'total_members_size' => 50,
             'email' => 'testorg@example.com',
             'contact_number' => '+60123456789',
-            'org_type' => ['NGO'],
+            'org_type' => 'NGO',
             'primary_activities' => ['Welfare / Charity'],
             'key_office_bearers' => [
                 'president' => ['salutation' => 'Dato\'', 'name' => 'President Name', 'nric' => '900101145555', 'email' => 'pres@example.com', 'phone' => '+60123456789'],
