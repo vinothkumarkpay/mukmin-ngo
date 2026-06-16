@@ -30,4 +30,14 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'kiplepay' => [
+        'merchant_id' => env('KIPLEPAY_MERCHANT_ID'),
+        'secret_key' => env('KIPLEPAY_SECRET_KEY'),
+        'merchant_id_guest' => env('KIPLEPAY_MERCHANT_ID_GUEST'),
+        'secret_key_guest' => env('KIPLEPAY_SECRET_KEY_GUEST'),
+        'merchant_id_user' => env('KIPLEPAY_MERCHANT_ID_USER'),
+        'secret_key_user' => env('KIPLEPAY_SECRET_KEY_USER'),
+        'url' => env('KIPLEPAY_URL', 'https://sandbox.webcash.com.my'),
+    ],
+
 ];

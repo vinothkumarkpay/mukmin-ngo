@@ -7,6 +7,7 @@ use App\Http\Controllers\Welfare\PageController;
 use App\Http\Controllers\Welfare\FormSubmissionController;
 use App\Http\Controllers\Welfare\AdminAuthController;
 use App\Http\Controllers\Welfare\AdminDashboardController;
+use App\Http\Controllers\Welfare\DonationDemoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,13 @@ Route::name('welfare.')->group(function () {
     Route::get('/legal-disclaimer', [PageController::class, 'legalDisclaimer'])->name('legal-disclaimer');
     Route::get('/donate', [PageController::class, 'donate'])->name('donate');
     Route::post('/donate/submit', [FormSubmissionController::class, 'submitDonate'])->name('donate.submit');
+
+    // Standalone Webcash/KiplePay demo — not linked in site navigation
+    Route::get('/donate-demo', [DonationDemoController::class, 'create'])->name('donate-demo');
+    Route::post('/donate-demo', [DonationDemoController::class, 'store'])->name('donate-demo.store');
+    Route::get('/donate-demo/thank-you', [DonationDemoController::class, 'thankYou'])->name('donate-demo.thank-you');
+    Route::match(['GET', 'POST'], '/donate-demo/payment/return', [DonationDemoController::class, 'paymentReturn'])->name('donate-demo.payment.return');
+    Route::match(['GET', 'POST'], '/donate-demo/payment/callback', [DonationDemoController::class, 'paymentCallback'])->name('donate-demo.payment.callback');
     
     // New placeholders
     Route::get('/ecosystem', [PageController::class, 'ecosystem'])->name('ecosystem');
