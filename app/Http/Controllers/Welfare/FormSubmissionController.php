@@ -46,7 +46,9 @@ class FormSubmissionController extends Controller
         }
 
         try {
-            Mail::to('support@mukmin.org')->send(new FormSubmissionMail($formName, $validated, true));
+            Mail::to('support@mukmin.org')
+                ->cc('infofikrah@mukmin.org')
+                ->send(new FormSubmissionMail($formName, $validated, true));
         } catch (\Throwable $e) {
             Log::error("Mail to support failed for {$formName}", [
                 'error' => $e->getMessage(),
