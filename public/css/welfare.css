@@ -1188,7 +1188,6 @@ section { padding: 60px 0; }
         background: #f1f1f1;
         font-size: 18px;
     }
-    .btn-donate-rounded,
     .search-icon-btn {
         display: none;
     }
@@ -1227,6 +1226,24 @@ section { padding: 60px 0; }
         display: inline-block;
     }
     .btn-scholarship-rounded .action-text {
+        display: inline-block;
+    }
+    .btn-donate-rounded {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 38px;
+        padding: 0 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+        gap: 0;
+    }
+    .btn-donate-rounded i {
+        display: none;
+    }
+    .btn-donate-rounded .action-text {
         display: inline-block;
     }
     .site-logo .logo-desktop {
