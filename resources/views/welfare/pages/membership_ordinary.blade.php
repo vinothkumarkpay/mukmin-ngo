@@ -426,7 +426,7 @@
                         </div>
                         <div class="form-group">
                             <label>Full Name</label>
-                            <input type="text" name="key_office_bearers[president][name]" class="form-control" value="{{ old('key_office_bearers.president.name') }}" required>
+                            <input type="text" name="key_office_bearers[president][name]" class="form-control" placeholder="Name as per NRIC" value="{{ old('key_office_bearers.president.name') }}" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -460,7 +460,7 @@
                         </div>
                         <div class="form-group">
                             <label>Full Name</label>
-                            <input type="text" name="key_office_bearers[secretary][name]" class="form-control" value="{{ old('key_office_bearers.secretary.name') }}">
+                            <input type="text" name="key_office_bearers[secretary][name]" class="form-control" placeholder="Name as per NRIC" value="{{ old('key_office_bearers.secretary.name') }}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -494,7 +494,7 @@
                         </div>
                         <div class="form-group">
                             <label>Full Name</label>
-                            <input type="text" name="key_office_bearers[treasurer][name]" class="form-control" value="{{ old('key_office_bearers.treasurer.name') }}">
+                            <input type="text" name="key_office_bearers[treasurer][name]" class="form-control" placeholder="Name as per NRIC" value="{{ old('key_office_bearers.treasurer.name') }}">
                         </div>
                     </div>
                     <div class="form-group">

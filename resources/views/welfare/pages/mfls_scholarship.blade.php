@@ -238,7 +238,7 @@
 
                 <div class="form-group">
                     <label for="full_name">Full Name *</label>
-                    <input type="text" id="full_name" name="full_name" class="form-control @error('full_name') is-invalid @enderror" value="{{ old('full_name') }}" minlength="2" maxlength="255" autocomplete="name" required>
+                    <input type="text" id="full_name" name="full_name" class="form-control @error('full_name') is-invalid @enderror" placeholder="Name as per NRIC" value="{{ old('full_name') }}" minlength="2" maxlength="255" autocomplete="name" required>
                     @error('full_name')<span class="field-error">{{ $message }}</span>@enderror
                 </div>
 

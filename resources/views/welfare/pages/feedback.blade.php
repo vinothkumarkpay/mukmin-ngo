@@ -251,7 +251,7 @@
                 
                 <div class="form-group">
                     <label for="full_name">Full Name *</label>
-                    <input type="text" id="full_name" name="full_name" class="form-control" value="{{ old('full_name') }}" required>
+                    <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Name as per NRIC" value="{{ old('full_name') }}" required>
                 </div>
 
                 <div class="grid-2">

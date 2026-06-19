@@ -274,7 +274,7 @@
                         </div>
                         <div class="form-group">
                             <label for="ind_name">Full Name *</label>
-                            <input type="text" id="ind_name" name="ind_name" class="form-control" value="{{ old('ind_name') }}">
+                            <input type="text" id="ind_name" name="ind_name" class="form-control" placeholder="Name as per NRIC" value="{{ old('ind_name') }}">
                         </div>
                     </div>
 

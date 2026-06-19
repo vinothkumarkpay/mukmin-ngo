@@ -35,7 +35,7 @@
 
             <div>
                 <label style="display: block; font-weight: 500; margin-bottom: 5px; color: var(--color-heading);">Full Name</label>
-                <input type="text" name="name" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';" required>
+                <input type="text" name="name" placeholder="Name as per NRIC" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';" required>
             </div>
 
             <div>

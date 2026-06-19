@@ -256,7 +256,7 @@
                 
                 <div class="form-group">
                     <label for="full_name">Full Name (as per NRIC / Passport) *</label>
-                    <input type="text" id="full_name" name="full_name" class="form-control" value="{{ old('full_name') }}" required>
+                    <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Name as per NRIC" value="{{ old('full_name') }}" required>
                 </div>
 
                 <div class="grid-2">
@@ -411,7 +411,7 @@
                 <div class="grid-2">
                     <div class="form-group">
                         <label for="emergency_contact_name">Full Name *</label>
-                        <input type="text" id="emergency_contact_name" name="emergency_contact_name" class="form-control" value="{{ old('emergency_contact_name') }}" required>
+                        <input type="text" id="emergency_contact_name" name="emergency_contact_name" class="form-control" placeholder="Name as per NRIC" value="{{ old('emergency_contact_name') }}" required>
                     </div>
                     <div class="form-group">
                         <label for="emergency_contact_relationship">Relationship *</label>
