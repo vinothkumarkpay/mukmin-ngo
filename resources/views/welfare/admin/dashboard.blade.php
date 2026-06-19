@@ -56,6 +56,11 @@
                 </div>
             </li>
             <li>
+                <div class="sidebar-link" data-tab="panel-mfls-documents">
+                    <i class="fas fa-file-excel"></i> MFLS Partner Documents
+                </div>
+            </li>
+            <li>
                 <div class="sidebar-link" data-tab="panel-contact">
                     <i class="fas fa-envelope"></i> Contact Messages
                 </div>
@@ -725,6 +730,81 @@
                 </div>
             </div>
 
+            <div class="dashboard-panel" id="panel-mfls-documents">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>MFLS Partner Programme Documents</h3>
+                    </div>
+                    <div class="card-body">
+                        <p style="margin-bottom: 18px; color: #555; font-size: 14px;">
+                            Upload or replace the Excel programme information sheet for each partner institution. Updates appear immediately on the public MFLS page under the <strong>More Info</strong> button.
+                        </p>
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Partner Institution</th>
+                                        <th>Current File</th>
+                                        <th>Last Updated</th>
+                                        <th style="text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($mflsPartnerDocuments as $partnerDocument)
+                                        <tr>
+                                            <td><strong>{{ $partnerDocument['name'] }}</strong></td>
+                                            <td>
+                                                @if($partnerDocument['has_document'])
+                                                    {{ $partnerDocument['document']->original_filename }}
+                                                @else
+                                                    <span style="color: var(--admin-text-muted);">No document uploaded</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($partnerDocument['updated_at'])
+                                                    {{ $partnerDocument['updated_at']->format('d M Y, h:i A') }}
+                                                @else
+                                                    —
+                                                @endif
+                                            </td>
+                                            <td style="text-align: right;">
+                                                <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; align-items: center;">
+                                                    @if($partnerDocument['has_document'])
+                                                        <button
+                                                            type="button"
+                                                            class="btn-admin btn-admin-primary js-partner-doc-view"
+                                                            data-partner-id="{{ $partnerDocument['id'] }}"
+                                                            data-partner-name="{{ $partnerDocument['name'] }}"
+                                                            data-view-url="{{ route('welfare.admin.mfls.partner-documents.view', $partnerDocument['id']) }}"
+                                                            data-download-url="{{ route('welfare.admin.mfls.partner-documents.download', $partnerDocument['id']) }}"
+                                                        >
+                                                            <i class="fas fa-eye"></i> View
+                                                        </button>
+                                                        <a href="{{ route('welfare.admin.mfls.partner-documents.download', $partnerDocument['id']) }}" class="btn-admin btn-admin-secondary">
+                                                            <i class="fas fa-download"></i> Download
+                                                        </a>
+                                                    @endif
+                                                    <form action="{{ route('welfare.admin.mfls.partner-documents.upload', $partnerDocument['id']) }}" method="POST" enctype="multipart/form-data" class="admin-import-form" style="justify-content: flex-end; margin: 0;">
+                                                        @csrf
+                                                        <label class="admin-import-file-label">
+                                                            <input type="file" name="programme_file" accept=".xlsx,.xls" required class="admin-import-file-input">
+                                                            <span class="btn-admin btn-admin-secondary admin-import-file-btn"><i class="fas fa-folder-open"></i> Choose Excel</span>
+                                                        </label>
+                                                        <button type="submit" class="btn-admin btn-admin-primary">
+                                                            <i class="fas fa-upload"></i> Update
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- 9. OPTIONS MANAGER PANEL -->
             <div class="dashboard-panel" id="panel-options">
                 <div class="options-grid">
@@ -825,6 +905,25 @@
         </div>
         <div class="modal-footer">
             <button class="btn-admin btn-admin-secondary" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- MFLS PARTNER DOCUMENT PREVIEW MODAL -->
+<div class="modal-backdrop" id="mfls-doc-modal" onclick="closePartnerDocumentModal()">
+    <div class="modal-window modal-window-wide" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3 id="mfls-doc-modal-title">Programme Document</h3>
+            <button class="modal-close" onclick="closePartnerDocumentModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body mfls-doc-preview-body" id="mfls-doc-modal-body">
+            Loading document preview...
+        </div>
+        <div class="modal-footer" style="justify-content: space-between;">
+            <a href="#" id="mfls-doc-download-link" class="btn-admin btn-admin-primary" style="text-decoration: none;">
+                <i class="fas fa-download"></i> Download Excel
+            </a>
+            <button class="btn-admin btn-admin-secondary" onclick="closePartnerDocumentModal()">Close</button>
         </div>
     </div>
 </div>
@@ -1010,6 +1109,42 @@
         document.getElementById('detail-modal').classList.remove('open');
     }
 
+    function closePartnerDocumentModal() {
+        const modal = document.getElementById('mfls-doc-modal');
+        const modalBody = document.getElementById('mfls-doc-modal-body');
+        if (!modal) return;
+        modal.classList.remove('open');
+        if (modalBody) {
+            modalBody.innerHTML = '';
+        }
+    }
+
+    window.viewPartnerDocument = function (viewUrl, downloadUrl, partnerName) {
+        const modal = document.getElementById('mfls-doc-modal');
+        const modalBody = document.getElementById('mfls-doc-modal-body');
+        const modalTitle = document.getElementById('mfls-doc-modal-title');
+        const downloadLink = document.getElementById('mfls-doc-download-link');
+
+        if (!modal || !modalBody || !viewUrl) {
+            return;
+        }
+
+        modalTitle.textContent = partnerName + ' Programme Document';
+        downloadLink.href = downloadUrl || '#';
+        modalBody.innerHTML = '<iframe class="mfls-programme-iframe" src="' + viewUrl + '"></iframe>';
+        modal.classList.add('open');
+    };
+
+    document.querySelectorAll('.js-partner-doc-view').forEach(function (button) {
+        button.addEventListener('click', function () {
+            viewPartnerDocument(
+                button.getAttribute('data-view-url'),
+                button.getAttribute('data-download-url'),
+                button.getAttribute('data-partner-name') || 'Partner'
+            );
+        });
+    });
+
     // AJAX status updates
     function updateStatus(type, id, status) {
         if (!confirm(`Are you sure you want to set status of submission #${id} to ${status.toUpperCase()}?`)) return;
@@ -1048,11 +1183,14 @@
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
             closeModal();
+            closePartnerDocumentModal();
         }
     });
 
     @if(session('import_tab'))
     switchTab(@json(session('import_tab')));
+    @elseif(session('admin_tab'))
+    switchTab(@json(session('admin_tab')));
     @endif
 
     document.querySelectorAll('.admin-import-file-input').forEach(function(input) {

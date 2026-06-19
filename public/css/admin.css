@@ -479,6 +479,34 @@ a:hover {
     transition: transform 0.3s ease;
     overflow: hidden;
 }
+.modal-window-wide {
+    max-width: 1100px;
+}
+.mfls-doc-preview-body {
+    overflow: auto;
+    padding: 0;
+}
+.mfls-programme-preview {
+    padding: 0;
+    overflow: hidden;
+}
+.mfls-programme-iframe {
+    display: block;
+    width: 100%;
+    min-height: 70vh;
+    border: 0;
+    background: #ffffff;
+}
+.mfls-programme-modal__loading,
+.mfls-programme-modal__error {
+    padding: 48px 24px;
+    text-align: center;
+    color: #64748b;
+    font-size: 14px;
+}
+.mfls-programme-modal__error {
+    color: #b83210;
+}
 .modal-backdrop.open .modal-window {
     transform: scale(1);
 }

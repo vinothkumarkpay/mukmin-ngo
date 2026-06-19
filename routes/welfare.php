@@ -8,6 +8,7 @@ use App\Http\Controllers\Welfare\FormSubmissionController;
 use App\Http\Controllers\Welfare\AdminAuthController;
 use App\Http\Controllers\Welfare\AdminDashboardController;
 use App\Http\Controllers\Welfare\DonationDemoController;
+use App\Http\Controllers\Welfare\MflsPartnerDocumentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,6 +50,9 @@ Route::name('welfare.')->group(function () {
     Route::get('/serve-together', [PageController::class, 'serve'])->name('serve');
     Route::get('/impact-areas', [PageController::class, 'impact'])->name('impact');
     Route::get('/impact-areas/mfls', [PageController::class, 'mfls'])->name('impact.mfls');
+    Route::get('/impact-areas/mfls/partner/{partnerId}/programme-info', [MflsPartnerDocumentController::class, 'preview'])->name('impact.mfls.partner-programme-info');
+    Route::get('/impact-areas/mfls/partner/{partnerId}/programme-info/view', [MflsPartnerDocumentController::class, 'viewHtml'])->name('impact.mfls.partner-programme-info.view');
+    Route::get('/impact-areas/mfls/partner/{partnerId}/programme-info/download', [MflsPartnerDocumentController::class, 'download'])->name('impact.mfls.partner-programme-info.download');
     Route::get('/impact-areas/sirat-series', [PageController::class, 'sirat'])->name('impact.sirat');
     Route::get('/news', [PageController::class, 'news'])->name('news');
     Route::get('/changing-lives', [PageController::class, 'changing'])->name('changing');
@@ -104,5 +108,8 @@ Route::name('welfare.')->group(function () {
         Route::post('/admin/options/add', [AdminDashboardController::class, 'addOption'])->name('admin.options.add');
         Route::post('/admin/options/edit/{id}', [AdminDashboardController::class, 'editOption'])->name('admin.options.edit');
         Route::post('/admin/options/delete/{id}', [AdminDashboardController::class, 'deleteOption'])->name('admin.options.delete');
+        Route::post('/admin/mfls/partner-documents/{partnerId}', [MflsPartnerDocumentController::class, 'upload'])->name('admin.mfls.partner-documents.upload');
+        Route::get('/admin/mfls/partner-documents/{partnerId}/view', [MflsPartnerDocumentController::class, 'viewHtml'])->name('admin.mfls.partner-documents.view');
+        Route::get('/admin/mfls/partner-documents/{partnerId}/download', [MflsPartnerDocumentController::class, 'download'])->name('admin.mfls.partner-documents.download');
     });
 });

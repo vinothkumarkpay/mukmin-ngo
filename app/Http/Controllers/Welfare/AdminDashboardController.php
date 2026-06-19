@@ -14,6 +14,7 @@ use App\Models\VolunteerSubmission;
 use App\Models\ContactSubmission;
 use App\Models\CommunityAidSubmission;
 use App\Models\MflsScholarshipSubmission;
+use App\Services\Welfare\MflsPartnerDocumentService;
 use App\Services\Welfare\SubmissionImportRegistry;
 use App\Services\Welfare\SubmissionImporter;
 use Response;
@@ -46,7 +47,8 @@ class AdminDashboardController extends Controller
         $aid = CommunityAidSubmission::orderBy('created_at', 'desc')->get();
         $mfls = MflsScholarshipSubmission::orderBy('created_at', 'desc')->get();
 
-        // 3. Fetch dropdown options grouped by form_type
+        app(MflsPartnerDocumentService::class)->bootstrapDocumentsIfMissing();
+        $mflsPartnerDocuments = app(MflsPartnerDocumentService::class)->documentsForAdmin();
         $options = FormDropdownOption::orderBy('form_type')
             ->orderBy('sort_order')
             ->orderBy('option_value')
@@ -71,7 +73,7 @@ class AdminDashboardController extends Controller
         ];
 
         return view('welfare.admin.dashboard', compact(
-            'stats', 'feedback', 'ordinary', 'friends', 'mentor', 'partner', 'volunteer', 'contact', 'aid', 'mfls', 'options', 'formTypesMap'
+            'stats', 'feedback', 'ordinary', 'friends', 'mentor', 'partner', 'volunteer', 'contact', 'aid', 'mfls', 'options', 'formTypesMap', 'mflsPartnerDocuments'
         ));
     }
 

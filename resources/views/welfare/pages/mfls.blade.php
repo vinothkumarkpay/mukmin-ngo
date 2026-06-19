@@ -376,6 +376,142 @@
     background: var(--color-primary-dk, #b83210);
     color: #ffffff !important;
 }
+.mfls-partner-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+.mfls-info-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    color: var(--color-primary, #d43c18) !important;
+    padding: 11px 22px;
+    border: 1px solid var(--color-primary, #d43c18);
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-main);
+}
+.mfls-info-btn:hover:not(:disabled) {
+    background: #fdf8f6;
+}
+.mfls-info-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+.mfls-programme-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+.mfls-programme-modal[hidden] {
+    display: none;
+}
+.mfls-programme-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.65);
+}
+.mfls-programme-modal__dialog {
+    position: relative;
+    width: min(1100px, 100%);
+    max-height: calc(100vh - 48px);
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.mfls-programme-modal__header,
+.mfls-programme-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 24px;
+    background: #fafafa;
+    border-bottom: 1px solid #e2e8f0;
+}
+.mfls-programme-modal__footer {
+    border-bottom: 0;
+    border-top: 1px solid #e2e8f0;
+}
+.mfls-programme-modal__header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--color-heading);
+}
+.mfls-programme-modal__close {
+    border: 0;
+    background: transparent;
+    color: #64748b;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+}
+.mfls-programme-modal__body {
+    padding: 0;
+    overflow: auto;
+    flex: 1;
+    background: #ffffff;
+}
+.mfls-programme-modal__loading,
+.mfls-programme-modal__error {
+    padding: 48px 24px;
+    text-align: center;
+    color: #64748b;
+    font-size: 14px;
+}
+.mfls-programme-modal__error {
+    color: #b83210;
+}
+.mfls-programme-preview {
+    padding: 0;
+    overflow: hidden;
+}
+.mfls-programme-iframe {
+    display: block;
+    width: 100%;
+    min-height: 70vh;
+    border: 0;
+    background: #ffffff;
+}
+.mfls-download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--color-primary, #d43c18);
+    color: #ffffff !important;
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+.mfls-download-btn:hover {
+    background: var(--color-primary-dk, #b83210);
+    color: #ffffff !important;
+}
+.mfls-modal-close-btn {
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #334155;
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
 .mfls-faq-list .mfls-expand-trigger h2 {
     font-size: 15px;
     line-height: 1.45;
@@ -565,9 +701,21 @@
                                     @endforeach
                                 </ul>
                             @endif
-                            <a href="{{ $mflsApplyUrl }}" class="mfls-apply-btn">
-                                Apply Now <i class="fas fa-arrow-right" style="font-size: 11px;"></i>
-                            </a>
+                            <div class="mfls-partner-actions">
+                                <a href="{{ $mflsApplyUrl }}" class="mfls-apply-btn">
+                                    Apply Now <i class="fas fa-arrow-right" style="font-size: 11px;"></i>
+                                </a>
+                                <button
+                                    type="button"
+                                    class="mfls-info-btn"
+                                    data-partner-info="{{ $partner['id'] }}"
+                                    data-partner-name="{{ $partner['name'] }}"
+                                    data-view-url="{{ route('welfare.impact.mfls.partner-programme-info.view', ['partnerId' => $partner['id'], 'v' => time()]) }}"
+                                    data-download-url="{{ route('welfare.impact.mfls.partner-programme-info.download', ['partnerId' => $partner['id']]) }}"
+                                >
+                                    More Info <i class="fas fa-file-excel" style="font-size: 11px;"></i>
+                                </button>
+                            </div>
                         </article>
                     @endforeach
                 </div>
@@ -598,6 +746,27 @@
             </div>
         </div>
     </section>
+</div>
+
+<div id="mfls-programme-modal" class="mfls-programme-modal" hidden aria-hidden="true">
+    <div class="mfls-programme-modal__backdrop" data-mfls-modal-close></div>
+    <div class="mfls-programme-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="mfls-programme-modal-title">
+        <div class="mfls-programme-modal__header">
+            <h3 id="mfls-programme-modal-title">Programme Information</h3>
+            <button type="button" class="mfls-programme-modal__close" data-mfls-modal-close aria-label="Close programme information">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="mfls-programme-modal__body" id="mfls-programme-modal-body">
+            <div class="mfls-programme-modal__loading">Loading programme information...</div>
+        </div>
+        <div class="mfls-programme-modal__footer">
+            <a href="#" id="mfls-programme-download" class="mfls-download-btn" download>
+                <i class="fas fa-download"></i> Download Excel
+            </a>
+            <button type="button" class="mfls-modal-close-btn" data-mfls-modal-close>Close</button>
+        </div>
+    </div>
 </div>
 
 @push('scripts')
@@ -652,6 +821,51 @@
                     }, 50);
                 }
             }
+        });
+    });
+
+    var programmeModal = document.getElementById('mfls-programme-modal');
+    var programmeModalBody = document.getElementById('mfls-programme-modal-body');
+    var programmeModalTitle = document.getElementById('mfls-programme-modal-title');
+    var programmeDownloadLink = document.getElementById('mfls-programme-download');
+
+    function closeProgrammeModal() {
+        if (!programmeModal) return;
+        programmeModal.hidden = true;
+        programmeModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    function openProgrammeModal() {
+        if (!programmeModal) return;
+        programmeModal.hidden = false;
+        programmeModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    document.querySelectorAll('[data-mfls-modal-close]').forEach(function (el) {
+        el.addEventListener('click', closeProgrammeModal);
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && programmeModal && !programmeModal.hidden) {
+            closeProgrammeModal();
+        }
+    });
+
+    document.querySelectorAll('[data-partner-info]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var viewUrl = btn.getAttribute('data-view-url');
+            var downloadUrl = btn.getAttribute('data-download-url');
+            var partnerName = btn.getAttribute('data-partner-name') || 'Partner';
+
+            if (!viewUrl || !programmeModal || !programmeModalBody) return;
+
+            programmeModalTitle.textContent = partnerName + ' Programme Information';
+            programmeDownloadLink.href = downloadUrl || '#';
+            programmeDownloadLink.removeAttribute('aria-disabled');
+            programmeModalBody.innerHTML = '<iframe class="mfls-programme-iframe" src="' + viewUrl + '"></iframe>';
+            openProgrammeModal();
         });
     });
 })();
