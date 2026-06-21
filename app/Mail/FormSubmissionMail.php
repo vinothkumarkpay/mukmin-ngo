@@ -137,13 +137,15 @@ class FormSubmissionMail extends Mailable
         'received_aid_before_details' => 'Previous Aid Details',
 
         // MFLS Scholarship
+        'partner_institution_id' => 'Partner Institution ID',
+        'partner_institution_name' => 'Partner Institution',
         'marital_status' => 'Marital Status',
         'marital_status_other' => 'Marital Status (Other)',
         'current_qualification' => 'Current Qualification (Year 2025/2026)',
         'institution_name' => 'Institution Name',
         'current_cgpa_result' => 'Current CGPA / Final Result',
         'academic_transcript' => 'Academic Transcript',
-        'programme_course_applied' => 'Programme / Course Applied',
+        'programme_course_applied' => 'Selected Programme',
         'applied_to_university' => 'Applied to Participating University?',
         'received_offer_letter' => 'Received Offer Letter?',
         'offer_letter' => 'Offer Letter Upload',
@@ -268,6 +270,22 @@ class FormSubmissionMail extends Mailable
     protected function formatData(array $data)
     {
         $formatted = [];
+
+        foreach (['partner_institution_name', 'programme_course_applied'] as $priorityKey) {
+            if (empty($data[$priorityKey])) {
+                continue;
+            }
+
+            $formatted[] = [
+                'label' => self::$labels[$priorityKey] ?? ucwords(str_replace('_', ' ', $priorityKey)),
+                'value' => nl2br(e($data[$priorityKey])),
+                'is_html' => true,
+            ];
+            unset($data[$priorityKey]);
+        }
+
+        unset($data['partner_institution_id']);
+
         foreach ($data as $key => $value) {
             if ($key === 'declaration_confirmed') {
                 continue;

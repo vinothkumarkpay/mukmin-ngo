@@ -112,7 +112,7 @@ class CommunityAidSubmissionTest extends TestCase
             
             $hasAttachments = count($mail->diskAttachments) === 2 || count($mail->attachments) === 2;
 
-            return $mail->hasTo('support@mukmin.org') &&
+            return $mail->hasTo('communitywelfare@mukmin.org') &&
                    $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->isForSupport &&

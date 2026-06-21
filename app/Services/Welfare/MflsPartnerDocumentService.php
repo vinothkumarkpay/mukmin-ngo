@@ -20,13 +20,39 @@ class MflsPartnerDocumentService
 
     public function partnerName(string $partnerId): ?string
     {
+        $partner = $this->findPartner($partnerId);
+
+        return $partner['name'] ?? null;
+    }
+
+    public function findPartner(string $partnerId): ?array
+    {
         foreach (config('mfls_partners.institutions', []) as $partner) {
             if ($partner['id'] === $partnerId) {
-                return $partner['name'];
+                return $partner;
             }
         }
 
         return null;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function partnerProgrammes(array $partner): array
+    {
+        if (!empty($partner['programme_groups'])) {
+            $programmes = [];
+            foreach ($partner['programme_groups'] as $group) {
+                foreach ($group['programmes'] as $programme) {
+                    $programmes[] = $programme;
+                }
+            }
+
+            return $programmes;
+        }
+
+        return $partner['programmes'] ?? [];
     }
 
     public function isValidPartnerId(string $partnerId): bool

@@ -254,9 +254,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
     width: 100%;
-    min-height: 180px;
+    min-height: 152px;
     padding: 24px 18px;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
@@ -276,13 +275,6 @@
     max-width: 260px;
     height: 104px;
     object-fit: contain;
-}
-.mfls-partner-logo-btn span {
-    font-size: 16px;
-    font-weight: 700;
-    color: #444;
-    text-align: center;
-    line-height: 1.35;
 }
 .mfls-partner-details {
     display: flex;
@@ -447,6 +439,9 @@
     border-top: 1px solid #e2e8f0;
     justify-content: flex-end;
 }
+.mfls-programme-modal__footer .mfls-apply-btn {
+    text-decoration: none;
+}
 .mfls-programme-modal__header h3 {
     margin: 0;
     font-size: 18px;
@@ -525,15 +520,12 @@
         grid-template-columns: repeat(2, 1fr);
     }
     .mfls-partner-logo-btn {
-        min-height: 150px;
+        min-height: 132px;
         padding: 18px 14px;
     }
     .mfls-partner-logo-btn img {
         max-width: 200px;
         height: 84px;
-    }
-    .mfls-partner-logo-btn span {
-        font-size: 15px;
     }
     .mfls-programme-list {
         grid-template-columns: 1fr;
@@ -570,9 +562,10 @@
                         </button>
                         <div class="mfls-expand-panel" id="expand-application-criteria" role="region" aria-labelledby="expand-btn-application-criteria" hidden>
                             <ul class="mfls-criteria-list">
-                                <li>Applicants must be of Indian Muslim heritage.</li>
-                                <li>Applicants must be a Malaysian citizen.</li>
-                                <li>Priority will be given to applicants from B40 and financially deserving backgrounds.</li>
+                                <li>New student intake only</li>
+                                <li>Foundation, Diploma, Degree &amp; TVET programmes</li>
+                                <li>Malaysian students of Indian Muslim heritage</li>
+                                <li>Subject to institution-specific eligibility requirements</li>
                             </ul>
                             <p class="mfls-criteria-subheading">Age Requirements:</p>
                             <ul class="mfls-criteria-list">
@@ -651,8 +644,7 @@
                             aria-expanded="{{ $loop->first ? 'true' : 'false' }}"
                             aria-controls="partner-detail-{{ $partner['id'] }}"
                         >
-                            <img src="{{ asset($partner['logo']) }}" alt="{{ $partner['name'] }} logo">
-                            <span>{{ $partner['name'] }}</span>
+                            <img src="{{ asset($partner['logo']) }}" alt="{{ $partner['name'] }}">
                         </button>
                     @endforeach
                 </div>
@@ -687,14 +679,12 @@
                                 </ul>
                             @endif
                             <div class="mfls-partner-actions">
-                                <a href="{{ $mflsApplyUrl }}" class="mfls-apply-btn">
-                                    Apply Now <i class="fas fa-arrow-right" style="font-size: 11px;"></i>
-                                </a>
                                 <button
                                     type="button"
                                     class="mfls-info-btn"
                                     data-partner-info="{{ $partner['id'] }}"
                                     data-partner-name="{{ $partner['name'] }}"
+                                    data-apply-url="{{ route('welfare.mfls-scholarship', ['partner' => $partner['id']]) }}"
                                     data-view-url="{{ route('welfare.impact.mfls.partner-programme-info.view', ['partnerId' => $partner['id'], 'v' => time()]) }}"
                                 >
                                     More Info <i class="fas fa-file-excel" style="font-size: 11px;"></i>
@@ -745,7 +735,9 @@
             <div class="mfls-programme-modal__loading">Loading programme information...</div>
         </div>
         <div class="mfls-programme-modal__footer">
-            <button type="button" class="mfls-modal-close-btn" data-mfls-modal-close>Close</button>
+            <a href="#" id="mfls-programme-apply" class="mfls-apply-btn">
+                Apply Now <i class="fas fa-arrow-right" style="font-size: 11px;"></i>
+            </a>
         </div>
     </div>
 </div>
@@ -808,6 +800,7 @@
     var programmeModal = document.getElementById('mfls-programme-modal');
     var programmeModalBody = document.getElementById('mfls-programme-modal-body');
     var programmeModalTitle = document.getElementById('mfls-programme-modal-title');
+    var programmeApplyLink = document.getElementById('mfls-programme-apply');
 
     function closeProgrammeModal() {
         if (!programmeModal) return;
@@ -836,11 +829,15 @@
     document.querySelectorAll('[data-partner-info]').forEach(function (btn) {
         btn.addEventListener('click', function () {
             var viewUrl = btn.getAttribute('data-view-url');
+            var applyUrl = btn.getAttribute('data-apply-url');
             var partnerName = btn.getAttribute('data-partner-name') || 'Partner';
 
             if (!viewUrl || !programmeModal || !programmeModalBody) return;
 
             programmeModalTitle.textContent = partnerName + ' Programme Information';
+            if (programmeApplyLink) {
+                programmeApplyLink.href = applyUrl || '#';
+            }
             programmeModalBody.innerHTML = '<iframe class="mfls-programme-iframe" src="' + viewUrl + '"></iframe>';
             openProgrammeModal();
         });

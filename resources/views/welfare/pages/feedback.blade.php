@@ -1,4 +1,4 @@
-@extends('welfare.layouts.app')
+﻿@extends('welfare.layouts.app')
 
 @section('title', 'Community Feedback & Suggestion Form - Pertubuhan Gabungan MUKMIN Nasional')
 
@@ -250,17 +250,17 @@
                 <div class="form-section-title">Individual / Organisation Details</div>
                 
                 <div class="form-group">
-                    <label for="full_name">Full Name *</label>
+                    <label for="full_name">Full Name</label>
                     <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Name as per NRIC" value="{{ old('full_name') }}" required>
                 </div>
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="nric_number">NRIC Number *</label>
+                        <label for="nric_number">NRIC Number</label>
                         <input type="text" id="nric_number" name="nric_number" class="form-control" placeholder="e.g. 900101145555" inputmode="numeric" pattern="[0-9]{1,12}" maxlength="12" value="{{ old('nric_number') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="state_residency">State *</label>
+                        <label for="state_residency">State</label>
                         <select id="state_residency" name="state_residency" class="form-control" required>
                             <option value="">-- Choose State --</option>
                             @foreach(['Johor', 'Kedah', 'Kelantan', 'Melaka', 'Negeri Sembilan', 'Pahang', 'Penang', 'Perak', 'Perlis', 'Sabah', 'Sarawak', 'Selangor', 'Terengganu', 'Wilayah Persekutuan Kuala Lumpur', 'Wilayah Persekutuan Labuan', 'Wilayah Persekutuan Putrajaya'] as $state)
@@ -282,17 +282,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="full_address">Full Address *</label>
+                    <label for="full_address">Full Address</label>
                     <textarea id="full_address" name="full_address" rows="3" class="form-control" style="font-family: inherit;" required>{{ old('full_address') }}</textarea>
                 </div>
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="email">Email Address *</label>
+                        <label for="email">Email Address</label>
                         <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" value="{{ old('email') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="contact_number">Contact Number *</label>
+                        <label for="contact_number">Contact Number</label>
                         <input type="tel" id="contact_number" name="contact_number" class="form-control" placeholder="e.g. +60123456789" value="{{ old('contact_number') }}" required>
                     </div>
                 </div>
@@ -301,7 +301,7 @@
                 <div class="form-section-title">Suggestion / Feedback Category</div>
 
                 <div class="form-group">
-                    <label>Select Category * (Dropdown List)</label>
+                    <label>Select Category (Dropdown List)</label>
                     <div class="custom-dropdown-container" id="category-dropdown">
                         <div class="dropdown-trigger" data-placeholder="Choose categories...">
                             <span class="trigger-text">Choose categories...</span>
@@ -319,22 +319,22 @@
                 </div>
 
                 <div class="form-group" id="other-category-group" style="display: none;">
-                    <label for="other_category">Please specify "Other" Category *</label>
+                    <label for="other_category">Please specify "Other" Category</label>
                     <input type="text" id="other_category" name="other_category" class="form-control" value="{{ old('other_category') }}">
                 </div>
 
                 <div class="form-group">
-                    <label for="suggestion_description">Please describe your suggestion, feedback, concern, or proposed initiative: *</label>
+                    <label for="suggestion_description">Please describe your suggestion, feedback, concern, or proposed initiative:</label>
                     <textarea id="suggestion_description" name="suggestion_description" rows="5" class="form-control" style="font-family: inherit;" required>{{ old('suggestion_description') }}</textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="benefits_description">How do you believe this suggestion can benefit the MUKMIN ecosystem or community? *</label>
+                    <label for="benefits_description">How do you believe this suggestion can benefit the MUKMIN ecosystem or community?</label>
                     <textarea id="benefits_description" name="benefits_description" rows="4" class="form-control" style="font-family: inherit;" required>{{ old('benefits_description') }}</textarea>
                 </div>
 
                 <div class="form-group">
-                    <label>Would you like to be contacted for further discussion or collaboration? *</label>
+                    <label>Would you like to be contacted for further discussion or collaboration?</label>
                     <div class="radio-group">
                         <label class="radio-label">
                             <input type="radio" name="contact_consent" value="1" {{ old('contact_consent') === '1' ? 'checked' : '' }} required>

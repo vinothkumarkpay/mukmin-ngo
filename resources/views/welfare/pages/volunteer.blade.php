@@ -1,4 +1,4 @@
-@extends('welfare.layouts.app')
+﻿@extends('welfare.layouts.app')
 
 @section('title', 'Volunteer Registration - Pertubuhan Gabungan MUKMIN Nasional')
 
@@ -267,17 +267,17 @@
                 <div class="form-section-title">Volunteer Details</div>
                 
                 <div class="form-group">
-                    <label for="full_name">Full Name *</label>
+                    <label for="full_name">Full Name</label>
                     <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Name as per NRIC" value="{{ old('full_name') }}" required>
                 </div>
 
                 <div class="grid-3">
                     <div class="form-group">
-                        <label for="nric_passport">NRIC / Passport Number *</label>
+                        <label for="nric_passport">NRIC / Passport Number</label>
                         <input type="text" id="nric_passport" name="nric_passport" class="form-control" value="{{ old('nric_passport') }}" required>
                     </div>
                     <div class="form-group">
-                        <label>Gender *</label>
+                        <label>Gender</label>
                         <div class="radio-group" style="margin-top: 12px;">
                             <label class="radio-label">
                                 <input type="radio" name="gender" value="Male" {{ old('gender') === 'Male' ? 'checked' : '' }} required>
@@ -290,7 +290,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="state_residency">State *</label>
+                        <label for="state_residency">State</label>
                         <select id="state_residency" name="state_residency" class="form-control" required>
                             <option value="">-- Choose State --</option>
                             @foreach(['Johor', 'Kedah', 'Kelantan', 'Melaka', 'Negeri Sembilan', 'Pahang', 'Penang', 'Perak', 'Perlis', 'Sabah', 'Sarawak', 'Selangor', 'Terengganu', 'Wilayah Persekutuan Kuala Lumpur', 'Wilayah Persekutuan Labuan', 'Wilayah Persekutuan Putrajaya'] as $state)
@@ -302,7 +302,7 @@
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="occupation_study">Occupation / Field of Study *</label>
+                        <label for="occupation_study">Occupation / Field of Study</label>
                         <input type="text" id="occupation_study" name="occupation_study" class="form-control" value="{{ old('occupation_study') }}" required>
                     </div>
                     <div class="form-group">
@@ -312,17 +312,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="full_address">Full Address *</label>
+                    <label for="full_address">Full Address</label>
                     <textarea id="full_address" name="full_address" rows="3" class="form-control" style="font-family: inherit;" required>{{ old('full_address') }}</textarea>
                 </div>
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="email">Email Address *</label>
+                        <label for="email">Email Address</label>
                         <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" value="{{ old('email') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="contact_number">Contact Number *</label>
+                        <label for="contact_number">Contact Number</label>
                         <input type="tel" id="contact_number" name="contact_number" class="form-control" placeholder="e.g. +60123456789" value="{{ old('contact_number') }}" required>
                     </div>
                 </div>
@@ -331,7 +331,7 @@
                 <div class="form-section-title">Volunteer Engagement</div>
                 
                 <div class="form-group">
-                    <label>Area(s) of Interest * (Dropdown List)</label>
+                    <label>Area(s) of Interest (Dropdown List)</label>
                     <div class="custom-dropdown-container" id="interest-dropdown">
                         <div class="dropdown-trigger" data-placeholder="Choose areas of interest...">
                             <span class="trigger-text">Choose areas of interest...</span>
@@ -349,18 +349,18 @@
                 </div>
 
                 <div class="form-group" id="other-interest-group" style="display: none;">
-                    <label for="interest_other">Please specify "Other" Interest *</label>
+                    <label for="interest_other">Please specify "Other" Interest</label>
                     <input type="text" id="interest_other" name="interest_other" class="form-control" value="{{ old('interest_other') }}">
                 </div>
 
                 <div class="form-group">
-                    <label for="skills_expertise">Skills / Expertise You Can Contribute *</label>
+                    <label for="skills_expertise">Skills / Expertise You Can Contribute</label>
                     <textarea id="skills_expertise" name="skills_expertise" rows="3" class="form-control" placeholder="e.g. Graphic design, photography, medical, counseling, event management, first aid" style="font-family: inherit;" required>{{ old('skills_expertise') }}</textarea>
                 </div>
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label>Preferred Mode of Volunteering * (Dropdown List)</label>
+                        <label>Preferred Mode of Volunteering (Dropdown List)</label>
                         <div class="custom-dropdown-container" id="mode-dropdown">
                             <div class="dropdown-trigger" data-placeholder="Choose mode...">
                                 <span class="trigger-text">Choose mode...</span>
@@ -377,7 +377,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Availability * (Dropdown List)</label>
+                        <label>Availability (Dropdown List)</label>
                         <div class="custom-dropdown-container" id="availability-dropdown">
                             <div class="dropdown-trigger" data-placeholder="Choose availability...">
                                 <span class="trigger-text">Choose availability...</span>
@@ -396,7 +396,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Have you volunteered with any organisation before? *</label>
+                    <label>Have you volunteered with any organisation before?</label>
                     <div class="radio-group">
                         <label class="radio-label">
                             <input type="radio" name="has_volunteered_before" value="1" {{ old('has_volunteered_before') === '1' ? 'checked' : '' }} required>
@@ -410,7 +410,7 @@
                 </div>
 
                 <div class="form-group" id="volunteered-details-group" style="display: none;">
-                    <label for="volunteered_before_details">If yes, please specify: *</label>
+                    <label for="volunteered_before_details">If yes, please specify:</label>
                     <textarea id="volunteered_before_details" name="volunteered_before_details" rows="3" class="form-control" placeholder="Which organisation and what activities did you do?" style="font-family: inherit;">{{ old('volunteered_before_details') }}</textarea>
                 </div>
 
@@ -419,16 +419,16 @@
                 
                 <div class="emergency-row">
                     <div class="form-group">
-                        <label for="emergency_contact_name">Full Name *</label>
+                        <label for="emergency_contact_name">Full Name</label>
                         <input type="text" id="emergency_contact_name" name="emergency_contact_name" class="form-control" placeholder="Name as per NRIC" value="{{ old('emergency_contact_name') }}" required>
                     </div>
                     <div class="grid-2">
                         <div class="form-group">
-                            <label for="emergency_contact_relationship">Relationship *</label>
+                            <label for="emergency_contact_relationship">Relationship</label>
                             <input type="text" id="emergency_contact_relationship" name="emergency_contact_relationship" class="form-control" placeholder="e.g. Spouse / Parent / Sibling" value="{{ old('emergency_contact_relationship') }}" required>
                         </div>
                         <div class="form-group">
-                            <label for="emergency_contact_phone">Contact Number *</label>
+                            <label for="emergency_contact_phone">Contact Number</label>
                             <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" class="form-control" placeholder="e.g. +60123456789" value="{{ old('emergency_contact_phone') }}" required>
                         </div>
                     </div>

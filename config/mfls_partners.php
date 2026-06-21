@@ -5,7 +5,7 @@ return [
         [
             'id' => 'bac',
             'name' => 'BAC',
-            'logo' => 'welfare/img/mfls/partners/bac.png',
+            'logo' => 'welfare/img/mfls/partners/bac.jpg',
             'info' => 'Foundation and law programmes aligned with professional pathways in legal and business studies.',
             'programmes' => [
                 'FIL (Foundation in Law)',
@@ -32,7 +32,7 @@ return [
         [
             'id' => 'iact',
             'name' => 'IACT',
-            'logo' => 'welfare/img/mfls/partners/iact.png',
+            'logo' => 'welfare/img/mfls/partners/iact.jpg',
             'info' => 'Creative media programmes focused on digital communications, broadcasting and film.',
             'programmes' => [
                 'Diploma Digital Media & Communications',

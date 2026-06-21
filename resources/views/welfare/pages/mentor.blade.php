@@ -1,4 +1,4 @@
-@extends('welfare.layouts.app')
+﻿@extends('welfare.layouts.app')
 
 @section('title', 'Mentor Registration - Pertubuhan Gabungan MUKMIN Nasional')
 
@@ -259,17 +259,17 @@
                 <div class="form-section-title">Mentor Details</div>
                 
                 <div class="form-group">
-                    <label for="full_name">Full Name *</label>
+                    <label for="full_name">Full Name</label>
                     <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Name as per NRIC" value="{{ old('full_name') }}" required>
                 </div>
 
                 <div class="grid-3">
                     <div class="form-group">
-                        <label for="nric_passport">NRIC / Passport Number *</label>
+                        <label for="nric_passport">NRIC / Passport Number</label>
                         <input type="text" id="nric_passport" name="nric_passport" class="form-control" value="{{ old('nric_passport') }}" required>
                     </div>
                     <div class="form-group">
-                        <label>Gender *</label>
+                        <label>Gender</label>
                         <div class="radio-group" style="margin-top: 12px;">
                             <label class="radio-label">
                                 <input type="radio" name="gender" value="Male" {{ old('gender') === 'Male' ? 'checked' : '' }} required>
@@ -282,7 +282,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="state_residency">State *</label>
+                        <label for="state_residency">State</label>
                         <select id="state_residency" name="state_residency" class="form-control" required>
                             <option value="">-- Choose State --</option>
                             @foreach(['Johor', 'Kedah', 'Kelantan', 'Melaka', 'Negeri Sembilan', 'Pahang', 'Penang', 'Perak', 'Perlis', 'Sabah', 'Sarawak', 'Selangor', 'Terengganu', 'Wilayah Persekutuan Kuala Lumpur', 'Wilayah Persekutuan Labuan', 'Wilayah Persekutuan Putrajaya'] as $state)
@@ -294,22 +294,22 @@
 
                 <div class="grid-3">
                     <div class="form-group">
-                        <label for="occupation">Occupation / Profession *</label>
+                        <label for="occupation">Occupation / Profession</label>
                         <input type="text" id="occupation" name="occupation" class="form-control" value="{{ old('occupation') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="organisation">Organisation / Institution *</label>
+                        <label for="organisation">Organisation / Institution</label>
                         <input type="text" id="organisation" name="organisation" class="form-control" value="{{ old('organisation') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="position">Position / Designation *</label>
+                        <label for="position">Position / Designation</label>
                         <input type="text" id="position" name="position" class="form-control" value="{{ old('position') }}" required>
                     </div>
                 </div>
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="experience_years">Years of Professional Experience *</label>
+                        <label for="experience_years">Years of Professional Experience</label>
                         <input type="number" id="experience_years" name="experience_years" class="form-control" min="0" value="{{ old('experience_years') }}" required>
                     </div>
                     <div class="form-group">
@@ -319,17 +319,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="full_address">Full Address *</label>
+                    <label for="full_address">Full Address</label>
                     <textarea id="full_address" name="full_address" rows="3" class="form-control" style="font-family: inherit;" required>{{ old('full_address') }}</textarea>
                 </div>
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="email">Email Address *</label>
+                        <label for="email">Email Address</label>
                         <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" value="{{ old('email') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="contact_number">Contact Number *</label>
+                        <label for="contact_number">Contact Number</label>
                         <input type="tel" id="contact_number" name="contact_number" class="form-control" placeholder="e.g. +60123456789" value="{{ old('contact_number') }}" required>
                     </div>
                 </div>
@@ -338,7 +338,7 @@
                 <div class="form-section-title">Mentorship Information</div>
                 
                 <div class="form-group">
-                    <label>Area(s) of Expertise * (Dropdown List)</label>
+                    <label>Area(s) of Expertise (Dropdown List)</label>
                     <div class="custom-dropdown-container" id="expertise-dropdown">
                         <div class="dropdown-trigger" data-placeholder="Choose expertise areas...">
                             <span class="trigger-text">Choose expertise areas...</span>
@@ -356,13 +356,13 @@
                 </div>
 
                 <div class="form-group" id="other-expertise-group" style="display: none;">
-                    <label for="expertise_other">Please specify "Other" Expertise *</label>
+                    <label for="expertise_other">Please specify "Other" Expertise</label>
                     <input type="text" id="expertise_other" name="expertise_other" class="form-control" value="{{ old('expertise_other') }}">
                 </div>
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label>Preferred Mentorship Format * (Dropdown List)</label>
+                        <label>Preferred Mentorship Format (Dropdown List)</label>
                         <div class="custom-dropdown-container" id="format-dropdown">
                             <div class="dropdown-trigger" data-placeholder="Choose formats...">
                                 <span class="trigger-text">Choose formats...</span>
@@ -379,7 +379,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Preferred Commitment Level * (Dropdown List)</label>
+                        <label>Preferred Commitment Level (Dropdown List)</label>
                         <div class="custom-dropdown-container" id="commitment-dropdown">
                             <div class="dropdown-trigger" data-placeholder="Choose commitment...">
                                 <span class="trigger-text">Choose commitment...</span>
@@ -398,12 +398,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="experience_description">Please briefly describe your experience and how you hope to contribute as a mentor: *</label>
+                    <label for="experience_description">Please briefly describe your experience and how you hope to contribute as a mentor:</label>
                     <textarea id="experience_description" name="experience_description" rows="4" class="form-control" style="font-family: inherit;" required>{{ old('experience_description') }}</textarea>
                 </div>
 
                 <div class="form-group">
-                    <label>Have you previously served as a mentor, trainer, advisor, or coach? *</label>
+                    <label>Have you previously served as a mentor, trainer, advisor, or coach?</label>
                     <div class="radio-group">
                         <label class="radio-label">
                             <input type="radio" name="has_served_before" value="1" {{ old('has_served_before') === '1' ? 'checked' : '' }} required>
@@ -417,7 +417,7 @@
                 </div>
 
                 <div class="form-group" id="served-details-group" style="display: none;">
-                    <label for="served_before_details">If yes, please provide brief details: *</label>
+                    <label for="served_before_details">If yes, please provide brief details:</label>
                     <textarea id="served_before_details" name="served_before_details" rows="3" class="form-control" style="font-family: inherit;">{{ old('served_before_details') }}</textarea>
                 </div>
 

@@ -19,6 +19,8 @@ class MflsScholarshipSubmission extends Model
         'marital_status_other',
         'contact_number',
         'full_address',
+        'partner_institution_id',
+        'partner_institution_name',
         'current_qualification',
         'institution_name',
         'current_cgpa_result',

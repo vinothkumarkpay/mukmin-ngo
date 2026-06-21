@@ -691,6 +691,7 @@
                                         <th>Full Name</th>
                                         <th>Email</th>
                                         <th>Qualification</th>
+                                        <th>Partner</th>
                                         <th>Programme</th>
                                         <th>Household Income</th>
                                         <th>Status</th>
@@ -705,6 +706,7 @@
                                             <td><strong>{{ $item->full_name }}</strong></td>
                                             <td>{{ $item->email }}</td>
                                             <td>{{ $item->current_qualification }}</td>
+                                            <td>{{ $item->partner_institution_name ?: '—' }}</td>
                                             <td>{{ $item->programme_course_applied }}</td>
                                             <td>{{ $item->household_income }}</td>
                                             <td>
@@ -720,7 +722,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="9" style="text-align: center; color: var(--admin-text-muted);">No MFLS scholarship applications found.</td>
+                                            <td colspan="10" style="text-align: center; color: var(--admin-text-muted);">No MFLS scholarship applications found.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

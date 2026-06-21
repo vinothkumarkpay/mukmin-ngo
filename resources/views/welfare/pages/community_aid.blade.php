@@ -1,4 +1,4 @@
-@extends('welfare.layouts.app')
+﻿@extends('welfare.layouts.app')
 
 @section('title', 'Community Aid & Assistance Request Form - Pertubuhan Gabungan MUKMIN Nasional')
 
@@ -255,17 +255,17 @@
                 <div class="form-section-title">I. Applicant Details</div>
                 
                 <div class="form-group">
-                    <label for="full_name">Full Name (as per NRIC / Passport) *</label>
+                    <label for="full_name">Full Name (as per NRIC / Passport)</label>
                     <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Name as per NRIC" value="{{ old('full_name') }}" required>
                 </div>
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="nric_passport">NRIC / Passport Number *</label>
+                        <label for="nric_passport">NRIC / Passport Number</label>
                         <input type="text" id="nric_passport" name="nric_passport" class="form-control" placeholder="e.g. 900101145555" value="{{ old('nric_passport') }}" required>
                     </div>
                     <div class="form-group">
-                        <label>Gender *</label>
+                        <label>Gender</label>
                         <div class="radio-group">
                             <label class="radio-label">
                                 <input type="radio" name="gender" value="Male" {{ old('gender') === 'Male' ? 'checked' : '' }} required>
@@ -281,18 +281,18 @@
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="dob">Date of Birth *</label>
+                        <label for="dob">Date of Birth</label>
                         <input type="date" id="dob" name="dob" class="form-control" value="{{ old('dob') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="nationality">Nationality *</label>
+                        <label for="nationality">Nationality</label>
                         <input type="text" id="nationality" name="nationality" class="form-control" value="{{ old('nationality') }}" required>
                     </div>
                 </div>
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="occupation">Occupation *</label>
+                        <label for="occupation">Occupation</label>
                         <input type="text" id="occupation" name="occupation" class="form-control" value="{{ old('occupation') }}" required>
                     </div>
                     <div class="form-group">
@@ -303,22 +303,22 @@
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="email">Email Address *</label>
+                        <label for="email">Email Address</label>
                         <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" value="{{ old('email') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="contact_number">Contact Number *</label>
+                        <label for="contact_number">Contact Number</label>
                         <input type="tel" id="contact_number" name="contact_number" class="form-control" placeholder="e.g. +60123456789" value="{{ old('contact_number') }}" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="full_address">Full Residential Address *</label>
+                    <label for="full_address">Full Residential Address</label>
                     <textarea id="full_address" name="full_address" rows="3" class="form-control" style="font-family: inherit;" required>{{ old('full_address') }}</textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="state_residency">State *</label>
+                    <label for="state_residency">State</label>
                     <select id="state_residency" name="state_residency" class="form-control" required>
                         <option value="">-- Choose State --</option>
                         @foreach(['Johor', 'Kedah', 'Kelantan', 'Melaka', 'Negeri Sembilan', 'Pahang', 'Penang', 'Perak', 'Perlis', 'Sabah', 'Sarawak', 'Selangor', 'Terengganu', 'Wilayah Persekutuan Kuala Lumpur', 'Wilayah Persekutuan Labuan', 'Wilayah Persekutuan Putrajaya'] as $state)
@@ -331,7 +331,7 @@
                 <div class="form-section-title">II. Type of Aid Required</div>
 
                 <div class="form-group">
-                    <label>Select Types of Aid Required * (Dropdown List)</label>
+                    <label>Select Types of Aid Required (Dropdown List)</label>
                     <div class="custom-dropdown-container" id="aid-dropdown">
                         <div class="dropdown-trigger" data-placeholder="Choose types of aid...">
                             <span class="trigger-text">Choose types of aid...</span>
@@ -349,7 +349,7 @@
                 </div>
 
                 <div class="form-group" id="other-aid-group" style="display: none;">
-                    <label for="type_of_aid_other">Please specify "Other" Type of Aid *</label>
+                    <label for="type_of_aid_other">Please specify "Other" Type of Aid</label>
                     <input type="text" id="type_of_aid_other" name="type_of_aid_other" class="form-control" value="{{ old('type_of_aid_other') }}">
                 </div>
 
@@ -357,13 +357,13 @@
                 <div class="form-section-title">III. Details of Assistance Required</div>
 
                 <div class="form-group">
-                    <label for="situation_description">Please describe your current situation and the type of assistance required: *</label>
+                    <label for="situation_description">Please describe your current situation and the type of assistance required:</label>
                     <textarea id="situation_description" name="situation_description" rows="5" class="form-control" style="font-family: inherit;" required>{{ old('situation_description') }}</textarea>
                 </div>
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="who_benefits">Who will benefit from this assistance? *</label>
+                        <label for="who_benefits">Who will benefit from this assistance?</label>
                         <select id="who_benefits" name="who_benefits" class="form-control" required>
                             <option value="">-- Select Beneficiary Type --</option>
                             @foreach(['Individual', 'Family', 'Community / Group', 'Organisation / Institution'] as $benefitType)
@@ -381,7 +381,7 @@
                 <div class="form-section-title">IV. Supporting Information</div>
 
                 <div class="form-group">
-                    <label>Have you previously received aid or assistance from any organisation? *</label>
+                    <label>Have you previously received aid or assistance from any organisation?</label>
                     <div class="radio-group">
                         <label class="radio-label">
                             <input type="radio" name="received_aid_before" value="1" {{ old('received_aid_before') === '1' ? 'checked' : '' }} required>
@@ -395,7 +395,7 @@
                 </div>
 
                 <div class="form-group" id="received-aid-details-group" style="display: none;">
-                    <label for="received_aid_before_details">If yes, please specify details (Organisation name, type of aid, date received) *</label>
+                    <label for="received_aid_before_details">If yes, please specify details (Organisation name, type of aid, date received)</label>
                     <textarea id="received_aid_before_details" name="received_aid_before_details" rows="3" class="form-control" style="font-family: inherit;">{{ old('received_aid_before_details') }}</textarea>
                 </div>
 
@@ -410,17 +410,17 @@
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="emergency_contact_name">Full Name *</label>
+                        <label for="emergency_contact_name">Full Name</label>
                         <input type="text" id="emergency_contact_name" name="emergency_contact_name" class="form-control" placeholder="Name as per NRIC" value="{{ old('emergency_contact_name') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="emergency_contact_relationship">Relationship *</label>
+                        <label for="emergency_contact_relationship">Relationship</label>
                         <input type="text" id="emergency_contact_relationship" name="emergency_contact_relationship" class="form-control" value="{{ old('emergency_contact_relationship') }}" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="emergency_contact_phone">Contact Number *</label>
+                    <label for="emergency_contact_phone">Contact Number</label>
                     <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" class="form-control" placeholder="e.g. +60123456789" value="{{ old('emergency_contact_phone') }}" required>
                 </div>
 

@@ -426,7 +426,7 @@ class AdminDashboardController extends Controller
                     break;
 
                 case 'mfls':
-                    fputcsv($file, ['ID', 'Date', 'Email', 'Full Name', 'NRIC', 'DOB', 'Gender', 'Marital Status', 'Phone', 'Address', 'Current Qualification', 'Institution', 'CGPA/Result', 'Programme Applied', 'Applied to University', 'Offer Letter Received', 'Household Income', 'Father Name', 'Father Occupation', 'Mother Name', 'Mother Occupation', 'Dependents', 'Other Scholarship', 'Leadership Roles', 'Involvement Level', 'Community Service', 'Status']);
+                    fputcsv($file, ['ID', 'Date', 'Email', 'Full Name', 'NRIC', 'DOB', 'Gender', 'Marital Status', 'Phone', 'Address', 'Partner Institution', 'Selected Programme', 'Current Qualification', 'Institution', 'CGPA/Result', 'Applied to University', 'Offer Letter Received', 'Household Income', 'Father Name', 'Father Occupation', 'Mother Name', 'Mother Occupation', 'Dependents', 'Other Scholarship', 'Leadership Roles', 'Involvement Level', 'Community Service', 'Status']);
                     foreach (MflsScholarshipSubmission::all() as $item) {
                         fputcsv($file, [
                             $item->id,
@@ -439,10 +439,11 @@ class AdminDashboardController extends Controller
                             $item->marital_status === 'Other' ? 'Other: ' . $item->marital_status_other : $item->marital_status,
                             $item->contact_number,
                             $item->full_address,
+                            $item->partner_institution_name,
+                            $item->programme_course_applied,
                             $item->current_qualification,
                             $item->institution_name,
                             $item->current_cgpa_result,
-                            $item->programme_course_applied,
                             $item->applied_to_university ? 'Yes' : 'No',
                             $item->received_offer_letter === null ? '' : ($item->received_offer_letter ? 'Yes' : 'No'),
                             $item->household_income,

@@ -1,4 +1,4 @@
-@extends('welfare.layouts.app')
+﻿@extends('welfare.layouts.app')
 
 @section('title', 'Partnership & Collaboration - Pertubuhan Gabungan MUKMIN Nasional')
 
@@ -254,17 +254,17 @@
                 <div class="form-section-title">Organisation / Partner Details</div>
                 
                 <div class="form-group">
-                    <label for="company_name">Organisation / Company Name *</label>
+                    <label for="company_name">Organisation / Company Name</label>
                     <input type="text" id="company_name" name="company_name" class="form-control" value="{{ old('company_name') }}" required>
                 </div>
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="contact_person">Primary Contact Person *</label>
+                        <label for="contact_person">Primary Contact Person</label>
                         <input type="text" id="contact_person" name="contact_person" class="form-control" value="{{ old('contact_person') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="position">Position / Designation *</label>
+                        <label for="position">Position / Designation</label>
                         <input type="text" id="position" name="position" class="form-control" value="{{ old('position') }}" required>
                     </div>
                 </div>
@@ -275,29 +275,29 @@
                         <input type="text" id="org_reg_number" name="org_reg_number" class="form-control" value="{{ old('org_reg_number') }}">
                     </div>
                     <div class="form-group">
-                        <label for="state_country">State / Country *</label>
+                        <label for="state_country">State / Country</label>
                         <input type="text" id="state_country" name="state_country" class="form-control" placeholder="e.g. Selangor / Malaysia" value="{{ old('state_country') }}" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="office_address">Office Address *</label>
+                    <label for="office_address">Office Address</label>
                     <textarea id="office_address" name="office_address" rows="3" class="form-control" style="font-family: inherit;" required>{{ old('office_address') }}</textarea>
                 </div>
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="email">Email Address *</label>
+                        <label for="email">Email Address</label>
                         <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" value="{{ old('email') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="contact_number">Contact Number *</label>
+                        <label for="contact_number">Contact Number</label>
                         <input type="tel" id="contact_number" name="contact_number" class="form-control" placeholder="e.g. +60123456789" value="{{ old('contact_number') }}" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Organisation Type * (Dropdown List)</label>
+                    <label>Organisation Type (Dropdown List)</label>
                     <div class="custom-dropdown-container" id="orgtype-dropdown">
                         <div class="dropdown-trigger" data-placeholder="Choose organisation types...">
                             <span class="trigger-text">Choose organisation types...</span>
@@ -315,7 +315,7 @@
                 </div>
 
                 <div class="form-group" id="other-orgtype-group" style="display: none;">
-                    <label for="org_type_other">Please specify "Other" Organisation Type *</label>
+                    <label for="org_type_other">Please specify "Other" Organisation Type</label>
                     <input type="text" id="org_type_other" name="org_type_other" class="form-control" value="{{ old('org_type_other') }}">
                 </div>
 
@@ -323,7 +323,7 @@
                 <div class="form-section-title">Partnership Information</div>
 
                 <div class="form-group">
-                    <label>Area(s) of Collaboration Interest * (Dropdown List)</label>
+                    <label>Area(s) of Collaboration Interest (Dropdown List)</label>
                     <div class="custom-dropdown-container" id="collab-dropdown">
                         <div class="dropdown-trigger" data-placeholder="Choose collaboration areas...">
                             <span class="trigger-text">Choose collaboration areas...</span>
@@ -341,12 +341,12 @@
                 </div>
 
                 <div class="form-group" id="other-collab-group" style="display: none;">
-                    <label for="collaboration_other">Please specify "Other" Collaboration Area *</label>
+                    <label for="collaboration_other">Please specify "Other" Collaboration Area</label>
                     <input type="text" id="collaboration_other" name="collaboration_other" class="form-control" value="{{ old('collaboration_other') }}">
                 </div>
 
                 <div class="form-group">
-                    <label>Type of Partnership Proposed * (Dropdown List)</label>
+                    <label>Type of Partnership Proposed (Dropdown List)</label>
                     <div class="custom-dropdown-container" id="partner-type-dropdown">
                         <div class="dropdown-trigger" data-placeholder="Choose partnership types...">
                             <span class="trigger-text">Choose partnership types...</span>
@@ -364,22 +364,22 @@
                 </div>
 
                 <div class="form-group" id="other-partnertype-group" style="display: none;">
-                    <label for="partnership_other">Please specify "Other" Partnership Type *</label>
+                    <label for="partnership_other">Please specify "Other" Partnership Type</label>
                     <input type="text" id="partnership_other" name="partnership_other" class="form-control" value="{{ old('partnership_other') }}">
                 </div>
 
                 <div class="form-group">
-                    <label for="proposal_description">Please briefly describe your proposed collaboration or partnership: *</label>
+                    <label for="proposal_description">Please briefly describe your proposed collaboration or partnership:</label>
                     <textarea id="proposal_description" name="proposal_description" rows="5" class="form-control" style="font-family: inherit;" required>{{ old('proposal_description') }}</textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="expected_outcomes">Expected Outcomes / Impact of Collaboration: *</label>
+                    <label for="expected_outcomes">Expected Outcomes / Impact of Collaboration:</label>
                     <textarea id="expected_outcomes" name="expected_outcomes" rows="3" class="form-control" style="font-family: inherit;" required>{{ old('expected_outcomes') }}</textarea>
                 </div>
 
                 <div class="form-group">
-                    <label>Has your organisation previously collaborated with NGOs or community initiatives? *</label>
+                    <label>Has your organisation previously collaborated with NGOs or community initiatives?</label>
                     <div class="radio-group">
                         <label class="radio-label">
                             <input type="radio" name="has_collaborated_before" value="1" {{ old('has_collaborated_before') === '1' ? 'checked' : '' }} required>
@@ -393,14 +393,14 @@
                 </div>
 
                 <div class="form-group" id="collab-details-group" style="display: none;">
-                    <label for="collaborated_before_details">If yes, please provide brief details: *</label>
+                    <label for="collaborated_before_details">If yes, please provide brief details:</label>
                     <textarea id="collaborated_before_details" name="collaborated_before_details" rows="3" class="form-control" style="font-family: inherit;">{{ old('collaborated_before_details') }}</textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="supporting_files">Attach Supporting Documents (Optional)</label>
                     <input type="file" id="supporting_files" name="supporting_files[]" multiple class="form-control" style="font-size: 13px; padding: 10px;">
-                    <span style="display: block; font-size: 11.5px; color: #666; margin-top: 5px;">* You can select and upload multiple files (PDF, Word, Images, Zip, PPT - Max 20MB total)</span>
+                    <span style="display: block; font-size: 11.5px; color: #666; margin-top: 5px;">You can select and upload multiple files (PDF, Word, Images, Zip, PPT - Max 20MB total)</span>
                 </div>
 
                 <!-- DECLARATION -->

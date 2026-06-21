@@ -52,7 +52,7 @@ class FormSubmissionEmailTest extends TestCase
 
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
-            return $mail->hasTo('support@mukmin.org') &&
+            return $mail->hasTo('info@mukmin.org') &&
                    $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->isForSupport;
@@ -95,10 +95,10 @@ class FormSubmissionEmailTest extends TestCase
                    !$mail->isForSupport;
         });
 
-        // Check support email
+        // Check team inbox email
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
-            return $mail->hasTo('support@mukmin.org') &&
+            return $mail->hasTo('membership@mukmin.org') &&
                    $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->subject === 'New Submission: Ordinary Member Registration' &&
@@ -135,7 +135,7 @@ class FormSubmissionEmailTest extends TestCase
 
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
-            return $mail->hasTo('support@mukmin.org') &&
+            return $mail->hasTo('membership@mukmin.org') &&
                    $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->isForSupport;
@@ -170,7 +170,7 @@ class FormSubmissionEmailTest extends TestCase
 
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
-            return $mail->hasTo('support@mukmin.org') &&
+            return $mail->hasTo('membership@mukmin.org') &&
                    $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->isForSupport;
@@ -212,7 +212,7 @@ class FormSubmissionEmailTest extends TestCase
 
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
-            return $mail->hasTo('support@mukmin.org') &&
+            return $mail->hasTo('membership@mukmin.org') &&
                    $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->isForSupport;
@@ -257,7 +257,7 @@ class FormSubmissionEmailTest extends TestCase
             
             $hasAttachments = count($mail->diskAttachments) === 1 || count($mail->attachments) === 1;
             
-            return $mail->hasTo('support@mukmin.org') &&
+            return $mail->hasTo('membership@mukmin.org') &&
                    $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->isForSupport &&
@@ -300,7 +300,7 @@ class FormSubmissionEmailTest extends TestCase
 
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
-            return $mail->hasTo('support@mukmin.org') &&
+            return $mail->hasTo('membership@mukmin.org') &&
                    $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->isForSupport;
@@ -312,6 +312,7 @@ class FormSubmissionEmailTest extends TestCase
         $wordParagraph = implode(' ', array_fill(0, 160, 'leadership'));
 
         $formData = [
+            'partner_id' => 'bac',
             'email' => 'mfls@example.com',
             'full_name' => 'Ahmad Student',
             'nric_passport' => '010101011234',
@@ -324,7 +325,7 @@ class FormSubmissionEmailTest extends TestCase
             'institution_name' => 'SMK Contoh',
             'current_cgpa_result' => '7A 2B',
             'academic_transcript' => UploadedFile::fake()->create('transcript.pdf', 100, 'application/pdf'),
-            'programme_course_applied' => 'Foundation in Law',
+            'programme_course_applied' => 'FIL (Foundation in Law)',
             'applied_to_university' => '0',
             'household_income' => '< RM2,000',
             'father_guardian_name' => 'Father Name',
@@ -345,20 +346,36 @@ class FormSubmissionEmailTest extends TestCase
         $response = $this->post(route('welfare.mfls-scholarship.submit'), $formData);
         $response->assertStatus(200);
 
+        $this->assertDatabaseHas('mfls_scholarship_submissions', [
+            'email' => 'mfls@example.com',
+            'partner_institution_id' => 'bac',
+            'partner_institution_name' => 'BAC',
+            'programme_course_applied' => 'FIL (Foundation in Law)',
+        ]);
+
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
+            $labels = array_column($mail->formattedData, 'label');
             return $mail->hasTo('mfls@example.com') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->subject === 'Application Received : MUKMIN Future Leaders Scholarship (MFLS)' &&
-                   !$mail->isForSupport;
+                   !$mail->isForSupport &&
+                   in_array('Partner Institution', $labels, true) &&
+                   in_array('Selected Programme', $labels, true);
         });
 
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
-            return $mail->hasTo('support@mukmin.org') &&
+            $labels = array_column($mail->formattedData, 'label');
+            $programmeIndex = array_search('Selected Programme', $labels, true);
+            $partnerIndex = array_search('Partner Institution', $labels, true);
+            return $mail->hasTo('scholarship@mukmin.org') &&
                    $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
-                   $mail->isForSupport;
+                   $mail->isForSupport &&
+                   $partnerIndex !== false &&
+                   $programmeIndex !== false &&
+                   $partnerIndex < $programmeIndex;
         });
     }
 
@@ -367,6 +384,7 @@ class FormSubmissionEmailTest extends TestCase
         $wordParagraph = implode(' ', array_fill(0, 160, 'leadership'));
 
         $baseData = [
+            'partner_id' => 'bac',
             'full_name' => 'Ahmad Student',
             'dob' => '2001-01-01',
             'gender' => 'Male',
@@ -376,7 +394,7 @@ class FormSubmissionEmailTest extends TestCase
             'institution_name' => 'SMK Contoh',
             'current_cgpa_result' => '7A 2B',
             'academic_transcript' => UploadedFile::fake()->create('transcript.pdf', 100, 'application/pdf'),
-            'programme_course_applied' => 'Foundation in Law',
+            'programme_course_applied' => 'FIL (Foundation in Law)',
             'applied_to_university' => '0',
             'household_income' => '< RM2,000',
             'father_guardian_name' => 'Father Name',
@@ -394,7 +412,7 @@ class FormSubmissionEmailTest extends TestCase
             'declaration_confirmed' => '1',
         ];
 
-        $this->from(route('welfare.mfls-scholarship'))
+        $this->from(route('welfare.mfls-scholarship', ['partner' => 'bac']))
             ->post(route('welfare.mfls-scholarship.submit'), array_merge($baseData, [
                 'email' => 'mfls@example.com',
                 'nric_passport' => '12345',
@@ -402,7 +420,7 @@ class FormSubmissionEmailTest extends TestCase
             ]))
             ->assertSessionHasErrors(['nric_passport']);
 
-        $this->from(route('welfare.mfls-scholarship'))
+        $this->from(route('welfare.mfls-scholarship', ['partner' => 'bac']))
             ->post(route('welfare.mfls-scholarship.submit'), array_merge($baseData, [
                 'email' => 'not-an-email',
                 'nric_passport' => '010101011234',
@@ -410,7 +428,7 @@ class FormSubmissionEmailTest extends TestCase
             ]))
             ->assertSessionHasErrors(['email']);
 
-        $this->from(route('welfare.mfls-scholarship'))
+        $this->from(route('welfare.mfls-scholarship', ['partner' => 'bac']))
             ->post(route('welfare.mfls-scholarship.submit'), array_merge($baseData, [
                 'email' => 'mfls@example.com',
                 'nric_passport' => '010101011234',

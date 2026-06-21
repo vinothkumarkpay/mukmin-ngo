@@ -1,4 +1,4 @@
-@extends('welfare.layouts.app')
+﻿@extends('welfare.layouts.app')
 
 @section('title', 'Friends of MUKMIN Registration - Pertubuhan Gabungan MUKMIN Nasional')
 
@@ -236,7 +236,7 @@
                 <!-- SECTION A: CATEGORY -->
                 <div class="form-section-title">Section A: Category Selection</div>
                 <div class="form-group">
-                    <label>Select Friends of MUKMIN Category * (Dropdown List)</label>
+                    <label>Select Friends of MUKMIN Category (Dropdown List)</label>
                     <div class="custom-dropdown-container" id="entity-dropdown">
                         <div class="dropdown-trigger" data-placeholder="Choose category...">
                             <span class="trigger-text">Choose category...</span>
@@ -254,7 +254,7 @@
                 </div>
 
                 <div class="form-group" id="others-specify-group" style="display: none;">
-                    <label for="others_specify">Please specify "Others" Category *</label>
+                    <label for="others_specify">Please specify "Others" Category</label>
                     <input type="text" id="others_specify" name="others_specify" class="form-control" value="{{ old('others_specify') }}">
                 </div>
 
@@ -264,7 +264,7 @@
 
                     <div class="grid-2">
                         <div class="form-group">
-                            <label for="ind_salutation">Salutation *</label>
+                            <label for="ind_salutation">Salutation</label>
                             <select id="ind_salutation" name="ind_salutation" class="form-control">
                                 <option value="">-- Choose Salutation --</option>
                                 @foreach($salutations as $salutation)
@@ -273,13 +273,13 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="ind_name">Full Name *</label>
+                            <label for="ind_name">Full Name</label>
                             <input type="text" id="ind_name" name="ind_name" class="form-control" placeholder="Name as per NRIC" value="{{ old('ind_name') }}">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="ind_profession">Profession / Occupation *</label>
+                        <label for="ind_profession">Profession / Occupation</label>
                         <select id="ind_profession" name="ind_profession" class="form-control">
                             <option value="">-- Choose Profession / Occupation --</option>
                             @foreach($professionOptions as $option)
@@ -289,18 +289,18 @@
                     </div>
 
                     <div class="form-group" id="ind-profession-other-group" style="display: none;">
-                        <label for="ind_profession_other">Please specify profession / occupation *</label>
+                        <label for="ind_profession_other">Please specify profession / occupation</label>
                         <input type="text" id="ind_profession_other" name="ind_profession_other" class="form-control" value="{{ old('ind_profession_other') }}">
                     </div>
 
                     <div class="form-group">
-                        <label for="ind_address">Full Address *</label>
+                        <label for="ind_address">Full Address</label>
                         <textarea id="ind_address" name="ind_address" rows="3" class="form-control" style="font-family: inherit;">{{ old('ind_address') }}</textarea>
                     </div>
 
                     <div class="grid-2">
                         <div class="form-group">
-                            <label for="ind_state">State *</label>
+                            <label for="ind_state">State</label>
                             <select id="ind_state" name="ind_state" class="form-control">
                                 <option value="">-- Choose State --</option>
                                 @foreach($states as $state)
@@ -309,23 +309,23 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="ind_postcode">Postcode *</label>
+                            <label for="ind_postcode">Postcode</label>
                             <input type="text" id="ind_postcode" name="ind_postcode" class="form-control" value="{{ old('ind_postcode') }}">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="ind_nric">NRIC *</label>
+                        <label for="ind_nric">NRIC</label>
                         <input type="text" id="ind_nric" name="ind_nric" class="form-control" placeholder="e.g. 900101145555" inputmode="numeric" maxlength="12" value="{{ old('ind_nric') }}">
                     </div>
 
                     <div class="grid-2">
                         <div class="form-group">
-                            <label for="ind_email">Email Address *</label>
+                            <label for="ind_email">Email Address</label>
                             <input type="email" id="ind_email" name="ind_email" class="form-control" placeholder="name@example.com" value="{{ old('ind_email') }}">
                         </div>
                         <div class="form-group">
-                            <label for="ind_phone">Contact Number *</label>
+                            <label for="ind_phone">Contact Number</label>
                             <input type="tel" id="ind_phone" name="ind_phone" class="form-control" placeholder="e.g. +60123456789" value="{{ old('ind_phone') }}">
                         </div>
                     </div>
@@ -333,7 +333,7 @@
                     <div class="form-section-title">Section C: Area of Interest</div>
 
                     <div class="form-group">
-                        <label for="ind_area_of_interest">Area of Interest *</label>
+                        <label for="ind_area_of_interest">Area of Interest</label>
                         <select id="ind_area_of_interest" name="ind_area_of_interest" class="form-control">
                             <option value="">-- Choose Area of Interest --</option>
                             @foreach($areaOfInterestOptions as $option)
@@ -348,18 +348,18 @@
                     <div class="form-section-title">Section B: Organisation Details</div>
 
                     <div class="form-group">
-                        <label for="org_name">Name of Organisation *</label>
+                        <label for="org_name">Name of Organisation</label>
                         <input type="text" id="org_name" name="org_name" class="form-control" value="{{ old('org_name') }}">
                     </div>
 
                     <div class="form-group">
-                        <label for="org_address">Full Address of Organisation *</label>
+                        <label for="org_address">Full Address of Organisation</label>
                         <textarea id="org_address" name="org_address" rows="3" class="form-control" style="font-family: inherit;">{{ old('org_address') }}</textarea>
                     </div>
 
                     <div class="grid-2">
                         <div class="form-group">
-                            <label for="org_state">State *</label>
+                            <label for="org_state">State</label>
                             <select id="org_state" name="org_state" class="form-control">
                                 <option value="">-- Choose State --</option>
                                 @foreach($states as $state)
@@ -368,25 +368,25 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="org_postcode">Postcode *</label>
+                            <label for="org_postcode">Postcode</label>
                             <input type="text" id="org_postcode" name="org_postcode" class="form-control" value="{{ old('org_postcode') }}">
                         </div>
                     </div>
 
                     <div class="grid-2">
                         <div class="form-group">
-                            <label for="org_email">Official Organisation Email Address *</label>
+                            <label for="org_email">Official Organisation Email Address</label>
                             <input type="email" id="org_email" name="org_email" class="form-control" placeholder="name@example.com" value="{{ old('org_email') }}">
                         </div>
                         <div class="form-group">
-                            <label for="org_phone">Official Contact Number (WhatsApp preferred) *</label>
+                            <label for="org_phone">Official Contact Number (WhatsApp preferred)</label>
                             <input type="tel" id="org_phone" name="org_phone" class="form-control" placeholder="e.g. +60123456789" value="{{ old('org_phone') }}">
                         </div>
                     </div>
 
                     <div class="grid-2">
                         <div class="form-group">
-                            <label for="org_contact_person_salutation">Salutation *</label>
+                            <label for="org_contact_person_salutation">Salutation</label>
                             <select id="org_contact_person_salutation" name="org_contact_person_salutation" class="form-control">
                                 <option value="">-- Choose Salutation --</option>
                                 @foreach($salutations as $salutation)
@@ -395,13 +395,13 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="org_contact_person_name">Official Contact Person Name *</label>
+                            <label for="org_contact_person_name">Official Contact Person Name</label>
                             <input type="text" id="org_contact_person_name" name="org_contact_person_name" class="form-control" value="{{ old('org_contact_person_name') }}">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="org_contact_person_nric">NRIC *</label>
+                        <label for="org_contact_person_nric">NRIC</label>
                         <input type="text" id="org_contact_person_nric" name="org_contact_person_nric" class="form-control" placeholder="e.g. 900101145555" inputmode="numeric" maxlength="12" value="{{ old('org_contact_person_nric') }}">
                     </div>
 

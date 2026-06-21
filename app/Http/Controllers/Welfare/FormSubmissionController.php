@@ -17,18 +17,20 @@ use App\Models\MflsScholarshipSubmission;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\FormSubmissionMail;
+use App\Services\Welfare\MflsPartnerDocumentService;
 
 class FormSubmissionController extends Controller
 {
     /**
-     * Send acknowledgement to the applicant (when email provided) and a copy to support.
+     * Send acknowledgement to the applicant (when email provided) and a copy to the team inbox.
      * Each recipient is mailed independently so one failure does not block the other.
      */
     private function sendFormSubmissionEmails(
         string $formName,
         array $validated,
         ?string $applicantEmail = null,
-        ?string $applicantName = null
+        ?string $applicantName = null,
+        ?string $formKey = null
     ): void
     {
         $applicantEmail = $applicantEmail ?: $this->resolveApplicantEmail($validated);
@@ -45,12 +47,17 @@ class FormSubmissionController extends Controller
             }
         }
 
+        $teamEmail = $formKey
+            ? config("welfare.form_submission_recipients.{$formKey}", config('welfare.email'))
+            : config('welfare.email');
+
         try {
-            Mail::to('support@mukmin.org')
-                ->cc('infofikrah@mukmin.org')
+            Mail::to($teamEmail)
+                ->cc(config('welfare.form_submission_cc'))
                 ->send(new FormSubmissionMail($formName, $validated, true));
         } catch (\Throwable $e) {
-            Log::error("Mail to support failed for {$formName}", [
+            Log::error("Mail to team inbox failed for {$formName}", [
+                'email' => $teamEmail,
                 'error' => $e->getMessage(),
             ]);
         }
@@ -178,7 +185,7 @@ class FormSubmissionController extends Controller
 
         FeedbackSubmission::create($validated);
 
-        $this->sendFormSubmissionEmails('Feedback & Suggestion', $validated, $validated['email']);
+        $this->sendFormSubmissionEmails('Feedback & Suggestion', $validated, $validated['email'], null, 'feedback-suggestion');
 
         return view('welfare.pages.form_success', [
             'title' => 'Thank you for sharing your feedback with MUKMIN.',
@@ -245,7 +252,7 @@ class FormSubmissionController extends Controller
 
         OrdinaryMemberSubmission::create($validated);
 
-        $this->sendFormSubmissionEmails('Ordinary Member Registration', $validated, $validated['email']);
+        $this->sendFormSubmissionEmails('Ordinary Member Registration', $validated, $validated['email'], null, 'membership-ordinary');
 
         return view('welfare.pages.form_success', [
             'title' => 'Application Submitted Successfully',
@@ -350,7 +357,7 @@ class FormSubmissionController extends Controller
         FriendMemberSubmission::create($validated);
 
         $email = $validated['entity_type'] === 'Individual' ? ($validated['ind_email'] ?? null) : ($validated['org_email'] ?? null);
-        $this->sendFormSubmissionEmails('Friend of MUKMIN Registration', $validated, $email ?: null);
+        $this->sendFormSubmissionEmails('Friend of MUKMIN Registration', $validated, $email ?: null, null, 'membership-friends');
 
         return view('welfare.pages.form_success', [
             'title' => 'Your submission has been successfully received.',
@@ -393,7 +400,7 @@ class FormSubmissionController extends Controller
 
         MentorSubmission::create($validated);
 
-        $this->sendFormSubmissionEmails('Mentor Registration', $validated, $validated['email']);
+        $this->sendFormSubmissionEmails('Mentor Registration', $validated, $validated['email'], null, 'mentor-registration');
 
         return view('welfare.pages.form_success', [
             'title' => 'Thank you for registering as a MUKMIN Mentor.',
@@ -445,7 +452,7 @@ class FormSubmissionController extends Controller
 
         PartnerSubmission::create($validated);
 
-        $this->sendFormSubmissionEmails('Partnership & Collaboration Proposal', $validated, $validated['email']);
+        $this->sendFormSubmissionEmails('Partnership & Collaboration Proposal', $validated, $validated['email'], null, 'partnership-collaboration');
 
         return view('welfare.pages.form_success', [
             'title' => 'Thank you for engaging with MUKMIN.',
@@ -488,7 +495,7 @@ class FormSubmissionController extends Controller
 
         VolunteerSubmission::create($validated);
 
-        $this->sendFormSubmissionEmails('Volunteer Registration', $validated, $validated['email']);
+        $this->sendFormSubmissionEmails('Volunteer Registration', $validated, $validated['email'], null, 'volunteer-registration');
 
         return view('welfare.pages.form_success', [
             'title' => 'Thank You For Stepping Forward To Serve',
@@ -506,7 +513,7 @@ class FormSubmissionController extends Controller
         ]);
 
         ContactSubmission::create($validated);
-        $this->sendFormSubmissionEmails('Contact Us', $validated, $validated['email'], $validated['name']);
+        $this->sendFormSubmissionEmails('Contact Us', $validated, $validated['email'], $validated['name'], 'contact');
 
         return view('welfare.pages.form_success', [
             'title' => 'Message Sent Successfully',
@@ -575,7 +582,7 @@ class FormSubmissionController extends Controller
 
         \App\Models\CommunityAidSubmission::create($validated);
 
-        $this->sendFormSubmissionEmails('Community Aid & Assistance Request', $validated, $validated['email'], $validated['full_name']);
+        $this->sendFormSubmissionEmails('Community Aid & Assistance Request', $validated, $validated['email'], $validated['full_name'], 'community-aid');
 
         return view('welfare.pages.form_success', [
             'title' => 'Request Submitted Successfully',
@@ -583,14 +590,27 @@ class FormSubmissionController extends Controller
         ]);
     }
 
-    public function mflsScholarship()
+    public function mflsScholarship(Request $request, MflsPartnerDocumentService $mflsPartners)
     {
-        return view('welfare.pages.mfls_scholarship');
+        $partnerId = $request->query('partner');
+        $selectedPartner = $partnerId && $mflsPartners->isValidPartnerId($partnerId)
+            ? $mflsPartners->findPartner($partnerId)
+            : null;
+
+        return view('welfare.pages.mfls_scholarship', compact('selectedPartner'));
     }
 
-    public function submitMflsScholarship(Request $request)
+    public function submitMflsScholarship(Request $request, MflsPartnerDocumentService $mflsPartners)
     {
+        $partner = $mflsPartners->findPartner((string) $request->input('partner_id', ''));
+        $partnerProgrammes = $partner ? $mflsPartners->partnerProgrammes($partner) : [];
+
         $validated = $request->validate([
+            'partner_id' => ['required', 'string', function (string $attribute, $value, \Closure $fail) use ($mflsPartners) {
+                if (!$mflsPartners->isValidPartnerId((string) $value)) {
+                    $fail('Please select a valid partner institution from the MFLS page.');
+                }
+            }],
             'email' => $this->requiredEmailRule(),
             'full_name' => ['required', 'string', 'min:2', 'max:255', 'regex:/^[\p{L}\s\'\-\.@]+$/u'],
             'nric_passport' => $this->malaysianNricRule(),
@@ -604,7 +624,13 @@ class FormSubmissionController extends Controller
             'institution_name' => 'required|string|min:2|max:255',
             'current_cgpa_result' => 'required|string|min:1|max:255',
             'academic_transcript' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
-            'programme_course_applied' => 'required|string|min:2|max:255',
+            'programme_course_applied' => [
+                'required',
+                'string',
+                'min:2',
+                'max:255',
+                Rule::in($partnerProgrammes),
+            ],
             'applied_to_university' => 'required|boolean',
             'received_offer_letter' => 'nullable|boolean',
             'offer_letter' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
@@ -642,6 +668,7 @@ class FormSubmissionController extends Controller
             'academic_transcript.required' => 'Please upload your academic transcript.',
             'academic_transcript.mimes' => 'Academic transcript must be a PDF, JPG, PNG, DOC, or DOCX file.',
             'academic_transcript.max' => 'Academic transcript must not exceed 20MB.',
+            'programme_course_applied.in' => 'Please select a valid programme for the chosen institution.',
             'declaration_confirmed.accepted' => 'You must agree to the declaration before submitting.',
         ]);
 
@@ -651,6 +678,11 @@ class FormSubmissionController extends Controller
             'proof_of_income',
             'recommendation_letter',
         ];
+
+        unset($validated['partner_id']);
+
+        $validated['partner_institution_id'] = $partner['id'];
+        $validated['partner_institution_name'] = $partner['name'];
 
         foreach ($fileFields as $field) {
             if ($request->hasFile($field)) {
@@ -672,7 +704,8 @@ class FormSubmissionController extends Controller
             'MFLS Scholarship Application',
             $validated,
             $validated['email'],
-            $validated['full_name']
+            $validated['full_name'],
+            'mfls-scholarship'
         );
 
         return view('welfare.pages.form_success', [
