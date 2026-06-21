@@ -781,16 +781,28 @@
     <section class="hero-slider">
         <div class="slider-container">
             <a href="{{ route('welfare.about') }}" class="slide active">
-                <img src="{{ asset('welfare/img/banner-1.jpeg') }}" alt="One Identity. One Vision. One Community.">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="{{ asset('welfare/img/banner-1-mobile.jpg') }}">
+                    <img src="{{ asset('welfare/img/banner-1.jpeg') }}" alt="One Identity. One Vision. One Community.">
+                </picture>
             </a>
             <a href="{{ route('welfare.serve') }}#membership-vertical-tabs" class="slide">
-                <img src="{{ asset('welfare/img/banner-2.png') }}" alt="Join Us">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="{{ asset('welfare/img/banner-2-mobile.jpg') }}">
+                    <img src="{{ asset('welfare/img/banner-2.png') }}" alt="Join Us">
+                </picture>
             </a>
             <a href="{{ route('welfare.impact.mfls') }}" class="slide">
-                <img src="{{ asset('welfare/img/banner-3.png') }}" alt="Empowering Future Leaders. Unlocking Potential.">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="{{ asset('welfare/img/banner-3-mobile.jpg') }}">
+                    <img src="{{ asset('welfare/img/banner-3.png') }}" alt="Empowering Future Leaders. Unlocking Potential.">
+                </picture>
             </a>
             <a href="{{ route('welfare.ecosystem') }}" class="slide">
-                <img src="{{ asset('welfare/img/banner-4.png') }}" alt="Our Ecosystem">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="{{ asset('welfare/img/banner-4-mobile.jpg') }}">
+                    <img src="{{ asset('welfare/img/banner-4.png') }}" alt="Our Ecosystem">
+                </picture>
             </a>
 
             <!-- Slider Controls -->

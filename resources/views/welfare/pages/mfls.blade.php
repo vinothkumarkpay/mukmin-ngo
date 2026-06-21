@@ -445,6 +445,7 @@
 .mfls-programme-modal__footer {
     border-bottom: 0;
     border-top: 1px solid #e2e8f0;
+    justify-content: flex-end;
 }
 .mfls-programme-modal__header h3 {
     margin: 0;
@@ -485,22 +486,6 @@
     min-height: 70vh;
     border: 0;
     background: #ffffff;
-}
-.mfls-download-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--color-primary, #d43c18);
-    color: #ffffff !important;
-    padding: 10px 18px;
-    border-radius: 4px;
-    font-size: 13px;
-    font-weight: 700;
-    text-decoration: none;
-}
-.mfls-download-btn:hover {
-    background: var(--color-primary-dk, #b83210);
-    color: #ffffff !important;
 }
 .mfls-modal-close-btn {
     border: 1px solid #cbd5e1;
@@ -711,7 +696,6 @@
                                     data-partner-info="{{ $partner['id'] }}"
                                     data-partner-name="{{ $partner['name'] }}"
                                     data-view-url="{{ route('welfare.impact.mfls.partner-programme-info.view', ['partnerId' => $partner['id'], 'v' => time()]) }}"
-                                    data-download-url="{{ route('welfare.impact.mfls.partner-programme-info.download', ['partnerId' => $partner['id']]) }}"
                                 >
                                     More Info <i class="fas fa-file-excel" style="font-size: 11px;"></i>
                                 </button>
@@ -761,9 +745,6 @@
             <div class="mfls-programme-modal__loading">Loading programme information...</div>
         </div>
         <div class="mfls-programme-modal__footer">
-            <a href="#" id="mfls-programme-download" class="mfls-download-btn" download>
-                <i class="fas fa-download"></i> Download Excel
-            </a>
             <button type="button" class="mfls-modal-close-btn" data-mfls-modal-close>Close</button>
         </div>
     </div>
@@ -827,7 +808,6 @@
     var programmeModal = document.getElementById('mfls-programme-modal');
     var programmeModalBody = document.getElementById('mfls-programme-modal-body');
     var programmeModalTitle = document.getElementById('mfls-programme-modal-title');
-    var programmeDownloadLink = document.getElementById('mfls-programme-download');
 
     function closeProgrammeModal() {
         if (!programmeModal) return;
@@ -856,14 +836,11 @@
     document.querySelectorAll('[data-partner-info]').forEach(function (btn) {
         btn.addEventListener('click', function () {
             var viewUrl = btn.getAttribute('data-view-url');
-            var downloadUrl = btn.getAttribute('data-download-url');
             var partnerName = btn.getAttribute('data-partner-name') || 'Partner';
 
             if (!viewUrl || !programmeModal || !programmeModalBody) return;
 
             programmeModalTitle.textContent = partnerName + ' Programme Information';
-            programmeDownloadLink.href = downloadUrl || '#';
-            programmeDownloadLink.removeAttribute('aria-disabled');
             programmeModalBody.innerHTML = '<iframe class="mfls-programme-iframe" src="' + viewUrl + '"></iframe>';
             openProgrammeModal();
         });

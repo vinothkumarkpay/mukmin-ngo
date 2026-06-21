@@ -623,6 +623,10 @@ h6 { font-size: 13px; line-height: 20px; }
     pointer-events: auto;
     z-index: 2;
 }
+.hero-slider .slide picture {
+    display: block;
+    width: 100%;
+}
 .hero-slider .slide img {
     width: 100%;
     height: auto;
