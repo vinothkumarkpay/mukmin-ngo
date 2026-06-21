@@ -772,6 +772,10 @@
             var partnerId = btn.getAttribute('data-partner-id');
             var isActive = btn.classList.contains('is-active');
 
+            if (isActive) {
+                return;
+            }
+
             logoBtns.forEach(function (otherBtn) {
                 otherBtn.classList.remove('is-active');
                 otherBtn.setAttribute('aria-expanded', 'false');
@@ -782,17 +786,15 @@
                 panel.hidden = true;
             });
 
-            if (!isActive) {
-                btn.classList.add('is-active');
-                btn.setAttribute('aria-expanded', 'true');
-                var panel = document.getElementById('partner-detail-' + partnerId);
-                if (panel) {
-                    panel.classList.add('is-open');
-                    panel.hidden = false;
-                    setTimeout(function () {
-                        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    }, 50);
-                }
+            btn.classList.add('is-active');
+            btn.setAttribute('aria-expanded', 'true');
+            var panel = document.getElementById('partner-detail-' + partnerId);
+            if (panel) {
+                panel.classList.add('is-open');
+                panel.hidden = false;
+                setTimeout(function () {
+                    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 50);
             }
         });
     });
