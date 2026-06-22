@@ -116,26 +116,12 @@
 #aid-programs .aid-card-progress {
     display: none;
 }
-.subtab-card .read-more-btn {
-    display: inline-block;
-    background: #a5a5a5;
-    color: #ffffff;
+.subtab-card .btn {
     font-size: 13px;
     font-weight: 600;
+    line-height: 1;
     padding: 10px 25px;
     border-radius: 20px;
-    text-decoration: none;
-    transition: background 0.3s ease, transform 0.2s ease;
-    cursor: pointer;
-    border: none;
-    outline: none;
-}
-.subtab-card .read-more-btn:hover {
-    background: #d43c18;
-    transform: translateY(-1px);
-}
-.subtab-card .read-more-btn:active {
-    transform: translateY(0);
 }
 
 /* Modal system */
@@ -828,7 +814,7 @@
                     </div>
                     <h3>Vision</h3>
                     <p>To become a national community development ecosystem that advances societal well-being, shared prosperity, and inclusive, sustainable progress.</p>
-                    <button class="read-more-btn" onclick="openSubtabModal('vision')">Read more</button>
+                    <button type="button" class="btn btn-primary" onclick="openSubtabModal('vision')">Read more</button>
                 </div>
 
                 <!-- Card 2: Three Engines of Impact -->
@@ -838,7 +824,7 @@
                     </div>
                     <h3>Three Engines of Impact</h3>
                     <p>MUKMIN operates through three complementary engines to strengthen collaboration, align stakeholders, and drive meaningful community impact at scale.</p>
-                    <button class="read-more-btn" onclick="openSubtabModal('engines')">Read more</button>
+                    <button type="button" class="btn btn-primary" onclick="openSubtabModal('engines')">Read more</button>
                 </div>
 
                 <!-- Card 3: Strategic Initiatives -->
@@ -848,7 +834,7 @@
                     </div>
                     <h3>Strategic Initiatives</h3>
                     <p>MUKMIN focuses on strengthening communities through strategic focus areas that advance inclusive development, future-ready leadership and sustainable national progress.</p>
-                    <button class="read-more-btn" onclick="openSubtabModal('initiatives')">Read more</button>
+                    <button type="button" class="btn btn-primary" onclick="openSubtabModal('initiatives')">Read more</button>
                 </div>
             </div>
         </div>
@@ -1177,7 +1163,7 @@
                     <p>Providing educational support, learning access and development opportunities to empower future generations through knowledge and skills.</p>
                     <!-- Progress Bar -->
                     <div style="margin-top: auto;">
-                        <a href="{{ route('welfare.community-aid') }}" class="read-more-btn" style="display: inline-block; margin-bottom: 15px;">Talk to us</a>
+                        <a href="{{ route('welfare.community-aid') }}" class="btn btn-primary" style="margin-bottom: 15px;">Talk to us</a>
                         <div class="aid-card-progress" style="margin-bottom: 0;">
                             <div class="aid-card-progress-label">
                                 <span>Aid Target Reached</span>
@@ -1199,7 +1185,7 @@
                     <p>Delivering community assistance and outreach programmes that uplift vulnerable groups and strengthen social well-being.</p>
                     <!-- Progress Bar -->
                     <div style="margin-top: auto;">
-                        <a href="{{ route('welfare.community-aid') }}" class="read-more-btn" style="display: inline-block; margin-bottom: 15px;">Talk to us</a>
+                        <a href="{{ route('welfare.community-aid') }}" class="btn btn-primary" style="margin-bottom: 15px;">Talk to us</a>
                         <div class="aid-card-progress" style="margin-bottom: 0;">
                             <div class="aid-card-progress-label">
                                 <span>Aid Target Reached</span>
@@ -1221,7 +1207,7 @@
                     <p>Improving access to healthcare support, wellness initiatives and essential assistance for healthier and more resilient communities.</p>
                     <!-- Progress Bar -->
                     <div style="margin-top: auto;">
-                        <a href="{{ route('welfare.community-aid') }}" class="read-more-btn" style="display: inline-block; margin-bottom: 15px;">Talk to us</a>
+                        <a href="{{ route('welfare.community-aid') }}" class="btn btn-primary" style="margin-bottom: 15px;">Talk to us</a>
                         <div class="aid-card-progress" style="margin-bottom: 0;">
                             <div class="aid-card-progress-label">
                                 <span>Aid Target Reached</span>
@@ -1243,7 +1229,7 @@
                     <p>Supporting strategic and community-driven initiatives that address evolving challenges and areas requiring immediate impact.</p>
                     <!-- Progress Bar and Link -->
                     <div style="margin-top: auto;">
-                        <a href="{{ route('welfare.community-aid') }}" class="read-more-btn" style="display: inline-block; margin-bottom: 15px;">Talk to us</a>
+                        <a href="{{ route('welfare.community-aid') }}" class="btn btn-primary" style="margin-bottom: 15px;">Talk to us</a>
                         <div class="aid-card-progress" style="margin-bottom: 0;">
                             <div class="aid-card-progress-label">
                                 <span>Aid Target Reached</span>
