@@ -53,7 +53,6 @@ class FormSubmissionController extends Controller
 
         try {
             Mail::to($teamEmail)
-                ->cc(config('welfare.form_submission_cc'))
                 ->send(new FormSubmissionMail($formName, $validated, true));
         } catch (\Throwable $e) {
             Log::error("Mail to team inbox failed for {$formName}", [

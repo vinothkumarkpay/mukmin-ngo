@@ -53,7 +53,6 @@ class FormSubmissionEmailTest extends TestCase
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
             return $mail->hasTo('info@mukmin.org') &&
-                   $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->isForSupport;
         });
@@ -99,7 +98,6 @@ class FormSubmissionEmailTest extends TestCase
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
             return $mail->hasTo('membership@mukmin.org') &&
-                   $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->subject === 'New Submission: Ordinary Member Registration' &&
                    $mail->isForSupport;
@@ -136,7 +134,6 @@ class FormSubmissionEmailTest extends TestCase
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
             return $mail->hasTo('membership@mukmin.org') &&
-                   $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->isForSupport;
         });
@@ -171,7 +168,6 @@ class FormSubmissionEmailTest extends TestCase
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
             return $mail->hasTo('membership@mukmin.org') &&
-                   $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->isForSupport;
         });
@@ -213,7 +209,6 @@ class FormSubmissionEmailTest extends TestCase
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
             return $mail->hasTo('membership@mukmin.org') &&
-                   $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->isForSupport;
         });
@@ -258,7 +253,6 @@ class FormSubmissionEmailTest extends TestCase
             $hasAttachments = count($mail->diskAttachments) === 1 || count($mail->attachments) === 1;
             
             return $mail->hasTo('membership@mukmin.org') &&
-                   $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->isForSupport &&
                    $hasAttachments;
@@ -301,7 +295,6 @@ class FormSubmissionEmailTest extends TestCase
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
             return $mail->hasTo('membership@mukmin.org') &&
-                   $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->isForSupport;
         });
@@ -370,7 +363,6 @@ class FormSubmissionEmailTest extends TestCase
             $programmeIndex = array_search('Selected Programme', $labels, true);
             $partnerIndex = array_search('Partner Institution', $labels, true);
             return $mail->hasTo('scholarship@mukmin.org') &&
-                   $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->isForSupport &&
                    $partnerIndex !== false &&

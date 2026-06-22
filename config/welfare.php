@@ -6,7 +6,6 @@ return [
     'tagline' => env('WELFARE_TAGLINE', 'Nonprofit Organization & Charity'),
     'org_name' => env('WELFARE_ORG_NAME', 'PERTUBUHAN GABUNGAN MUKMIN NASIONAL (PPM-019-10-15042026)'),
     'email' => env('WELFARE_EMAIL', 'support@mukmin.org'),
-    'form_submission_cc' => env('WELFARE_FORM_SUBMISSION_CC', 'infofikrah@mukmin.org'),
     'form_submission_recipients' => [
         'mfls-scholarship' => 'scholarship@mukmin.org',
         'membership-ordinary' => 'membership@mukmin.org',

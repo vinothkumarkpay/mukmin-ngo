@@ -34,7 +34,6 @@ class ContactSubmissionTest extends TestCase
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
             return $mail->hasTo('info@mukmin.org') &&
-                   $mail->hasCc('infofikrah@mukmin.org') &&
                    $mail->isForSupport;
         });
     }
