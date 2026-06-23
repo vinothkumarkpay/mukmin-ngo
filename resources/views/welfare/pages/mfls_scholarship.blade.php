@@ -3,6 +3,7 @@
 @section('title', 'MUKMIN Future Leaders Scholarship (MFLS) Application Form')
 
 @section('content')
+@include('welfare.partials.form-controls-styles')
 <style>
 .form-page-container {
     background: #f7f9f8;
@@ -111,13 +112,6 @@
 .form-group {
     margin-bottom: 22px;
 }
-.form-group label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #333;
-    font-size: 14px;
-}
 .form-control {
     width: 100%;
     padding: 12px 16px;
@@ -225,27 +219,6 @@
 }
 .btn-submit:hover {
     background: #b83210;
-}
-.radio-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px 30px;
-    margin-top: 8px;
-}
-.radio-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 500 !important;
-    font-size: 14px;
-    color: #444;
-    cursor: pointer;
-}
-.radio-label input[type="radio"] {
-    width: 18px;
-    height: 18px;
-    accent-color: #d43c18;
-    cursor: pointer;
 }
 .field-hint {
     color: #666;
@@ -417,7 +390,7 @@
                     <label>Citizenship</label>
                     <div class="radio-group">
                         <label class="radio-label">
-                            <input type="radio" name="citizenship" value="Malaysian" {{ old('citizenship', 'Malaysian') === 'Malaysian' ? 'checked' : '' }} required>
+                            <input type="radio" name="citizenship" value="Malaysian" {{ old('citizenship') === 'Malaysian' ? 'checked' : '' }} required>
                             Malaysian
                         </label>
                         <label class="radio-label">
@@ -705,10 +678,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (eligibilityModal) {
             eligibilityModal.classList.remove('is-visible');
         }
-        const malaysianRadio = document.querySelector('input[name="citizenship"][value="Malaysian"]');
-        if (malaysianRadio) {
-            malaysianRadio.checked = true;
-        }
+        citizenshipRadios.forEach(function (radio) {
+            radio.checked = false;
+        });
         citizenshipBlocked = false;
         if (submitBtn && !submitBtn.hasAttribute('data-partner-disabled')) {
             submitBtn.disabled = false;

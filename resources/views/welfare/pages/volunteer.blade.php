@@ -3,6 +3,7 @@
 @section('title', 'Volunteer Registration - Pertubuhan Gabungan MUKMIN Nasional')
 
 @section('content')
+@include('welfare.partials.form-controls-styles')
 <style>
 .form-page-container {
     background: #f7f9f8;
@@ -49,13 +50,6 @@
 }
 .form-group {
     margin-bottom: 22px;
-}
-.form-group label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #333;
-    font-size: 14px;
 }
 .form-control {
     width: 100%;
@@ -184,50 +178,8 @@
 .custom-dropdown-container.open .dropdown-options-list {
     display: block;
 }
-.dropdown-option-item {
-    display: flex;
-    align-items: center;
-    padding: 10px 16px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-    font-size: 14px;
-    color: #444;
-}
 .dropdown-option-item:hover {
     background: #fdf6f4;
-}
-.dropdown-option-item input[type="checkbox"],
-.dropdown-option-item input[type="radio"] {
-    margin-right: 12px;
-    width: 16px;
-    height: 16px;
-    accent-color: #d43c18;
-    cursor: pointer;
-}
-.dropdown-option-item span {
-    user-select: none;
-}
-
-/* Radio Button Styling */
-.radio-group {
-    display: flex;
-    gap: 30px;
-    margin-top: 8px;
-}
-.radio-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 500 !important;
-    font-size: 14px;
-    color: #444;
-    cursor: pointer;
-}
-.radio-label input[type="radio"] {
-    width: 18px;
-    height: 18px;
-    accent-color: #d43c18;
-    cursor: pointer;
 }
 
 @media (max-width: 768px) {
