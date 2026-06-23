@@ -18,7 +18,9 @@ class MflsPageTest extends TestCase
         $response->assertSee('Applications are facilitated through a coordinated selection process', false);
         $response->assertSee('Application Criteria', false);
         $response->assertSee('New student intake only', false);
-        $response->assertSee('Malaysian students of Indian Muslim heritage', false);
+        $response->assertSee('Malaysian or Permanent Resident (PR) of Indian Muslim heritage', false);
+        $response->assertSee('Applicants must not be receiving another full scholarship or equivalent funding support.', false);
+        $response->assertDontSee('Applicants must meet the entry requirements of the chosen programme.', false);
         $response->assertSee('How It Works', false);
         $response->assertSee('Application Submission', false);
         $response->assertSee('Begin Your Learning Journey', false);

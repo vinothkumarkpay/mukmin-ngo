@@ -564,8 +564,9 @@
                             <ul class="mfls-criteria-list">
                                 <li>New student intake only</li>
                                 <li>Foundation, Diploma, Degree &amp; TVET programmes</li>
-                                <li>Malaysian students of Indian Muslim heritage</li>
+                                <li>Malaysian or Permanent Resident (PR) of Indian Muslim heritage</li>
                                 <li>Subject to institution-specific eligibility requirements</li>
+                                <li>Applicants must not be receiving another full scholarship or equivalent funding support.</li>
                             </ul>
                             <p class="mfls-criteria-subheading">Age Requirements:</p>
                             <ul class="mfls-criteria-list">
@@ -573,10 +574,6 @@
                                 <li>Degree Programmes: Up to 25 years old</li>
                                 <li>ODL / Working Adult Programmes: Eligible subject to programme requirements</li>
                                 <li>Master&rsquo;s / Postgraduate Programmes: Up to 55 years old</li>
-                            </ul>
-                            <ul class="mfls-criteria-list">
-                                <li>Applicants must meet the entry requirements of the chosen programme.</li>
-                                <li>Applicants must not be receiving another full scholarship or equivalent funding support.</li>
                             </ul>
                         </div>
                     </article>
