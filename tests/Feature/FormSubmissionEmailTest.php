@@ -311,9 +311,13 @@ class FormSubmissionEmailTest extends TestCase
             'nric_passport' => '010101011234',
             'dob' => '2001-01-01',
             'gender' => 'Male',
+            'age' => '22',
+            'citizenship' => 'Malaysian',
             'marital_status' => 'Single',
             'contact_number' => '+60123456789',
             'full_address' => '123 Jalan Pendidikan',
+            'state' => 'Selangor',
+            'postcode' => '43000',
             'current_qualification' => 'SPM',
             'institution_name' => 'SMK Contoh',
             'current_cgpa_result' => '7A 2B',
@@ -349,12 +353,16 @@ class FormSubmissionEmailTest extends TestCase
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
             $labels = array_column($mail->formattedData, 'label');
+            $hasAttachments = count($mail->diskAttachments) >= 1 || count($mail->attachments) >= 1 || count($mail->rawAttachments) >= 1;
             return $mail->hasTo('mfls@example.com') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->subject === 'Application Received : MUKMIN Future Leaders Scholarship (MFLS)' &&
                    !$mail->isForSupport &&
                    in_array('Partner Institution', $labels, true) &&
-                   in_array('Selected Programme', $labels, true);
+                   in_array('Selected Programme', $labels, true) &&
+                   in_array('Age', $labels, true) &&
+                   in_array('Citizenship', $labels, true) &&
+                   $hasAttachments;
         });
 
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
@@ -362,13 +370,60 @@ class FormSubmissionEmailTest extends TestCase
             $labels = array_column($mail->formattedData, 'label');
             $programmeIndex = array_search('Selected Programme', $labels, true);
             $partnerIndex = array_search('Partner Institution', $labels, true);
+            $hasAttachments = count($mail->diskAttachments) >= 1 || count($mail->attachments) >= 1 || count($mail->rawAttachments) >= 1;
             return $mail->hasTo('scholarship@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->isForSupport &&
                    $partnerIndex !== false &&
                    $programmeIndex !== false &&
-                   $partnerIndex < $programmeIndex;
+                   $partnerIndex < $programmeIndex &&
+                   $hasAttachments;
         });
+    }
+
+    public function test_mfls_scholarship_rejects_non_malaysian_citizenship()
+    {
+        $wordParagraph = implode(' ', array_fill(0, 160, 'leadership'));
+
+        $formData = [
+            'partner_id' => 'bac',
+            'email' => 'mfls@example.com',
+            'full_name' => 'Ahmad Student',
+            'nric_passport' => '010101011234',
+            'dob' => '2001-01-01',
+            'gender' => 'Male',
+            'age' => '22',
+            'citizenship' => 'Non-Malaysian',
+            'marital_status' => 'Single',
+            'contact_number' => '+60123456789',
+            'full_address' => '123 Jalan Pendidikan',
+            'state' => 'Selangor',
+            'postcode' => '43000',
+            'current_qualification' => 'SPM',
+            'institution_name' => 'SMK Contoh',
+            'current_cgpa_result' => '7A 2B',
+            'academic_transcript' => UploadedFile::fake()->create('transcript.pdf', 100, 'application/pdf'),
+            'programme_course_applied' => 'FIL (Foundation in Law)',
+            'applied_to_university' => '0',
+            'household_income' => '< RM2,000',
+            'father_guardian_name' => 'Father Name',
+            'father_guardian_occupation' => 'Driver',
+            'mother_guardian_name' => 'Mother Name',
+            'mother_guardian_occupation' => 'Homemaker',
+            'number_of_dependents' => '4',
+            'other_scholarship_details' => 'None',
+            'leadership_roles' => 'School prefect, club president, NGO volunteer',
+            'involvement_level' => 'Leader',
+            'community_service_involvement' => 'Weekly tutoring for underprivileged students.',
+            'community_contribution' => $wordParagraph,
+            'leadership_experience_statement' => $wordParagraph,
+            'scholar_selection_statement' => $wordParagraph,
+            'declaration_confirmed' => '1',
+        ];
+
+        $this->from(route('welfare.mfls-scholarship', ['partner' => 'bac']))
+            ->post(route('welfare.mfls-scholarship.submit'), $formData)
+            ->assertSessionHasErrors(['citizenship']);
     }
 
     public function test_mfls_scholarship_rejects_invalid_nric_phone_and_email()
@@ -380,8 +435,12 @@ class FormSubmissionEmailTest extends TestCase
             'full_name' => 'Ahmad Student',
             'dob' => '2001-01-01',
             'gender' => 'Male',
+            'age' => '22',
+            'citizenship' => 'Malaysian',
             'marital_status' => 'Single',
             'full_address' => '123 Jalan Pendidikan, Kuala Lumpur',
+            'state' => 'Selangor',
+            'postcode' => '43000',
             'current_qualification' => 'SPM',
             'institution_name' => 'SMK Contoh',
             'current_cgpa_result' => '7A 2B',

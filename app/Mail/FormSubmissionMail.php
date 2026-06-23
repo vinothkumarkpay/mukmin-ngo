@@ -84,6 +84,8 @@ class FormSubmissionMail extends Mailable
         // Mentor
         'nric_passport' => 'NRIC / Passport Number',
         'gender' => 'Gender',
+        'age' => 'Age',
+        'citizenship' => 'Citizenship',
         'occupation' => 'Occupation',
         'experience_years' => 'Years of Experience',
         'linkedin' => 'LinkedIn Profile',
@@ -218,47 +220,67 @@ class FormSubmissionMail extends Mailable
             ->subject($this->subject)
             ->view('emails.form_submission');
 
-        // Attach files if the email is for support
+        if ($this->formName === 'MFLS Scholarship Application') {
+            $this->attachSubmissionSummary($email);
+            $this->attachUploadedFiles($email);
+            return $email;
+        }
+
         if ($this->isForSupport) {
-            // Find and attach registration_certificate
-            if (!empty($this->formData['registration_certificate'])) {
-                $path = $this->formData['registration_certificate'];
+            $this->attachUploadedFiles($email);
+        }
+
+        return $email;
+    }
+
+    protected function attachSubmissionSummary($email): void
+    {
+        $lines = ["{$this->formName} — Submission Summary", str_repeat('=', 50), ''];
+
+        foreach ($this->formattedData as $row) {
+            $label = $row['label'];
+            $value = $row['is_html']
+                ? trim(strip_tags(str_replace(['<br>', '<br/>', '<br />'], "\n", $row['value'])))
+                : $row['value'];
+            $lines[] = "{$label}: {$value}";
+            $lines[] = '';
+        }
+
+        $filename = 'MFLS_Application_Submission.txt';
+        $email->attachData(implode("\n", $lines), $filename, ['mime' => 'text/plain']);
+    }
+
+    protected function attachUploadedFiles($email): void
+    {
+        if (!empty($this->formData['registration_certificate']) && Storage::disk('public')->exists($this->formData['registration_certificate'])) {
+            $email->attach(Storage::disk('public')->path($this->formData['registration_certificate']));
+        }
+
+        if (!empty($this->formData['committee_members']) && Storage::disk('public')->exists($this->formData['committee_members'])) {
+            $email->attach(Storage::disk('public')->path($this->formData['committee_members']));
+        }
+
+        if (!empty($this->formData['supporting_documents']) && is_array($this->formData['supporting_documents'])) {
+            foreach ($this->formData['supporting_documents'] as $path) {
                 if (Storage::disk('public')->exists($path)) {
                     $email->attach(Storage::disk('public')->path($path));
-                }
-            }
-            // Find and attach committee_members
-            if (!empty($this->formData['committee_members'])) {
-                $path = $this->formData['committee_members'];
-                if (Storage::disk('public')->exists($path)) {
-                    $email->attach(Storage::disk('public')->path($path));
-                }
-            }
-            // Find and attach supporting_documents
-            if (!empty($this->formData['supporting_documents']) && is_array($this->formData['supporting_documents'])) {
-                foreach ($this->formData['supporting_documents'] as $path) {
-                    if (Storage::disk('public')->exists($path)) {
-                        $email->attach(Storage::disk('public')->path($path));
-                    }
-                }
-            }
-
-            foreach (['academic_transcript', 'offer_letter', 'proof_of_income', 'recommendation_letter'] as $fileField) {
-                if (!empty($this->formData[$fileField]) && Storage::disk('public')->exists($this->formData[$fileField])) {
-                    $email->attach(Storage::disk('public')->path($this->formData[$fileField]));
-                }
-            }
-
-            if (!empty($this->formData['relevant_certificates']) && is_array($this->formData['relevant_certificates'])) {
-                foreach ($this->formData['relevant_certificates'] as $path) {
-                    if (Storage::disk('public')->exists($path)) {
-                        $email->attach(Storage::disk('public')->path($path));
-                    }
                 }
             }
         }
 
-        return $email;
+        foreach (['academic_transcript', 'offer_letter', 'proof_of_income', 'recommendation_letter'] as $fileField) {
+            if (!empty($this->formData[$fileField]) && Storage::disk('public')->exists($this->formData[$fileField])) {
+                $email->attach(Storage::disk('public')->path($this->formData[$fileField]));
+            }
+        }
+
+        if (!empty($this->formData['relevant_certificates']) && is_array($this->formData['relevant_certificates'])) {
+            foreach ($this->formData['relevant_certificates'] as $path) {
+                if (Storage::disk('public')->exists($path)) {
+                    $email->attach(Storage::disk('public')->path($path));
+                }
+            }
+        }
     }
 
     /**

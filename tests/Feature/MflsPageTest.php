@@ -49,6 +49,13 @@ class MflsPageTest extends TestCase
         $response->assertSee('Select Programme', false);
         $response->assertSee('FIL (Foundation in Law)', false);
         $response->assertSee('Section 1: Personal Information', false);
+        $response->assertSee('Age', false);
+        $response->assertSee('Citizenship', false);
+        $response->assertSee('Postcode', false);
+        $response->assertSee('Permanent Resident', false);
+        $response->assertSee('Not Eligible', false);
+        $response->assertDontSee('Divorced', false);
+        $response->assertDontSee('e.g. 0123456789', false);
         $response->assertSee('Section 2: Academic Information', false);
         $response->assertSee('Section 3: Financial Background', false);
         $response->assertSee('Section 4: Leadership', false);

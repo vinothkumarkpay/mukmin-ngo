@@ -595,14 +595,17 @@ class FormSubmissionController extends Controller
         $selectedPartner = $partnerId && $mflsPartners->isValidPartnerId($partnerId)
             ? $mflsPartners->findPartner($partnerId)
             : null;
+        $states = $this->malaysianStateOptions();
 
-        return view('welfare.pages.mfls_scholarship', compact('selectedPartner'));
+        return view('welfare.pages.mfls_scholarship', compact('selectedPartner', 'states'));
     }
 
     public function submitMflsScholarship(Request $request, MflsPartnerDocumentService $mflsPartners)
     {
         $partner = $mflsPartners->findPartner((string) $request->input('partner_id', ''));
         $partnerProgrammes = $partner ? $mflsPartners->partnerProgrammes($partner) : [];
+
+        $states = $this->malaysianStateOptions();
 
         $validated = $request->validate([
             'partner_id' => ['required', 'string', function (string $attribute, $value, \Closure $fail) use ($mflsPartners) {
@@ -615,10 +618,13 @@ class FormSubmissionController extends Controller
             'nric_passport' => $this->malaysianNricRule(),
             'dob' => 'required|date|before_or_equal:today|after:1950-01-01',
             'gender' => 'required|string|in:Male,Female',
-            'marital_status' => 'required|string|in:Single,Married,Divorced,Other',
-            'marital_status_other' => 'required_if:marital_status,Other|nullable|string|min:2|max:255',
+            'age' => 'required|integer|min:15|max:60',
+            'citizenship' => 'required|string|in:Malaysian,Permanent Resident',
+            'marital_status' => 'required|string|in:Single,Married',
             'contact_number' => $this->malaysianPhoneRule(),
             'full_address' => 'required|string|min:10|max:1000',
+            'state' => ['required', 'string', Rule::in($states)],
+            'postcode' => 'required|string|max:10',
             'current_qualification' => 'required|string|in:SPM,STPM,Foundation,Diploma,Degree',
             'institution_name' => 'required|string|min:2|max:255',
             'current_cgpa_result' => 'required|string|min:1|max:255',
@@ -662,7 +668,8 @@ class FormSubmissionController extends Controller
             'dob.before_or_equal' => 'Date of birth cannot be in the future.',
             'dob.after' => 'Please enter a valid date of birth.',
             'contact_number.required' => 'Please enter your phone number.',
-            'contact_number.regex' => 'Please enter a valid Malaysian mobile number (e.g. 0123456789 or +60123456789).',
+            'contact_number.regex' => 'Please enter a valid Malaysian mobile number.',
+            'citizenship.in' => 'The MFLS Scholarship is open to Malaysian citizens and Permanent Residents only.',
             'full_address.min' => 'Please enter your complete residential address.',
             'academic_transcript.required' => 'Please upload your academic transcript.',
             'academic_transcript.mimes' => 'Academic transcript must be a PDF, JPG, PNG, DOC, or DOCX file.',

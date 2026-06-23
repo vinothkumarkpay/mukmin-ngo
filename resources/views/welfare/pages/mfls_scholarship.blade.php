@@ -139,6 +139,49 @@
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
+.eligibility-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.eligibility-modal-overlay.is-visible {
+    display: flex;
+}
+.eligibility-modal {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 28px 24px;
+    max-width: 440px;
+    width: 100%;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+    text-align: center;
+}
+.eligibility-modal h3 {
+    font-size: 18px;
+    color: #d43c18;
+    margin: 0 0 12px;
+}
+.eligibility-modal p {
+    font-size: 14px;
+    color: #444;
+    line-height: 22px;
+    margin: 0 0 20px;
+}
+.eligibility-modal button {
+    background: #0c5930;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
 .declaration-box {
     background: #fdf6f4;
     border-left: 4px solid #d43c18;
@@ -361,29 +404,51 @@
                             Female
                         </label>
                     </div>
+                    @error('gender')<span class="field-error">{{ $message }}</span>@enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" class="form-control @error('age') is-invalid @enderror" value="{{ old('age') }}" min="15" max="60" required>
+                    @error('age')<span class="field-error">{{ $message }}</span>@enderror
+                </div>
+
+                <div class="form-group">
+                    <label>Citizenship</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="citizenship" value="Malaysian" {{ old('citizenship', 'Malaysian') === 'Malaysian' ? 'checked' : '' }} required>
+                            Malaysian
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="citizenship" value="Permanent Resident" {{ old('citizenship') === 'Permanent Resident' ? 'checked' : '' }}>
+                            Permanent Resident
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="citizenship" value="Non-Malaysian" {{ old('citizenship') === 'Non-Malaysian' ? 'checked' : '' }}>
+                            Non-Malaysian
+                        </label>
+                    </div>
+                    @error('citizenship')<span class="field-error">{{ $message }}</span>@enderror
                 </div>
 
                 <div class="form-group">
                     <label>Marital Status</label>
                     <div class="radio-group">
-                        @foreach(['Single', 'Married', 'Divorced', 'Other'] as $status)
+                        @foreach(['Single', 'Married'] as $status)
                             <label class="radio-label">
                                 <input type="radio" name="marital_status" value="{{ $status }}" {{ old('marital_status') === $status ? 'checked' : '' }} required>
                                 {{ $status }}
                             </label>
                         @endforeach
                     </div>
-                </div>
-
-                <div class="form-group" id="marital-status-other-group" style="display: none;">
-                    <label for="marital_status_other">Please specify marital status</label>
-                    <input type="text" id="marital_status_other" name="marital_status_other" class="form-control" value="{{ old('marital_status_other') }}">
+                    @error('marital_status')<span class="field-error">{{ $message }}</span>@enderror
                 </div>
 
                 <div class="form-group">
                     <label for="contact_number">Phone Number</label>
-                    <input type="tel" id="contact_number" name="contact_number" class="form-control @error('contact_number') is-invalid @enderror" placeholder="e.g. 0123456789 or +60123456789" value="{{ old('contact_number') }}" pattern="(\+?6?01)[0-9][0-9\s\-()]{7,11}" minlength="10" maxlength="16" autocomplete="tel" title="Malaysian mobile number" required>
-                    <small class="field-hint">Malaysian mobile number starting with 01 (e.g. 0123456789).</small>
+                    <input type="tel" id="contact_number" name="contact_number" class="form-control @error('contact_number') is-invalid @enderror" value="{{ old('contact_number') }}" pattern="(\+?6?01)[0-9][0-9\s\-()]{7,11}" minlength="10" maxlength="16" autocomplete="tel" title="Malaysian mobile number" required>
+                    <small class="field-hint">Malaysian mobile number starting with 01.</small>
                     @error('contact_number')<span class="field-error">{{ $message }}</span>@enderror
                 </div>
 
@@ -391,6 +456,24 @@
                     <label for="full_address">Current Residential Address</label>
                     <textarea id="full_address" name="full_address" rows="3" class="form-control @error('full_address') is-invalid @enderror" style="font-family: inherit;" minlength="10" maxlength="1000" required>{{ old('full_address') }}</textarea>
                     @error('full_address')<span class="field-error">{{ $message }}</span>@enderror
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <select id="state" name="state" class="form-control @error('state') is-invalid @enderror" required>
+                            <option value="">-- Choose State --</option>
+                            @foreach($states as $stateOption)
+                                <option value="{{ $stateOption }}" {{ old('state') == $stateOption ? 'selected' : '' }}>{{ $stateOption }}</option>
+                            @endforeach
+                        </select>
+                        @error('state')<span class="field-error">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="postcode">Postcode</label>
+                        <input type="text" id="postcode" name="postcode" class="form-control @error('postcode') is-invalid @enderror" value="{{ old('postcode') }}" maxlength="10" required>
+                        @error('postcode')<span class="field-error">{{ $message }}</span>@enderror
+                    </div>
                 </div>
 
                 <div class="form-section-title">Section 2: Academic Information</div>
@@ -579,32 +662,96 @@
 
                 @include('welfare.partials.important-notes')
 
-                <button type="submit" class="btn-submit" @unless($selectedPartner) disabled @endunless>Submit MFLS Application</button>
+                <button type="submit" class="btn-submit" id="mfls-submit-btn" @unless($selectedPartner) disabled data-partner-disabled="true" @endunless>Submit MFLS Application</button>
             </form>
         </div>
+    </div>
+</div>
+
+<div class="eligibility-modal-overlay" id="citizenship-eligibility-modal" role="dialog" aria-modal="true" aria-labelledby="eligibility-modal-title">
+    <div class="eligibility-modal">
+        <h3 id="eligibility-modal-title">Not Eligible</h3>
+        <p>The MFLS Scholarship is open to Malaysian citizens and Permanent Residents (PR) of Indian Muslim heritage only. You are not eligible to proceed with this application.</p>
+        <button type="button" id="eligibility-modal-close">Understood</button>
     </div>
 </div>
 
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const maritalRadios = document.querySelectorAll('input[name="marital_status"]');
-    const otherGroup = document.getElementById('marital-status-other-group');
-    const otherInput = document.getElementById('marital_status_other');
+    const citizenshipRadios = document.querySelectorAll('input[name="citizenship"]');
+    const eligibilityModal = document.getElementById('citizenship-eligibility-modal');
+    const eligibilityModalClose = document.getElementById('eligibility-modal-close');
+    const mflsForm = document.getElementById('mfls-form');
+    const submitBtn = document.getElementById('mfls-submit-btn');
+    let citizenshipBlocked = false;
 
-    function toggleMaritalOther() {
-        const selected = document.querySelector('input[name="marital_status"]:checked');
-        if (selected && selected.value === 'Other') {
-            otherGroup.style.display = 'block';
-            otherInput.setAttribute('required', 'required');
-        } else {
-            otherGroup.style.display = 'none';
-            otherInput.removeAttribute('required');
+    function getSelectedCitizenship() {
+        const selected = document.querySelector('input[name="citizenship"]:checked');
+        return selected ? selected.value : '';
+    }
+
+    function showEligibilityModal() {
+        citizenshipBlocked = true;
+        if (submitBtn) {
+            submitBtn.disabled = true;
+        }
+        if (eligibilityModal) {
+            eligibilityModal.classList.add('is-visible');
         }
     }
 
-    maritalRadios.forEach(radio => radio.addEventListener('change', toggleMaritalOther));
-    toggleMaritalOther();
+    function hideEligibilityModal() {
+        if (eligibilityModal) {
+            eligibilityModal.classList.remove('is-visible');
+        }
+        const malaysianRadio = document.querySelector('input[name="citizenship"][value="Malaysian"]');
+        if (malaysianRadio) {
+            malaysianRadio.checked = true;
+        }
+        citizenshipBlocked = false;
+        if (submitBtn && !submitBtn.hasAttribute('data-partner-disabled')) {
+            submitBtn.disabled = false;
+        }
+    }
+
+    citizenshipRadios.forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            if (this.value === 'Non-Malaysian') {
+                showEligibilityModal();
+            } else {
+                citizenshipBlocked = false;
+                if (submitBtn && !submitBtn.hasAttribute('data-partner-disabled')) {
+                    submitBtn.disabled = false;
+                }
+            }
+        });
+    });
+
+    if (eligibilityModalClose) {
+        eligibilityModalClose.addEventListener('click', hideEligibilityModal);
+    }
+
+    if (eligibilityModal) {
+        eligibilityModal.addEventListener('click', function (event) {
+            if (event.target === eligibilityModal) {
+                hideEligibilityModal();
+            }
+        });
+    }
+
+    if (getSelectedCitizenship() === 'Non-Malaysian') {
+        showEligibilityModal();
+    }
+
+    if (mflsForm) {
+        mflsForm.addEventListener('submit', function (event) {
+            if (citizenshipBlocked || getSelectedCitizenship() === 'Non-Malaysian') {
+                event.preventDefault();
+                showEligibilityModal();
+            }
+        });
+    }
 
     const nricInput = document.getElementById('nric_passport');
     if (nricInput) {

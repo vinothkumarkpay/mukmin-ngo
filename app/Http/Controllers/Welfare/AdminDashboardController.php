@@ -426,7 +426,7 @@ class AdminDashboardController extends Controller
                     break;
 
                 case 'mfls':
-                    fputcsv($file, ['ID', 'Date', 'Email', 'Full Name', 'NRIC', 'DOB', 'Gender', 'Marital Status', 'Phone', 'Address', 'Partner Institution', 'Selected Programme', 'Current Qualification', 'Institution', 'CGPA/Result', 'Applied to University', 'Offer Letter Received', 'Household Income', 'Father Name', 'Father Occupation', 'Mother Name', 'Mother Occupation', 'Dependents', 'Other Scholarship', 'Leadership Roles', 'Involvement Level', 'Community Service', 'Status']);
+                    fputcsv($file, ['ID', 'Date', 'Email', 'Full Name', 'NRIC', 'DOB', 'Gender', 'Age', 'Citizenship', 'Marital Status', 'Phone', 'Address', 'State', 'Postcode', 'Partner Institution', 'Selected Programme', 'Current Qualification', 'Institution', 'CGPA/Result', 'Applied to University', 'Offer Letter Received', 'Household Income', 'Father Name', 'Father Occupation', 'Mother Name', 'Mother Occupation', 'Dependents', 'Other Scholarship', 'Leadership Roles', 'Involvement Level', 'Community Service', 'Status']);
                     foreach (MflsScholarshipSubmission::all() as $item) {
                         fputcsv($file, [
                             $item->id,
@@ -436,9 +436,13 @@ class AdminDashboardController extends Controller
                             $item->nric_passport,
                             $item->dob ? $item->dob->format('Y-m-d') : '',
                             $item->gender,
-                            $item->marital_status === 'Other' ? 'Other: ' . $item->marital_status_other : $item->marital_status,
+                            $item->age,
+                            $item->citizenship,
+                            $item->marital_status,
                             $item->contact_number,
                             $item->full_address,
+                            $item->state,
+                            $item->postcode,
                             $item->partner_institution_name,
                             $item->programme_course_applied,
                             $item->current_qualification,
