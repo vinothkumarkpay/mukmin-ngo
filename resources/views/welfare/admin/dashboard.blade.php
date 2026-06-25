@@ -788,6 +788,7 @@
                                                     @endif
                                                     <form action="{{ route('welfare.admin.mfls.partner-documents.upload', $partnerDocument['id']) }}" method="POST" enctype="multipart/form-data" class="admin-import-form" style="justify-content: flex-end; margin: 0;">
                                                         @csrf
+                                                        <input type="hidden" name="import_tab" value="panel-mfls-documents">
                                                         <label class="admin-import-file-label">
                                                             <input type="file" name="programme_file" accept=".xlsx,.xls" required class="admin-import-file-input">
                                                             <span class="btn-admin btn-admin-secondary admin-import-file-btn"><i class="fas fa-folder-open"></i> Choose Excel</span>
@@ -1189,11 +1190,19 @@
         }
     });
 
-    @if(session('import_tab'))
-    switchTab(@json(session('import_tab')));
-    @elseif(session('admin_tab'))
-    switchTab(@json(session('admin_tab')));
-    @endif
+    (function restoreAdminTab() {
+        const hashTab = window.location.hash.replace(/^#/, '');
+        if (hashTab && document.getElementById(hashTab)) {
+            switchTab(hashTab);
+            return;
+        }
+
+        @if(session('import_tab'))
+        switchTab(@json(session('import_tab')));
+        @elseif(session('admin_tab'))
+        switchTab(@json(session('admin_tab')));
+        @endif
+    })();
 
     document.querySelectorAll('.admin-import-file-input').forEach(function(input) {
         input.addEventListener('change', function() {

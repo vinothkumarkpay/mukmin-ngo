@@ -71,8 +71,8 @@ class MflsPartnerDocumentController extends Controller
         $documents->storeUpload($partnerId, $request->file('programme_file'));
 
         return redirect()
-            ->route('welfare.admin.dashboard')
-            ->with('admin_tab', 'panel-mfls-documents')
+            ->to(route('welfare.admin.dashboard') . '#panel-mfls-documents')
+            ->with('import_tab', $request->input('import_tab', 'panel-mfls-documents'))
             ->with('success', 'Programme information updated for ' . ($documents->partnerName($partnerId) ?: $partnerId) . '.');
     }
 }

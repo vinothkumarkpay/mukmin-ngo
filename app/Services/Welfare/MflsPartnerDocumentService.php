@@ -97,13 +97,37 @@ class MflsPartnerDocumentService
             $partnerId . '.' . $extension
         );
 
-        return MflsPartnerDocument::updateOrCreate(
+        $document = MflsPartnerDocument::updateOrCreate(
             ['partner_id' => $partnerId],
             [
                 'original_filename' => $file->getClientOriginalName(),
                 'stored_path' => $storedPath,
             ]
         );
+        $document->touch();
+
+        return $document->refresh();
+    }
+
+    public function documentUpdatedAt(?MflsPartnerDocument $document): ?\Illuminate\Support\Carbon
+    {
+        if (!$document || !is_file($this->absolutePath($document))) {
+            return null;
+        }
+
+        $dbUpdatedAt = $document->updated_at;
+        $fileUpdatedAt = \Illuminate\Support\Carbon::createFromTimestamp(
+            filemtime($this->absolutePath($document)),
+            config('app.timezone')
+        );
+
+        if ($dbUpdatedAt === null) {
+            return $fileUpdatedAt->timezone('Asia/Kuala_Lumpur');
+        }
+
+        $latest = $dbUpdatedAt->gt($fileUpdatedAt) ? $dbUpdatedAt : $fileUpdatedAt;
+
+        return $latest->timezone('Asia/Kuala_Lumpur');
     }
 
     public function bootstrapDocumentsIfMissing(): void
@@ -264,7 +288,7 @@ CSS;
                 'name' => $partner['name'],
                 'document' => $document,
                 'has_document' => $document !== null && is_file($this->absolutePath($document)),
-                'updated_at' => $document ? $document->updated_at : null,
+                'updated_at' => $this->documentUpdatedAt($document),
             ];
         }
 
