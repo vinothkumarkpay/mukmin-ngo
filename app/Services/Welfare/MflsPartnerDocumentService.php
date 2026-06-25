@@ -4,6 +4,7 @@ namespace App\Services\Welfare;
 
 use App\Models\MflsPartnerDocument;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Writer\Html;
@@ -83,8 +84,10 @@ class MflsPartnerDocumentService
         $extension = strtolower($file->getClientOriginalExtension() ?: 'xlsx');
         $storedPath = self::STORAGE_DIR . '/' . $partnerId . '.' . $extension;
 
+        File::ensureDirectoryExists(storage_path('app/' . self::STORAGE_DIR), 0775);
+
         $existing = $this->findForPartner($partnerId);
-        if ($existing && $existing->stored_path !== $storedPath) {
+        if ($existing) {
             Storage::disk('local')->delete($existing->stored_path);
         }
 
