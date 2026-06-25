@@ -128,7 +128,7 @@ class SubmissionImportRegistry
             'friends' => [
                 'Individual', '', '', '', '', '', '', '', '',
                 'Ahmad bin Ali', '900101011234', 'Selangor', 'Civil Servant / Government Officer', '',
-                'No 1, Jalan Example', 'ahmad@example.com', '+60123456789', 'Education & Future Readiness',
+                'No 1, Jalan Example', 'ahmad@example.com', '+60123456789', 'Education and Talent Development',
             ],
             'mentor' => [
                 'Dr. Fatimah', '800101011234', 'Female', 'Consultant', 'Example Sdn Bhd',

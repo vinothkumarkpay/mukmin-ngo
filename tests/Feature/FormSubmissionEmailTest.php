@@ -117,7 +117,7 @@ class FormSubmissionEmailTest extends TestCase
             'ind_address' => 'Friend Address',
             'ind_email' => 'friend_ind@example.com',
             'ind_phone' => '+60111222333',
-            'ind_area_of_interest' => 'Education & Future Readiness',
+            'ind_area_of_interest' => 'Education and Talent Development',
             'declaration_confirmed' => '1',
         ];
 

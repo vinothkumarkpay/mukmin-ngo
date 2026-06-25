@@ -279,12 +279,11 @@ class FormSubmissionController extends Controller
     private function friendsAreaOfInterestOptions(): array
     {
         return [
-            'General Community Development',
-            'Socio-Economic Mobility',
-            'Education & Future Readiness',
-            'Entrepreneurship & Innovation',
-            'Faith, Identity & Ukhwah',
-            'Leadership & Capacity Building',
+            'Economic Empowerment',
+            'Education and Talent Development',
+            'Leadership and Representation',
+            'Community Welfare',
+            'Faith, Identity and Ukhwah',
         ];
     }
 
