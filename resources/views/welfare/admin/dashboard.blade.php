@@ -201,7 +201,7 @@
                         <h3>Welcome to the MUKMIN Administrative Portal</h3>
                     </div>
                     <div class="card-body">
-                        <p style="margin-bottom: 15px;">Use the left navigation sidebar to view individual form submissions, download CSV reports, import bulk records from Excel templates, approve/reject applications, and configure form dropdown option items dynamically.</p>
+                        <p style="margin-bottom: 15px;">Use the left navigation sidebar to view individual form submissions, download CSV reports, import bulk records from Excel templates, update submission status, and configure form dropdown option items dynamically.</p>
                         <div class="important-notes" style="margin-bottom: 0;">
                             <h4>SYSTEM NOTE</h4>
                             <p style="font-size: 13.5px; color: #555;">All data changes (like changing approval status, deleting dropdown lists, or submitting new forms) will take effect instantly in the database.</p>
@@ -233,6 +233,7 @@
                                         <th>Email</th>
                                         <th>State</th>
                                         <th>Categories Selected</th>
+                                        <th class="status-col">Status</th>
                                         <th style="text-align: right;">Actions</th>
                                     </tr>
                                 </thead>
@@ -251,13 +252,16 @@
                                                     {{ $item->categories }}
                                                 @endif
                                             </td>
+                                            <td>
+                                                @include('welfare.admin.partials.status-select', ['type' => 'feedback', 'item' => $item])
+                                            </td>
                                             <td style="text-align: right;">
                                                 <button onclick="viewDetail('feedback', {{ $item->id }})" class="btn-admin btn-admin-primary">View</button>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="7" style="text-align: center; color: var(--admin-text-muted);">No submissions found.</td>
+                                            <td colspan="8" style="text-align: center; color: var(--admin-text-muted);">No submissions found.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -289,7 +293,7 @@
                                         <th>Organisation Name</th>
                                         <th>State</th>
                                         <th>ROS Registered</th>
-                                        <th>Status</th>
+                                        <th class="status-col">Status</th>
                                         <th style="text-align: right;">Actions</th>
                                     </tr>
                                 </thead>
@@ -302,14 +306,10 @@
                                             <td>{{ $item->registered_state }}</td>
                                             <td>{{ $item->is_registered_ros ? 'Yes' : 'No' }}</td>
                                             <td>
-                                                <span class="badge badge-{{ $item->status }}" id="badge-ordinary-{{ $item->id }}">
-                                                    {{ $item->status }}
-                                                </span>
+                                                @include('welfare.admin.partials.status-select', ['type' => 'ordinary', 'item' => $item])
                                             </td>
-                                            <td style="text-align: right; display: flex; gap: 5px; justify-content: flex-end;">
+                                            <td style="text-align: right;">
                                                 <button onclick="viewDetail('ordinary', {{ $item->id }})" class="btn-admin btn-admin-primary">View</button>
-                                                <button onclick="updateStatus('ordinary', {{ $item->id }}, 'approved')" class="btn-admin btn-admin-secondary" style="color: #059669;" title="Approve"><i class="fas fa-check"></i></button>
-                                                <button onclick="updateStatus('ordinary', {{ $item->id }}, 'rejected')" class="btn-admin btn-admin-danger" style="padding: 8px 12px;" title="Reject"><i class="fas fa-times"></i></button>
                                             </td>
                                         </tr>
                                     @empty
@@ -346,7 +346,7 @@
                                         <th>Entity Type</th>
                                         <th>Name / Organisation</th>
                                         <th>Residency / State</th>
-                                        <th>Status</th>
+                                        <th class="status-col">Status</th>
                                         <th style="text-align: right;">Actions</th>
                                     </tr>
                                 </thead>
@@ -373,14 +373,10 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <span class="badge badge-{{ $item->status }}" id="badge-friends-{{ $item->id }}">
-                                                    {{ $item->status }}
-                                                </span>
+                                                @include('welfare.admin.partials.status-select', ['type' => 'friends', 'item' => $item])
                                             </td>
-                                            <td style="text-align: right; display: flex; gap: 5px; justify-content: flex-end;">
+                                            <td style="text-align: right;">
                                                 <button onclick="viewDetail('friends', {{ $item->id }})" class="btn-admin btn-admin-primary">View</button>
-                                                <button onclick="updateStatus('friends', {{ $item->id }}, 'approved')" class="btn-admin btn-admin-secondary" style="color: #059669;" title="Approve"><i class="fas fa-check"></i></button>
-                                                <button onclick="updateStatus('friends', {{ $item->id }}, 'rejected')" class="btn-admin btn-admin-danger" style="padding: 8px 12px;" title="Reject"><i class="fas fa-times"></i></button>
                                             </td>
                                         </tr>
                                     @empty
@@ -419,6 +415,7 @@
                                         <th>Organisation</th>
                                         <th>Exp Years</th>
                                         <th>State</th>
+                                        <th class="status-col">Status</th>
                                         <th style="text-align: right;">Actions</th>
                                     </tr>
                                 </thead>
@@ -432,13 +429,16 @@
                                             <td>{{ $item->organisation }}</td>
                                             <td>{{ $item->experience_years }} yrs</td>
                                             <td>{{ $item->state_residency }}</td>
+                                            <td>
+                                                @include('welfare.admin.partials.status-select', ['type' => 'mentor', 'item' => $item])
+                                            </td>
                                             <td style="text-align: right;">
                                                 <button onclick="viewDetail('mentor', {{ $item->id }})" class="btn-admin btn-admin-primary">View</button>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="8" style="text-align: center; color: var(--admin-text-muted);">No submissions found.</td>
+                                            <td colspan="9" style="text-align: center; color: var(--admin-text-muted);">No submissions found.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -471,7 +471,7 @@
                                         <th>Contact Person</th>
                                         <th>Email</th>
                                         <th>State/Country</th>
-                                        <th>Status</th>
+                                        <th class="status-col">Status</th>
                                         <th style="text-align: right;">Actions</th>
                                     </tr>
                                 </thead>
@@ -485,14 +485,10 @@
                                             <td>{{ $item->email }}</td>
                                             <td>{{ $item->state_country }}</td>
                                             <td>
-                                                <span class="badge badge-{{ $item->status }}" id="badge-partner-{{ $item->id }}">
-                                                    {{ $item->status }}
-                                                </span>
+                                                @include('welfare.admin.partials.status-select', ['type' => 'partner', 'item' => $item])
                                             </td>
-                                            <td style="text-align: right; display: flex; gap: 5px; justify-content: flex-end;">
+                                            <td style="text-align: right;">
                                                 <button onclick="viewDetail('partner', {{ $item->id }})" class="btn-admin btn-admin-primary">View</button>
-                                                <button onclick="updateStatus('partner', {{ $item->id }}, 'approved')" class="btn-admin btn-admin-secondary" style="color: #059669;" title="Approve"><i class="fas fa-check"></i></button>
-                                                <button onclick="updateStatus('partner', {{ $item->id }}, 'rejected')" class="btn-admin btn-admin-danger" style="padding: 8px 12px;" title="Reject"><i class="fas fa-times"></i></button>
                                             </td>
                                         </tr>
                                     @empty
@@ -532,6 +528,7 @@
                                         <th>Contact Number</th>
                                         <th>State</th>
                                         <th>Mode</th>
+                                        <th class="status-col">Status</th>
                                         <th style="text-align: right;">Actions</th>
                                     </tr>
                                 </thead>
@@ -546,13 +543,16 @@
                                             <td>{{ $item->contact_number }}</td>
                                             <td>{{ $item->state_residency }}</td>
                                             <td>{{ $item->preferred_mode }}</td>
+                                            <td>
+                                                @include('welfare.admin.partials.status-select', ['type' => 'volunteer', 'item' => $item])
+                                            </td>
                                             <td style="text-align: right;">
                                                 <button onclick="viewDetail('volunteer', {{ $item->id }})" class="btn-admin btn-admin-primary">View</button>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="9" style="text-align: center; color: var(--admin-text-muted);">No volunteers found.</td>
+                                            <td colspan="10" style="text-align: center; color: var(--admin-text-muted);">No volunteers found.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -584,6 +584,7 @@
                                         <th>Full Name</th>
                                         <th>Email</th>
                                         <th>Phone</th>
+                                        <th class="status-col">Status</th>
                                         <th style="text-align: right;">Actions</th>
                                     </tr>
                                 </thead>
@@ -595,13 +596,16 @@
                                             <td><strong>{{ $item->name }}</strong></td>
                                             <td>{{ $item->email }}</td>
                                             <td>{{ $item->phone }}</td>
+                                            <td>
+                                                @include('welfare.admin.partials.status-select', ['type' => 'contact', 'item' => $item])
+                                            </td>
                                             <td style="text-align: right;">
                                                 <button onclick="viewDetail('contact', {{ $item->id }})" class="btn-admin btn-admin-primary">View</button>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="6" style="text-align: center; color: var(--admin-text-muted);">No messages found.</td>
+                                            <td colspan="7" style="text-align: center; color: var(--admin-text-muted);">No messages found.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -634,7 +638,7 @@
                                         <th>Email</th>
                                         <th>State</th>
                                         <th>Aid Type(s)</th>
-                                        <th>Status</th>
+                                        <th class="status-col">Status</th>
                                         <th style="text-align: right;">Actions</th>
                                     </tr>
                                 </thead>
@@ -654,14 +658,10 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <span class="badge badge-{{ $item->status }}" id="badge-aid-{{ $item->id }}">
-                                                    {{ $item->status }}
-                                                </span>
+                                                @include('welfare.admin.partials.status-select', ['type' => 'aid', 'item' => $item])
                                             </td>
-                                            <td style="text-align: right; display: flex; gap: 5px; justify-content: flex-end;">
+                                            <td style="text-align: right;">
                                                 <button onclick="viewDetail('aid', {{ $item->id }})" class="btn-admin btn-admin-primary">View</button>
-                                                <button onclick="updateStatus('aid', {{ $item->id }}, 'approved')" class="btn-admin btn-admin-secondary" style="color: #059669;" title="Approve"><i class="fas fa-check"></i></button>
-                                                <button onclick="updateStatus('aid', {{ $item->id }}, 'rejected')" class="btn-admin btn-admin-danger" style="padding: 8px 12px;" title="Reject"><i class="fas fa-times"></i></button>
                                             </td>
                                         </tr>
                                     @empty
@@ -701,7 +701,7 @@
                                         <th>Partner</th>
                                         <th>Programme</th>
                                         <th>Household Income</th>
-                                        <th>Status</th>
+                                        <th class="status-col">Status</th>
                                         <th style="text-align: right;">Actions</th>
                                     </tr>
                                 </thead>
@@ -717,14 +717,10 @@
                                             <td>{{ $item->programme_course_applied }}</td>
                                             <td>{{ $item->household_income }}</td>
                                             <td>
-                                                <span class="badge badge-{{ $item->status }}" id="badge-mfls-{{ $item->id }}">
-                                                    {{ $item->status }}
-                                                </span>
+                                                @include('welfare.admin.partials.status-select', ['type' => 'mfls', 'item' => $item])
                                             </td>
-                                            <td style="text-align: right; display: flex; gap: 5px; justify-content: flex-end;">
+                                            <td style="text-align: right;">
                                                 <button onclick="viewDetail('mfls', {{ $item->id }})" class="btn-admin btn-admin-primary">View</button>
-                                                <button onclick="updateStatus('mfls', {{ $item->id }}, 'approved')" class="btn-admin btn-admin-secondary" style="color: #059669;" title="Approve"><i class="fas fa-check"></i></button>
-                                                <button onclick="updateStatus('mfls', {{ $item->id }}, 'rejected')" class="btn-admin btn-admin-danger" style="padding: 8px 12px;" title="Reject"><i class="fas fa-times"></i></button>
                                             </td>
                                         </tr>
                                     @empty
@@ -940,6 +936,19 @@
 
 @push('scripts')
 <script>
+    const STATUS_LABELS = @json($submissionStatusOptions);
+
+    function statusBadgeClass(status) {
+        const legacyMap = { pending: 'received', under_review: 'reviewing', new: 'received' };
+        const normalized = legacyMap[status] || status;
+        return 'badge badge-' + normalized;
+    }
+
+    function statusLabel(status) {
+        const legacyMap = { pending: 'received', under_review: 'reviewing', new: 'received' };
+        const normalized = legacyMap[status] || status;
+        return STATUS_LABELS[normalized] || status.replace(/_/g, ' ');
+    }
     // Mobile sidebar
     const sidebarToggle = document.getElementById('sidebar-toggle');
     const sidebarBackdrop = document.getElementById('sidebar-backdrop');
@@ -1140,7 +1149,7 @@
                 }
 
                 if (data.status) {
-                    html += `<div class="detail-label">APPLICATION STATUS</div><div class="detail-value" style="font-weight:700;"><span class="badge badge-${data.status}">${data.status}</span></div>`;
+                    html += `<div class="detail-label">APPLICATION STATUS</div><div class="detail-value" style="font-weight:700;"><span class="${statusBadgeClass(data.status)}">${statusLabel(data.status)}</span></div>`;
                 }
 
                 html += '</div>';
@@ -1191,11 +1200,18 @@
         });
     });
 
-    // AJAX status updates
-    function updateStatus(type, id, status) {
-        if (!confirm(`Are you sure you want to set status of submission #${id} to ${status.toUpperCase()}?`)) return;
+    function submitStatusUpdate(event, type, id) {
+        event.preventDefault();
 
+        const form = event.target;
+        const select = form.querySelector('.status-select');
+        const submitBtn = form.querySelector('.status-update-btn');
+        const status = select.value;
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        if (submitBtn) {
+            submitBtn.disabled = true;
+        }
 
         fetch(`{{ url('/admin/submissions') }}/${type}/${id}/status`, {
             method: 'POST',
@@ -1211,17 +1227,23 @@
         })
         .then(data => {
             if (data.success) {
-                // Update badge text and class
-                const badge = document.getElementById(`badge-${type}-${id}`);
-                if (badge) {
-                    badge.textContent = status;
-                    badge.className = `badge badge-${status}`;
+                select.dataset.originalValue = data.status;
+                if (submitBtn) {
+                    submitBtn.classList.add('is-saved');
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i>';
+                    setTimeout(() => {
+                        submitBtn.classList.remove('is-saved');
+                    }, 1500);
                 }
-                alert(`Status successfully updated to ${status.toUpperCase()}!`);
             }
         })
         .catch(error => {
             alert(`Error updating status: ${error.message}`);
+        })
+        .finally(() => {
+            if (submitBtn) {
+                submitBtn.disabled = false;
+            }
         });
     }
 

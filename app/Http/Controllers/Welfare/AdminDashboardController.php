@@ -17,6 +17,7 @@ use App\Models\MflsScholarshipSubmission;
 use App\Services\Welfare\MflsPartnerDocumentService;
 use App\Services\Welfare\SubmissionImportRegistry;
 use App\Services\Welfare\SubmissionImporter;
+use App\Support\SubmissionStatus;
 use Response;
 
 class AdminDashboardController extends Controller
@@ -74,7 +75,7 @@ class AdminDashboardController extends Controller
 
         return view('welfare.admin.dashboard', compact(
             'stats', 'feedback', 'ordinary', 'friends', 'mentor', 'partner', 'volunteer', 'contact', 'aid', 'mfls', 'options', 'formTypesMap', 'mflsPartnerDocuments'
-        ));
+        ))->with('submissionStatusOptions', SubmissionStatus::options());
     }
 
     public function showSubmission($type, $id)
@@ -120,34 +121,48 @@ class AdminDashboardController extends Controller
     public function updateStatus(Request $request, $type, $id)
     {
         $validated = $request->validate([
-            'status' => 'required|string|in:pending,approved,rejected,under_review',
+            'status' => SubmissionStatus::validationRule(),
         ]);
 
-        $submission = null;
+        $submission = $this->findSubmissionForStatusUpdate($type, $id);
+
+        if (!$submission) {
+            return response()->json(['error' => 'Invalid submission type for status update.'], 400);
+        }
+
+        $submission->update(['status' => $validated['status']]);
+
+        return response()->json([
+            'success' => true,
+            'status' => $validated['status'],
+            'label' => SubmissionStatus::label($validated['status']),
+        ]);
+    }
+
+    private function findSubmissionForStatusUpdate(string $type, $id)
+    {
         switch ($type) {
+            case 'feedback':
+                return FeedbackSubmission::findOrFail($id);
             case 'ordinary':
-                $submission = OrdinaryMemberSubmission::findOrFail($id);
-                break;
+                return OrdinaryMemberSubmission::findOrFail($id);
             case 'friends':
-                $submission = FriendMemberSubmission::findOrFail($id);
-                break;
+                return FriendMemberSubmission::findOrFail($id);
+            case 'mentor':
+                return MentorSubmission::findOrFail($id);
             case 'partner':
-                $submission = PartnerSubmission::findOrFail($id);
-                break;
+                return PartnerSubmission::findOrFail($id);
+            case 'volunteer':
+                return VolunteerSubmission::findOrFail($id);
+            case 'contact':
+                return ContactSubmission::findOrFail($id);
             case 'aid':
-                $submission = CommunityAidSubmission::findOrFail($id);
-                break;
+                return CommunityAidSubmission::findOrFail($id);
             case 'mfls':
-                $submission = MflsScholarshipSubmission::findOrFail($id);
-                break;
+                return MflsScholarshipSubmission::findOrFail($id);
+            default:
+                return null;
         }
-
-        if ($submission) {
-            $submission->update(['status' => $validated['status']]);
-            return response()->json(['success' => true, 'status' => $validated['status']]);
-        }
-
-        return response()->json(['error' => 'Invalid submission type for status update.'], 400);
     }
 
     // Dynamic dropdown option management
@@ -207,7 +222,7 @@ class AdminDashboardController extends Controller
 
             switch ($type) {
                 case 'feedback':
-                    fputcsv($file, ['ID', 'Date', 'Full Name', 'NRIC', 'Organisation', 'Position', 'State', 'Address', 'Email', 'Phone', 'Categories', 'Other Category', 'Suggestion', 'Benefits', 'Contact Consent', 'Preferred Methods']);
+                    fputcsv($file, ['ID', 'Date', 'Full Name', 'NRIC', 'Organisation', 'Position', 'State', 'Address', 'Email', 'Phone', 'Categories', 'Other Category', 'Suggestion', 'Benefits', 'Contact Consent', 'Preferred Methods', 'Status']);
                     foreach (FeedbackSubmission::all() as $item) {
                         fputcsv($file, [
                             $item->id,
@@ -225,7 +240,8 @@ class AdminDashboardController extends Controller
                             $item->suggestion_description,
                             $item->benefits_description,
                             $item->contact_consent ? 'Yes' : 'No',
-                            is_array($item->preferred_contact_methods) ? implode(', ', $item->preferred_contact_methods) : $item->preferred_contact_methods
+                            is_array($item->preferred_contact_methods) ? implode(', ', $item->preferred_contact_methods) : $item->preferred_contact_methods,
+                            SubmissionStatus::label($item->status)
                         ]);
                     }
                     break;
@@ -260,7 +276,7 @@ class AdminDashboardController extends Controller
                             $bearers['secretary']['name'] ?? '',
                             $bearers['secretary']['email'] ?? '',
                             $bearers['secretary']['phone'] ?? '',
-                            ucfirst($item->status)
+                            SubmissionStatus::label($item->status)
                         ]);
                     }
                     break;
@@ -289,13 +305,13 @@ class AdminDashboardController extends Controller
                             $item->ind_email,
                             $item->ind_phone,
                             $item->ind_area_of_interest,
-                            ucfirst($item->status)
+                            SubmissionStatus::label($item->status)
                         ]);
                     }
                     break;
 
                 case 'mentor':
-                    fputcsv($file, ['ID', 'Date', 'Full Name', 'NRIC/Passport', 'Gender', 'Occupation', 'Organisation', 'Position', 'Years Experience', 'State', 'Address', 'Email', 'Phone', 'LinkedIn', 'Expertise Areas', 'Expertise Other', 'Formats', 'Commitments', 'Experience Description', 'Has Served Before', 'Served Before Details']);
+                    fputcsv($file, ['ID', 'Date', 'Full Name', 'NRIC/Passport', 'Gender', 'Occupation', 'Organisation', 'Position', 'Years Experience', 'State', 'Address', 'Email', 'Phone', 'LinkedIn', 'Expertise Areas', 'Expertise Other', 'Formats', 'Commitments', 'Experience Description', 'Has Served Before', 'Served Before Details', 'Status']);
                     foreach (MentorSubmission::all() as $item) {
                         fputcsv($file, [
                             $item->id,
@@ -318,7 +334,8 @@ class AdminDashboardController extends Controller
                             is_array($item->preferred_commitment) ? implode(', ', $item->preferred_commitment) : $item->preferred_commitment,
                             $item->experience_description,
                             $item->has_served_before ? 'Yes' : 'No',
-                            $item->served_before_details
+                            $item->served_before_details,
+                            SubmissionStatus::label($item->status)
                         ]);
                     }
                     break;
@@ -348,13 +365,13 @@ class AdminDashboardController extends Controller
                             $item->has_collaborated_before ? 'Yes' : 'No',
                             $item->collaborated_before_details,
                             is_array($item->supporting_documents) ? implode(', ', $item->supporting_documents) : $item->supporting_documents,
-                            ucfirst($item->status)
+                            SubmissionStatus::label($item->status)
                         ]);
                     }
                     break;
 
                 case 'volunteer':
-                    fputcsv($file, ['ID', 'Date', 'Full Name', 'NRIC/Passport', 'Gender', 'Occupation/Study', 'Organisation', 'State', 'Address', 'Email', 'Phone', 'Interest Areas', 'Interest Other', 'Skills/Expertise', 'Preferred Mode', 'Availability', 'Has Volunteered Before', 'Volunteered Details', 'Emergency Name', 'Emergency Relationship', 'Emergency Phone']);
+                    fputcsv($file, ['ID', 'Date', 'Full Name', 'NRIC/Passport', 'Gender', 'Occupation/Study', 'Organisation', 'State', 'Address', 'Email', 'Phone', 'Interest Areas', 'Interest Other', 'Skills/Expertise', 'Preferred Mode', 'Availability', 'Has Volunteered Before', 'Volunteered Details', 'Emergency Name', 'Emergency Relationship', 'Emergency Phone', 'Status']);
                     foreach (VolunteerSubmission::all() as $item) {
                         fputcsv($file, [
                             $item->id,
@@ -377,13 +394,14 @@ class AdminDashboardController extends Controller
                             $item->volunteered_before_details,
                             $item->emergency_contact_name,
                             $item->emergency_contact_relationship,
-                            $item->emergency_contact_phone
+                            $item->emergency_contact_phone,
+                            SubmissionStatus::label($item->status)
                         ]);
                     }
                     break;
 
                 case 'contact':
-                    fputcsv($file, ['ID', 'Date', 'Name', 'Email', 'Phone', 'Message']);
+                    fputcsv($file, ['ID', 'Date', 'Name', 'Email', 'Phone', 'Message', 'Status']);
                     foreach (ContactSubmission::all() as $item) {
                         fputcsv($file, [
                             $item->id,
@@ -391,7 +409,8 @@ class AdminDashboardController extends Controller
                             $item->name,
                             $item->email,
                             $item->phone,
-                            $item->message
+                            $item->message,
+                            SubmissionStatus::label($item->status)
                         ]);
                     }
                     break;
@@ -420,7 +439,7 @@ class AdminDashboardController extends Controller
                             $item->number_of_beneficiaries,
                             $item->received_aid_before ? 'Yes' : 'No',
                             $item->received_aid_before_details,
-                            ucfirst($item->status)
+                            SubmissionStatus::label($item->status)
                         ]);
                     }
                     break;
@@ -460,7 +479,7 @@ class AdminDashboardController extends Controller
                             $item->leadership_roles,
                             $item->involvement_level,
                             $item->community_service_involvement,
-                            ucfirst($item->status)
+                            SubmissionStatus::label($item->status)
                         ]);
                     }
                     break;
@@ -502,7 +521,7 @@ class AdminDashboardController extends Controller
 
         $message = "Successfully imported {$result['imported']} record(s).";
         if ($this->hasStatus($type)) {
-            $message .= ' All imported records are set to pending status.';
+            $message .= ' All imported records are set to Received status.';
         }
 
         if (!empty($result['errors'])) {
@@ -521,6 +540,6 @@ class AdminDashboardController extends Controller
 
     private function hasStatus(string $type): bool
     {
-        return in_array($type, ['ordinary', 'friends', 'partner', 'aid', 'mfls'], true);
+        return in_array($type, ['feedback', 'ordinary', 'friends', 'mentor', 'partner', 'volunteer', 'contact', 'aid', 'mfls'], true);
     }
 }

@@ -135,7 +135,7 @@ class FormDropdownSeeder extends Seeder
                 'treasurer' => ['salutation' => 'Mr.', 'name' => 'Wong Kar Fai', 'nric' => '800101145557', 'email' => 'wong@kebajikaninsan.org.my', 'phone' => '+6012-7778899']
             ],
             'declaration_confirmed' => true,
-            'status' => 'pending'
+            'status' => 'received'
         ]);
 
         // 4. Mock Submissions for Friends of MUKMIN
@@ -196,7 +196,7 @@ class FormDropdownSeeder extends Seeder
             'collaborated_before_details' => 'Collaborated with Mercy Malaysia and Yayasan Hijau on various B40 training camps.',
             'supporting_documents' => ['Company / Organisation Profile', 'Proposal Deck'],
             'declaration_confirmed' => true,
-            'status' => 'pending'
+            'status' => 'received'
         ]);
 
         // 7. Mock Submissions for Volunteers

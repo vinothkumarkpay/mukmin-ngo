@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\FormSubmissionMail;
 use App\Services\Welfare\MflsPartnerDocumentService;
+use App\Support\SubmissionStatus;
 
 class FormSubmissionController extends Controller
 {
@@ -182,6 +183,7 @@ class FormSubmissionController extends Controller
             'declaration_confirmed' => 'required|accepted',
         ]);
 
+        $this->applyDefaultSubmissionStatus($validated);
         FeedbackSubmission::create($validated);
 
         $this->sendFormSubmissionEmails('Feedback & Suggestion', $validated, $validated['email'], null, 'feedback-suggestion');
@@ -249,6 +251,7 @@ class FormSubmissionController extends Controller
         $validated['committee_members'] = null;
         $validated['org_type'] = [$validated['org_type']];
 
+        $this->applyDefaultSubmissionStatus($validated);
         OrdinaryMemberSubmission::create($validated);
 
         $this->sendFormSubmissionEmails('Ordinary Member Registration', $validated, $validated['email'], null, 'membership-ordinary');
@@ -352,6 +355,7 @@ class FormSubmissionController extends Controller
 
         $validated = $request->validate($rules);
 
+        $this->applyDefaultSubmissionStatus($validated);
         FriendMemberSubmission::create($validated);
 
         $email = $validated['entity_type'] === 'Individual' ? ($validated['ind_email'] ?? null) : ($validated['org_email'] ?? null);
@@ -396,6 +400,7 @@ class FormSubmissionController extends Controller
             'declaration_confirmed' => 'required|accepted',
         ]);
 
+        $this->applyDefaultSubmissionStatus($validated);
         MentorSubmission::create($validated);
 
         $this->sendFormSubmissionEmails('Mentor Registration', $validated, $validated['email'], null, 'mentor-registration');
@@ -448,6 +453,7 @@ class FormSubmissionController extends Controller
             $validated['supporting_documents'] = $filePaths;
         }
 
+        $this->applyDefaultSubmissionStatus($validated);
         PartnerSubmission::create($validated);
 
         $this->sendFormSubmissionEmails('Partnership & Collaboration Proposal', $validated, $validated['email'], null, 'partnership-collaboration');
@@ -491,6 +497,7 @@ class FormSubmissionController extends Controller
             'declaration_confirmed' => 'required|accepted',
         ]);
 
+        $this->applyDefaultSubmissionStatus($validated);
         VolunteerSubmission::create($validated);
 
         $this->sendFormSubmissionEmails('Volunteer Registration', $validated, $validated['email'], null, 'volunteer-registration');
@@ -510,6 +517,7 @@ class FormSubmissionController extends Controller
             'message' => 'required|string',
         ]);
 
+        $this->applyDefaultSubmissionStatus($validated);
         ContactSubmission::create($validated);
         $this->sendFormSubmissionEmails('Contact Us', $validated, $validated['email'], $validated['name'], 'contact');
 
@@ -578,6 +586,7 @@ class FormSubmissionController extends Controller
             $validated['supporting_documents'] = $filePaths;
         }
 
+        $this->applyDefaultSubmissionStatus($validated);
         \App\Models\CommunityAidSubmission::create($validated);
 
         $this->sendFormSubmissionEmails('Community Aid & Assistance Request', $validated, $validated['email'], $validated['full_name'], 'community-aid');
@@ -703,6 +712,7 @@ class FormSubmissionController extends Controller
             $validated['relevant_certificates'] = $certificatePaths;
         }
 
+        $this->applyDefaultSubmissionStatus($validated);
         MflsScholarshipSubmission::create($validated);
 
         $this->sendFormSubmissionEmails(
@@ -770,5 +780,10 @@ class FormSubmissionController extends Controller
             'Mrs.',
             'Ms.',
         ];
+    }
+
+    private function applyDefaultSubmissionStatus(array &$validated): void
+    {
+        $validated['status'] = SubmissionStatus::default();
     }
 }

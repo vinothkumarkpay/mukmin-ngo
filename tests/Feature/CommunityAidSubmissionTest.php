@@ -85,7 +85,7 @@ class CommunityAidSubmissionTest extends TestCase
             'full_name' => 'Jane Smith',
             'email' => 'janesmith@example.com',
             'who_benefits' => 'Individual',
-            'status' => 'pending'
+            'status' => 'received'
         ]);
 
         $submission = CommunityAidSubmission::first();
@@ -142,7 +142,7 @@ class CommunityAidSubmissionTest extends TestCase
             'emergency_contact_relationship' => 'Brother',
             'emergency_contact_phone' => '+60112223334',
             'declaration_confirmed' => true,
-            'status' => 'pending'
+            'status' => 'received'
         ]);
 
         // Simulating admin session/authentication

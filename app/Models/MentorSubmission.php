@@ -11,7 +11,7 @@ class MentorSubmission extends Model
         'position', 'experience_years', 'state_residency', 'full_address', 'email',
         'contact_number', 'linkedin', 'expertise_areas', 'expertise_other',
         'preferred_format', 'preferred_commitment', 'experience_description',
-        'has_served_before', 'served_before_details', 'declaration_confirmed'
+        'has_served_before', 'served_before_details', 'declaration_confirmed', 'status'
     ];
 
     protected $casts = [

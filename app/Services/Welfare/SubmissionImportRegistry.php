@@ -11,6 +11,7 @@ use App\Models\MflsScholarshipSubmission;
 use App\Models\OrdinaryMemberSubmission;
 use App\Models\PartnerSubmission;
 use App\Models\VolunteerSubmission;
+use App\Support\SubmissionStatus;
 use InvalidArgumentException;
 
 class SubmissionImportRegistry
@@ -65,7 +66,7 @@ class SubmissionImportRegistry
 
     public function hasStatus(): bool
     {
-        return in_array($this->type, ['ordinary', 'friends', 'partner', 'aid', 'mfls'], true);
+        return true;
     }
 
     /** @return array<string, array{label: string, required?: bool, hint?: string}> */
@@ -90,7 +91,7 @@ class SubmissionImportRegistry
         ];
 
         if ($this->hasStatus()) {
-            $lines[] = '7. All imported records are saved with status: pending.';
+            $lines[] = '7. All imported records are saved with status: Received / New.';
         }
 
         $lines[] = '';
@@ -255,32 +256,38 @@ class SubmissionImportRegistry
                 );
                 $data['is_registered_ros'] = $data['is_registered_ros'] ?? false;
                 $data['declaration_confirmed'] = true;
-                $data['status'] = 'pending';
+                $data['status'] = SubmissionStatus::default();
                 break;
 
             case 'friends':
                 $data['declaration_confirmed'] = true;
-                $data['status'] = 'pending';
+                $data['status'] = SubmissionStatus::default();
                 break;
 
             case 'feedback':
                 $data['contact_consent'] = $data['contact_consent'] ?? true;
                 $data['declaration_confirmed'] = true;
+                $data['status'] = SubmissionStatus::default();
                 break;
 
             case 'mentor':
             case 'volunteer':
                 $data['declaration_confirmed'] = true;
+                $data['status'] = SubmissionStatus::default();
+                break;
+
+            case 'contact':
+                $data['status'] = SubmissionStatus::default();
                 break;
 
             case 'partner':
                 $data['declaration_confirmed'] = true;
-                $data['status'] = 'pending';
+                $data['status'] = SubmissionStatus::default();
                 break;
 
             case 'aid':
                 $data['declaration_confirmed'] = true;
-                $data['status'] = 'pending';
+                $data['status'] = SubmissionStatus::default();
                 break;
 
             case 'mfls':
@@ -288,7 +295,7 @@ class SubmissionImportRegistry
                     // keep both fields
                 }
                 $data['declaration_confirmed'] = true;
-                $data['status'] = 'pending';
+                $data['status'] = SubmissionStatus::default();
                 break;
         }
 
