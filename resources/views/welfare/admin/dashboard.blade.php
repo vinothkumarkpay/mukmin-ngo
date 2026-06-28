@@ -4,8 +4,10 @@
 
 @section('body')
 <div class="dashboard-wrapper">
+    <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
     <!-- SIDEBAR -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="admin-sidebar">
         <div class="sidebar-header">
             <h1 class="sidebar-logo"><i class="fas fa-mosque"></i> mukmin <span>admin</span></h1>
         </div>
@@ -83,14 +85,19 @@
     <main class="main-content">
         <!-- TOP NAV -->
         <header class="top-nav">
-            <h2 id="top-nav-title">Dashboard Overview</h2>
-            <div style="display: flex; align-items: center; gap: 20px;">
+            <div class="top-nav-left">
+                <button type="button" class="sidebar-toggle" id="sidebar-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="admin-sidebar">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2 id="top-nav-title">Dashboard Overview</h2>
+            </div>
+            <div class="top-nav-actions" style="display: flex; align-items: center; gap: 20px;">
                 <div class="user-profile">
                     <i class="fas fa-user-shield"></i>
                     <span>System Administrator</span>
                 </div>
                 <a href="{{ route('welfare.admin.logout') }}" class="btn-admin btn-admin-secondary" style="padding: 8px 14px; display: inline-flex; align-items: center; gap: 6px; text-decoration: none;" title="Logout">
-                    <i class="fas fa-sign-out-alt"></i> Logout
+                    <i class="fas fa-sign-out-alt"></i> <span class="btn-label">Logout</span>
                 </a>
             </div>
         </header>
@@ -933,6 +940,41 @@
 
 @push('scripts')
 <script>
+    // Mobile sidebar
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+
+    function openSidebar() {
+        document.body.classList.add('sidebar-open');
+        if (sidebarToggle) {
+            sidebarToggle.setAttribute('aria-expanded', 'true');
+            sidebarToggle.setAttribute('aria-label', 'Close navigation menu');
+        }
+    }
+
+    function closeSidebar() {
+        document.body.classList.remove('sidebar-open');
+        if (sidebarToggle) {
+            sidebarToggle.setAttribute('aria-expanded', 'false');
+            sidebarToggle.setAttribute('aria-label', 'Open navigation menu');
+        }
+    }
+
+    function toggleSidebar() {
+        if (document.body.classList.contains('sidebar-open')) {
+            closeSidebar();
+        } else {
+            openSidebar();
+        }
+    }
+
+    if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', toggleSidebar);
+    }
+    if (sidebarBackdrop) {
+        sidebarBackdrop.addEventListener('click', closeSidebar);
+    }
+
     // Tab toggling
     document.querySelectorAll('.sidebar-link').forEach(link => {
         link.addEventListener('click', function () {
@@ -941,6 +983,7 @@
             
             const tabId = this.getAttribute('data-tab');
             switchTab(tabId);
+            closeSidebar();
         });
     });
 
@@ -1182,11 +1225,21 @@
         });
     }
 
-    // Close modal on Escape key
+    // Close modal or sidebar on Escape key
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
-            closeModal();
-            closePartnerDocumentModal();
+            if (document.body.classList.contains('sidebar-open')) {
+                closeSidebar();
+            } else {
+                closeModal();
+                closePartnerDocumentModal();
+            }
+        }
+    });
+
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            closeSidebar();
         }
     });
 
