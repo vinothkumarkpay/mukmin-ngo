@@ -1,6 +1,6 @@
 @extends('welfare.layouts.app')
 
-@section('title', 'Thank You (Demo) - Pertubuhan Gabungan MUKMIN Nasional')
+@section('title', 'Thank You - Pertubuhan Gabungan MUKMIN Nasional')
 
 @section('content')
 <section class="section-padding bg-light" style="padding: 100px 0; min-height: calc(100vh - 350px); display: flex; align-items: center; justify-content: center;">

@@ -7,6 +7,7 @@ use App\Http\Controllers\Welfare\PageController;
 use App\Http\Controllers\Welfare\FormSubmissionController;
 use App\Http\Controllers\Welfare\AdminAuthController;
 use App\Http\Controllers\Welfare\AdminDashboardController;
+use App\Http\Controllers\Welfare\DonationController;
 use App\Http\Controllers\Welfare\DonationDemoController;
 use App\Http\Controllers\Welfare\MflsPartnerDocumentController;
 use Illuminate\Support\Facades\Route;
@@ -35,10 +36,13 @@ Route::name('welfare.')->group(function () {
     Route::get('/contact', [PageController::class, 'contact'])->name('contact');
     Route::post('/contact/submit', [FormSubmissionController::class, 'submitContact'])->name('contact.submit');
     Route::get('/legal-disclaimer', [PageController::class, 'legalDisclaimer'])->name('legal-disclaimer');
-    Route::get('/donate', [PageController::class, 'donate'])->name('donate');
-    Route::post('/donate/submit', [FormSubmissionController::class, 'submitDonate'])->name('donate.submit');
+    Route::get('/donate', [DonationController::class, 'create'])->name('donate');
+    Route::post('/donate', [DonationController::class, 'store'])->name('donate.store');
+    Route::get('/donate/thank-you', [DonationController::class, 'thankYou'])->name('donate.thank-you');
+    Route::match(['GET', 'POST'], '/donate/payment/return', [DonationController::class, 'paymentReturn'])->name('donate.payment.return');
+    Route::match(['GET', 'POST'], '/donate/payment/callback', [DonationController::class, 'paymentCallback'])->name('donate.payment.callback');
 
-    // Standalone Webcash/KiplePay demo — not linked in site navigation
+    // Standalone demo form for payment testing — not linked in site navigation
     Route::get('/donate-demo', [DonationDemoController::class, 'create'])->name('donate-demo');
     Route::post('/donate-demo', [DonationDemoController::class, 'store'])->name('donate-demo.store');
     Route::get('/donate-demo/thank-you', [DonationDemoController::class, 'thankYou'])->name('donate-demo.thank-you');

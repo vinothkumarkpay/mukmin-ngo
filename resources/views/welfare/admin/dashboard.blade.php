@@ -63,6 +63,11 @@
                 </div>
             </li>
             <li>
+                <div class="sidebar-link" data-tab="panel-payments">
+                    <i class="fas fa-credit-card"></i> Donation Payments
+                </div>
+            </li>
+            <li>
                 <div class="sidebar-link" data-tab="panel-contact">
                     <i class="fas fa-envelope"></i> Contact Messages
                 </div>
@@ -185,6 +190,13 @@
                         <div class="stat-info">
                             <h3>{{ $stats['mfls'] }}</h3>
                             <p>MFLS Scholarship Applications</p>
+                        </div>
+                    </div>
+                    <div class="stat-card" onclick="switchTab('panel-payments')">
+                        <div class="stat-icon"><i class="fas fa-credit-card"></i></div>
+                        <div class="stat-info">
+                            <h3>{{ $stats['donations'] }}</h3>
+                            <p>Donation Payments</p>
                         </div>
                     </div>
                     <div class="stat-card" onclick="switchTab('panel-contact')">
@@ -562,7 +574,63 @@
                 </div>
             </div>
 
-            <!-- 9. CONTACT MESSAGES PANEL -->
+            <!-- 9. DONATION PAYMENTS PANEL -->
+            <div class="dashboard-panel" id="panel-payments">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Donation Payments</h3>
+                    </div>
+                    <div class="card-body">
+                        @include('welfare.admin.partials.payments-filter', [
+                            'donationPayments' => $donationPayments,
+                            'donationPaymentMethods' => $donationPaymentMethods,
+                        ])
+
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Date</th>
+                                        <th>Order ID</th>
+                                        <th>Donor Name</th>
+                                        <th>Email</th>
+                                        <th>Amount (RM)</th>
+                                        <th>Payment Mode</th>
+                                        <th>Status</th>
+                                        <th style="text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($donationPayments as $payment)
+                                        <tr>
+                                            <td>#{{ $payment->id }}</td>
+                                            <td>{{ $payment->created_at->format('d M Y, h:i A') }}</td>
+                                            <td><code>{{ $payment->order_id }}</code></td>
+                                            <td><strong>{{ $payment->name }}</strong></td>
+                                            <td>{{ $payment->email }}</td>
+                                            <td>{{ number_format($payment->amount, 2) }}</td>
+                                            <td>{{ $payment->payment_method }}</td>
+                                            <td>
+                                                <span class="badge badge-{{ $payment->status }}">{{ ucfirst($payment->status) }}</span>
+                                            </td>
+                                            <td style="text-align: right;">
+                                                <button onclick="viewDetail('donation', {{ $payment->id }})" class="btn-admin btn-admin-primary">View</button>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="9" style="text-align: center; color: var(--admin-text-muted);">No payments found.</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. CONTACT MESSAGES PANEL -->
             <div class="dashboard-panel" id="panel-contact">
                 <div class="dashboard-card">
                     <div class="card-header">

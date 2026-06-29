@@ -1,10 +1,14 @@
 @extends('welfare.layouts.app')
 
-@section('title', 'Donate - Pertubuhan Gabungan MUKMIN Nasional')
+@section('title', 'Donate (Demo) - Pertubuhan Gabungan MUKMIN Nasional')
 
 @section('content')
 <section class="section-donate bg-white" style="padding: 60px 0;">
     <div class="container" style="max-width: 640px; margin: 0 auto; padding: 20px;">
+        <div style="padding: 12px 16px; border-radius: 6px; margin-bottom: 24px; background: #fffbeb; color: #92400e; border: 1px solid #fde68a; text-align: center; font-size: 0.9rem;">
+            <i class="fas fa-flask"></i> <strong>Testing environment</strong> — this demo form uses live KiplePay sandbox payments. Not linked in site navigation.
+        </div>
+
         <div class="section-header text-center" style="margin-bottom: 45px;">
             <h2>Make a Donation</h2>
             <div class="section-divider"><span></span></div>
@@ -44,7 +48,7 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                 <div>
                     <label style="display: block; font-weight: 500; margin-bottom: 5px; color: var(--color-heading);">Phone Number</label>
-                    <input type="text" name="phone" value="{{ old('phone') }}" placeholder="+60 12-345 6789" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';" required>
+                    <input type="text" name="phone" value="{{ old('phone') }}" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';" required>
                 </div>
                 <div>
                     <label style="display: block; font-weight: 500; margin-bottom: 5px; color: var(--color-heading);">Donation Amount (RM)</label>
@@ -57,7 +61,7 @@
                 <div style="display: flex; align-items: center; gap: 12px; background: #f8fafc; border: 1px solid var(--color-border); border-radius: 6px; padding: 14px 16px;">
                     <i class="fas fa-shield-alt" style="color: #16a34a; font-size: 1.4rem;"></i>
                     <div>
-                        <div style="font-weight: 600; color: var(--color-heading);">KiplePay / Webcash</div>
+                        <div style="font-weight: 600; color: var(--color-heading);">KiplePay</div>
                         <div style="font-size: 0.85rem; color: #64748b;">FPX, credit/debit cards, and e-wallets</div>
                     </div>
                 </div>

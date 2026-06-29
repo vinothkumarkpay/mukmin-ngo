@@ -9,11 +9,11 @@ use App\Services\Welfare\DonationPaymentCallbackHandler;
 use App\Services\Welfare\DonationPaymentReturnHandler;
 use Illuminate\Http\Request;
 
-class DonationDemoController extends Controller
+class DonationController extends Controller
 {
     public function create()
     {
-        return view('welfare.pages.donate_demo');
+        return view('welfare.pages.donate');
     }
 
     public function store(Request $request)
@@ -26,7 +26,7 @@ class DonationDemoController extends Controller
             'message' => 'nullable|string|max:1200',
         ]);
 
-        $orderNo = 'DEMO-' . strtoupper(uniqid());
+        $orderNo = 'MUKMIN-' . strtoupper(uniqid());
 
         Donation::create([
             'name' => $request->name,
@@ -44,33 +44,33 @@ class DonationDemoController extends Controller
         $paymentData = $kiplePay->preparePayment(
             $orderNo,
             $request->amount,
-            'MUKMIN Donation (Demo)',
+            'MUKMIN Donation',
             $request->name,
             $request->email,
-            route('welfare.donate-demo.payment.return'),
-            route('welfare.donate-demo.payment.callback')
+            route('welfare.donate.payment.return'),
+            route('welfare.donate.payment.callback')
         );
 
-        return view('welfare.pages.donate_demo_payment_redirect', compact('paymentData'));
+        return view('welfare.pages.donate_payment_redirect', compact('paymentData'));
     }
 
     public function paymentReturn(Request $request, DonationPaymentReturnHandler $handler)
     {
         return $handler->handle(
             $request,
-            'welfare.donate-demo.thank-you',
-            'welfare.donate-demo',
-            'Donation Demo'
+            'welfare.donate.thank-you',
+            'welfare.donate',
+            'Donation'
         );
     }
 
     public function paymentCallback(Request $request, DonationPaymentCallbackHandler $handler)
     {
-        return $handler->handle($request, 'Donation Demo');
+        return $handler->handle($request, 'Donation');
     }
 
     public function thankYou()
     {
-        return view('welfare.pages.donate_demo_thank_you');
+        return view('welfare.pages.donate_thank_you');
     }
 }

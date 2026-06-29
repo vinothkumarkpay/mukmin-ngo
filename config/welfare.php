@@ -16,6 +16,7 @@ return [
         'mentor-registration' => 'membership@mukmin.org',
         'partnership-collaboration' => 'membership@mukmin.org',
         'contact' => 'info@mukmin.org',
+        'donation' => 'donate@mukmin.org',
     ],
     'phone' => env('WELFARE_PHONE', '+6014 302 1800'),
     'whatsapp_url' => env('WELFARE_WHATSAPP_URL', 'https://wa.me/60143021800?text=Salam.%20I%20would%20like%20to%20inquire%20about%20MUKMIN.%20Kindly%20assist%20me.'),

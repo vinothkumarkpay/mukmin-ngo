@@ -13,6 +13,7 @@ use App\Models\PartnerSubmission;
 use App\Models\VolunteerSubmission;
 use App\Models\ContactSubmission;
 use App\Models\CommunityAidSubmission;
+use App\Models\Donation;
 use App\Models\MflsScholarshipSubmission;
 use App\Services\Welfare\MflsPartnerDocumentService;
 use App\Services\Welfare\SubmissionImportRegistry;
@@ -35,6 +36,7 @@ class AdminDashboardController extends Controller
             'contact' => ContactSubmission::count(),
             'aid' => CommunityAidSubmission::count(),
             'mfls' => MflsScholarshipSubmission::count(),
+            'donations' => Donation::count(),
         ];
 
         // 2. Fetch all submissions
@@ -47,6 +49,35 @@ class AdminDashboardController extends Controller
         $contact = ContactSubmission::orderBy('created_at', 'desc')->get();
         $aid = CommunityAidSubmission::orderBy('created_at', 'desc')->get();
         $mfls = MflsScholarshipSubmission::orderBy('created_at', 'desc')->get();
+
+        $donationPaymentsQuery = Donation::query()->orderBy('created_at', 'desc');
+
+        if ($request->filled('payment_status')) {
+            $donationPaymentsQuery->where('status', $request->payment_status);
+        }
+
+        if ($request->filled('name')) {
+            $donationPaymentsQuery->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->filled('email')) {
+            $donationPaymentsQuery->where('email', 'like', '%' . $request->email . '%');
+        }
+
+        if ($request->filled('order_id')) {
+            $donationPaymentsQuery->where('order_id', 'like', '%' . $request->order_id . '%');
+        }
+
+        if ($request->filled('payment_method')) {
+            $donationPaymentsQuery->where('payment_method', $request->payment_method);
+        }
+
+        $donationPayments = $donationPaymentsQuery->get();
+        $donationPaymentMethods = Donation::query()
+            ->whereNotNull('payment_method')
+            ->distinct()
+            ->orderBy('payment_method')
+            ->pluck('payment_method');
 
         app(MflsPartnerDocumentService::class)->bootstrapDocumentsIfMissing();
         $mflsPartnerDocuments = app(MflsPartnerDocumentService::class)->documentsForAdmin();
@@ -74,7 +105,7 @@ class AdminDashboardController extends Controller
         ];
 
         return view('welfare.admin.dashboard', compact(
-            'stats', 'feedback', 'ordinary', 'friends', 'mentor', 'partner', 'volunteer', 'contact', 'aid', 'mfls', 'options', 'formTypesMap', 'mflsPartnerDocuments'
+            'stats', 'feedback', 'ordinary', 'friends', 'mentor', 'partner', 'volunteer', 'contact', 'aid', 'mfls', 'donationPayments', 'donationPaymentMethods', 'options', 'formTypesMap', 'mflsPartnerDocuments'
         ))->with('submissionStatusOptions', SubmissionStatus::options());
     }
 
@@ -108,6 +139,9 @@ class AdminDashboardController extends Controller
                 break;
             case 'mfls':
                 $submission = MflsScholarshipSubmission::find($id);
+                break;
+            case 'donation':
+                $submission = Donation::find($id);
                 break;
         }
 
