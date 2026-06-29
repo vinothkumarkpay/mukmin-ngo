@@ -1,6 +1,6 @@
 @php
     $activeFilters = collect([
-        'name' => request('name'),
+        'donor_name' => request('donor_name'),
         'email' => request('email'),
         'order_id' => request('order_id'),
         'payment_method' => request('payment_method'),
@@ -25,14 +25,13 @@
         </div>
     </div>
 
-    <form method="GET" action="{{ route('welfare.admin.dashboard') }}" class="payments-filter-form">
-        <input type="hidden" name="admin_tab" value="panel-payments">
+    <form method="GET" action="{{ route('welfare.admin.donation-payments') }}" id="donation-payments-filter-form" class="payments-filter-form">
         <div class="payments-filter-grid">
             <div class="payments-filter-field">
-                <label for="filter_name">Donor name</label>
+                <label for="filter_donor_name">Donor name</label>
                 <div class="payments-input-wrap">
                     <i class="fas fa-user"></i>
-                    <input type="text" name="name" id="filter_name" value="{{ request('name') }}" placeholder="e.g. Ahmad bin Ali" autocomplete="off">
+                    <input type="text" name="donor_name" id="filter_donor_name" value="{{ request('donor_name') }}" placeholder="e.g. Ahmad bin Ali" autocomplete="off">
                 </div>
             </div>
 
@@ -105,7 +104,7 @@
             @endif
 
             <div class="payments-filter-actions">
-                <a href="{{ route('welfare.admin.dashboard', ['admin_tab' => 'panel-payments']) }}" class="btn-admin btn-admin-secondary payments-btn-clear">
+                <a href="{{ route('welfare.admin.donation-payments') }}" class="btn-admin btn-admin-secondary payments-btn-clear">
                     <i class="fas fa-rotate-left"></i> Reset
                 </a>
                 <button type="submit" class="btn-admin btn-admin-primary payments-btn-apply">

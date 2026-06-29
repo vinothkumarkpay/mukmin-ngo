@@ -50,29 +50,7 @@ class AdminDashboardController extends Controller
         $aid = CommunityAidSubmission::orderBy('created_at', 'desc')->get();
         $mfls = MflsScholarshipSubmission::orderBy('created_at', 'desc')->get();
 
-        $donationPaymentsQuery = Donation::query()->orderBy('created_at', 'desc');
-
-        if ($request->filled('payment_status')) {
-            $donationPaymentsQuery->where('status', $request->payment_status);
-        }
-
-        if ($request->filled('name')) {
-            $donationPaymentsQuery->where('name', 'like', '%' . $request->name . '%');
-        }
-
-        if ($request->filled('email')) {
-            $donationPaymentsQuery->where('email', 'like', '%' . $request->email . '%');
-        }
-
-        if ($request->filled('order_id')) {
-            $donationPaymentsQuery->where('order_id', 'like', '%' . $request->order_id . '%');
-        }
-
-        if ($request->filled('payment_method')) {
-            $donationPaymentsQuery->where('payment_method', $request->payment_method);
-        }
-
-        $donationPayments = $donationPaymentsQuery->get();
+        $donationPayments = Donation::query()->orderBy('created_at', 'desc')->get();
         $donationPaymentMethods = Donation::query()
             ->whereNotNull('payment_method')
             ->distinct()
@@ -106,10 +84,50 @@ class AdminDashboardController extends Controller
 
         return view('welfare.admin.dashboard', compact(
             'stats', 'feedback', 'ordinary', 'friends', 'mentor', 'partner', 'volunteer', 'contact', 'aid', 'mfls', 'donationPayments', 'donationPaymentMethods', 'options', 'formTypesMap', 'mflsPartnerDocuments'
-        ))->with([
-            'submissionStatusOptions' => SubmissionStatus::options(),
-            'admin_tab' => $request->input('admin_tab'),
-        ]);
+        ))->with('submissionStatusOptions', SubmissionStatus::options());
+    }
+
+    public function donationPayments(Request $request)
+    {
+        $donationPayments = $this->filteredDonationPaymentsQuery($request)->get();
+        $donationPaymentMethods = Donation::query()
+            ->whereNotNull('payment_method')
+            ->distinct()
+            ->orderBy('payment_method')
+            ->pluck('payment_method');
+
+        return view('welfare.admin.donation-payments', compact(
+            'donationPayments',
+            'donationPaymentMethods'
+        ));
+    }
+
+    private function filteredDonationPaymentsQuery(Request $request)
+    {
+        $query = Donation::query()->orderBy('created_at', 'desc');
+
+        if ($request->filled('payment_status')) {
+            $query->where('status', $request->payment_status);
+        }
+
+        $donorName = trim((string) $request->input('donor_name', $request->input('name', '')));
+        if ($donorName !== '') {
+            $query->where('name', 'like', '%' . addcslashes($donorName, '%_\\') . '%');
+        }
+
+        if ($request->filled('email')) {
+            $query->where('email', 'like', '%' . addcslashes(trim($request->email), '%_\\') . '%');
+        }
+
+        if ($request->filled('order_id')) {
+            $query->where('order_id', 'like', '%' . addcslashes(trim($request->order_id), '%_\\') . '%');
+        }
+
+        if ($request->filled('payment_method')) {
+            $query->where('payment_method', $request->payment_method);
+        }
+
+        return $query;
     }
 
     public function showSubmission($type, $id)

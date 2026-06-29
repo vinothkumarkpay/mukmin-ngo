@@ -102,6 +102,7 @@ Route::name('welfare.')->group(function () {
 
     Route::middleware('admin.auth')->group(function () {
         Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+        Route::get('/admin/donation-payments', [AdminDashboardController::class, 'donationPayments'])->name('admin.donation-payments');
         Route::get('/admin/submissions/{type}/{id}', [AdminDashboardController::class, 'showSubmission'])->name('admin.submission.detail');
         Route::post('/admin/submissions/{type}/{id}/status', [AdminDashboardController::class, 'updateStatus'])->name('admin.submission.status');
         Route::get('/admin/export/{type}', [AdminDashboardController::class, 'exportCsv'])->name('admin.export');

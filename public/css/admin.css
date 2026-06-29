@@ -147,6 +147,7 @@ a:hover {
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s;
+    text-decoration: none;
 }
 .sidebar-link:hover {
     color: #ffffff;

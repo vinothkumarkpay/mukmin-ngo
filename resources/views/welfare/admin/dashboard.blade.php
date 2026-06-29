@@ -4,87 +4,10 @@
 
 @section('body')
 <div class="dashboard-wrapper">
-    <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="admin-sidebar">
-        <div class="sidebar-header">
-            <h1 class="sidebar-logo"><i class="fas fa-mosque"></i> mukmin <span>admin</span></h1>
-        </div>
-        <ul class="sidebar-menu">
-            <li>
-                <div class="sidebar-link active" data-tab="panel-overview">
-                    <i class="fas fa-chart-pie"></i> Overview
-                </div>
-            </li>
-            <li>
-                <div class="sidebar-link" data-tab="panel-feedback">
-                    <i class="fas fa-comment-alt"></i> Feedback & Ideas
-                </div>
-            </li>
-            <li>
-                <div class="sidebar-link" data-tab="panel-ordinary">
-                    <i class="fas fa-building"></i> Ordinary Members
-                </div>
-            </li>
-            <li>
-                <div class="sidebar-link" data-tab="panel-friends">
-                    <i class="fas fa-users"></i> Friends of MUKMIN
-                </div>
-            </li>
-            <li>
-                <div class="sidebar-link" data-tab="panel-mentor">
-                    <i class="fas fa-user-tie"></i> Mentors
-                </div>
-            </li>
-            <li>
-                <div class="sidebar-link" data-tab="panel-partner">
-                    <i class="fas fa-handshake"></i> Partnerships
-                </div>
-            </li>
-            <li>
-                <div class="sidebar-link" data-tab="panel-volunteer">
-                    <i class="fas fa-hands-helping"></i> Volunteers
-                </div>
-            </li>
-            <li>
-                <div class="sidebar-link" data-tab="panel-aid">
-                    <i class="fas fa-hand-holding-medical"></i> Community Aid Requests
-                </div>
-            </li>
-            <li>
-                <div class="sidebar-link" data-tab="panel-mfls">
-                    <i class="fas fa-graduation-cap"></i> MFLS Scholarship Applications
-                </div>
-            </li>
-            <li>
-                <div class="sidebar-link" data-tab="panel-mfls-documents">
-                    <i class="fas fa-file-excel"></i> MFLS Partner Documents
-                </div>
-            </li>
-            <li>
-                <div class="sidebar-link" data-tab="panel-payments">
-                    <i class="fas fa-credit-card"></i> Donation Payments
-                </div>
-            </li>
-            <li>
-                <div class="sidebar-link" data-tab="panel-contact">
-                    <i class="fas fa-envelope"></i> Contact Messages
-                </div>
-            </li>
-            <li style="border-top: 1px solid rgba(255,255,255,0.08); margin-top: 15px; padding-top: 15px;">
-                <div class="sidebar-link" data-tab="panel-options">
-                    <i class="fas fa-sliders-h"></i> Options Manager
-                </div>
-            </li>
-        </ul>
-        <div class="sidebar-footer">
-            <span>v1.0.0</span>
-            <a href="{{ route('welfare.admin.logout') }}" class="logout-btn" title="Logout">
-                <i class="fas fa-sign-out-alt"></i>
-            </a>
-        </div>
-    </aside>
+    @include('welfare.admin.partials.admin-sidebar', [
+        'sidebarContext' => 'dashboard',
+        'activeTab' => 'panel-overview',
+    ])
 
     <!-- MAIN PANEL -->
     <main class="main-content">
@@ -192,7 +115,7 @@
                             <p>MFLS Scholarship Applications</p>
                         </div>
                     </div>
-                    <div class="stat-card" onclick="switchTab('panel-payments')">
+                    <div class="stat-card" onclick="window.location='{{ route('welfare.admin.donation-payments') }}'">
                         <div class="stat-icon"><i class="fas fa-credit-card"></i></div>
                         <div class="stat-info">
                             <h3>{{ $stats['donations'] }}</h3>
@@ -579,53 +502,18 @@
                 <div class="dashboard-card">
                     <div class="card-header">
                         <h3>Donation Payments</h3>
+                        <div class="card-actions">
+                            <a href="{{ route('welfare.admin.donation-payments') }}" class="btn-admin btn-admin-primary">
+                                <i class="fas fa-search"></i> Search &amp; Filter
+                            </a>
+                        </div>
                     </div>
                     <div class="card-body">
-                        @include('welfare.admin.partials.payments-filter', [
+                        @include('welfare.admin.partials.donation-payments-content', [
                             'donationPayments' => $donationPayments,
                             'donationPaymentMethods' => $donationPaymentMethods,
+                            'showFilter' => false,
                         ])
-
-                        <div class="table-responsive">
-                            <table class="admin-table">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Date</th>
-                                        <th>Order ID</th>
-                                        <th>Donor Name</th>
-                                        <th>Email</th>
-                                        <th>Amount (RM)</th>
-                                        <th>Payment Mode</th>
-                                        <th>Status</th>
-                                        <th style="text-align: right;">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($donationPayments as $payment)
-                                        <tr>
-                                            <td>#{{ $payment->id }}</td>
-                                            <td>{{ $payment->created_at->format('d M Y, h:i A') }}</td>
-                                            <td><code>{{ $payment->order_id }}</code></td>
-                                            <td><strong>{{ $payment->name }}</strong></td>
-                                            <td>{{ $payment->email }}</td>
-                                            <td>{{ number_format($payment->amount, 2) }}</td>
-                                            <td>{{ $payment->payment_method }}</td>
-                                            <td>
-                                                <span class="badge badge-{{ $payment->status }}">{{ ucfirst($payment->status) }}</span>
-                                            </td>
-                                            <td style="text-align: right;">
-                                                <button onclick="viewDetail('donation', {{ $payment->id }})" class="btn-admin btn-admin-primary">View</button>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="9" style="text-align: center; color: var(--admin-text-muted);">No payments found.</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -1052,8 +940,8 @@
         sidebarBackdrop.addEventListener('click', closeSidebar);
     }
 
-    // Tab toggling
-    document.querySelectorAll('.sidebar-link').forEach(link => {
+    // Tab toggling — only in-page tab links, not external route links
+    document.querySelectorAll('.sidebar-link[data-tab]').forEach(link => {
         link.addEventListener('click', function () {
             document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
             this.classList.add('active');
@@ -1075,8 +963,10 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
         // Update nav bar title
-        const menuText = document.querySelector(`.sidebar-link[data-tab="${tabId}"]`).textContent.trim();
-        document.getElementById('top-nav-title').textContent = menuText;
+        const menuEl = document.querySelector(`.sidebar-link[data-tab="${tabId}"]`);
+        if (menuEl) {
+            document.getElementById('top-nav-title').textContent = menuEl.textContent.trim();
+        }
 
         // Set sidebar item active in case switched programmatically from stats card
         document.querySelectorAll('.sidebar-link').forEach(l => {
@@ -1357,8 +1247,6 @@
 
         @if(session('import_tab'))
         switchTab(@json(session('import_tab')));
-        @elseif(!empty($admin_tab))
-        switchTab(@json($admin_tab));
         @elseif(session('admin_tab'))
         switchTab(@json(session('admin_tab')));
         @endif
