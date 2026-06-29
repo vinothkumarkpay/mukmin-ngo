@@ -149,6 +149,70 @@ class DonationPaymentNotificationTest extends TestCase
         });
     }
 
+    public function test_return_marks_paid_even_when_hash_mismatch(): void
+    {
+        $orderNo = 'MUKMIN-TESTHASH';
+        $amount = 15.00;
+
+        Donation::create([
+            'name' => 'Hash Tester',
+            'email' => 'hash@example.com',
+            'phone' => '+60144444444',
+            'amount' => $amount,
+            'status' => 'pending',
+            'order_id' => $orderNo,
+            'payment_method' => 'KiplePay',
+        ]);
+
+        $payload = $this->buildCallbackPayload($orderNo, $amount, '100');
+        $payload['ord_key'] = 'invalid-hash';
+
+        app(\App\Services\Welfare\DonationPaymentReturnHandler::class)->handle(
+            request()->merge($payload),
+            'welfare.donate.thank-you',
+            'welfare.donate',
+            'Donation'
+        );
+
+        $this->assertDatabaseHas('donations', [
+            'order_id' => $orderNo,
+            'status' => 'paid',
+        ]);
+    }
+
+    public function test_return_uses_session_order_when_mercref_missing(): void
+    {
+        $orderNo = 'DEMO-TESTSESSION';
+        $amount = 20.00;
+
+        Donation::create([
+            'name' => 'Session Tester',
+            'email' => 'session@example.com',
+            'phone' => '+60155555555',
+            'amount' => $amount,
+            'status' => 'pending',
+            'order_id' => $orderNo,
+            'payment_method' => 'KiplePay',
+        ]);
+
+        $payload = $this->buildCallbackPayload($orderNo, $amount, '100');
+        unset($payload['ord_mercref']);
+
+        session(['pending_donation_order_id' => $orderNo]);
+
+        app(\App\Services\Welfare\DonationPaymentReturnHandler::class)->handle(
+            request()->merge($payload),
+            'welfare.donate-demo.thank-you',
+            'welfare.donate-demo',
+            'Donation Demo'
+        );
+
+        $this->assertDatabaseHas('donations', [
+            'order_id' => $orderNo,
+            'status' => 'paid',
+        ]);
+    }
+
     public function test_return_then_callback_sends_only_one_email(): void
     {
         $orderNo = 'MUKMIN-TESTBOTH';

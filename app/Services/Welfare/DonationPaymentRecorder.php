@@ -13,36 +13,44 @@ class DonationPaymentRecorder
     ) {}
 
     /**
-     * @param  bool  $requireHash  When true (callback), a valid ord_key is required.
+     * @param  bool  $requireHash  When true (callback), hash validation must pass.
      */
     public function record(Donation $donation, array $payload, bool $requireHash = true, string $logContext = 'Donation'): bool
     {
         $kiplePay = KiplePayService::make('guest');
+        $hashPresent = ! empty($payload['ord_key']) || ! empty($payload['merchant_hashvalue']);
+        $hashValid = $hashPresent
+            ? $kiplePay->validateCallback($payload, (float) $donation->amount)
+            : false;
 
-        if (! empty($payload['ord_key'])) {
-            if (! $kiplePay->validateCallback($payload)) {
-                Log::warning("{$logContext} hash validation failed for {$donation->order_id}");
+        if ($requireHash) {
+            if (! $hashValid) {
+                Log::warning("{$logContext} callback validation failed for {$donation->order_id}", $payload);
 
                 return false;
             }
-        } elseif ($requireHash) {
-            Log::warning("{$logContext} missing hash for {$donation->order_id}");
-
-            return false;
+        } elseif ($hashPresent && ! $hashValid) {
+            Log::warning("{$logContext} return hash mismatch for {$donation->order_id}, using returncode instead", $payload);
         }
 
         $previousStatus = $donation->status;
-        $isSuccess = (($payload['returncode'] ?? '') == '100');
+        $isSuccess = $kiplePay->isSuccessfulReturn($payload['returncode'] ?? null);
 
-        $donation->update([
-            'status' => $isSuccess ? 'paid' : 'failed',
-            'payment_payload' => $payload,
-        ]);
+        if ($requireHash || $hashValid || $isSuccess) {
+            $donation->update([
+                'status' => $isSuccess ? 'paid' : 'failed',
+                'payment_payload' => $payload,
+            ]);
 
-        Log::info("{$logContext} {$donation->order_id} status updated to: " . ($isSuccess ? 'paid' : 'failed'));
+            Log::info("{$logContext} {$donation->order_id} status updated to: " . ($isSuccess ? 'paid' : 'failed'));
 
-        $this->notifier->notifyIfStatusChanged($donation, $previousStatus, $payload);
+            $this->notifier->notifyIfStatusChanged($donation, $previousStatus, $payload);
 
-        return true;
+            return true;
+        }
+
+        Log::warning("{$logContext} could not confirm payment for {$donation->order_id}", $payload);
+
+        return false;
     }
 }

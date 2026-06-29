@@ -39,6 +39,8 @@ class DonationDemoController extends Controller
             'payment_method' => 'KiplePay',
         ]);
 
+        session(['pending_donation_order_id' => $orderNo]);
+
         $kiplePay = KiplePayService::make('guest');
 
         $paymentData = $kiplePay->preparePayment(

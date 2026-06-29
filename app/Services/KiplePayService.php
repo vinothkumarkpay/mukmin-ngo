@@ -51,15 +51,24 @@ class KiplePayService
         return sha1($this->secretKey . $this->merchantId . $orderNo . $amountWithoutDecimal);
     }
 
-    public function validateCallback($data)
+    public function validateCallback($data, ?float $fallbackAmount = null)
     {
         $orderNo = $data['ord_mercref'] ?? '';
-        $amount = $data['ord_totalamt'] ?? '';
-        $receivedHash = $data['ord_key'] ?? '';
+        $amount = $data['ord_totalamt'] ?? ($fallbackAmount !== null ? number_format($fallbackAmount, 2, '.', '') : '');
+        $receivedHash = strtolower((string) ($data['ord_key'] ?? $data['merchant_hashvalue'] ?? ''));
+
+        if ($receivedHash === '') {
+            return false;
+        }
 
         $amountWithoutDecimal = number_format((float) $amount, 2, '', '');
         $calculatedHash = sha1($this->secretKey . $this->merchantId . $orderNo . $amountWithoutDecimal);
 
-        return $receivedHash === $calculatedHash;
+        return hash_equals(strtolower($calculatedHash), $receivedHash);
+    }
+
+    public function isSuccessfulReturn($returncode): bool
+    {
+        return (string) $returncode === '100';
     }
 }

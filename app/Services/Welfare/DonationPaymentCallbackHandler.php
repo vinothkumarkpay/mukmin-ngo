@@ -19,10 +19,16 @@ class DonationPaymentCallbackHandler
 
         $donation = Donation::where('order_id', $request->ord_mercref)->first();
         if (! $donation) {
+            Log::warning("{$logContext} Callback: donation not found for {$request->ord_mercref}", $request->all());
+
             return response('Order Not Found', 404);
         }
 
-        $this->recorder->record($donation, $request->all(), true, $logContext);
+        $recorded = $this->recorder->record($donation, $request->all(), true, $logContext);
+
+        if ($recorded) {
+            session()->forget('pending_donation_order_id');
+        }
 
         return response('OK');
     }
