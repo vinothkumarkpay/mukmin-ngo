@@ -1108,7 +1108,9 @@
         const modalBody = document.getElementById('modal-body');
         
         modalBody.innerHTML = '<div style="padding: 20px; text-align: center;"><i class="fas fa-spinner fa-spin fa-2x" style="color: var(--admin-primary)"></i><p style="margin-top:10px;">Loading details...</p></div>';
-        modalTitle.textContent = `${type.toUpperCase()} Submission details (#${id})`;
+        modalTitle.textContent = type === 'donation'
+            ? `Donation Payment Details (#${id})`
+            : `${type.toUpperCase()} Submission details (#${id})`;
         
         modal.classList.add('open');
 
@@ -1155,6 +1157,13 @@
 
                     let label = key.replace(/_/g, ' ').toUpperCase();
                     let val = data[key];
+
+                    if (type === 'donation' && key === 'payment_payload' && val && typeof val === 'object') {
+                        label = 'GATEWAY RESPONSE';
+                        val = '<pre style="margin:0; white-space:pre-wrap; font-size:12px;">' + escapeHtml(JSON.stringify(val, null, 2)) + '</pre>';
+                        html += `<div class="detail-label">${label}</div><div class="detail-value">${val}</div>`;
+                        continue;
+                    }
 
                     if (val === null || val === undefined) {
                         val = '-';
@@ -1216,7 +1225,7 @@
                     html += `<div class="detail-label">${label}</div><div class="detail-value">${val}</div>`;
                 }
 
-                if (data.status) {
+                if (data.status && type !== 'donation') {
                     html += `<div class="detail-label">APPLICATION STATUS</div><div class="detail-value" style="font-weight:700;"><span class="${statusBadgeClass(data.status)}">${statusLabel(data.status)}</span></div>`;
                 }
 
@@ -1340,8 +1349,16 @@
             return;
         }
 
+        const queryTab = new URLSearchParams(window.location.search).get('admin_tab');
+        if (queryTab && document.getElementById(queryTab)) {
+            switchTab(queryTab);
+            return;
+        }
+
         @if(session('import_tab'))
         switchTab(@json(session('import_tab')));
+        @elseif(!empty($admin_tab))
+        switchTab(@json($admin_tab));
         @elseif(session('admin_tab'))
         switchTab(@json(session('admin_tab')));
         @endif

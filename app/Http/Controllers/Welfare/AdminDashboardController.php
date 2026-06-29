@@ -106,7 +106,10 @@ class AdminDashboardController extends Controller
 
         return view('welfare.admin.dashboard', compact(
             'stats', 'feedback', 'ordinary', 'friends', 'mentor', 'partner', 'volunteer', 'contact', 'aid', 'mfls', 'donationPayments', 'donationPaymentMethods', 'options', 'formTypesMap', 'mflsPartnerDocuments'
-        ))->with('submissionStatusOptions', SubmissionStatus::options());
+        ))->with([
+            'submissionStatusOptions' => SubmissionStatus::options(),
+            'admin_tab' => $request->input('admin_tab'),
+        ]);
     }
 
     public function showSubmission($type, $id)

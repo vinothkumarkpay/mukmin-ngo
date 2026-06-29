@@ -22,7 +22,7 @@ class DonationController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:30',
-            'amount' => 'required|numeric|min:10|max:999999',
+            'amount' => 'required|numeric|min:1|max:999999',
             'message' => 'nullable|string|max:1200',
         ]);
 

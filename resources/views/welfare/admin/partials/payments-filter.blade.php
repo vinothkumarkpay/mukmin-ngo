@@ -25,7 +25,8 @@
         </div>
     </div>
 
-    <form method="GET" action="{{ route('welfare.admin.dashboard') }}#panel-payments" class="payments-filter-form">
+    <form method="GET" action="{{ route('welfare.admin.dashboard') }}" class="payments-filter-form">
+        <input type="hidden" name="admin_tab" value="panel-payments">
         <div class="payments-filter-grid">
             <div class="payments-filter-field">
                 <label for="filter_name">Donor name</label>
@@ -104,7 +105,7 @@
             @endif
 
             <div class="payments-filter-actions">
-                <a href="{{ route('welfare.admin.dashboard') }}#panel-payments" class="btn-admin btn-admin-secondary payments-btn-clear">
+                <a href="{{ route('welfare.admin.dashboard', ['admin_tab' => 'panel-payments']) }}" class="btn-admin btn-admin-secondary payments-btn-clear">
                     <i class="fas fa-rotate-left"></i> Reset
                 </a>
                 <button type="submit" class="btn-admin btn-admin-primary payments-btn-apply">

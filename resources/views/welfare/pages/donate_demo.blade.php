@@ -52,7 +52,7 @@
                 </div>
                 <div>
                     <label style="display: block; font-weight: 500; margin-bottom: 5px; color: var(--color-heading);">Donation Amount (RM)</label>
-                    <input type="number" name="amount" step="0.01" min="10" value="{{ old('amount') }}" placeholder="0.00" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';" required>
+                    <input type="number" name="amount" step="0.01" min="1" value="{{ old('amount') }}" placeholder="0.00" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';" required>
                 </div>
             </div>
 
