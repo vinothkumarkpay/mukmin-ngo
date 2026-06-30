@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Welfare;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Welfare\Concerns\ChecksAdminAccess;
 use Illuminate\Http\Request;
 use App\Models\FormDropdownOption;
 use App\Models\FeedbackSubmission;
@@ -24,6 +25,8 @@ use Response;
 
 class AdminDashboardController extends Controller
 {
+    use ChecksAdminAccess;
+
     /** @var array<string, string> */
     private const SUBMISSION_TAB_TYPES = [
         'panel-feedback' => 'feedback',
@@ -39,6 +42,16 @@ class AdminDashboardController extends Controller
 
     public function index(Request $request)
     {
+        $activeTab = (string) $request->get('admin_tab', 'panel-overview');
+
+        if (! $this->access()->userCanAccessTab($this->adminUser(), $activeTab)) {
+            $activeTab = $this->access()->defaultFirstAccessibleTab($this->adminUser());
+        }
+
+        $allowedPanelIds = collect($this->access()->menuItemsForUser($this->adminUser()))
+            ->pluck('id')
+            ->all();
+
         // 1. Gather stats
         $stats = [
             'feedback' => FeedbackSubmission::count(),
@@ -57,7 +70,6 @@ class AdminDashboardController extends Controller
             ? SubmissionStatus::normalize($request->submission_status)
             : null;
 
-        $activeTab = (string) $request->get('admin_tab', 'panel-overview');
         $filteredTabType = ($submissionStatusFilter && isset(self::SUBMISSION_TAB_TYPES[$activeTab]))
             ? self::SUBMISSION_TAB_TYPES[$activeTab]
             : null;
@@ -148,6 +160,7 @@ class AdminDashboardController extends Controller
             'filteredSubmissionCount',
             'filteredTabType',
             'activeTab',
+            'allowedPanelIds',
         ))->with('submissionStatusOptions', SubmissionStatus::options());
     }
 
@@ -178,6 +191,8 @@ class AdminDashboardController extends Controller
 
     public function donationPayments(Request $request)
     {
+        $this->authorizePermission('donations.view');
+
         $donationPayments = $this->filteredDonationPaymentsQuery($request)->get();
         $donationPaymentMethods = Donation::query()
             ->whereNotNull('payment_method')
@@ -221,6 +236,12 @@ class AdminDashboardController extends Controller
 
     public function showSubmission($type, $id)
     {
+        if ($type === 'donation') {
+            $this->authorizePermission('donations.view');
+        } else {
+            $this->authorizeSubmission($type, 'view');
+        }
+
         $submission = null;
         switch ($type) {
             case 'feedback':
@@ -264,6 +285,8 @@ class AdminDashboardController extends Controller
 
     public function updateStatus(Request $request, $type, $id)
     {
+        $this->authorizeSubmission($type, 'status');
+
         $validated = $request->validate([
             'status' => SubmissionStatus::validationRule(),
         ]);
@@ -285,6 +308,8 @@ class AdminDashboardController extends Controller
 
     public function notifyStatusUpdate($type, $id, SubmissionStatusNotifier $notifier)
     {
+        $this->authorizeSubmission($type, 'status');
+
         $submission = $this->findSubmissionForStatusUpdate($type, $id);
 
         if (! $submission) {
@@ -336,6 +361,8 @@ class AdminDashboardController extends Controller
     // Dynamic dropdown option management
     public function addOption(Request $request)
     {
+        $this->authorizePermission('options.manage');
+
         $validated = $request->validate([
             'form_type' => 'required|string|max:100',
             'option_value' => 'required|string|max:255',
@@ -351,6 +378,8 @@ class AdminDashboardController extends Controller
 
     public function editOption(Request $request, $id)
     {
+        $this->authorizePermission('options.manage');
+
         $validated = $request->validate([
             'option_value' => 'required|string|max:255',
             'sort_order' => 'required|integer',
@@ -364,6 +393,8 @@ class AdminDashboardController extends Controller
 
     public function deleteOption($id)
     {
+        $this->authorizePermission('options.manage');
+
         $option = FormDropdownOption::findOrFail($id);
         $option->delete();
 
@@ -373,6 +404,8 @@ class AdminDashboardController extends Controller
     // Export submissions to CSV format
     public function exportCsv($type)
     {
+        $this->authorizeSubmission($type, 'export');
+
         $filename = "submissions_{$type}_" . date('Ymd_His') . ".csv";
         $headers = [
             "Content-type"        => "text/csv; charset=UTF-8",
@@ -664,6 +697,8 @@ class AdminDashboardController extends Controller
             abort(404);
         }
 
+        $this->authorizeSubmission($type, 'import');
+
         return $importer->downloadTemplate($type);
     }
 
@@ -672,6 +707,8 @@ class AdminDashboardController extends Controller
         if (!in_array($type, SubmissionImportRegistry::TYPES, true)) {
             abort(404);
         }
+
+        $this->authorizeSubmission($type, 'import');
 
         $request->validate([
             'import_file' => 'required|file|mimes:csv,txt,xlsx,xls|max:10240',

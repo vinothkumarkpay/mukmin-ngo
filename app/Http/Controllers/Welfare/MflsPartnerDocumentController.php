@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Welfare;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Welfare\Concerns\ChecksAdminAccess;
 use App\Services\Welfare\MflsPartnerDocumentService;
 use Illuminate\Http\Request;
 
 class MflsPartnerDocumentController extends Controller
 {
+    use ChecksAdminAccess;
+
     public function preview(string $partnerId, MflsPartnerDocumentService $documents)
     {
         $document = $documents->findForPartner($partnerId);
@@ -32,6 +35,8 @@ class MflsPartnerDocumentController extends Controller
 
     public function viewHtml(string $partnerId, MflsPartnerDocumentService $documents)
     {
+        $this->authorizePermission('mfls.documents.view');
+
         $document = $documents->findForPartner($partnerId);
 
         if (!$document || !is_file($documents->absolutePath($document))) {
@@ -49,6 +54,8 @@ class MflsPartnerDocumentController extends Controller
 
     public function download(string $partnerId, MflsPartnerDocumentService $documents)
     {
+        $this->authorizePermission('mfls.documents.view');
+
         $document = $documents->findForPartner($partnerId);
 
         if (!$document) {
@@ -60,6 +67,8 @@ class MflsPartnerDocumentController extends Controller
 
     public function upload(Request $request, string $partnerId, MflsPartnerDocumentService $documents)
     {
+        $this->authorizePermission('mfls.documents.upload');
+
         if (!$documents->isValidPartnerId($partnerId)) {
             abort(404);
         }

@@ -3,32 +3,20 @@
 @section('title', 'Admin Dashboard - MUKMIN Portal')
 
 @section('body')
+@php
+    $allowedPanelIds = $allowedPanelIds ?? [];
+    $canPanel = fn ($panelId) => in_array($panelId, $allowedPanelIds, true);
+    $isActivePanel = fn ($panelId) => ($activeTab ?? 'panel-overview') === $panelId;
+@endphp
 <div class="dashboard-wrapper">
     @include('welfare.admin.partials.admin-sidebar', [
         'sidebarContext' => 'dashboard',
-        'activeTab' => 'panel-overview',
+        'activeTab' => $activeTab ?? 'panel-overview',
     ])
 
     <!-- MAIN PANEL -->
     <main class="main-content">
-        <!-- TOP NAV -->
-        <header class="top-nav">
-            <div class="top-nav-left">
-                <button type="button" class="sidebar-toggle" id="sidebar-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="admin-sidebar">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <h2 id="top-nav-title">Dashboard Overview</h2>
-            </div>
-            <div class="top-nav-actions" style="display: flex; align-items: center; gap: 20px;">
-                <div class="user-profile">
-                    <i class="fas fa-user-shield"></i>
-                    <span>System Administrator</span>
-                </div>
-                <a href="{{ route('welfare.admin.logout') }}" class="btn-admin btn-admin-secondary" style="padding: 8px 14px; display: inline-flex; align-items: center; gap: 6px; text-decoration: none;" title="Logout">
-                    <i class="fas fa-sign-out-alt"></i> <span class="btn-label">Logout</span>
-                </a>
-            </div>
-        </header>
+        @include('welfare.admin.partials.admin-top-nav', ['pageTitle' => 'Dashboard Overview'])
 
         <!-- CONTENT BODY -->
         <div class="content-body">
@@ -65,8 +53,10 @@
             @include('welfare.admin.partials.submissions-status-filter')
 
             <!-- 1. OVERVIEW PANEL -->
-            <div class="dashboard-panel active" id="panel-overview">
+            @if($canPanel('panel-overview'))
+            <div class="dashboard-panel{{ $isActivePanel('panel-overview') ? ' active' : '' }}" id="panel-overview">
                 <div class="stats-grid">
+                    @if($canPanel('panel-feedback'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-feedback')">
                         <div class="stat-icon"><i class="fas fa-comment-dots"></i></div>
                         <div class="stat-info">
@@ -74,6 +64,8 @@
                             <p>Feedback & Ideas</p>
                         </div>
                     </div>
+                    @endif
+                    @if($canPanel('panel-ordinary'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-ordinary')">
                         <div class="stat-icon"><i class="fas fa-building"></i></div>
                         <div class="stat-info">
@@ -81,6 +73,8 @@
                             <p>Ordinary Members</p>
                         </div>
                     </div>
+                    @endif
+                    @if($canPanel('panel-friends'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-friends')">
                         <div class="stat-icon"><i class="fas fa-user-friends"></i></div>
                         <div class="stat-info">
@@ -88,6 +82,8 @@
                             <p>Friends of MUKMIN</p>
                         </div>
                     </div>
+                    @endif
+                    @if($canPanel('panel-mentor'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-mentor')">
                         <div class="stat-icon"><i class="fas fa-chalkboard-teacher"></i></div>
                         <div class="stat-info">
@@ -95,6 +91,8 @@
                             <p>Mentors Registered</p>
                         </div>
                     </div>
+                    @endif
+                    @if($canPanel('panel-partner'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-partner')">
                         <div class="stat-icon"><i class="fas fa-handshake-angle"></i></div>
                         <div class="stat-info">
@@ -102,6 +100,8 @@
                             <p>Partnerships</p>
                         </div>
                     </div>
+                    @endif
+                    @if($canPanel('panel-volunteer'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-volunteer')">
                         <div class="stat-icon"><i class="fas fa-hand-holding-heart"></i></div>
                         <div class="stat-info">
@@ -109,6 +109,8 @@
                             <p>Volunteers Registered</p>
                         </div>
                     </div>
+                    @endif
+                    @if($canPanel('panel-aid'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-aid')">
                         <div class="stat-icon"><i class="fas fa-hand-holding-medical"></i></div>
                         <div class="stat-info">
@@ -116,6 +118,8 @@
                             <p>Community Aid Requests</p>
                         </div>
                     </div>
+                    @endif
+                    @if($canPanel('panel-mfls'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-mfls')">
                         <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
                         <div class="stat-info">
@@ -123,6 +127,8 @@
                             <p>MFLS Scholarship Applications</p>
                         </div>
                     </div>
+                    @endif
+                    @if($canPanel('panel-payments'))
                     <div class="stat-card" onclick="window.location='{{ route('welfare.admin.donation-payments') }}'">
                         <div class="stat-icon"><i class="fas fa-credit-card"></i></div>
                         <div class="stat-info">
@@ -130,6 +136,8 @@
                             <p>Donation Payments</p>
                         </div>
                     </div>
+                    @endif
+                    @if($canPanel('panel-contact'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-contact')">
                         <div class="stat-icon"><i class="fas fa-envelope"></i></div>
                         <div class="stat-info">
@@ -137,6 +145,7 @@
                             <p>Contact Messages</p>
                         </div>
                     </div>
+                    @endif
                 </div>
 
                 <div class="dashboard-card">
@@ -152,8 +161,10 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <!-- 2. FEEDBACK PANEL -->
+            @if($canPanel('panel-feedback'))
             <div class="dashboard-panel" id="panel-feedback">
                 <div class="dashboard-card">
                     <div class="card-header">
@@ -213,8 +224,10 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <!-- 3. ORDINARY MEMBERS PANEL -->
+            @if($canPanel('panel-ordinary'))
             <div class="dashboard-panel" id="panel-ordinary">
                 <div class="dashboard-card">
                     <div class="card-header">
@@ -266,8 +279,10 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <!-- 4. FRIENDS PANEL -->
+            @if($canPanel('panel-friends'))
             <div class="dashboard-panel" id="panel-friends">
                 <div class="dashboard-card">
                     <div class="card-header">
@@ -333,8 +348,10 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <!-- 5. MENTOR PANEL -->
+            @if($canPanel('panel-mentor'))
             <div class="dashboard-panel" id="panel-mentor">
                 <div class="dashboard-card">
                     <div class="card-header">
@@ -390,8 +407,10 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <!-- 6. PARTNERSHIPS PANEL -->
+            @if($canPanel('panel-partner'))
             <div class="dashboard-panel" id="panel-partner">
                 <div class="dashboard-card">
                     <div class="card-header">
@@ -445,8 +464,10 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <!-- 7. VOLUNTEER PANEL -->
+            @if($canPanel('panel-volunteer'))
             <div class="dashboard-panel" id="panel-volunteer">
                 <div class="dashboard-card">
                     <div class="card-header">
@@ -504,8 +525,10 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <!-- 9. DONATION PAYMENTS PANEL -->
+            @if($canPanel('panel-payments'))
             <div class="dashboard-panel" id="panel-payments">
                 <div class="dashboard-card">
                     <div class="card-header">
@@ -525,8 +548,10 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <!-- 10. CONTACT MESSAGES PANEL -->
+            @if($canPanel('panel-contact'))
             <div class="dashboard-panel" id="panel-contact">
                 <div class="dashboard-card">
                     <div class="card-header">
@@ -578,8 +603,10 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <!-- 10. COMMUNITY AID PANEL -->
+            @if($canPanel('panel-aid'))
             <div class="dashboard-panel" id="panel-aid">
                 <div class="dashboard-card">
                     <div class="card-header">
@@ -639,8 +666,10 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <!-- 8. MFLS SCHOLARSHIP PANEL -->
+            @if($canPanel('panel-mfls'))
             <div class="dashboard-panel" id="panel-mfls">
                 <div class="dashboard-card">
                     <div class="card-header">
@@ -698,7 +727,9 @@
                     </div>
                 </div>
             </div>
+            @endif
 
+            @if($canPanel('panel-mfls-documents'))
             <div class="dashboard-panel" id="panel-mfls-documents">
                 <div class="dashboard-card">
                     <div class="card-header">
@@ -774,8 +805,10 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <!-- 9. OPTIONS MANAGER PANEL -->
+            @if($canPanel('panel-options'))
             <div class="dashboard-panel" id="panel-options">
                 <div class="options-grid">
                     <!-- Dropdown types sidebar -->
@@ -857,6 +890,7 @@
                     </div>
                 </div>
             </div>
+            @endif
 
         </div>
     </main>

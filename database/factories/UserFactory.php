@@ -20,7 +20,28 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
+            'is_active' => true,
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (\App\Models\User $user) {
+            if ($user->role_id) {
+                return;
+            }
+
+            $role = \App\Models\Role::firstOrCreate(
+                ['slug' => 'super-admin'],
+                [
+                    'name' => 'Super Admin',
+                    'description' => 'Full admin access',
+                    'is_super' => true,
+                ]
+            );
+
+            $user->forceFill(['role_id' => $role->id, 'is_active' => true])->save();
+        });
     }
 
     /**

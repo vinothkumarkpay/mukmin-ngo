@@ -2,22 +2,7 @@
     $sidebarContext = $sidebarContext ?? 'dashboard';
     $activeTab = $activeTab ?? 'panel-overview';
     $dashboardUrl = route('welfare.admin.dashboard');
-
-    $navItems = [
-        ['id' => 'panel-overview', 'icon' => 'fa-chart-pie', 'label' => 'Overview'],
-        ['id' => 'panel-feedback', 'icon' => 'fa-comment-alt', 'label' => 'Feedback & Ideas'],
-        ['id' => 'panel-ordinary', 'icon' => 'fa-building', 'label' => 'Ordinary Members'],
-        ['id' => 'panel-friends', 'icon' => 'fa-users', 'label' => 'Friends of MUKMIN'],
-        ['id' => 'panel-mentor', 'icon' => 'fa-user-tie', 'label' => 'Mentors'],
-        ['id' => 'panel-partner', 'icon' => 'fa-handshake', 'label' => 'Partnerships'],
-        ['id' => 'panel-volunteer', 'icon' => 'fa-hands-helping', 'label' => 'Volunteers'],
-        ['id' => 'panel-aid', 'icon' => 'fa-hand-holding-medical', 'label' => 'Community Aid Requests'],
-        ['id' => 'panel-mfls', 'icon' => 'fa-graduation-cap', 'label' => 'MFLS Scholarship Applications'],
-        ['id' => 'panel-mfls-documents', 'icon' => 'fa-file-excel', 'label' => 'MFLS Partner Documents'],
-        ['id' => 'panel-payments', 'icon' => 'fa-credit-card', 'label' => 'Donation Payments', 'route' => 'welfare.admin.donation-payments'],
-        ['id' => 'panel-contact', 'icon' => 'fa-envelope', 'label' => 'Contact Messages'],
-        ['id' => 'panel-options', 'icon' => 'fa-sliders-h', 'label' => 'Options Manager', 'divider' => true],
-    ];
+    $navItems = app(\App\Services\Welfare\AdminAccessService::class)->menuItemsForUser(auth()->user());
 @endphp
 
 <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>

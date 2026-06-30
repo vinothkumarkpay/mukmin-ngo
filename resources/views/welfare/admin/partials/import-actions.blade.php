@@ -1,3 +1,4 @@
+@if(auth()->user()->hasPermission('submissions.' . $type . '.import'))
 <a href="{{ route('welfare.admin.import.template', $type) }}" class="btn-admin btn-admin-secondary" title="Download Excel import template">
     <i class="fas fa-file-excel"></i> Download Template
 </a>
@@ -12,3 +13,4 @@
         <i class="fas fa-upload"></i> Import
     </button>
 </form>
+@endif

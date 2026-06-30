@@ -1194,6 +1194,13 @@ a:hover {
         background-position: right 10px center;
         -webkit-text-fill-color: var(--admin-text-dark);
     }
+    .status-readonly {
+        display: inline-block;
+        padding: 6px 10px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--admin-text-muted);
+    }
 
     .auth-card {
         padding: 28px 24px;
@@ -1203,5 +1210,138 @@ a:hover {
 @media (max-width: 480px) {
     .top-nav .btn-admin-secondary {
         padding: 8px 10px;
+    }
+}
+
+/* RBAC / User Management */
+.admin-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+.admin-form-grid .form-group-full {
+    grid-column: 1 / -1;
+}
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--admin-text-dark);
+}
+.form-group label small {
+    font-weight: 400;
+    color: var(--admin-text-muted);
+}
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--admin-border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #fff;
+}
+.form-control:focus {
+    outline: none;
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 3px rgba(212, 60, 24, 0.12);
+}
+.checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+.form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+.badge-admin {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+.badge-admin-primary {
+    background: rgba(212, 60, 24, 0.12);
+    color: var(--admin-primary);
+}
+.badge-admin-success {
+    background: rgba(34, 197, 94, 0.12);
+    color: #15803d;
+}
+.badge-admin-muted {
+    background: #f1f5f9;
+    color: var(--admin-text-muted);
+}
+.btn-admin-danger {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+.btn-admin-danger:hover {
+    background: #fecaca;
+    color: #991b1b;
+}
+.permission-menu-grid,
+.permission-check-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+}
+.permission-menu-item,
+.permission-check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid var(--admin-border);
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+}
+.permission-menu-item input,
+.permission-check-item input {
+    margin-top: 3px;
+}
+.permission-menu-item span,
+.permission-check-item span {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.permission-menu-item strong,
+.permission-check-item strong {
+    font-size: 14px;
+}
+.permission-menu-item small,
+.permission-check-item small {
+    font-size: 12px;
+    color: var(--admin-text-muted);
+}
+.permission-menu-item i {
+    color: var(--admin-primary);
+    margin-right: 6px;
+}
+.permission-group {
+    margin-bottom: 24px;
+}
+.permission-group:last-child {
+    margin-bottom: 0;
+}
+.permission-group h4 {
+    margin-bottom: 12px;
+    font-size: 15px;
+    color: var(--admin-text-dark);
+}
+@media (max-width: 768px) {
+    .admin-form-grid {
+        grid-template-columns: 1fr;
     }
 }

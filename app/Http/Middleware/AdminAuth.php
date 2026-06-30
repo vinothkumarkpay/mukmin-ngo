@@ -8,18 +8,27 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminAuth
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
-     */
     public function handle(Request $request, Closure $next)
     {
         if (! Auth::check()) {
             return redirect()->route('welfare.admin.login')->with('error', 'Please login to access the Admin Panel.');
         }
+
+        $user = Auth::user();
+
+        if (! $user->is_active) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect()->route('welfare.admin.login')->with('error', 'Your account has been deactivated.');
+        }
+
+        if (! $user->role_id) {
+            return redirect()->route('welfare.admin.login')->with('error', 'Your account has no assigned role. Contact a super admin.');
+        }
+
+        $user->loadMissing('role.permissions');
 
         return $next($request);
     }

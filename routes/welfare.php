@@ -7,6 +7,8 @@ use App\Http\Controllers\Welfare\PageController;
 use App\Http\Controllers\Welfare\FormSubmissionController;
 use App\Http\Controllers\Welfare\AdminAuthController;
 use App\Http\Controllers\Welfare\AdminDashboardController;
+use App\Http\Controllers\Welfare\AdminRoleController;
+use App\Http\Controllers\Welfare\AdminUserController;
 use App\Http\Controllers\Welfare\DonationController;
 use App\Http\Controllers\Welfare\DonationDemoController;
 use App\Http\Controllers\Welfare\MflsPartnerDocumentController;
@@ -102,7 +104,9 @@ Route::name('welfare.')->group(function () {
 
     Route::middleware('admin.auth')->group(function () {
         Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-        Route::get('/admin/donation-payments', [AdminDashboardController::class, 'donationPayments'])->name('admin.donation-payments');
+        Route::get('/admin/donation-payments', [AdminDashboardController::class, 'donationPayments'])
+            ->middleware('admin.permission:donations.view')
+            ->name('admin.donation-payments');
         Route::get('/admin/submissions/{type}/{id}', [AdminDashboardController::class, 'showSubmission'])->name('admin.submission.detail');
         Route::post('/admin/submissions/{type}/{id}/status', [AdminDashboardController::class, 'updateStatus'])->name('admin.submission.status');
         Route::post('/admin/submissions/{type}/{id}/status/notify', [AdminDashboardController::class, 'notifyStatusUpdate'])->name('admin.submission.status.notify');
@@ -117,5 +121,24 @@ Route::name('welfare.')->group(function () {
         Route::post('/admin/mfls/partner-documents/{partnerId}', [MflsPartnerDocumentController::class, 'upload'])->name('admin.mfls.partner-documents.upload');
         Route::get('/admin/mfls/partner-documents/{partnerId}/view', [MflsPartnerDocumentController::class, 'viewHtml'])->name('admin.mfls.partner-documents.view');
         Route::get('/admin/mfls/partner-documents/{partnerId}/download', [MflsPartnerDocumentController::class, 'download'])->name('admin.mfls.partner-documents.download');
+
+        // User & role management (super admin configurable)
+        Route::middleware('admin.permission:admin.users.manage')->group(function () {
+            Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
+            Route::get('/admin/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
+            Route::post('/admin/users', [AdminUserController::class, 'store'])->name('admin.users.store');
+            Route::get('/admin/users/{user}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
+            Route::put('/admin/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
+            Route::delete('/admin/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
+        });
+
+        Route::middleware('admin.permission:admin.roles.manage')->group(function () {
+            Route::get('/admin/roles', [AdminRoleController::class, 'index'])->name('admin.roles.index');
+            Route::get('/admin/roles/create', [AdminRoleController::class, 'create'])->name('admin.roles.create');
+            Route::post('/admin/roles', [AdminRoleController::class, 'store'])->name('admin.roles.store');
+            Route::get('/admin/roles/{role}/edit', [AdminRoleController::class, 'edit'])->name('admin.roles.edit');
+            Route::put('/admin/roles/{role}', [AdminRoleController::class, 'update'])->name('admin.roles.update');
+            Route::delete('/admin/roles/{role}', [AdminRoleController::class, 'destroy'])->name('admin.roles.destroy');
+        });
     });
 });
