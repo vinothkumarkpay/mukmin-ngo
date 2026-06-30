@@ -74,7 +74,10 @@ class DonationDonorPaymentMail extends Mailable
         $name = $this->donation->name ?: 'there';
 
         return match ($this->statusKey) {
-            'success' => "Assalamu alaikum {$name},<br><br>Thank you for your generous support. Your online donation payment has been <strong>successfully received</strong>.",
+            'success' => 'Salam from MUKMIN,<br><br>'
+                . 'Thank you for your generous contribution to MUKMIN.<br><br>'
+                . 'We have successfully received your donation, and your support will help strengthen initiatives that advance education, community welfare, leadership development, economic empowerment, and community-building efforts across the communities we serve.<br>'
+                . 'At MUKMIN, we believe that meaningful change begins when individuals, organisations and communities come together with a common purpose. Every contribution, regardless of its size, becomes part of a larger movement dedicated to creating sustainable impact and improving lives across our communities.',
             'failed' => "Assalamu alaikum {$name},<br><br>We were unable to complete your online donation payment. Your transaction was <strong>not successful</strong>.",
             default => "Assalamu alaikum {$name},<br><br>Thank you for choosing to support MUKMIN. Your donation payment is currently <strong>pending</strong> while you complete checkout with our payment gateway.",
         };
@@ -83,7 +86,12 @@ class DonationDonorPaymentMail extends Mailable
     protected function buildFooterMessage(): string
     {
         return match ($this->statusKey) {
-            'success' => 'May Allah reward your kindness. If you have any questions about this donation, please contact us at <a href="mailto:donate@mukmin.org" style="color: #0c5930; text-decoration: none; font-weight: 500;">donate@mukmin.org</a>.',
+            'success' => 'Should you have any questions regarding your contribution, please feel free to contact us at <a href="mailto:info@mukmin.org" style="color: #0c5930; text-decoration: none; font-weight: 500;">info@mukmin.org</a>.<br><br>'
+                . 'On behalf of the entire MUKMIN family, thank you for believing in our mission and standing with us as we work towards a more empowered, compassionate and united community.<br><br>'
+                . 'With sincere appreciation,<br>'
+                . 'MUKMIN Secretariat<br>'
+                . 'Pertubuhan Gabungan MUKMIN Nasional<br>'
+                . '🌐 <a href="https://www.mukmin.org" style="color: #0c5930; text-decoration: none; font-weight: 500;">www.mukmin.org</a>',
             'failed' => 'No amount has been charged. You may return to the donation page and try again. If you need assistance, please contact us at <a href="mailto:donate@mukmin.org" style="color: #0c5930; text-decoration: none; font-weight: 500;">donate@mukmin.org</a>.',
             default => 'Please complete your payment on the KiplePay page. You will receive another email once your payment is confirmed or if it fails.',
         };

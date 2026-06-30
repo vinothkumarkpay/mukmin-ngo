@@ -1,33 +1,64 @@
-$src = 'C:\Users\vinod\Downloads\Mukmin_eposter_Folder-20260610T074602Z-3-001\Mukmin_eposter_Folder\Links'
+$viewSrc = 'C:\Users\vinod\Downloads\view'
+$logosSrc = 'C:\Users\vinod\Downloads\logos'
 $dest = 'C:\Code\mukmin1\public\welfare\img\mfls\partners'
-
-if (-not (Test-Path $src)) {
-    Write-Error "Source folder not found: $src"
-    exit 1
-}
 
 New-Item -ItemType Directory -Force -Path $dest | Out-Null
 
-$map = @{
-    'bac.webp'      = 'IMG_9767.JPG.webp'
-    'iact.webp'     = 'IMG_9767.JPG.webp'
-    'unimy.webp'    = 'IMG_9767.JPG.webp'
-    'veritas.webp'  = 'IMG_9767.JPG.webp'
-    'reliance.webp' = 'IMG_9767.JPG.webp'
-    'binary.webp'   = 'IMG_9770.JPG.webp'
-    'unitar.webp'   = 'IMG_9771.JPG.webp'
-    'uoc.webp'      = 'IMG_9768.JPG.webp'
-    'mahsa.webp'    = 'IMG_9769.JPG.webp'
+# Approved logos from Downloads\view
+$viewMap = @{
+    'bac.jpg'      = @('BAC.jpeg')
+    'iact.jpg'     = @('IACT.jpeg')
+    'veritas.jpeg' = @('VERITAS.jpeg', 'veritas.jpeg', 'Veritas.jpeg')
 }
 
-foreach ($entry in $map.GetEnumerator()) {
-    $sourceFile = Join-Path $src $entry.Value
+foreach ($entry in $viewMap.GetEnumerator()) {
+    $sourceFile = $null
+    foreach ($candidate in $entry.Value) {
+        $path = Join-Path $viewSrc $candidate
+        if (Test-Path $path) {
+            $sourceFile = $path
+            break
+        }
+    }
+
     $targetFile = Join-Path $dest $entry.Key
-    if (-not (Test-Path $sourceFile)) {
-        Write-Error "Missing source file: $sourceFile"
+
+    if (-not $sourceFile) {
+        if (Test-Path $targetFile) {
+            Write-Warning "Source not found for $($entry.Key); keeping existing file at $targetFile"
+            continue
+        }
+
+        Write-Error "Missing source file for $($entry.Key). Expected one of: $($entry.Value -join ', ') in $viewSrc"
         exit 1
     }
+
     Copy-Item $sourceFile $targetFile -Force
 }
 
-Get-ChildItem $dest -Filter '*.webp' | Format-Table Name, Length -AutoSize
+# Logos from Downloads\logos
+if (Test-Path $logosSrc) {
+    $logosMap = @{
+        'reliance.png' = 'LOGO_Reliance_Color.png'
+        'unimy.png'    = 'LOGO_UNIMY.png'
+    }
+
+    foreach ($entry in $logosMap.GetEnumerator()) {
+        $sourceFile = Join-Path $logosSrc $entry.Value
+        $targetFile = Join-Path $dest $entry.Key
+
+        if (-not (Test-Path $sourceFile)) {
+            if (Test-Path $targetFile) {
+                Write-Warning "Source not found for $($entry.Key); keeping existing file at $targetFile"
+                continue
+            }
+
+            Write-Error "Missing source file: $sourceFile"
+            exit 1
+        }
+
+        Copy-Item $sourceFile $targetFile -Force
+    }
+}
+
+Get-ChildItem $dest -Include bac.jpg, iact.jpg, veritas.jpeg, reliance.png, unimy.png -File | Format-Table Name, Length -AutoSize

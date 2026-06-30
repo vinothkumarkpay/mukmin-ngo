@@ -141,10 +141,16 @@
             <div class="email-body">
                 <div class="intro-text">
                     {!! $introMessage !!}
-                    <div style="margin-top: 16px;">
-                        <span class="status-badge status-{{ $statusKey }}">{{ $statusLabel }}</span>
-                    </div>
+                    @if($statusKey !== 'success')
+                        <div style="margin-top: 16px;">
+                            <span class="status-badge status-{{ $statusKey }}">{{ $statusLabel }}</span>
+                        </div>
+                    @endif
                 </div>
+
+                @if($statusKey === 'success')
+                    <p style="font-size: 16px; font-weight: 700; color: #2d3748; margin: 0 0 16px 0;">Transaction Details</p>
+                @endif
 
                 <table class="form-table">
                     <tbody>

@@ -43,7 +43,7 @@ class DonationPaymentReturnHandler
         if ($kiplePay->isSuccessfulReturn($request->returncode)) {
             return redirect()
                 ->route($successRoute)
-                ->with('success', 'Thank you for your generous donation!');
+                ->with('success', 'Thank you for your generous contribution to MUKMIN.');
         }
 
         return redirect()

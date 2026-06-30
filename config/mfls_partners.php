@@ -169,7 +169,7 @@ return [
         [
             'id' => 'veritas',
             'name' => 'VERITAS UNIVERSITY COLLEGE',
-            'logo' => 'welfare/img/mfls/partners/veritas.png',
+            'logo' => 'welfare/img/mfls/partners/veritas.jpeg',
             'info' => 'Flexible ODL and conventional programmes in business, accounting and early childhood education.',
             'programmes' => [
                 'Foundation in Arts (Open & Distance Learning)',
