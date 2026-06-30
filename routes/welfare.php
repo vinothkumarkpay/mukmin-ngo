@@ -118,9 +118,15 @@ Route::name('welfare.')->group(function () {
         Route::post('/admin/options/add', [AdminDashboardController::class, 'addOption'])->name('admin.options.add');
         Route::post('/admin/options/edit/{id}', [AdminDashboardController::class, 'editOption'])->name('admin.options.edit');
         Route::post('/admin/options/delete/{id}', [AdminDashboardController::class, 'deleteOption'])->name('admin.options.delete');
-        Route::post('/admin/mfls/partner-documents/{partnerId}', [MflsPartnerDocumentController::class, 'upload'])->name('admin.mfls.partner-documents.upload');
-        Route::get('/admin/mfls/partner-documents/{partnerId}/view', [MflsPartnerDocumentController::class, 'viewHtml'])->name('admin.mfls.partner-documents.view');
-        Route::get('/admin/mfls/partner-documents/{partnerId}/download', [MflsPartnerDocumentController::class, 'download'])->name('admin.mfls.partner-documents.download');
+        Route::post('/admin/mfls/partner-documents/{partnerId}', [MflsPartnerDocumentController::class, 'upload'])
+            ->middleware('admin.permission:mfls.documents.upload')
+            ->name('admin.mfls.partner-documents.upload');
+        Route::get('/admin/mfls/partner-documents/{partnerId}/view', [MflsPartnerDocumentController::class, 'viewHtml'])
+            ->middleware('admin.permission:mfls.documents.view')
+            ->name('admin.mfls.partner-documents.view');
+        Route::get('/admin/mfls/partner-documents/{partnerId}/download', [MflsPartnerDocumentController::class, 'download'])
+            ->middleware('admin.permission:mfls.documents.view')
+            ->name('admin.mfls.partner-documents.download');
 
         // User & role management (super admin configurable)
         Route::middleware('admin.permission:admin.users.manage')->group(function () {
