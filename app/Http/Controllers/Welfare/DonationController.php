@@ -7,6 +7,7 @@ use App\Models\Donation;
 use App\Services\KiplePayService;
 use App\Services\Welfare\DonationPaymentCallbackHandler;
 use App\Services\Welfare\DonationPaymentReturnHandler;
+use App\Services\Welfare\DonationPaymentNotifier;
 use Illuminate\Http\Request;
 
 class DonationController extends Controller
@@ -16,7 +17,7 @@ class DonationController extends Controller
         return view('welfare.pages.donate');
     }
 
-    public function store(Request $request)
+    public function store(Request $request, DonationPaymentNotifier $notifier)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -28,7 +29,7 @@ class DonationController extends Controller
 
         $orderNo = 'MUKMIN-' . strtoupper(uniqid());
 
-        Donation::create([
+        $donation = Donation::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
@@ -38,6 +39,8 @@ class DonationController extends Controller
             'order_id' => $orderNo,
             'payment_method' => 'KiplePay',
         ]);
+
+        $notifier->notifyPending($donation);
 
         session(['pending_donation_order_id' => $orderNo]);
 

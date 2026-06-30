@@ -175,6 +175,147 @@ class CommunityAidSubmissionTest extends TestCase
         $response->assertHeader('Content-Type', 'text/csv; charset=UTF-8');
     }
 
+    public function test_admin_dashboard_filters_submissions_by_status(): void
+    {
+        CommunityAidSubmission::create([
+            'full_name' => 'Approved Applicant',
+            'nric_passport' => '950202105433',
+            'gender' => 'Female',
+            'dob' => '1995-02-02',
+            'nationality' => 'Malaysian',
+            'occupation' => 'Freelancer',
+            'contact_number' => '+60176543211',
+            'email' => 'approved@example.com',
+            'full_address' => '789 Hope Avenue, Kuala Lumpur',
+            'state_residency' => 'Wilayah Persekutuan Kuala Lumpur',
+            'type_of_aid' => ['Healthcare Aid'],
+            'situation_description' => 'Medical assistance needed.',
+            'who_benefits' => 'Individual',
+            'received_aid_before' => false,
+            'emergency_contact_name' => 'John Smith',
+            'emergency_contact_relationship' => 'Brother',
+            'emergency_contact_phone' => '+60112223334',
+            'declaration_confirmed' => true,
+            'status' => 'approved',
+        ]);
+
+        CommunityAidSubmission::create([
+            'full_name' => 'Received Applicant',
+            'nric_passport' => '950202105434',
+            'gender' => 'Male',
+            'dob' => '1994-03-03',
+            'nationality' => 'Malaysian',
+            'occupation' => 'Driver',
+            'contact_number' => '+60176543212',
+            'email' => 'received@example.com',
+            'full_address' => '12 Jalan Sentosa, Kuala Lumpur',
+            'state_residency' => 'Wilayah Persekutuan Kuala Lumpur',
+            'type_of_aid' => ['Financial Assistance'],
+            'situation_description' => 'Needs financial support.',
+            'who_benefits' => 'Family',
+            'received_aid_before' => false,
+            'emergency_contact_name' => 'Ali Rahman',
+            'emergency_contact_relationship' => 'Brother',
+            'emergency_contact_phone' => '+60112223335',
+            'declaration_confirmed' => true,
+            'status' => 'received',
+        ]);
+
+        $this->actingAsAdmin();
+
+        $response = $this->get(route('welfare.admin.dashboard', [
+            'submission_status' => 'approved',
+            'admin_tab' => 'panel-aid',
+        ]));
+
+        $response->assertStatus(200);
+        $response->assertSee('Approved Applicant', false);
+        $response->assertDontSee('Received Applicant', false);
+        $response->assertSee('Filter Submissions by Status', false);
+        $response->assertSee('1 result', false);
+    }
+
+    public function test_admin_dashboard_filters_friends_by_human_readable_status_label(): void
+    {
+        \App\Models\FriendMemberSubmission::create([
+            'entity_type' => 'Individual',
+            'ind_name' => 'Mariam Sulaiman',
+            'ind_nric' => '950202105432',
+            'ind_state' => 'Johor',
+            'ind_address' => 'Johor Bahru',
+            'ind_postcode' => '80000',
+            'ind_email' => 'mariam@example.com',
+            'ind_phone' => '+60123456789',
+            'declaration_confirmed' => true,
+            'status' => 'Received / New',
+        ]);
+
+        \App\Models\FriendMemberSubmission::create([
+            'entity_type' => 'Individual',
+            'ind_name' => 'Approved Friend',
+            'ind_nric' => '950202105499',
+            'ind_state' => 'Selangor',
+            'ind_address' => 'Shah Alam',
+            'ind_postcode' => '40000',
+            'ind_email' => 'approvedfriend@example.com',
+            'ind_phone' => '+60198765432',
+            'declaration_confirmed' => true,
+            'status' => 'Approved',
+        ]);
+
+        $this->actingAsAdmin();
+
+        $response = $this->get(route('welfare.admin.dashboard', [
+            'submission_status' => 'approved',
+            'admin_tab' => 'panel-friends',
+        ]));
+
+        $response->assertStatus(200);
+        $response->assertSee('Approved Friend', false);
+        $response->assertDontSee('Mariam Sulaiman', false);
+    }
+
+    public function test_admin_dashboard_reviewing_filter_excludes_received_friends(): void
+    {
+        \App\Models\FriendMemberSubmission::create([
+            'entity_type' => 'Individual',
+            'ind_name' => 'test',
+            'ind_nric' => '950202105432',
+            'ind_state' => 'Perlis',
+            'ind_address' => 'Perlis',
+            'ind_postcode' => '01000',
+            'ind_email' => 'test@example.com',
+            'ind_phone' => '+60123456789',
+            'declaration_confirmed' => true,
+            'status' => 'Received / New',
+        ]);
+
+        \App\Models\FriendMemberSubmission::create([
+            'entity_type' => 'Individual',
+            'ind_name' => 'Reviewing Friend',
+            'ind_nric' => '950202105499',
+            'ind_state' => 'Johor',
+            'ind_address' => 'Johor Bahru',
+            'ind_postcode' => '80000',
+            'ind_email' => 'reviewing@example.com',
+            'ind_phone' => '+60198765432',
+            'declaration_confirmed' => true,
+            'status' => 'Reviewing',
+        ]);
+
+        $this->actingAsAdmin();
+
+        $response = $this->get(route('welfare.admin.dashboard', [
+            'submission_status' => 'reviewing',
+            'admin_tab' => 'panel-friends',
+        ]));
+
+        $response->assertStatus(200);
+        $response->assertSee('Reviewing Friend', false);
+        $response->assertDontSee('test@example.com', false);
+        $response->assertSee('1 result', false);
+    }
+
     private function actingAsAdmin()
     {
         $user = \App\Models\User::factory()->create();

@@ -381,6 +381,23 @@ class FormSubmissionEmailTest extends TestCase
         });
     }
 
+    public function test_mfls_scholarship_email_formats_boolean_fields_as_yes_no()
+    {
+        $mail = new FormSubmissionMail('MFLS Scholarship Application', [
+            'partner_institution_name' => 'Sunway University',
+            'programme_course_applied' => 'Diploma in Culinary Arts',
+            'applied_to_university' => '1',
+            'received_offer_letter' => '0',
+            'full_name' => 'Ahmad Student',
+        ], true);
+
+        $rows = collect($mail->formattedData)->keyBy('label');
+
+        $this->assertSame('Yes', $rows['Applied to Participating University?']['value']);
+        $this->assertSame('No', $rows['Received Offer Letter?']['value']);
+        $this->assertSame('Sunway University', strip_tags($rows['Partner Institution']['value']));
+    }
+
     public function test_mfls_scholarship_rejects_non_malaysian_citizenship()
     {
         $wordParagraph = implode(' ', array_fill(0, 160, 'leadership'));

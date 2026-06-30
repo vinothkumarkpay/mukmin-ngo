@@ -626,6 +626,30 @@ a:hover {
 .payments-status-pill--failed input:checked + span {
     background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
 }
+.submissions-status-filter-card {
+    margin-bottom: 24px;
+}
+.submissions-status-pill--received input:checked + span {
+    background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+}
+.submissions-status-pill--reviewing input:checked + span {
+    background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+}
+.submissions-status-pill--pending_approval input:checked + span {
+    background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+}
+.submissions-status-pill--further_info_required input:checked + span {
+    background: linear-gradient(135deg, #fb923c 0%, #c2410c 100%);
+}
+.submissions-status-pill--approved input:checked + span {
+    background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+}
+.submissions-status-pill--rejected input:checked + span {
+    background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
+}
+.submissions-status-pill--completed input:checked + span {
+    background: linear-gradient(135deg, #60a5fa 0%, #1d4ed8 100%);
+}
 .payments-filter-footer {
     display: flex;
     align-items: center;
@@ -708,89 +732,55 @@ a:hover {
     }
 }
 
-/* Status update form in tables */
+/* Status update in tables */
 .status-cell {
     display: block;
     min-width: 0;
 }
-.status-form {
-    display: inline-flex;
-    align-items: stretch;
+.status-select {
+    display: block;
     width: 100%;
     max-width: 168px;
-    border: 1px solid var(--admin-border);
-    border-radius: 6px;
-    background: #ffffff;
-    overflow: hidden;
-    box-shadow: 0 1px 2px rgb(15 23 42 / 0.04);
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-.status-form:hover {
-    border-color: #cbd5e1;
-}
-.status-form:focus-within {
-    border-color: var(--admin-primary);
-    box-shadow: 0 0 0 3px rgba(212, 60, 24, 0.08);
-}
-.status-select {
-    flex: 1 1 auto;
-    min-width: 0;
-    width: 132px;
-    max-width: 132px;
-    padding: 5px 22px 5px 8px;
+    padding: 6px 28px 6px 10px;
     font-size: 11px;
     font-weight: 500;
     line-height: 1.25;
     letter-spacing: 0.01em;
     color: var(--admin-text-dark);
     -webkit-text-fill-color: var(--admin-text-dark);
-    border: none;
-    border-radius: 0;
-    background-color: transparent;
+    border: 1px solid var(--admin-border);
+    border-radius: 6px;
+    background-color: #ffffff;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M2.5 4.5 6 8l3.5-3.5'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 7px center;
+    background-position: right 8px center;
     appearance: none;
     -webkit-appearance: none;
     cursor: pointer;
     outline: none;
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.04);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.status-select:hover {
+    border-color: #cbd5e1;
 }
 .status-select:focus {
     outline: none;
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 3px rgba(212, 60, 24, 0.08);
 }
-.status-update-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    min-width: 28px;
-    padding: 0;
-    border: none;
-    border-left: 1px solid var(--admin-border);
-    border-radius: 0;
-    background: #f8fafc;
-    color: var(--admin-text-muted);
-    font-size: 10px;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-}
-.status-update-btn:hover {
-    background: var(--admin-primary-light);
-    color: var(--admin-primary);
-}
-.status-update-btn:disabled {
-    opacity: 0.55;
+.status-select:disabled {
+    opacity: 0.65;
     cursor: wait;
-}
-.status-update-btn.is-saved {
-    background: #ecfdf5;
-    color: #059669;
 }
 .admin-table td .status-cell {
     vertical-align: middle;
 }
 .admin-table td:has(.status-cell) {
     min-width: 168px;
+}
+.modal-window-confirm {
+    max-width: 440px;
 }
 
 /* Options Grid Manager */
@@ -1193,30 +1183,16 @@ a:hover {
         min-width: 200px;
         white-space: normal;
     }
-    .status-form {
-        display: flex;
+    .status-select {
         width: 100%;
         max-width: none;
         min-width: 200px;
-        overflow: visible;
-    }
-    .status-select {
-        flex: 1 1 auto;
-        width: auto;
-        min-width: 0;
-        max-width: none;
         min-height: 36px;
         padding: 8px 32px 8px 10px;
         font-size: 12px;
         line-height: 1.35;
         background-position: right 10px center;
         -webkit-text-fill-color: var(--admin-text-dark);
-    }
-    .status-update-btn {
-        width: 36px;
-        min-width: 36px;
-        min-height: 36px;
-        font-size: 12px;
     }
 
     .auth-card {

@@ -56,59 +56,67 @@
                 </div>
             @endif
 
+            @php
+                $emptySubmissionMessage = $submissionStatusFilter
+                    ? 'No submissions found with status "' . \App\Support\SubmissionStatus::label($submissionStatusFilter) . '".'
+                    : 'No submissions found.';
+            @endphp
+
+            @include('welfare.admin.partials.submissions-status-filter')
+
             <!-- 1. OVERVIEW PANEL -->
             <div class="dashboard-panel active" id="panel-overview">
                 <div class="stats-grid">
-                    <div class="stat-card" onclick="switchTab('panel-feedback')">
+                    <div class="stat-card" onclick="navigateToDashboardTab('panel-feedback')">
                         <div class="stat-icon"><i class="fas fa-comment-dots"></i></div>
                         <div class="stat-info">
                             <h3>{{ $stats['feedback'] }}</h3>
                             <p>Feedback & Ideas</p>
                         </div>
                     </div>
-                    <div class="stat-card" onclick="switchTab('panel-ordinary')">
+                    <div class="stat-card" onclick="navigateToDashboardTab('panel-ordinary')">
                         <div class="stat-icon"><i class="fas fa-building"></i></div>
                         <div class="stat-info">
                             <h3>{{ $stats['ordinary'] }}</h3>
                             <p>Ordinary Members</p>
                         </div>
                     </div>
-                    <div class="stat-card" onclick="switchTab('panel-friends')">
+                    <div class="stat-card" onclick="navigateToDashboardTab('panel-friends')">
                         <div class="stat-icon"><i class="fas fa-user-friends"></i></div>
                         <div class="stat-info">
                             <h3>{{ $stats['friends'] }}</h3>
                             <p>Friends of MUKMIN</p>
                         </div>
                     </div>
-                    <div class="stat-card" onclick="switchTab('panel-mentor')">
+                    <div class="stat-card" onclick="navigateToDashboardTab('panel-mentor')">
                         <div class="stat-icon"><i class="fas fa-chalkboard-teacher"></i></div>
                         <div class="stat-info">
                             <h3>{{ $stats['mentor'] }}</h3>
                             <p>Mentors Registered</p>
                         </div>
                     </div>
-                    <div class="stat-card" onclick="switchTab('panel-partner')">
+                    <div class="stat-card" onclick="navigateToDashboardTab('panel-partner')">
                         <div class="stat-icon"><i class="fas fa-handshake-angle"></i></div>
                         <div class="stat-info">
                             <h3>{{ $stats['partner'] }}</h3>
                             <p>Partnerships</p>
                         </div>
                     </div>
-                    <div class="stat-card" onclick="switchTab('panel-volunteer')">
+                    <div class="stat-card" onclick="navigateToDashboardTab('panel-volunteer')">
                         <div class="stat-icon"><i class="fas fa-hand-holding-heart"></i></div>
                         <div class="stat-info">
                             <h3>{{ $stats['volunteer'] }}</h3>
                             <p>Volunteers Registered</p>
                         </div>
                     </div>
-                    <div class="stat-card" onclick="switchTab('panel-aid')">
+                    <div class="stat-card" onclick="navigateToDashboardTab('panel-aid')">
                         <div class="stat-icon"><i class="fas fa-hand-holding-medical"></i></div>
                         <div class="stat-info">
                             <h3>{{ $stats['aid'] }}</h3>
                             <p>Community Aid Requests</p>
                         </div>
                     </div>
-                    <div class="stat-card" onclick="switchTab('panel-mfls')">
+                    <div class="stat-card" onclick="navigateToDashboardTab('panel-mfls')">
                         <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
                         <div class="stat-info">
                             <h3>{{ $stats['mfls'] }}</h3>
@@ -122,7 +130,7 @@
                             <p>Donation Payments</p>
                         </div>
                     </div>
-                    <div class="stat-card" onclick="switchTab('panel-contact')">
+                    <div class="stat-card" onclick="navigateToDashboardTab('panel-contact')">
                         <div class="stat-icon"><i class="fas fa-envelope"></i></div>
                         <div class="stat-info">
                             <h3>{{ $stats['contact'] }}</h3>
@@ -196,7 +204,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="8" style="text-align: center; color: var(--admin-text-muted);">No submissions found.</td>
+                                            <td colspan="8" style="text-align: center; color: var(--admin-text-muted);">{{ $emptySubmissionMessage }}</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -249,7 +257,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="7" style="text-align: center; color: var(--admin-text-muted);">No applications found.</td>
+                                            <td colspan="7" style="text-align: center; color: var(--admin-text-muted);">{{ $emptySubmissionMessage }}</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -316,7 +324,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="7" style="text-align: center; color: var(--admin-text-muted);">No submissions found.</td>
+                                            <td colspan="7" style="text-align: center; color: var(--admin-text-muted);">{{ $emptySubmissionMessage }}</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -373,7 +381,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="9" style="text-align: center; color: var(--admin-text-muted);">No submissions found.</td>
+                                            <td colspan="9" style="text-align: center; color: var(--admin-text-muted);">{{ $emptySubmissionMessage }}</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -428,7 +436,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="8" style="text-align: center; color: var(--admin-text-muted);">No proposals found.</td>
+                                            <td colspan="8" style="text-align: center; color: var(--admin-text-muted);">{{ $emptySubmissionMessage }}</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -487,7 +495,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="10" style="text-align: center; color: var(--admin-text-muted);">No volunteers found.</td>
+                                            <td colspan="10" style="text-align: center; color: var(--admin-text-muted);">{{ $emptySubmissionMessage }}</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -561,7 +569,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="7" style="text-align: center; color: var(--admin-text-muted);">No messages found.</td>
+                                            <td colspan="7" style="text-align: center; color: var(--admin-text-muted);">{{ $emptySubmissionMessage }}</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -622,7 +630,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="8" style="text-align: center; color: var(--admin-text-muted);">No aid requests found.</td>
+                                            <td colspan="8" style="text-align: center; color: var(--admin-text-muted);">{{ $emptySubmissionMessage }}</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -681,7 +689,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="10" style="text-align: center; color: var(--admin-text-muted);">No MFLS scholarship applications found.</td>
+                                            <td colspan="10" style="text-align: center; color: var(--admin-text-muted);">{{ $emptySubmissionMessage }}</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -890,6 +898,44 @@
     </div>
 </div>
 
+<!-- STATUS CHANGE CONFIRMATION MODAL -->
+<div class="modal-backdrop" id="status-confirm-modal" onclick="cancelStatusChange()">
+    <div class="modal-window modal-window-confirm" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3>Status Confirmation</h3>
+            <button type="button" class="modal-close" onclick="cancelStatusChange()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <p style="margin: 0; color: var(--admin-text-dark); font-size: 15px; line-height: 1.6;">
+                Are you sure you want to change the status for this submission?
+            </p>
+        </div>
+        <div class="modal-footer" style="justify-content: flex-end; gap: 10px;">
+            <button type="button" class="btn-admin btn-admin-secondary" onclick="cancelStatusChange()">Cancel</button>
+            <button type="button" class="btn-admin btn-admin-primary" onclick="confirmStatusChange()">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<!-- STATUS EMAIL NOTIFICATION MODAL -->
+<div class="modal-backdrop" id="status-email-modal" onclick="declineStatusEmailNotification()">
+    <div class="modal-window modal-window-confirm" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3>Email Notification</h3>
+            <button type="button" class="modal-close" onclick="declineStatusEmailNotification()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <p style="margin: 0; color: var(--admin-text-dark); font-size: 15px; line-height: 1.6;">
+                Would you like to notify the applicant of this status update via email?
+            </p>
+        </div>
+        <div class="modal-footer" style="justify-content: flex-end; gap: 10px;">
+            <button type="button" class="btn-admin btn-admin-secondary" onclick="declineStatusEmailNotification()">No</button>
+            <button type="button" class="btn-admin btn-admin-primary" id="status-email-confirm-btn" onclick="confirmStatusEmailNotification()">Yes</button>
+        </div>
+    </div>
+</div>
+
 @push('scripts')
 <script>
     const STATUS_LABELS = @json($submissionStatusOptions);
@@ -947,7 +993,7 @@
             this.classList.add('active');
             
             const tabId = this.getAttribute('data-tab');
-            switchTab(tabId);
+            navigateToDashboardTab(tabId);
             closeSidebar();
         });
     });
@@ -957,18 +1003,31 @@
             panel.classList.remove('active');
         });
         const activePanel = document.getElementById(tabId);
+        if (!activePanel) {
+            return;
+        }
+
         activePanel.classList.add('active');
 
-        // Scroll to top of view
+        const statusFilterCard = document.getElementById('submissions-status-filter-card');
+        const statusFilterTabField = document.getElementById('status-filter-admin-tab');
+        const hideStatusFilterOn = ['panel-overview', 'panel-options', 'panel-mfls-documents', 'panel-payments'];
+
+        if (statusFilterCard) {
+            statusFilterCard.style.display = hideStatusFilterOn.includes(tabId) ? 'none' : '';
+        }
+
+        if (statusFilterTabField) {
+            statusFilterTabField.value = tabId;
+        }
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        // Update nav bar title
         const menuEl = document.querySelector(`.sidebar-link[data-tab="${tabId}"]`);
         if (menuEl) {
             document.getElementById('top-nav-title').textContent = menuEl.textContent.trim();
         }
 
-        // Set sidebar item active in case switched programmatically from stats card
         document.querySelectorAll('.sidebar-link').forEach(l => {
             if (l.getAttribute('data-tab') === tabId) {
                 l.classList.add('active');
@@ -976,6 +1035,23 @@
                 l.classList.remove('active');
             }
         });
+
+        const resetLink = document.getElementById('submissions-status-reset-link');
+        if (resetLink) {
+            resetLink.href = `${window.location.pathname}?admin_tab=${encodeURIComponent(tabId)}`;
+        }
+    }
+
+    function navigateToDashboardTab(tabId) {
+        const params = new URLSearchParams(window.location.search);
+        const currentTab = params.get('admin_tab') || 'panel-overview';
+
+        if (currentTab === tabId && !params.has('submission_status')) {
+            switchTab(tabId);
+            return;
+        }
+
+        window.location.href = `${window.location.pathname}?admin_tab=${encodeURIComponent(tabId)}`;
     }
 
     // Switch Option types
@@ -1039,6 +1115,30 @@
                     return escapeHtml(filePath);
                 };
 
+                const booleanFields = new Set([
+                    'applied_to_university',
+                    'received_offer_letter',
+                    'declaration_confirmed',
+                    'contact_consent',
+                    'is_registered_ros',
+                    'has_served_before',
+                    'has_collaborated_before',
+                    'has_volunteered_before',
+                    'received_aid_before',
+                    'currently_studying',
+                    'receiving_other_scholarship',
+                ]);
+
+                const formatBooleanDisplay = (value) => {
+                    if (value === true || value === 1 || value === '1') {
+                        return 'Yes';
+                    }
+                    if (value === false || value === 0 || value === '0') {
+                        return 'No';
+                    }
+                    return null;
+                };
+
                 // Add standard elements
                 html += `<div class="detail-label">Date Submitted</div><div class="detail-value">${formatDate(data.created_at)}</div>`;
 
@@ -1057,6 +1157,8 @@
 
                     if (val === null || val === undefined) {
                         val = '-';
+                    } else if (booleanFields.has(key)) {
+                        val = formatBooleanDisplay(val) ?? '-';
                     } else if (typeof val === 'boolean') {
                         val = val ? 'Yes' : 'No';
                     } else if (['registration_certificate', 'committee_members', 'academic_transcript', 'offer_letter', 'proof_of_income', 'recommendation_letter'].includes(key)) {
@@ -1167,18 +1269,87 @@
         });
     });
 
-    function submitStatusUpdate(event, type, id) {
-        event.preventDefault();
+    const submissionsStatusFilterForm = document.getElementById('submissions-status-filter-form');
+    if (submissionsStatusFilterForm) {
+        submissionsStatusFilterForm.querySelectorAll('input[name="submission_status"]').forEach(function (input) {
+            input.addEventListener('change', function () {
+                const tabField = document.getElementById('status-filter-admin-tab');
+                const activePanel = document.querySelector('.dashboard-panel.active');
+                if (tabField && activePanel) {
+                    tabField.value = activePanel.id;
+                }
+                submissionsStatusFilterForm.submit();
+            });
+        });
+    }
 
-        const form = event.target;
-        const select = form.querySelector('.status-select');
-        const submitBtn = form.querySelector('.status-update-btn');
-        const status = select.value;
+    function reloadIfStatusFilterActive() {
+        const activeFilter = new URLSearchParams(window.location.search).get('submission_status');
+        if (activeFilter) {
+            window.location.reload();
+        }
+    }
+
+    function removeRowIfStatusMismatch(select, status) {
+        const activeFilter = new URLSearchParams(window.location.search).get('submission_status');
+        if (!activeFilter || status === activeFilter) {
+            return;
+        }
+
+        const row = select.closest('tr');
+        if (!row) {
+            return;
+        }
+
+        row.remove();
+
+        const tbody = row.parentElement;
+        if (tbody && tbody.querySelectorAll('tr').length === 0) {
+            const columnCount = tbody.closest('table')?.querySelectorAll('thead th').length || 1;
+            const emptyRow = document.createElement('tr');
+            emptyRow.innerHTML = `<td colspan="${columnCount}" style="text-align: center; color: var(--admin-text-muted);">No submissions found with the active status filter.</td>`;
+            tbody.appendChild(emptyRow);
+        }
+    }
+
+    let pendingStatusChange = null;
+    let pendingEmailNotification = null;
+
+    function handleStatusChange(event, type, id) {
+        const select = event.target;
+        const newStatus = select.value;
+        const previousStatus = select.dataset.originalValue || newStatus;
+
+        if (newStatus === previousStatus) {
+            return;
+        }
+
+        select.value = previousStatus;
+
+        pendingStatusChange = { select, type, id, newStatus, previousStatus };
+        document.getElementById('status-confirm-modal').classList.add('open');
+    }
+
+    function cancelStatusChange() {
+        document.getElementById('status-confirm-modal').classList.remove('open');
+        pendingStatusChange = null;
+    }
+
+    function confirmStatusChange() {
+        if (!pendingStatusChange) {
+            return;
+        }
+
+        const { select, type, id, newStatus } = pendingStatusChange;
+        cancelStatusChange();
+        applyStatusUpdate(select, type, id, newStatus);
+    }
+
+    function applyStatusUpdate(select, type, id, status) {
+        const previousStatus = select.dataset.originalValue || status;
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-        if (submitBtn) {
-            submitBtn.disabled = true;
-        }
+        select.disabled = true;
 
         fetch(`{{ url('/admin/submissions') }}/${type}/${id}/status`, {
             method: 'POST',
@@ -1194,22 +1365,68 @@
         })
         .then(data => {
             if (data.success) {
+                select.value = data.status;
                 select.dataset.originalValue = data.status;
-                if (submitBtn) {
-                    submitBtn.classList.add('is-saved');
-                    submitBtn.innerHTML = '<i class="fas fa-check"></i>';
-                    setTimeout(() => {
-                        submitBtn.classList.remove('is-saved');
-                    }, 1500);
-                }
+                pendingEmailNotification = { type, id, status: data.status, label: data.label };
+                document.getElementById('status-email-modal').classList.add('open');
             }
         })
         .catch(error => {
+            select.value = previousStatus;
             alert(`Error updating status: ${error.message}`);
         })
         .finally(() => {
-            if (submitBtn) {
-                submitBtn.disabled = false;
+            select.disabled = false;
+        });
+    }
+
+    function declineStatusEmailNotification() {
+        document.getElementById('status-email-modal').classList.remove('open');
+
+        if (pendingEmailNotification) {
+            const select = document.querySelector(`#status-${pendingEmailNotification.type}-${pendingEmailNotification.id}`);
+            if (select) {
+                removeRowIfStatusMismatch(select, pendingEmailNotification.status);
+            }
+        }
+
+        pendingEmailNotification = null;
+    }
+
+    function confirmStatusEmailNotification() {
+        if (!pendingEmailNotification) {
+            return;
+        }
+
+        const { type, id } = pendingEmailNotification;
+        const confirmBtn = document.getElementById('status-email-confirm-btn');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        if (confirmBtn) {
+            confirmBtn.disabled = true;
+        }
+
+        fetch(`{{ url('/admin/submissions') }}/${type}/${id}/status/notify`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json().then(data => ({ ok: response.ok, data })))
+        .then(({ ok, data }) => {
+            if (!ok) {
+                throw new Error(data.error || 'Failed to send notification email');
+            }
+            declineStatusEmailNotification();
+        })
+        .catch(error => {
+            alert(`Error sending notification email: ${error.message}`);
+        })
+        .finally(() => {
+            if (confirmBtn) {
+                confirmBtn.disabled = false;
             }
         });
     }
@@ -1217,7 +1434,11 @@
     // Close modal or sidebar on Escape key
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
-            if (document.body.classList.contains('sidebar-open')) {
+            if (document.getElementById('status-email-modal').classList.contains('open')) {
+                declineStatusEmailNotification();
+            } else if (document.getElementById('status-confirm-modal').classList.contains('open')) {
+                cancelStatusChange();
+            } else if (document.body.classList.contains('sidebar-open')) {
                 closeSidebar();
             } else {
                 closeModal();
@@ -1249,6 +1470,8 @@
         switchTab(@json(session('import_tab')));
         @elseif(session('admin_tab'))
         switchTab(@json(session('admin_tab')));
+        @else
+        switchTab(document.getElementById('status-filter-admin-tab')?.value || 'panel-overview');
         @endif
     })();
 

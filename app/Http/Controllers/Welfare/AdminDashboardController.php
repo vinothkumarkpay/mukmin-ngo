@@ -18,11 +18,25 @@ use App\Models\MflsScholarshipSubmission;
 use App\Services\Welfare\MflsPartnerDocumentService;
 use App\Services\Welfare\SubmissionImportRegistry;
 use App\Services\Welfare\SubmissionImporter;
+use App\Services\Welfare\SubmissionStatusNotifier;
 use App\Support\SubmissionStatus;
 use Response;
 
 class AdminDashboardController extends Controller
 {
+    /** @var array<string, string> */
+    private const SUBMISSION_TAB_TYPES = [
+        'panel-feedback' => 'feedback',
+        'panel-ordinary' => 'ordinary',
+        'panel-friends' => 'friends',
+        'panel-mentor' => 'mentor',
+        'panel-partner' => 'partner',
+        'panel-volunteer' => 'volunteer',
+        'panel-contact' => 'contact',
+        'panel-aid' => 'aid',
+        'panel-mfls' => 'mfls',
+    ];
+
     public function index(Request $request)
     {
         // 1. Gather stats
@@ -39,16 +53,48 @@ class AdminDashboardController extends Controller
             'donations' => Donation::count(),
         ];
 
-        // 2. Fetch all submissions
-        $feedback = FeedbackSubmission::orderBy('created_at', 'desc')->get();
-        $ordinary = OrdinaryMemberSubmission::orderBy('created_at', 'desc')->get();
-        $friends = FriendMemberSubmission::orderBy('created_at', 'desc')->get();
-        $mentor = MentorSubmission::orderBy('created_at', 'desc')->get();
-        $partner = PartnerSubmission::orderBy('created_at', 'desc')->get();
-        $volunteer = VolunteerSubmission::orderBy('created_at', 'desc')->get();
-        $contact = ContactSubmission::orderBy('created_at', 'desc')->get();
-        $aid = CommunityAidSubmission::orderBy('created_at', 'desc')->get();
-        $mfls = MflsScholarshipSubmission::orderBy('created_at', 'desc')->get();
+        $submissionStatusFilter = $request->filled('submission_status')
+            ? SubmissionStatus::normalize($request->submission_status)
+            : null;
+
+        $activeTab = (string) $request->get('admin_tab', 'panel-overview');
+        $filteredTabType = ($submissionStatusFilter && isset(self::SUBMISSION_TAB_TYPES[$activeTab]))
+            ? self::SUBMISSION_TAB_TYPES[$activeTab]
+            : null;
+
+        // 2. Fetch submissions (status filter applies to the active tab only)
+        $feedback = $this->loadSubmissions('feedback', FeedbackSubmission::query(), $submissionStatusFilter, $filteredTabType);
+        $ordinary = $this->loadSubmissions('ordinary', OrdinaryMemberSubmission::query(), $submissionStatusFilter, $filteredTabType);
+        $friends = $this->loadSubmissions('friends', FriendMemberSubmission::query(), $submissionStatusFilter, $filteredTabType);
+        $mentor = $this->loadSubmissions('mentor', MentorSubmission::query(), $submissionStatusFilter, $filteredTabType);
+        $partner = $this->loadSubmissions('partner', PartnerSubmission::query(), $submissionStatusFilter, $filteredTabType);
+        $volunteer = $this->loadSubmissions('volunteer', VolunteerSubmission::query(), $submissionStatusFilter, $filteredTabType);
+        $contact = $this->loadSubmissions('contact', ContactSubmission::query(), $submissionStatusFilter, $filteredTabType);
+        $aid = $this->loadSubmissions('aid', CommunityAidSubmission::query(), $submissionStatusFilter, $filteredTabType);
+        $mfls = $this->loadSubmissions('mfls', MflsScholarshipSubmission::query(), $submissionStatusFilter, $filteredTabType);
+
+        $filteredSubmissionCount = $filteredTabType
+            ? match ($filteredTabType) {
+                'feedback' => $feedback->count(),
+                'ordinary' => $ordinary->count(),
+                'friends' => $friends->count(),
+                'mentor' => $mentor->count(),
+                'partner' => $partner->count(),
+                'volunteer' => $volunteer->count(),
+                'contact' => $contact->count(),
+                'aid' => $aid->count(),
+                'mfls' => $mfls->count(),
+                default => 0,
+            }
+            : $feedback->count()
+                + $ordinary->count()
+                + $friends->count()
+                + $mentor->count()
+                + $partner->count()
+                + $volunteer->count()
+                + $contact->count()
+                + $aid->count()
+                + $mfls->count();
 
         $donationPayments = Donation::query()->orderBy('created_at', 'desc')->get();
         $donationPaymentMethods = Donation::query()
@@ -83,8 +129,51 @@ class AdminDashboardController extends Controller
         ];
 
         return view('welfare.admin.dashboard', compact(
-            'stats', 'feedback', 'ordinary', 'friends', 'mentor', 'partner', 'volunteer', 'contact', 'aid', 'mfls', 'donationPayments', 'donationPaymentMethods', 'options', 'formTypesMap', 'mflsPartnerDocuments'
+            'stats',
+            'feedback',
+            'ordinary',
+            'friends',
+            'mentor',
+            'partner',
+            'volunteer',
+            'contact',
+            'aid',
+            'mfls',
+            'donationPayments',
+            'donationPaymentMethods',
+            'options',
+            'formTypesMap',
+            'mflsPartnerDocuments',
+            'submissionStatusFilter',
+            'filteredSubmissionCount',
+            'filteredTabType',
+            'activeTab',
         ))->with('submissionStatusOptions', SubmissionStatus::options());
+    }
+
+    private function loadSubmissions(string $type, $query, ?string $statusFilter, ?string $filteredTabType)
+    {
+        $applyFilter = $filteredTabType === $type;
+        $results = $this->filteredSubmissionsQuery($query, $applyFilter ? $statusFilter : null)->get();
+
+        if (! $applyFilter || ! $statusFilter) {
+            return $results;
+        }
+
+        return $results
+            ->filter(fn ($item) => SubmissionStatus::matchesFilter($item->status, $statusFilter))
+            ->values();
+    }
+
+    private function filteredSubmissionsQuery($query, ?string $statusFilter)
+    {
+        $query->orderBy('created_at', 'desc');
+
+        if (! $statusFilter) {
+            return $query;
+        }
+
+        return $query->whereIn('status', SubmissionStatus::storedValuesFor($statusFilter));
     }
 
     public function donationPayments(Request $request)
@@ -191,6 +280,30 @@ class AdminDashboardController extends Controller
             'success' => true,
             'status' => $validated['status'],
             'label' => SubmissionStatus::label($validated['status']),
+        ]);
+    }
+
+    public function notifyStatusUpdate($type, $id, SubmissionStatusNotifier $notifier)
+    {
+        $submission = $this->findSubmissionForStatusUpdate($type, $id);
+
+        if (! $submission) {
+            return response()->json(['error' => 'Invalid submission type for status notification.'], 400);
+        }
+
+        if (! $notifier->resolveApplicantEmail($submission)) {
+            return response()->json(['error' => 'No applicant email address is available for this submission.'], 422);
+        }
+
+        try {
+            $notifier->notifyApplicant($submission, $type);
+        } catch (\Throwable $e) {
+            return response()->json(['error' => 'Failed to send status notification email.'], 500);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Status notification email sent to the applicant.',
         ]);
     }
 

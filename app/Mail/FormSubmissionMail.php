@@ -170,6 +170,23 @@ class FormSubmissionMail extends Mailable
     ];
 
     /**
+     * Form fields stored as booleans (may arrive as 0/1 from HTTP validation).
+     */
+    protected static $booleanFields = [
+        'applied_to_university',
+        'received_offer_letter',
+        'declaration_confirmed',
+        'contact_consent',
+        'is_registered_ros',
+        'has_served_before',
+        'has_collaborated_before',
+        'has_volunteered_before',
+        'received_aid_before',
+        'currently_studying',
+        'receiving_other_scholarship',
+    ];
+
+    /**
      * Create a new message instance.
      *
      * @param string $formName
@@ -387,10 +404,10 @@ class FormSubmissionMail extends Mailable
                     'value' => $formattedValue,
                     'is_html' => true
                 ];
-            } elseif (is_bool($value)) {
+            } elseif (is_bool($value) || self::isBooleanFieldValue($key, $value)) {
                 $formatted[] = [
                     'label' => $label,
-                    'value' => $value ? 'Yes' : 'No',
+                    'value' => self::formatBooleanDisplay($value),
                     'is_html' => false
                 ];
             } elseif (is_numeric($value)) {
@@ -409,5 +426,23 @@ class FormSubmissionMail extends Mailable
             }
         }
         return $formatted;
+    }
+
+    protected static function isBooleanFieldValue(string $key, $value): bool
+    {
+        if (!in_array($key, self::$booleanFields, true)) {
+            return false;
+        }
+
+        return in_array($value, [0, 1, '0', '1', true, false, 'true', 'false', 'on', 'off'], true);
+    }
+
+    protected static function formatBooleanDisplay($value): string
+    {
+        if (in_array($value, [true, 1, '1', 'true', 'on'], true)) {
+            return 'Yes';
+        }
+
+        return 'No';
     }
 }

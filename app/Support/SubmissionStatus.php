@@ -69,7 +69,15 @@ class SubmissionStatus
             return self::RECEIVED;
         }
 
-        $status = strtolower(trim($status));
+        $trimmed = trim($status);
+
+        foreach (self::LABELS as $slug => $label) {
+            if (strcasecmp($trimmed, $label) === 0) {
+                return $slug;
+            }
+        }
+
+        $status = strtolower($trimmed);
 
         return self::LEGACY_MAP[$status] ?? $status;
     }
@@ -77,5 +85,50 @@ class SubmissionStatus
     public static function badgeClass(?string $status): string
     {
         return 'badge-' . self::normalize($status);
+    }
+
+    /** @return list<string> */
+    public static function matchingValues(?string $status): array
+    {
+        return self::storedValuesFor($status);
+    }
+
+    /** @return list<string> */
+    public static function storedValuesFor(?string $status): array
+    {
+        if ($status === null || $status === '') {
+            return [];
+        }
+
+        $normalized = self::normalize($status);
+        $values = [$normalized];
+
+        foreach (self::LEGACY_MAP as $legacy => $mapped) {
+            if ($mapped === $normalized) {
+                $values[] = $legacy;
+            }
+        }
+
+        if (isset(self::LABELS[$normalized])) {
+            $values[] = self::LABELS[$normalized];
+        }
+
+        return array_values(array_unique($values));
+    }
+
+    public static function matchesFilter(?string $recordStatus, ?string $filterStatus): bool
+    {
+        if ($filterStatus === null || $filterStatus === '') {
+            return true;
+        }
+
+        if ($recordStatus === null || $recordStatus === '') {
+            $recordStatus = self::default();
+        }
+
+        $normalizedRecord = self::normalize($recordStatus);
+        $normalizedFilter = self::normalize($filterStatus);
+
+        return $normalizedRecord === $normalizedFilter;
     }
 }

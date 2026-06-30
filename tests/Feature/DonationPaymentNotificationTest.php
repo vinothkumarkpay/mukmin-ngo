@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Mail\DonationDonorPaymentMail;
 use App\Mail\DonationPaymentMail;
 use App\Models\Donation;
 use App\Services\Welfare\DonationPaymentCallbackHandler;
@@ -55,6 +56,14 @@ class DonationPaymentNotificationTest extends TestCase
                 && $mail->donation->order_id === $orderNo
                 && str_contains($mail->subject, 'Paid');
         });
+
+        Mail::assertSent(DonationDonorPaymentMail::class, function ($mail) use ($orderNo) {
+            $mail->build();
+
+            return $mail->hasTo('ahmad@example.com')
+                && $mail->donation->order_id === $orderNo
+                && $mail->statusKey === 'success';
+        });
     }
 
     public function test_payment_callback_sends_email_when_failed(): void
@@ -85,6 +94,13 @@ class DonationPaymentNotificationTest extends TestCase
             return $mail->hasTo('donate@mukmin.org')
                 && str_contains($mail->subject, 'Failed');
         });
+
+        Mail::assertSent(DonationDonorPaymentMail::class, function ($mail) {
+            $mail->build();
+
+            return $mail->hasTo('siti@example.com')
+                && $mail->statusKey === 'failed';
+        });
     }
 
     public function test_duplicate_callback_does_not_send_duplicate_email(): void
@@ -109,6 +125,7 @@ class DonationPaymentNotificationTest extends TestCase
         $handler->handle(request()->merge($payload), 'Donation');
 
         Mail::assertSent(DonationPaymentMail::class, 1);
+        Mail::assertSent(DonationDonorPaymentMail::class, 1);
     }
 
     public function test_payment_return_sends_email_to_donate_inbox_when_paid(): void
@@ -146,6 +163,14 @@ class DonationPaymentNotificationTest extends TestCase
 
             return $mail->hasTo('donate@mukmin.org')
                 && $mail->donation->order_id === $orderNo;
+        });
+
+        Mail::assertSent(DonationDonorPaymentMail::class, function ($mail) use ($orderNo) {
+            $mail->build();
+
+            return $mail->hasTo('return@example.com')
+                && $mail->donation->order_id === $orderNo
+                && $mail->statusKey === 'success';
         });
     }
 
@@ -243,6 +268,30 @@ class DonationPaymentNotificationTest extends TestCase
         );
 
         Mail::assertSent(DonationPaymentMail::class, 1);
+        Mail::assertSent(DonationDonorPaymentMail::class, 1);
+    }
+
+    public function test_donation_store_sends_pending_email_to_donor(): void
+    {
+        $response = $this->post(route('welfare.donate.store'), [
+            'name' => 'Pending Donor',
+            'email' => 'pending@example.com',
+            'phone' => '+60123456789',
+            'amount' => 100,
+            'message' => 'Education fund',
+        ]);
+
+        $response->assertStatus(200);
+
+        Mail::assertSent(DonationDonorPaymentMail::class, function ($mail) {
+            $mail->build();
+
+            return $mail->hasTo('pending@example.com')
+                && $mail->statusKey === 'pending'
+                && str_contains($mail->subject, 'Pending');
+        });
+
+        Mail::assertNotSent(DonationPaymentMail::class);
     }
 
     private function buildCallbackPayload(string $orderNo, float $amount, string $returncode): array
