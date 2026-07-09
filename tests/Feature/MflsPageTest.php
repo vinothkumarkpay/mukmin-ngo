@@ -26,7 +26,7 @@ class MflsPageTest extends TestCase
         $response->assertSee('Begin Your Learning Journey', false);
         $response->assertSee('Partner Institutions', false);
         $response->assertSee('Programmes', false);
-        $response->assertSee('find your preferred university or programme?', false);
+        $response->assertSee('Looking for any other university?', false);
         $response->assertSee('Worry not! We may still be able to help you.', false);
         $response->assertSee('Submit an Education Aid Application', false);
         $response->assertSee(route('welfare.community-aid'), false);

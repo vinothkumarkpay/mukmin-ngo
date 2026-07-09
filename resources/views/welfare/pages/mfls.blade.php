@@ -679,7 +679,7 @@
                 </div>
 
                 <div class="mfls-partner-cta">
-                    <h3>Can&rsquo;t find your preferred university or programme?</h3>
+                    <h3>Looking for any other university?</h3>
                     <p>Worry not! We may still be able to help you.</p>
                     <p>
                         <a href="{{ route('welfare.community-aid') }}">Submit an Education Aid Application</a>
