@@ -276,6 +276,38 @@
     height: 104px;
     object-fit: contain;
 }
+.mfls-partner-cta {
+    background: #fdf8f6;
+    border: 1px solid rgba(212, 60, 24, 0.2);
+    border-left: 4px solid var(--color-primary, #d43c18);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+.mfls-partner-cta h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--color-heading);
+    margin: 0 0 8px;
+    line-height: 1.35;
+}
+.mfls-partner-cta p {
+    font-size: 14px;
+    line-height: 22px;
+    color: #555;
+    margin: 0 0 10px;
+}
+.mfls-partner-cta p:last-child {
+    margin-bottom: 0;
+}
+.mfls-partner-cta a {
+    color: var(--color-primary, #d43c18);
+    font-weight: 700;
+    text-decoration: underline;
+}
+.mfls-partner-cta a:hover {
+    color: var(--color-primary-dk, #b83210);
+}
 .mfls-partner-details {
     display: flex;
     flex-direction: column;
@@ -644,6 +676,15 @@
                             <img src="{{ asset($partner['logo']) }}" alt="{{ $partner['name'] }}">
                         </button>
                     @endforeach
+                </div>
+
+                <div class="mfls-partner-cta">
+                    <h3>Can&rsquo;t find your preferred university or programme?</h3>
+                    <p>Worry not! We may still be able to help you.</p>
+                    <p>
+                        <a href="{{ route('welfare.community-aid') }}">Submit an Education Aid Application</a>
+                        with details of your preferred university and programme, and our team will review your request and get back to you as soon as possible.
+                    </p>
                 </div>
 
                 <div class="mfls-partner-details">
