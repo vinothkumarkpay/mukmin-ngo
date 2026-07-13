@@ -676,6 +676,9 @@ h6 { font-size: 13px; line-height: 20px; }
     z-index: 1;
     text-decoration: none;
     color: inherit;
+    cursor: default;
+}
+.hero-slider a.slide {
     cursor: pointer;
 }
 .hero-slider .slide.active {

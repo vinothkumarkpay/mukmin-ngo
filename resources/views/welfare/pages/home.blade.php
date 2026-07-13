@@ -766,7 +766,13 @@
     <!-- HERO SLIDER SECTION -->
     <section class="hero-slider">
         <div class="slider-container">
-            <a href="{{ route('welfare.about') }}" class="slide active">
+            <div class="slide active">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="{{ asset('welfare/img/banner-imtf-mobile.jpg') }}">
+                    <img src="{{ asset('welfare/img/banner-imtf.jpeg') }}" alt="Official Launch of #IMTF2030 — Indian Muslim Transformational Framework">
+                </picture>
+            </div>
+            <a href="{{ route('welfare.about') }}" class="slide">
                 <picture>
                     <source media="(max-width: 768px)" srcset="{{ asset('welfare/img/banner-1-mobile.jpg') }}">
                     <img src="{{ asset('welfare/img/banner-1.jpeg') }}" alt="One Identity. One Vision. One Community.">
@@ -781,7 +787,7 @@
             <a href="{{ route('welfare.impact.mfls') }}" class="slide">
                 <picture>
                     <source media="(max-width: 768px)" srcset="{{ asset('welfare/img/banner-3-mobile.jpg') }}">
-                    <img src="{{ asset('welfare/img/banner-3.png') }}" alt="Empowering Future Leaders. Unlocking Potential.">
+                    <img src="{{ asset('welfare/img/banner-3.png') }}" alt="MUKMIN Future Leaders Scholarship">
                 </picture>
             </a>
             <a href="{{ route('welfare.ecosystem') }}" class="slide">
@@ -799,6 +805,7 @@
                 <span class="dot" data-index="1"></span>
                 <span class="dot" data-index="2"></span>
                 <span class="dot" data-index="3"></span>
+                <span class="dot" data-index="4"></span>
             </div>
         </div>
     </section>
