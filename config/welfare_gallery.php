@@ -55,5 +55,6 @@ return [
         19 => 'MUKMIN Shark Tank Pitching',
         20 => 'MUKMIN Football Friendly： KL vs Penang',
         21 => 'MUKMIN Official Jersey Launch',
+        22 => "MUKMIN's 1st EXCO Meeting",
     ],
 ];

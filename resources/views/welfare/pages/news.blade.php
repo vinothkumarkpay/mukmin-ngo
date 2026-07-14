@@ -794,8 +794,14 @@
                 <aside class="news-sidebar">
                     <div class="news-tab-list" role="tablist" aria-label="Impact Events">
 
+                        <!-- Tab 22 -->
+                        <button class="news-tab-item active" role="tab" aria-selected="true" aria-controls="event-tab-22" id="tab-22" data-index="22">
+                            <span class="news-tab-title">MUKMIN's 1st EXCO Meeting</span>
+                            <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 19 June 2026</span>
+                        </button>
+
                         <!-- Tab 15 -->
-                        <button class="news-tab-item active" role="tab" aria-selected="true" aria-controls="event-tab-15" id="tab-15" data-index="15">
+                        <button class="news-tab-item" role="tab" aria-selected="false" aria-controls="event-tab-15" id="tab-15" data-index="15">
                             <span class="news-tab-title">MUKMIN's 1st Inaugural AGM</span>
                             <span class="news-tab-date"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 31 May 2026</span>
                         </button>
@@ -926,8 +932,36 @@
                 <!-- Right Display Area -->
                 <main class="news-content-display">
 
+                    <!-- Detail 22 (1st EXCO Meeting) -->
+                    <article class="news-card-detail active" id="event-tab-22" role="tabpanel" aria-labelledby="tab-22" data-gallery-filter="{{ $newsGallerySlugs[22] ?? '' }}">
+                        <div class="news-detail-image-wrap">
+                            <img src="{{ asset('welfare/img/news/insights/22.png') }}" alt="MUKMIN's 1st EXCO Meeting">
+                        </div>
+                        <div class="news-detail-header">
+                            <div class="news-detail-title-wrap">
+                                <span class="news-detail-accent"></span>
+                                <h4 class="news-detail-title">MUKMIN's 1st EXCO Meeting</h4>
+                            </div>
+                            <div class="news-detail-meta">
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> 19 June 2026</span>
+                                <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> DUA Sentral Hotel, Brickfields, Kuala Lumpur</span>
+                            </div>
+                        </div>
+                        <div class="news-detail-description">
+                            <p>MUKMIN convened its 1st Executive Committee (EXCO) Meeting following the organisation's inaugural Annual General Meeting, bringing together 60 members of the Executive Committee to align on strategic priorities and the organisation's roadmap for the year ahead.</p>
+                            <p>The meeting focused on strengthening governance, reviewing key organisational developments, and discussing the implementation of MUKMIN's strategic initiatives across its five Impact Areas. Members also deliberated on upcoming flagship programmes, operational priorities, partnership opportunities, and initiatives aimed at delivering greater impact for the Indian Muslim community.</p>
+                            <p>The session reaffirmed the Executive Committee's collective commitment to building a well-governed, collaborative and future-focused organisation dedicated to empowering communities through sustainable socio-economic development, education, leadership and community welfare.</p>
+                            <p>The meeting concluded with a shared commitment among EXCO members to work collectively in advancing MUKMIN's vision and delivering meaningful outcomes for the communities it serves.</p>
+                        </div>
+                        <div class="news-detail-cta-wrap">
+                            <button class="news-detail-cta scroll-to-gallery">
+                                View Gallery <i class="fas fa-images" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </article>
+
                     <!-- Detail 15 (Inaugural AGM) -->
-                    <article class="news-card-detail active" id="event-tab-15" role="tabpanel" aria-labelledby="tab-15" data-gallery-filter="{{ $newsGallerySlugs[15] ?? '' }}">
+                    <article class="news-card-detail" id="event-tab-15" role="tabpanel" aria-labelledby="tab-15" data-gallery-filter="{{ $newsGallerySlugs[15] ?? '' }}">
                         <div class="news-detail-image-wrap">
                             <img src="{{ asset('welfare/img/news/insights/15.png') }}" alt="MUKMIN's 1st Inaugural AGM">
                         </div>
