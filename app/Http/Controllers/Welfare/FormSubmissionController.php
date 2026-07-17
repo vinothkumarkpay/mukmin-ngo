@@ -157,6 +157,11 @@ class FormSubmissionController extends Controller
         return ['required', 'regex:/^(?:\d{1,12}|(?=.*[A-Za-z])[A-Za-z0-9]{6,20})$/'];
     }
 
+    private function organisationNameRules(): array
+    {
+        return ['required', 'string', 'min:2', 'max:255', 'regex:/^[\p{L}\s]+$/u'];
+    }
+
     public function feedback()
     {
         $categories = $this->getOptions('feedback_category');
@@ -210,7 +215,7 @@ class FormSubmissionController extends Controller
         $salutations = $this->officeBearerSalutationOptions();
 
         $validated = $request->validate([
-            'name_of_organisation' => 'required|string|max:255',
+            'name_of_organisation' => $this->organisationNameRules(),
             'org_reg_number' => 'required|string|max:50',
             'org_reg_date' => 'required|date',
             'registered_state' => ['required', 'string', Rule::in($states)],
@@ -244,6 +249,8 @@ class FormSubmissionController extends Controller
             'key_office_bearers.treasurer.email' => $this->nullableEmailRule(),
             'key_office_bearers.treasurer.phone' => $this->nullablePhoneRule(),
             'declaration_confirmed' => 'required|accepted',
+        ], [
+            'name_of_organisation.regex' => 'Organisation name may only contain letters and spaces (no numbers).',
         ]);
 
         $validated['is_registered_ros'] = false;
@@ -340,7 +347,7 @@ class FormSubmissionController extends Controller
             ]);
         } else {
             $rules = array_merge($rules, [
-                'org_name' => 'required|string|max:255',
+                'org_name' => $this->organisationNameRules(),
                 'org_state' => ['required', 'string', Rule::in($states)],
                 'org_postcode' => 'required|string|max:10',
                 'org_address' => 'required|string',
@@ -353,7 +360,9 @@ class FormSubmissionController extends Controller
             ]);
         }
 
-        $validated = $request->validate($rules);
+        $validated = $request->validate($rules, [
+            'org_name.regex' => 'Organisation name may only contain letters and spaces (no numbers).',
+        ]);
 
         $this->applyDefaultSubmissionStatus($validated);
         FriendMemberSubmission::create($validated);

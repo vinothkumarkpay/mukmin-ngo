@@ -324,7 +324,7 @@
 
                     <div class="form-group">
                         <label for="org_name">Name of Organisation</label>
-                        <input type="text" id="org_name" name="org_name" class="form-control" value="{{ old('org_name') }}">
+                        <input type="text" id="org_name" name="org_name" class="form-control letters-only-input" value="{{ old('org_name') }}" title="Letters and spaces only (no numbers)">
                     </div>
 
                     <div class="form-group">
@@ -538,5 +538,6 @@ document.addEventListener('DOMContentLoaded', function () {
     toggleFormSections();
 });
 </script>
+@include('welfare.partials.form-letters-only-script')
 @endpush
 @endsection

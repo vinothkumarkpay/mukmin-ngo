@@ -256,7 +256,7 @@
                 
                 <div class="form-group">
                     <label for="name_of_organisation">Name of Organisation</label>
-                    <input type="text" id="name_of_organisation" name="name_of_organisation" class="form-control" value="{{ old('name_of_organisation') }}" required>
+                    <input type="text" id="name_of_organisation" name="name_of_organisation" class="form-control letters-only-input" value="{{ old('name_of_organisation') }}" title="Letters and spaces only (no numbers)" required>
                 </div>
 
                 <div class="grid-2">
@@ -579,5 +579,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+@include('welfare.partials.form-letters-only-script')
 @endpush
 @endsection
