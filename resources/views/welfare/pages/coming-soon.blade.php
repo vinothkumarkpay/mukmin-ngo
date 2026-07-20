@@ -266,11 +266,11 @@
                 @endif
 
                 <div class="coming-soon-social">
-                    <a href="https://web.facebook.com/profile.php?id=61590435118262" title="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/mukmin.malaysia" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.linkedin.com/in/mukminofficial/" title="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61590805645185" title="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/mukmin.nasional/" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/company/135994026/" title="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
                     <a href="https://x.com/Mukminmy" title="X / Twitter" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
-                    <a href="https://www.tiktok.com/@mukminnasional?is_from_webapp=1&sender_device=pc" title="TikTok" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.tiktok.com/@mukmin.nasional" title="TikTok" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
                     <a href="https://youtube.com/@mukmin-i7l?si=ZDB9eyr679HET6Ew" title="YouTube" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
                     @if(config('welfare.whatsapp_url'))
                     <a href="{{ config('welfare.whatsapp_url') }}" title="WhatsApp Support" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>

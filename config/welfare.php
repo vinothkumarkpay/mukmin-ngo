@@ -120,10 +120,10 @@ return [
     ],
 
     'social' => [
-        ['icon' => 'cmsms-icon-facebook', 'url' => 'https://web.facebook.com/profile.php?id=61590435118262'],
-        ['icon' => 'cmsms-icon-instagram', 'url' => 'https://www.instagram.com/mukmin.malaysia'],
-        ['icon' => 'cmsms-icon-linkedin', 'url' => 'https://www.linkedin.com/in/mukminofficial/'],
-        ['icon' => 'cmsms-icon-tiktok', 'url' => 'https://www.tiktok.com/@mukminnasional?is_from_webapp=1&sender_device=pc'],
+        ['icon' => 'cmsms-icon-facebook', 'url' => 'https://www.facebook.com/profile.php?id=61590805645185'],
+        ['icon' => 'cmsms-icon-instagram', 'url' => 'https://www.instagram.com/mukmin.nasional/'],
+        ['icon' => 'cmsms-icon-linkedin', 'url' => 'https://www.linkedin.com/company/135994026/'],
+        ['icon' => 'cmsms-icon-tiktok', 'url' => 'https://www.tiktok.com/@mukmin.nasional'],
         ['icon' => 'cmsms-icon-youtube', 'url' => 'https://youtube.com/@mukmin-i7l?si=ZDB9eyr679HET6Ew'],
         ['icon' => 'cmsms-icon-twitter', 'url' => 'https://x.com/Mukminmy'],
     ],
