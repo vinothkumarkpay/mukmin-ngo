@@ -30,9 +30,17 @@
     ])->filter(fn ($value) => filled($value));
 
     $currentAdminTab = request('admin_tab', $activeTab ?? 'panel-overview');
+    $hideFilterOn = ['panel-overview', 'panel-options', 'panel-mfls-documents', 'panel-payments'];
+    $showFilterCard = ! in_array($currentAdminTab, $hideFilterOn, true);
+
+    $filterFieldVisible = static function (string $panels) use ($currentAdminTab): bool {
+        $allowed = preg_split('/\s+/', trim($panels)) ?: [];
+
+        return in_array($currentAdminTab, $allowed, true);
+    };
 @endphp
 
-<div class="payments-filter-card submissions-status-filter-card" id="submissions-status-filter-card">
+<div class="payments-filter-card submissions-status-filter-card" id="submissions-status-filter-card" @unless($showFilterCard) style="display: none;" @endunless>
     <div class="payments-filter-header">
         <div class="payments-filter-title">
             <span class="payments-filter-icon"><i class="fas fa-filter"></i></span>
@@ -74,11 +82,12 @@
                 </div>
             </div>
 
-            <div class="payments-filter-field" data-filter-panels="panel-feedback panel-ordinary panel-friends panel-mentor panel-partner panel-volunteer panel-aid panel-mfls">
+            @php $showState = $filterFieldVisible('panel-feedback panel-ordinary panel-friends panel-mentor panel-partner panel-volunteer panel-aid panel-mfls'); @endphp
+            <div class="payments-filter-field" data-filter-panels="panel-feedback panel-ordinary panel-friends panel-mentor panel-partner panel-volunteer panel-aid panel-mfls" @unless($showState) style="display: none;" @endunless>
                 <label for="filter_state">State</label>
                 <div class="payments-input-wrap payments-input-wrap--select">
                     <i class="fas fa-map-marker-alt"></i>
-                    <select name="filter_state" id="filter_state">
+                    <select name="filter_state" id="filter_state" @unless($showState) disabled @endunless>
                         <option value="">All states</option>
                         @foreach(($submissionFilterStates ?? []) as $stateOption)
                             <option value="{{ $stateOption }}" @selected(request('filter_state') === $stateOption)>{{ $stateOption }}</option>
@@ -103,11 +112,12 @@
                 </div>
             </div>
 
-            <div class="payments-filter-field" data-filter-panels="panel-mfls">
+            @php $showPartner = $filterFieldVisible('panel-mfls'); @endphp
+            <div class="payments-filter-field" data-filter-panels="panel-mfls" @unless($showPartner) style="display: none;" @endunless>
                 <label for="filter_partner">Partner</label>
                 <div class="payments-input-wrap payments-input-wrap--select">
                     <i class="fas fa-university"></i>
-                    <select name="filter_partner" id="filter_partner">
+                    <select name="filter_partner" id="filter_partner" @unless($showPartner) disabled @endunless>
                         <option value="">All partners</option>
                         @foreach(($submissionFilterPartners ?? []) as $partnerOption)
                             <option value="{{ $partnerOption['id'] }}" @selected(request('filter_partner') === $partnerOption['id'])>{{ $partnerOption['name'] }}</option>
@@ -116,19 +126,21 @@
                 </div>
             </div>
 
-            <div class="payments-filter-field" data-filter-panels="panel-mfls">
+            @php $showProgramme = $filterFieldVisible('panel-mfls'); @endphp
+            <div class="payments-filter-field" data-filter-panels="panel-mfls" @unless($showProgramme) style="display: none;" @endunless>
                 <label for="filter_programme">Programme</label>
                 <div class="payments-input-wrap">
                     <i class="fas fa-graduation-cap"></i>
-                    <input type="text" name="filter_programme" id="filter_programme" value="{{ request('filter_programme') }}" placeholder="Programme name…" autocomplete="off">
+                    <input type="text" name="filter_programme" id="filter_programme" value="{{ request('filter_programme') }}" placeholder="Programme name…" autocomplete="off" @unless($showProgramme) disabled @endunless>
                 </div>
             </div>
 
-            <div class="payments-filter-field" data-filter-panels="panel-mfls">
+            @php $showQualification = $filterFieldVisible('panel-mfls'); @endphp
+            <div class="payments-filter-field" data-filter-panels="panel-mfls" @unless($showQualification) style="display: none;" @endunless>
                 <label for="filter_qualification">Qualification</label>
                 <div class="payments-input-wrap payments-input-wrap--select">
                     <i class="fas fa-book"></i>
-                    <select name="filter_qualification" id="filter_qualification">
+                    <select name="filter_qualification" id="filter_qualification" @unless($showQualification) disabled @endunless>
                         <option value="">All qualifications</option>
                         @foreach(($submissionFilterQualifications ?? []) as $qualification)
                             <option value="{{ $qualification }}" @selected(request('filter_qualification') === $qualification)>{{ $qualification }}</option>
@@ -137,11 +149,12 @@
                 </div>
             </div>
 
-            <div class="payments-filter-field" data-filter-panels="panel-mfls">
+            @php $showIncome = $filterFieldVisible('panel-mfls'); @endphp
+            <div class="payments-filter-field" data-filter-panels="panel-mfls" @unless($showIncome) style="display: none;" @endunless>
                 <label for="filter_household_income">Household income</label>
                 <div class="payments-input-wrap payments-input-wrap--select">
                     <i class="fas fa-coins"></i>
-                    <select name="filter_household_income" id="filter_household_income">
+                    <select name="filter_household_income" id="filter_household_income" @unless($showIncome) disabled @endunless>
                         <option value="">All income bands</option>
                         @foreach(($submissionFilterHouseholdIncomes ?? []) as $income)
                             <option value="{{ $income }}" @selected(request('filter_household_income') === $income)>{{ $income }}</option>
@@ -150,11 +163,12 @@
                 </div>
             </div>
 
-            <div class="payments-filter-field" data-filter-panels="panel-volunteer">
+            @php $showGender = $filterFieldVisible('panel-volunteer'); @endphp
+            <div class="payments-filter-field" data-filter-panels="panel-volunteer" @unless($showGender) style="display: none;" @endunless>
                 <label for="filter_gender">Gender</label>
                 <div class="payments-input-wrap payments-input-wrap--select">
                     <i class="fas fa-venus-mars"></i>
-                    <select name="filter_gender" id="filter_gender">
+                    <select name="filter_gender" id="filter_gender" @unless($showGender) disabled @endunless>
                         <option value="">All genders</option>
                         <option value="Male" @selected(request('filter_gender') === 'Male')>Male</option>
                         <option value="Female" @selected(request('filter_gender') === 'Female')>Female</option>
@@ -162,19 +176,21 @@
                 </div>
             </div>
 
-            <div class="payments-filter-field" data-filter-panels="panel-volunteer">
+            @php $showMode = $filterFieldVisible('panel-volunteer'); @endphp
+            <div class="payments-filter-field" data-filter-panels="panel-volunteer" @unless($showMode) style="display: none;" @endunless>
                 <label for="filter_mode">Preferred mode</label>
                 <div class="payments-input-wrap">
                     <i class="fas fa-laptop-house"></i>
-                    <input type="text" name="filter_mode" id="filter_mode" value="{{ request('filter_mode') }}" placeholder="e.g. On-site, Online…" autocomplete="off">
+                    <input type="text" name="filter_mode" id="filter_mode" value="{{ request('filter_mode') }}" placeholder="e.g. On-site, Online…" autocomplete="off" @unless($showMode) disabled @endunless>
                 </div>
             </div>
 
-            <div class="payments-filter-field" data-filter-panels="panel-friends">
+            @php $showEntity = $filterFieldVisible('panel-friends'); @endphp
+            <div class="payments-filter-field" data-filter-panels="panel-friends" @unless($showEntity) style="display: none;" @endunless>
                 <label for="filter_entity_type">Entity type</label>
                 <div class="payments-input-wrap payments-input-wrap--select">
                     <i class="fas fa-users"></i>
-                    <select name="filter_entity_type" id="filter_entity_type">
+                    <select name="filter_entity_type" id="filter_entity_type" @unless($showEntity) disabled @endunless>
                         <option value="">All entity types</option>
                         @foreach(($submissionFilterEntityTypes ?? []) as $entityType)
                             <option value="{{ $entityType }}" @selected(request('filter_entity_type') === $entityType)>{{ $entityType }}</option>
@@ -183,11 +199,12 @@
                 </div>
             </div>
 
-            <div class="payments-filter-field" data-filter-panels="panel-ordinary">
+            @php $showRos = $filterFieldVisible('panel-ordinary'); @endphp
+            <div class="payments-filter-field" data-filter-panels="panel-ordinary" @unless($showRos) style="display: none;" @endunless>
                 <label for="filter_ros">ROS registered</label>
                 <div class="payments-input-wrap payments-input-wrap--select">
                     <i class="fas fa-stamp"></i>
-                    <select name="filter_ros" id="filter_ros">
+                    <select name="filter_ros" id="filter_ros" @unless($showRos) disabled @endunless>
                         <option value="">All</option>
                         <option value="1" @selected(request('filter_ros') === '1')>Yes</option>
                         <option value="0" @selected(request('filter_ros') === '0')>No</option>
@@ -195,11 +212,12 @@
                 </div>
             </div>
 
-            <div class="payments-filter-field" data-filter-panels="panel-aid">
+            @php $showAid = $filterFieldVisible('panel-aid'); @endphp
+            <div class="payments-filter-field" data-filter-panels="panel-aid" @unless($showAid) style="display: none;" @endunless>
                 <label for="filter_aid_type">Aid type</label>
                 <div class="payments-input-wrap">
                     <i class="fas fa-hands-helping"></i>
-                    <input type="text" name="filter_aid_type" id="filter_aid_type" value="{{ request('filter_aid_type') }}" placeholder="e.g. Financial Assistance…" autocomplete="off">
+                    <input type="text" name="filter_aid_type" id="filter_aid_type" value="{{ request('filter_aid_type') }}" placeholder="e.g. Financial Assistance…" autocomplete="off" @unless($showAid) disabled @endunless>
                 </div>
             </div>
         </div>

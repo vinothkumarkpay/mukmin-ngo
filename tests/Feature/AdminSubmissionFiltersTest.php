@@ -35,6 +35,20 @@ class AdminSubmissionFiltersTest extends TestCase
         $response->assertSee('name="filter_household_income"', false);
         $response->assertSee('Apply filters', false);
         $response->assertDontSee('No status filter applied', false);
+
+        $html = $response->getContent();
+        $this->assertMatchesRegularExpression(
+            '/data-filter-panels="panel-volunteer"[^>]*style="display:\s*none;"/',
+            $html
+        );
+        $this->assertMatchesRegularExpression(
+            '/id="filter_gender"[^>]*\bdisabled\b/',
+            $html
+        );
+        $this->assertDoesNotMatchRegularExpression(
+            '/data-filter-panels="panel-mfls"[^>]*style="display:\s*none;"/',
+            $html
+        );
     }
 
     public function test_admin_can_filter_mfls_by_partner_and_status(): void
