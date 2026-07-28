@@ -181,6 +181,231 @@ class MflsPartnerDocumentService
         }
     }
 
+    /**
+     * Parse programme requirement rows from the partner Excel sheet.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function programmeRequirementRows(string $partnerId): array
+    {
+        $document = $this->findForPartner($partnerId);
+        if (!$document || !is_file($this->absolutePath($document))) {
+            return [];
+        }
+
+        $spreadsheet = IOFactory::load($this->absolutePath($document));
+        $sheet = $spreadsheet->getActiveSheet();
+        $rows = $sheet->toArray(null, true, true, true);
+
+        $headerMap = null;
+        $programmes = [];
+
+        foreach ($rows as $row) {
+            $cells = [];
+            foreach ($row as $col => $value) {
+                $cells[$col] = $this->normalizeCellValue($value);
+            }
+
+            if ($headerMap === null) {
+                $detected = $this->detectRequirementHeaderMap($cells);
+                if ($detected !== null) {
+                    $headerMap = $detected;
+                }
+                continue;
+            }
+
+            $programmeName = $cells[$headerMap['programme']] ?? '';
+            if ($programmeName === '' || $this->looksLikeHeaderLabel($programmeName)) {
+                continue;
+            }
+
+            $entry = [
+                'programme' => $programmeName,
+                'venue' => $this->cellFromMap($cells, $headerMap, 'venue'),
+                'course_fee' => $this->cellFromMap($cells, $headerMap, 'course_fee'),
+                'scholarship_coverage' => $this->cellFromMap($cells, $headerMap, 'scholarship_coverage'),
+                'waived_amount' => $this->cellFromMap($cells, $headerMap, 'waived_amount'),
+                'exclusions' => $this->cellFromMap($cells, $headerMap, 'exclusions'),
+                'academic_requirements' => $this->cellFromMap($cells, $headerMap, 'academic_requirements'),
+                'financial_requirement' => $this->cellFromMap($cells, $headerMap, 'financial_requirement'),
+                'academic_requirements_b40' => $this->cellFromMap($cells, $headerMap, 'academic_requirements_b40'),
+                'academic_requirements_merit' => $this->cellFromMap($cells, $headerMap, 'academic_requirements_merit'),
+            ];
+
+            if ($entry['academic_requirements'] === ''
+                && ($entry['academic_requirements_b40'] !== '' || $entry['academic_requirements_merit'] !== '')
+            ) {
+                $parts = [];
+                if ($entry['academic_requirements_b40'] !== '') {
+                    $parts[] = 'B40 Household Income Category: ' . $entry['academic_requirements_b40'];
+                }
+                if ($entry['academic_requirements_merit'] !== '') {
+                    $parts[] = 'Excellent Academic Merit Category: ' . $entry['academic_requirements_merit'];
+                }
+                $entry['academic_requirements'] = implode("\n\n", $parts);
+            }
+
+            $programmes[] = $entry;
+        }
+
+        return $programmes;
+    }
+
+    /**
+     * Find requirement details for a selected programme name.
+     *
+     * @return array<string, mixed>|null
+     */
+    public function findProgrammeRequirements(string $partnerId, string $programmeName): ?array
+    {
+        $rows = $this->programmeRequirementRows($partnerId);
+        if ($rows === []) {
+            return null;
+        }
+
+        $needle = $this->normalizeProgrammeKey($programmeName);
+        $best = null;
+        $bestScore = 0.0;
+
+        foreach ($rows as $row) {
+            $candidate = $this->normalizeProgrammeKey($row['programme']);
+            if ($candidate === '' || $needle === '') {
+                continue;
+            }
+
+            if ($candidate === $needle) {
+                return $row;
+            }
+
+            similar_text($candidate, $needle, $percent);
+            if ($percent > $bestScore) {
+                $bestScore = $percent;
+                $best = $row;
+            }
+        }
+
+        // Allow near-matches for sheet typos (e.g. "Foudation" vs "Foundation").
+        if ($best !== null && $bestScore >= 82.0) {
+            return $best;
+        }
+
+        return null;
+    }
+
+    private function normalizeCellValue($value): string
+    {
+        if ($value === null) {
+            return '';
+        }
+
+        $text = trim(preg_replace('/\s+/u', ' ', (string) $value) ?? '');
+
+        return $text;
+    }
+
+    private function looksLikeHeaderLabel(string $value): bool
+    {
+        $normalized = strtolower($value);
+
+        return in_array($normalized, [
+            'no.',
+            'no',
+            'programmes offered',
+            'programme offered',
+            'programs offered',
+        ], true);
+    }
+
+    /**
+     * @param  array<string, string>  $cells
+     * @return array<string, string>|null
+     */
+    private function detectRequirementHeaderMap(array $cells): ?array
+    {
+        $map = [];
+
+        foreach ($cells as $col => $label) {
+            if ($label === '') {
+                continue;
+            }
+
+            $normalized = strtolower($label);
+
+            if (str_contains($normalized, 'programmes offered')
+                || str_contains($normalized, 'programme offered')
+                || str_contains($normalized, 'programs offered')
+            ) {
+                $map['programme'] = $col;
+            } elseif ($normalized === 'venue' || str_starts_with($normalized, 'venue')) {
+                $map['venue'] = $col;
+            } elseif (str_contains($normalized, 'course fee')) {
+                $map['course_fee'] = $col;
+            } elseif (str_contains($normalized, 'scholarship coverage')) {
+                $map['scholarship_coverage'] = $col;
+            } elseif (str_contains($normalized, 'waived amount')) {
+                $map['waived_amount'] = $col;
+            } elseif ($normalized === 'exclusions' || str_starts_with($normalized, 'exclusion')) {
+                $map['exclusions'] = $col;
+            } elseif (str_contains($normalized, 'b40') && str_contains($normalized, 'academic') === false
+                && (str_contains($normalized, 'household') || str_contains($normalized, 'income category'))
+                && !str_contains($normalized, 'financial')
+            ) {
+                $map['academic_requirements_b40'] = $col;
+            } elseif (str_contains($normalized, 'excellent academic merit')
+                || (str_contains($normalized, 'merit') && str_contains($normalized, 'academic'))
+            ) {
+                $map['academic_requirements_merit'] = $col;
+            } elseif (str_contains($normalized, 'academic requirement')) {
+                $map['academic_requirements'] = $col;
+            } elseif (str_contains($normalized, 'financial requirement')
+                || ($normalized === 'financial' || str_starts_with($normalized, 'financial '))
+            ) {
+                $map['financial_requirement'] = $col;
+            }
+        }
+
+        // UNITAR-style sheets label B40 / Merit columns without the word "Academic" in-row.
+        if (!isset($map['academic_requirements_b40']) || !isset($map['academic_requirements_merit'])) {
+            foreach ($cells as $col => $label) {
+                $normalized = strtolower($label);
+                if (!isset($map['academic_requirements_b40'])
+                    && str_contains($normalized, 'b40')
+                    && str_contains($normalized, 'household')
+                ) {
+                    $map['academic_requirements_b40'] = $col;
+                }
+                if (!isset($map['academic_requirements_merit'])
+                    && str_contains($normalized, 'excellent academic merit')
+                ) {
+                    $map['academic_requirements_merit'] = $col;
+                }
+            }
+        }
+
+        return isset($map['programme']) ? $map : null;
+    }
+
+    /**
+     * @param  array<string, string>  $cells
+     * @param  array<string, string>  $headerMap
+     */
+    private function cellFromMap(array $cells, array $headerMap, string $key): string
+    {
+        if (!isset($headerMap[$key])) {
+            return '';
+        }
+
+        return $cells[$headerMap[$key]] ?? '';
+    }
+
+    private function normalizeProgrammeKey(string $value): string
+    {
+        $value = strtolower($value);
+        $value = preg_replace('/[^a-z0-9]+/', '', $value) ?? '';
+
+        return $value;
+    }
+
     public function buildPreviewPayload(MflsPartnerDocument $document): array
     {
         $path = $this->absolutePath($document);

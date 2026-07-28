@@ -1055,6 +1055,15 @@
             statusFilterTabField.value = tabId;
         }
 
+        document.querySelectorAll('#submissions-status-filter-form [data-filter-panels]').forEach(function (field) {
+            const panels = (field.getAttribute('data-filter-panels') || '').split(/\s+/).filter(Boolean);
+            const visible = panels.includes(tabId);
+            field.style.display = visible ? '' : 'none';
+            field.querySelectorAll('input, select, textarea').forEach(function (input) {
+                input.disabled = !visible;
+            });
+        });
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
         const menuEl = document.querySelector(`.sidebar-link[data-tab="${tabId}"]`);
@@ -1079,8 +1088,27 @@
     function navigateToDashboardTab(tabId) {
         const params = new URLSearchParams(window.location.search);
         const currentTab = params.get('admin_tab') || 'panel-overview';
+        const filterKeys = [
+            'submission_status',
+            'filter_q',
+            'filter_state',
+            'filter_date_from',
+            'filter_date_to',
+            'filter_partner',
+            'filter_programme',
+            'filter_qualification',
+            'filter_household_income',
+            'filter_gender',
+            'filter_mode',
+            'filter_entity_type',
+            'filter_ros',
+            'filter_aid_type',
+        ];
+        const hasFilters = filterKeys.some(function (key) {
+            return params.has(key) && params.get(key) !== '';
+        });
 
-        if (currentTab === tabId && !params.has('submission_status')) {
+        if (currentTab === tabId && !hasFilters) {
             switchTab(tabId);
             return;
         }
@@ -1305,21 +1333,37 @@
 
     const submissionsStatusFilterForm = document.getElementById('submissions-status-filter-form');
     if (submissionsStatusFilterForm) {
-        submissionsStatusFilterForm.querySelectorAll('input[name="submission_status"]').forEach(function (input) {
-            input.addEventListener('change', function () {
-                const tabField = document.getElementById('status-filter-admin-tab');
-                const activePanel = document.querySelector('.dashboard-panel.active');
-                if (tabField && activePanel) {
-                    tabField.value = activePanel.id;
-                }
-                submissionsStatusFilterForm.submit();
-            });
+        submissionsStatusFilterForm.addEventListener('submit', function () {
+            const tabField = document.getElementById('status-filter-admin-tab');
+            const activePanel = document.querySelector('.dashboard-panel.active');
+            if (tabField && activePanel) {
+                tabField.value = activePanel.id;
+            }
         });
     }
 
     function reloadIfStatusFilterActive() {
-        const activeFilter = new URLSearchParams(window.location.search).get('submission_status');
-        if (activeFilter) {
+        const params = new URLSearchParams(window.location.search);
+        const filterKeys = [
+            'submission_status',
+            'filter_q',
+            'filter_state',
+            'filter_date_from',
+            'filter_date_to',
+            'filter_partner',
+            'filter_programme',
+            'filter_qualification',
+            'filter_household_income',
+            'filter_gender',
+            'filter_mode',
+            'filter_entity_type',
+            'filter_ros',
+            'filter_aid_type',
+        ];
+        const hasFilters = filterKeys.some(function (key) {
+            return params.has(key) && params.get(key) !== '';
+        });
+        if (hasFilters) {
             window.location.reload();
         }
     }
@@ -1341,7 +1385,7 @@
         if (tbody && tbody.querySelectorAll('tr').length === 0) {
             const columnCount = tbody.closest('table')?.querySelectorAll('thead th').length || 1;
             const emptyRow = document.createElement('tr');
-            emptyRow.innerHTML = `<td colspan="${columnCount}" style="text-align: center; color: var(--admin-text-muted);">No submissions found with the active status filter.</td>`;
+            emptyRow.innerHTML = `<td colspan="${columnCount}" style="text-align: center; color: var(--admin-text-muted);">No submissions found with the active filters.</td>`;
             tbody.appendChild(emptyRow);
         }
     }

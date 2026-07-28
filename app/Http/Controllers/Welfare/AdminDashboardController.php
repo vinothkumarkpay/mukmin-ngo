@@ -66,39 +66,36 @@ class AdminDashboardController extends Controller
             'donations' => Donation::count(),
         ];
 
-        $submissionStatusFilter = $request->filled('submission_status')
-            ? SubmissionStatus::normalize($request->submission_status)
-            : null;
+        $submissionFilters = $this->resolveSubmissionFilters($request);
+        $hasSubmissionFilters = $this->hasActiveSubmissionFilters($submissionFilters);
 
-        $filteredTabType = ($submissionStatusFilter && isset(self::SUBMISSION_TAB_TYPES[$activeTab]))
+        $filteredTabType = ($hasSubmissionFilters && isset(self::SUBMISSION_TAB_TYPES[$activeTab]))
             ? self::SUBMISSION_TAB_TYPES[$activeTab]
             : null;
 
-        // 2. Fetch submissions (status filter applies to the active tab only)
-        $feedback = $this->loadSubmissions('feedback', FeedbackSubmission::query(), $submissionStatusFilter, $filteredTabType);
-        $ordinary = $this->loadSubmissions('ordinary', OrdinaryMemberSubmission::query(), $submissionStatusFilter, $filteredTabType);
-        $friends = $this->loadSubmissions('friends', FriendMemberSubmission::query(), $submissionStatusFilter, $filteredTabType);
-        $mentor = $this->loadSubmissions('mentor', MentorSubmission::query(), $submissionStatusFilter, $filteredTabType);
-        $partner = $this->loadSubmissions('partner', PartnerSubmission::query(), $submissionStatusFilter, $filteredTabType);
-        $volunteer = $this->loadSubmissions('volunteer', VolunteerSubmission::query(), $submissionStatusFilter, $filteredTabType);
-        $contact = $this->loadSubmissions('contact', ContactSubmission::query(), $submissionStatusFilter, $filteredTabType);
-        $aid = $this->loadSubmissions('aid', CommunityAidSubmission::query(), $submissionStatusFilter, $filteredTabType);
-        $mfls = $this->loadSubmissions('mfls', MflsScholarshipSubmission::query(), $submissionStatusFilter, $filteredTabType);
+        // 2. Fetch submissions (filters apply to the active tab only)
+        $feedback = $this->loadSubmissions('feedback', FeedbackSubmission::query(), $submissionFilters, $filteredTabType);
+        $ordinary = $this->loadSubmissions('ordinary', OrdinaryMemberSubmission::query(), $submissionFilters, $filteredTabType);
+        $friends = $this->loadSubmissions('friends', FriendMemberSubmission::query(), $submissionFilters, $filteredTabType);
+        $mentor = $this->loadSubmissions('mentor', MentorSubmission::query(), $submissionFilters, $filteredTabType);
+        $partner = $this->loadSubmissions('partner', PartnerSubmission::query(), $submissionFilters, $filteredTabType);
+        $volunteer = $this->loadSubmissions('volunteer', VolunteerSubmission::query(), $submissionFilters, $filteredTabType);
+        $contact = $this->loadSubmissions('contact', ContactSubmission::query(), $submissionFilters, $filteredTabType);
+        $aid = $this->loadSubmissions('aid', CommunityAidSubmission::query(), $submissionFilters, $filteredTabType);
+        $mfls = $this->loadSubmissions('mfls', MflsScholarshipSubmission::query(), $submissionFilters, $filteredTabType);
 
-        $filteredSubmissionCount = $filteredTabType
-            ? match ($filteredTabType) {
-                'feedback' => $feedback->count(),
-                'ordinary' => $ordinary->count(),
-                'friends' => $friends->count(),
-                'mentor' => $mentor->count(),
-                'partner' => $partner->count(),
-                'volunteer' => $volunteer->count(),
-                'contact' => $contact->count(),
-                'aid' => $aid->count(),
-                'mfls' => $mfls->count(),
-                default => 0,
-            }
-            : $feedback->count()
+        $currentTabType = self::SUBMISSION_TAB_TYPES[$activeTab] ?? null;
+        $filteredSubmissionCount = match ($currentTabType) {
+            'feedback' => $feedback->count(),
+            'ordinary' => $ordinary->count(),
+            'friends' => $friends->count(),
+            'mentor' => $mentor->count(),
+            'partner' => $partner->count(),
+            'volunteer' => $volunteer->count(),
+            'contact' => $contact->count(),
+            'aid' => $aid->count(),
+            'mfls' => $mfls->count(),
+            default => $feedback->count()
                 + $ordinary->count()
                 + $friends->count()
                 + $mentor->count()
@@ -106,7 +103,8 @@ class AdminDashboardController extends Controller
                 + $volunteer->count()
                 + $contact->count()
                 + $aid->count()
-                + $mfls->count();
+                + $mfls->count(),
+        };
 
         $donationPayments = Donation::query()->orderBy('created_at', 'desc')->get();
         $donationPaymentMethods = Donation::query()
@@ -140,6 +138,25 @@ class AdminDashboardController extends Controller
             'volunteer_availability' => 'Volunteer Availabilities',
         ];
 
+        $submissionFilterStates = $this->malaysianStateOptions();
+        $submissionFilterPartners = collect(config('mfls_partners.institutions', []))
+            ->map(fn ($partner) => [
+                'id' => $partner['id'],
+                'name' => $partner['name'],
+            ])
+            ->values()
+            ->all();
+        $submissionFilterQualifications = ['SPM', 'STPM', 'Foundation', 'Diploma', 'Degree'];
+        $submissionFilterHouseholdIncomes = ['< RM2,000', 'RM2,001 – RM4,000', 'RM4,001 – RM8,000', '> RM8,000'];
+        $submissionFilterEntityTypes = [
+            'Individual',
+            'Non-registered NGO',
+            'Non-registered Surau',
+            'Non-registered Madrasah',
+            'Others',
+        ];
+        $submissionStatusFilter = $submissionFilters['status'] ?? null;
+
         return view('welfare.admin.dashboard', compact(
             'stats',
             'feedback',
@@ -157,36 +174,222 @@ class AdminDashboardController extends Controller
             'formTypesMap',
             'mflsPartnerDocuments',
             'submissionStatusFilter',
+            'submissionFilters',
             'filteredSubmissionCount',
             'filteredTabType',
             'activeTab',
             'allowedPanelIds',
+            'submissionFilterStates',
+            'submissionFilterPartners',
+            'submissionFilterQualifications',
+            'submissionFilterHouseholdIncomes',
+            'submissionFilterEntityTypes',
         ))->with('submissionStatusOptions', SubmissionStatus::options());
     }
 
-    private function loadSubmissions(string $type, $query, ?string $statusFilter, ?string $filteredTabType)
+    /**
+     * @return array<string, mixed>
+     */
+    private function resolveSubmissionFilters(Request $request): array
+    {
+        $status = $request->filled('submission_status')
+            ? SubmissionStatus::normalize($request->input('submission_status'))
+            : null;
+
+        return [
+            'status' => $status,
+            'q' => trim((string) $request->input('filter_q', '')),
+            'state' => trim((string) $request->input('filter_state', '')),
+            'date_from' => trim((string) $request->input('filter_date_from', '')),
+            'date_to' => trim((string) $request->input('filter_date_to', '')),
+            'partner' => trim((string) $request->input('filter_partner', '')),
+            'programme' => trim((string) $request->input('filter_programme', '')),
+            'qualification' => trim((string) $request->input('filter_qualification', '')),
+            'household_income' => trim((string) $request->input('filter_household_income', '')),
+            'gender' => trim((string) $request->input('filter_gender', '')),
+            'mode' => trim((string) $request->input('filter_mode', '')),
+            'entity_type' => trim((string) $request->input('filter_entity_type', '')),
+            'ros' => $request->input('filter_ros'),
+            'aid_type' => trim((string) $request->input('filter_aid_type', '')),
+        ];
+    }
+
+    /**
+     * @param  array<string, mixed>  $filters
+     */
+    private function hasActiveSubmissionFilters(array $filters): bool
+    {
+        foreach ($filters as $key => $value) {
+            if ($key === 'ros') {
+                if ($value === '0' || $value === '1' || $value === 0 || $value === 1) {
+                    return true;
+                }
+                continue;
+            }
+
+            if (filled($value)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param  array<string, mixed>  $filters
+     */
+    private function loadSubmissions(string $type, $query, array $filters, ?string $filteredTabType)
     {
         $applyFilter = $filteredTabType === $type;
-        $results = $this->filteredSubmissionsQuery($query, $applyFilter ? $statusFilter : null)->get();
+        $results = $this->filteredSubmissionsQuery($query, $applyFilter ? $filters : [], $type)->get();
 
-        if (! $applyFilter || ! $statusFilter) {
+        if (! $applyFilter || empty($filters['status'])) {
             return $results;
         }
 
         return $results
-            ->filter(fn ($item) => SubmissionStatus::matchesFilter($item->status, $statusFilter))
+            ->filter(fn ($item) => SubmissionStatus::matchesFilter($item->status, $filters['status']))
             ->values();
     }
 
-    private function filteredSubmissionsQuery($query, ?string $statusFilter)
+    /**
+     * @param  array<string, mixed>  $filters
+     */
+    private function filteredSubmissionsQuery($query, array $filters, string $type)
     {
         $query->orderBy('created_at', 'desc');
 
-        if (! $statusFilter) {
+        if ($filters === []) {
             return $query;
         }
 
-        return $query->whereIn('status', SubmissionStatus::storedValuesFor($statusFilter));
+        if (! empty($filters['status'])) {
+            $query->whereIn('status', SubmissionStatus::storedValuesFor($filters['status']));
+        }
+
+        if (! empty($filters['date_from'])) {
+            $query->whereDate('created_at', '>=', $filters['date_from']);
+        }
+
+        if (! empty($filters['date_to'])) {
+            $query->whereDate('created_at', '<=', $filters['date_to']);
+        }
+
+        $search = $filters['q'] ?? '';
+        if ($search !== '') {
+            $like = '%' . $search . '%';
+            $query->where(function ($builder) use ($type, $like) {
+                foreach ($this->searchColumnsForType($type) as $column) {
+                    $builder->orWhere($column, 'like', $like);
+                }
+            });
+        }
+
+        $state = $filters['state'] ?? '';
+        if ($state !== '') {
+            $stateColumns = $this->stateColumnsForType($type);
+            if ($stateColumns !== []) {
+                $query->where(function ($builder) use ($stateColumns, $state) {
+                    foreach ($stateColumns as $column) {
+                        $builder->orWhere($column, $state);
+                    }
+                });
+            }
+        }
+
+        if ($type === 'mfls') {
+            if (! empty($filters['partner'])) {
+                $query->where('partner_institution_id', $filters['partner']);
+            }
+            if (! empty($filters['programme'])) {
+                $query->where('programme_course_applied', 'like', '%' . $filters['programme'] . '%');
+            }
+            if (! empty($filters['qualification'])) {
+                $query->where('current_qualification', $filters['qualification']);
+            }
+            if (! empty($filters['household_income'])) {
+                $query->where('household_income', $filters['household_income']);
+            }
+        }
+
+        if ($type === 'volunteer') {
+            if (! empty($filters['gender'])) {
+                $query->where('gender', $filters['gender']);
+            }
+            if (! empty($filters['mode'])) {
+                $query->where('preferred_mode', 'like', '%' . $filters['mode'] . '%');
+            }
+        }
+
+        if ($type === 'friends' && ! empty($filters['entity_type'])) {
+            $query->where('entity_type', $filters['entity_type']);
+        }
+
+        if ($type === 'ordinary' && ($filters['ros'] === '0' || $filters['ros'] === '1')) {
+            $query->where('is_registered_ros', (bool) ((int) $filters['ros']));
+        }
+
+        if ($type === 'aid' && ! empty($filters['aid_type'])) {
+            $query->where('type_of_aid', 'like', '%' . $filters['aid_type'] . '%');
+        }
+
+        return $query;
+    }
+
+    /** @return list<string> */
+    private function searchColumnsForType(string $type): array
+    {
+        return match ($type) {
+            'feedback' => ['full_name', 'email', 'organisation'],
+            'ordinary' => ['name_of_organisation', 'email'],
+            'friends' => ['ind_name', 'org_name', 'ind_email', 'org_email', 'org_contact_person_name'],
+            'mentor' => ['full_name', 'email', 'organisation', 'occupation'],
+            'partner' => ['company_name', 'contact_person', 'email'],
+            'volunteer' => ['full_name', 'email', 'contact_number'],
+            'contact' => ['name', 'email', 'phone'],
+            'aid' => ['full_name', 'email', 'contact_number'],
+            'mfls' => ['full_name', 'email', 'programme_course_applied', 'partner_institution_name'],
+            default => [],
+        };
+    }
+
+    /** @return list<string> */
+    private function stateColumnsForType(string $type): array
+    {
+        return match ($type) {
+            'feedback' => ['state_residency'],
+            'ordinary' => ['state', 'registered_state'],
+            'friends' => ['ind_state', 'org_state'],
+            'mentor' => ['state_residency'],
+            'partner' => ['state_country'],
+            'volunteer' => ['state_residency'],
+            'aid' => ['state_residency'],
+            'mfls' => ['state'],
+            default => [],
+        };
+    }
+
+    /** @return list<string> */
+    private function malaysianStateOptions(): array
+    {
+        return [
+            'Johor',
+            'Kedah',
+            'Kelantan',
+            'Melaka',
+            'Negeri Sembilan',
+            'Pahang',
+            'Perak',
+            'Perlis',
+            'Pulau Pinang',
+            'Sabah',
+            'Sarawak',
+            'Selangor',
+            'Terengganu',
+            'Wilayah Persekutuan Kuala Lumpur',
+            'Wilayah Persekutuan Labuan',
+            'Wilayah Persekutuan Putrajaya',
+        ];
     }
 
     public function donationPayments(Request $request)

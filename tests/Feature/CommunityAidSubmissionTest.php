@@ -231,7 +231,7 @@ class CommunityAidSubmissionTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Approved Applicant', false);
         $response->assertDontSee('Received Applicant', false);
-        $response->assertSee('Filter Submissions by Status', false);
+        $response->assertSee('Search &amp; Filter Submissions', false);
         $response->assertSee('1 result', false);
     }
 

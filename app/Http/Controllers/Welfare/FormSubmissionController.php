@@ -17,6 +17,7 @@ use App\Models\MflsScholarshipSubmission;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\FormSubmissionMail;
+use App\Mail\MflsRequirementsInquiryMail;
 use App\Services\Welfare\MflsPartnerDocumentService;
 use App\Support\SubmissionStatus;
 
@@ -615,6 +616,118 @@ class FormSubmissionController extends Controller
         $states = $this->malaysianStateOptions();
 
         return view('welfare.pages.mfls_scholarship', compact('selectedPartner', 'states'));
+    }
+
+    public function mflsProgrammeRequirements(Request $request, MflsPartnerDocumentService $mflsPartners)
+    {
+        $validated = $request->validate([
+            'partner' => ['required', 'string', function (string $attribute, $value, \Closure $fail) use ($mflsPartners) {
+                if (!$mflsPartners->isValidPartnerId((string) $value)) {
+                    $fail('Please select a valid partner institution.');
+                }
+            }],
+            'programme' => 'required|string|min:2|max:255',
+        ]);
+
+        $partner = $mflsPartners->findPartner($validated['partner']);
+        $partnerProgrammes = $mflsPartners->partnerProgrammes($partner);
+        if (!in_array($validated['programme'], $partnerProgrammes, true)) {
+            return response()->json([
+                'message' => 'Please select a valid programme for this institution.',
+            ], 422);
+        }
+
+        $requirements = $mflsPartners->findProgrammeRequirements(
+            $validated['partner'],
+            $validated['programme']
+        );
+
+        if ($requirements === null) {
+            return response()->json([
+                'found' => false,
+                'partner_name' => $partner['name'],
+                'programme' => $validated['programme'],
+                'message' => 'Detailed requirements for this programme are not available right now. You may continue with your application.',
+            ]);
+        }
+
+        return response()->json([
+            'found' => true,
+            'partner_name' => $partner['name'],
+            'programme' => $validated['programme'],
+            'matched_programme' => $requirements['programme'],
+            'venue' => $requirements['venue'],
+            'course_fee' => $requirements['course_fee'],
+            'scholarship_coverage' => $requirements['scholarship_coverage'],
+            'waived_amount' => $requirements['waived_amount'],
+            'exclusions' => $requirements['exclusions'],
+            'academic_requirements' => $requirements['academic_requirements'],
+            'financial_requirement' => $requirements['financial_requirement'],
+            'academic_requirements_b40' => $requirements['academic_requirements_b40'],
+            'academic_requirements_merit' => $requirements['academic_requirements_merit'],
+        ]);
+    }
+
+    public function submitMflsRequirementsInquiry(Request $request, MflsPartnerDocumentService $mflsPartners)
+    {
+        $partner = $mflsPartners->findPartner((string) $request->input('partner_id', ''));
+        $partnerProgrammes = $partner ? $mflsPartners->partnerProgrammes($partner) : [];
+
+        $validated = $request->validate([
+            'partner_id' => ['required', 'string', function (string $attribute, $value, \Closure $fail) use ($mflsPartners) {
+                if (!$mflsPartners->isValidPartnerId((string) $value)) {
+                    $fail('Please select a valid partner institution.');
+                }
+            }],
+            'programme' => ['required', 'string', 'min:2', 'max:255', Rule::in($partnerProgrammes)],
+            'email' => $this->requiredEmailRule(),
+        ], [
+            'email.required' => 'Please enter your email address.',
+            'email.email' => 'Please enter a valid email address.',
+            'programme.in' => 'Please select a valid programme for the chosen institution.',
+        ]);
+
+        $redirectUrl = route('welfare.impact.mfls');
+        $partnerName = $partner['name'];
+        $programmeName = $validated['programme'];
+        $applicantEmail = $validated['email'];
+
+        try {
+            Mail::to($applicantEmail)->send(new MflsRequirementsInquiryMail(
+                $applicantEmail,
+                $partnerName,
+                $programmeName,
+                $redirectUrl,
+                false
+            ));
+        } catch (\Throwable $e) {
+            Log::error('Mail to applicant failed for MFLS requirements inquiry', [
+                'email' => $applicantEmail,
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        $teamEmail = config('welfare.form_submission_recipients.mfls-scholarship', config('welfare.email'));
+        try {
+            Mail::to($teamEmail)->send(new MflsRequirementsInquiryMail(
+                $applicantEmail,
+                $partnerName,
+                $programmeName,
+                $redirectUrl,
+                true
+            ));
+        } catch (\Throwable $e) {
+            Log::error('Mail to team inbox failed for MFLS requirements inquiry', [
+                'email' => $teamEmail,
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'Thank you. We have emailed you next steps. You will now be redirected to the scholarship page.',
+            'redirect_url' => $redirectUrl,
+        ]);
     }
 
     public function submitMflsScholarship(Request $request, MflsPartnerDocumentService $mflsPartners)

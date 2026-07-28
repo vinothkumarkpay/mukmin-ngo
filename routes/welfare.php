@@ -92,6 +92,8 @@ Route::name('welfare.')->group(function () {
     Route::post('/community-aid/submit', [FormSubmissionController::class, 'submitCommunityAid'])->name('community-aid.submit');
 
     Route::get('/mfls-scholarship-application', [FormSubmissionController::class, 'mflsScholarship'])->name('mfls-scholarship');
+    Route::get('/mfls-scholarship-application/programme-requirements', [FormSubmissionController::class, 'mflsProgrammeRequirements'])->name('mfls-scholarship.programme-requirements');
+    Route::post('/mfls-scholarship-application/requirements-inquiry', [FormSubmissionController::class, 'submitMflsRequirementsInquiry'])->name('mfls-scholarship.requirements-inquiry');
     Route::post('/mfls-scholarship-application/submit', [FormSubmissionController::class, 'submitMflsScholarship'])->name('mfls-scholarship.submit');
 
     // Admin Section

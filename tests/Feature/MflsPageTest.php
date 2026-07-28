@@ -49,7 +49,6 @@ class MflsPageTest extends TestCase
         $response->assertSee('dual pathway model', false);
         $response->assertSee('Facilitated by FIKRAH', false);
         $response->assertSee('Apply Now. Lead the Future.', false);
-        $response->assertSee('Applications close on 15th July 2026', false);
         $response->assertSee('Select Programme', false);
         $response->assertSee('FIL (Foundation in Law)', false);
         $response->assertSee('Section 1: Personal Information', false);

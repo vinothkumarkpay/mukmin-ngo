@@ -84,17 +84,6 @@
 .partner-required-notice a:hover {
     text-decoration: underline;
 }
-.deadline-banner {
-    background: #fff8f0;
-    border: 1px solid #f0d9b8;
-    border-radius: 8px;
-    padding: 14px 18px;
-    margin-bottom: 25px;
-    font-size: 14px;
-    color: #8a4b12;
-    text-align: center;
-    font-weight: 600;
-}
 .form-section-title {
     font-size: 16px;
     font-weight: 700;
@@ -175,6 +164,116 @@
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
+}
+.requirements-modal {
+    max-width: 560px;
+    text-align: left;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+}
+.requirements-modal h3 {
+    text-align: left;
+}
+.requirements-modal .requirements-programme {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0c5930;
+    margin: 0 0 14px;
+    line-height: 22px;
+}
+.requirements-list {
+    margin: 0 0 18px;
+    padding: 0;
+    list-style: none;
+}
+.requirements-list li {
+    margin: 0 0 12px;
+    padding: 12px 14px;
+    background: #f7f9f8;
+    border-radius: 8px;
+    border: 1px solid #e6ece8;
+}
+.requirements-list .req-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #0c5930;
+    margin-bottom: 6px;
+}
+.requirements-list .req-value {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    line-height: 21px;
+    white-space: pre-wrap;
+}
+.requirements-question {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #1e1e1e;
+    margin: 0 0 14px;
+    text-align: center;
+}
+.requirements-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+.requirements-actions button {
+    min-width: 150px;
+}
+.requirements-actions .btn-secondary {
+    background: #ffffff;
+    color: #0c5930;
+    border: 1px solid #0c5930;
+}
+.requirements-actions .btn-danger {
+    background: #d43c18;
+}
+.requirements-email-panel,
+.requirements-done-panel {
+    display: none;
+}
+.requirements-email-panel.is-visible,
+.requirements-done-panel.is-visible {
+    display: block;
+}
+.requirements-check-panel.is-hidden {
+    display: none;
+}
+.requirements-email-panel label {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+.requirements-email-panel .form-control {
+    margin-bottom: 8px;
+}
+.requirements-email-error {
+    color: #b83210;
+    font-size: 12.5px;
+    margin: 0 0 12px;
+    display: none;
+}
+.requirements-email-error.is-visible {
+    display: block;
+}
+.requirements-loading {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    padding: 12px 0 4px;
+}
+.requirements-status-note {
+    font-size: 13px;
+    color: #666;
+    margin: 8px 0 0;
+    text-align: center;
 }
 .declaration-box {
     background: #fdf6f4;
@@ -269,10 +368,6 @@
                 <p>The programme provides access to TVET, Foundation, Diploma, Degree and Master programmes in collaboration with leading universities and institutions—ensuring multiple pathways for talents to progress, excel and succeed.</p>
                 <p>Facilitated by FIKRAH, MUKMIN's strategic think tank, MFLS goes beyond financial support by building a future-ready talent pipeline—developing individuals who are not only qualified, but skilled, adaptable and driven to contribute meaningfully to society and the nation.</p>
                 <p class="form-tagline">Apply Now. Lead the Future.</p>
-            </div>
-
-            <div class="deadline-banner">
-                Applications close on 15th July 2026.
             </div>
 
             @if (!$selectedPartner)
@@ -649,6 +744,42 @@
     </div>
 </div>
 
+@if ($selectedPartner)
+<div class="eligibility-modal-overlay" id="programme-requirements-modal" role="dialog" aria-modal="true" aria-labelledby="requirements-modal-title">
+    <div class="eligibility-modal requirements-modal">
+        <h3 id="requirements-modal-title">Programme Requirements</h3>
+        <p class="requirements-programme" id="requirements-programme-name"></p>
+
+        <div id="requirements-loading" class="requirements-loading" hidden>Loading programme requirements…</div>
+
+        <div id="requirements-check-panel">
+            <ul class="requirements-list" id="requirements-list"></ul>
+            <p class="requirements-question" id="requirements-question">Do you fulfil these programme requirements?</p>
+            <div class="requirements-actions" id="requirements-actions">
+                <button type="button" id="requirements-fulfill-yes">Yes, I fulfil them</button>
+                <button type="button" class="btn-danger" id="requirements-fulfill-no">No, I do not</button>
+            </div>
+            <p class="requirements-status-note" id="requirements-status-note" hidden></p>
+        </div>
+
+        <div id="requirements-email-panel" class="requirements-email-panel">
+            <p>Please enter your email address. We will send you guidance on next steps and ask you to contact us with your personal information so we can check feasibility and revert to you.</p>
+            <label for="requirements-inquiry-email">Email address</label>
+            <input type="email" id="requirements-inquiry-email" class="form-control" placeholder="name@example.com" maxlength="255" autocomplete="email">
+            <p class="requirements-email-error" id="requirements-email-error">Please enter a valid email address.</p>
+            <div class="requirements-actions">
+                <button type="button" id="requirements-inquiry-submit">Submit email</button>
+                <button type="button" class="btn-secondary" id="requirements-inquiry-back">Back</button>
+            </div>
+        </div>
+
+        <div id="requirements-done-panel" class="requirements-done-panel">
+            <p id="requirements-done-message">Thank you. We have emailed you next steps. You will now be redirected to the scholarship page.</p>
+        </div>
+    </div>
+</div>
+@endif
+
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -716,11 +847,371 @@ document.addEventListener('DOMContentLoaded', function () {
         showEligibilityModal();
     }
 
+    const programmeSelect = document.getElementById('programme_course_applied');
+    const requirementsModal = document.getElementById('programme-requirements-modal');
+    const requirementsProgrammeName = document.getElementById('requirements-programme-name');
+    const requirementsList = document.getElementById('requirements-list');
+    const requirementsLoading = document.getElementById('requirements-loading');
+    const requirementsCheckPanel = document.getElementById('requirements-check-panel');
+    const requirementsEmailPanel = document.getElementById('requirements-email-panel');
+    const requirementsDonePanel = document.getElementById('requirements-done-panel');
+    const requirementsQuestion = document.getElementById('requirements-question');
+    const requirementsActions = document.getElementById('requirements-actions');
+    const requirementsStatusNote = document.getElementById('requirements-status-note');
+    const requirementsInquiryEmail = document.getElementById('requirements-inquiry-email');
+    const requirementsEmailError = document.getElementById('requirements-email-error');
+    const partnerIdInput = document.querySelector('input[name="partner_id"]');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')
+        ? document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        : (document.querySelector('input[name="_token"]') ? document.querySelector('input[name="_token"]').value : '');
+
+    const requirementsUrl = @json(route('welfare.mfls-scholarship.programme-requirements'));
+    const inquiryUrl = @json(route('welfare.mfls-scholarship.requirements-inquiry'));
+    const partnerId = partnerIdInput ? partnerIdInput.value : '';
+
+    let requirementsConfirmed = !programmeSelect || !requirementsModal || !partnerId;
+    let requirementsRequestId = 0;
+    let currentProgramme = '';
+    let pendingSubmitAfterConfirm = false;
+
+    function requirementsStorageKey(programme) {
+        return 'mfls_req_ok:' + partnerId + ':' + programme;
+    }
+
+    function readRequirementsConfirmed(programme) {
+        if (!programme || !partnerId) {
+            return false;
+        }
+        try {
+            return sessionStorage.getItem(requirementsStorageKey(programme)) === '1';
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function writeRequirementsConfirmed(programme, confirmed) {
+        if (!programme || !partnerId) {
+            return;
+        }
+        try {
+            if (confirmed) {
+                sessionStorage.setItem(requirementsStorageKey(programme), '1');
+            } else {
+                sessionStorage.removeItem(requirementsStorageKey(programme));
+            }
+        } catch (e) {
+            // Ignore storage failures (private mode, etc.).
+        }
+    }
+
+    function showRequirementsModal() {
+        if (requirementsModal) {
+            requirementsModal.classList.add('is-visible');
+        }
+    }
+
+    function hideRequirementsModal() {
+        if (requirementsModal) {
+            requirementsModal.classList.remove('is-visible');
+        }
+    }
+
+    function resetRequirementsPanels() {
+        if (requirementsCheckPanel) {
+            requirementsCheckPanel.classList.remove('is-hidden');
+        }
+        if (requirementsEmailPanel) {
+            requirementsEmailPanel.classList.remove('is-visible');
+        }
+        if (requirementsDonePanel) {
+            requirementsDonePanel.classList.remove('is-visible');
+        }
+        if (requirementsEmailError) {
+            requirementsEmailError.classList.remove('is-visible');
+        }
+        if (requirementsInquiryEmail) {
+            requirementsInquiryEmail.value = '';
+        }
+        if (requirementsStatusNote) {
+            requirementsStatusNote.hidden = true;
+            requirementsStatusNote.textContent = '';
+        }
+        if (requirementsQuestion) {
+            requirementsQuestion.hidden = false;
+        }
+        if (requirementsActions) {
+            requirementsActions.hidden = false;
+        }
+    }
+
+    function appendRequirementItem(label, value) {
+        if (!requirementsList || !value) {
+            return;
+        }
+        const item = document.createElement('li');
+        const labelEl = document.createElement('span');
+        labelEl.className = 'req-label';
+        labelEl.textContent = label;
+        const valueEl = document.createElement('span');
+        valueEl.className = 'req-value';
+        valueEl.textContent = value;
+        item.appendChild(labelEl);
+        item.appendChild(valueEl);
+        requirementsList.appendChild(item);
+    }
+
+    function renderRequirements(data) {
+        requirementsList.innerHTML = '';
+        appendRequirementItem('Academic Requirements', data.academic_requirements);
+        appendRequirementItem('Financial Requirement', data.financial_requirement);
+        appendRequirementItem('Scholarship Coverage', data.scholarship_coverage);
+        appendRequirementItem('Course Fee', data.course_fee);
+
+        if (!requirementsList.children.length) {
+            appendRequirementItem('Requirements', 'No detailed requirements were listed for this programme.');
+        }
+    }
+
+    function confirmRequirementsAndContinue() {
+        requirementsConfirmed = true;
+        writeRequirementsConfirmed(currentProgramme, true);
+        hideRequirementsModal();
+
+        if (pendingSubmitAfterConfirm && mflsForm) {
+            pendingSubmitAfterConfirm = false;
+            if (typeof mflsForm.requestSubmit === 'function') {
+                mflsForm.requestSubmit();
+            } else {
+                mflsForm.submit();
+            }
+        }
+    }
+
+    function openRequirementsForProgramme(programme, options) {
+        const opts = options || {};
+        if (!requirementsModal || !programme || !partnerId) {
+            requirementsConfirmed = true;
+            return;
+        }
+
+        currentProgramme = programme;
+
+        if (!opts.force && readRequirementsConfirmed(programme)) {
+            requirementsConfirmed = true;
+            return;
+        }
+
+        requirementsConfirmed = false;
+        writeRequirementsConfirmed(programme, false);
+        resetRequirementsPanels();
+        requirementsProgrammeName.textContent = programme;
+        requirementsList.innerHTML = '';
+        requirementsLoading.hidden = false;
+        requirementsCheckPanel.classList.remove('is-hidden');
+        showRequirementsModal();
+
+        const requestId = ++requirementsRequestId;
+        const url = requirementsUrl + '?partner=' + encodeURIComponent(partnerId) + '&programme=' + encodeURIComponent(programme);
+
+        fetch(url, {
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).then(function (response) {
+            return response.json().then(function (data) {
+                return { ok: response.ok, status: response.status, data: data };
+            });
+        }).then(function (result) {
+            if (requestId !== requirementsRequestId) {
+                return;
+            }
+            requirementsLoading.hidden = true;
+
+            if (!result.ok) {
+                requirementsList.innerHTML = '';
+                appendRequirementItem('Notice', (result.data && result.data.message) ? result.data.message : 'Unable to load programme requirements right now. You may continue with your application.');
+                requirementsQuestion.hidden = true;
+                requirementsActions.hidden = true;
+                requirementsStatusNote.hidden = false;
+                requirementsStatusNote.textContent = 'You can continue filling the application form.';
+                window.setTimeout(confirmRequirementsAndContinue, 800);
+                return;
+            }
+
+            if (!result.data.found) {
+                requirementsList.innerHTML = '';
+                appendRequirementItem('Notice', result.data.message || 'Detailed requirements are not available for this programme.');
+                requirementsQuestion.hidden = true;
+                requirementsActions.hidden = true;
+                requirementsStatusNote.hidden = false;
+                requirementsStatusNote.textContent = 'You can continue filling the application form.';
+                window.setTimeout(confirmRequirementsAndContinue, 800);
+                return;
+            }
+
+            renderRequirements(result.data);
+            requirementsQuestion.hidden = false;
+            requirementsActions.hidden = false;
+        }).catch(function () {
+            if (requestId !== requirementsRequestId) {
+                return;
+            }
+            requirementsLoading.hidden = true;
+            requirementsList.innerHTML = '';
+            appendRequirementItem('Notice', 'Unable to load programme requirements right now. You may continue with your application.');
+            requirementsQuestion.hidden = true;
+            requirementsActions.hidden = true;
+            requirementsStatusNote.hidden = false;
+            requirementsStatusNote.textContent = 'You can continue filling the application form.';
+            window.setTimeout(confirmRequirementsAndContinue, 800);
+        });
+    }
+
+    if (programmeSelect && requirementsModal) {
+        programmeSelect.addEventListener('change', function () {
+            const programme = this.value.trim();
+            pendingSubmitAfterConfirm = false;
+            if (!programme) {
+                requirementsConfirmed = false;
+                currentProgramme = '';
+                hideRequirementsModal();
+                return;
+            }
+            openRequirementsForProgramme(programme, { force: true });
+        });
+
+        const yesBtn = document.getElementById('requirements-fulfill-yes');
+        const noBtn = document.getElementById('requirements-fulfill-no');
+        const inquirySubmitBtn = document.getElementById('requirements-inquiry-submit');
+        const inquiryBackBtn = document.getElementById('requirements-inquiry-back');
+
+        if (yesBtn) {
+            yesBtn.addEventListener('click', function () {
+                confirmRequirementsAndContinue();
+            });
+        }
+
+        if (noBtn) {
+            noBtn.addEventListener('click', function () {
+                pendingSubmitAfterConfirm = false;
+                requirementsCheckPanel.classList.add('is-hidden');
+                requirementsEmailPanel.classList.add('is-visible');
+                if (requirementsInquiryEmail) {
+                    requirementsInquiryEmail.focus();
+                }
+            });
+        }
+
+        if (inquiryBackBtn) {
+            inquiryBackBtn.addEventListener('click', function () {
+                requirementsEmailPanel.classList.remove('is-visible');
+                requirementsCheckPanel.classList.remove('is-hidden');
+                if (requirementsEmailError) {
+                    requirementsEmailError.classList.remove('is-visible');
+                }
+            });
+        }
+
+        if (inquirySubmitBtn) {
+            inquirySubmitBtn.addEventListener('click', function () {
+                const email = requirementsInquiryEmail ? requirementsInquiryEmail.value.trim() : '';
+                const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                if (!emailValid) {
+                    if (requirementsEmailError) {
+                        requirementsEmailError.classList.add('is-visible');
+                    }
+                    return;
+                }
+                if (requirementsEmailError) {
+                    requirementsEmailError.classList.remove('is-visible');
+                }
+
+                inquirySubmitBtn.disabled = true;
+                inquirySubmitBtn.textContent = 'Submitting…';
+
+                fetch(inquiryUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: JSON.stringify({
+                        partner_id: partnerId,
+                        programme: currentProgramme,
+                        email: email
+                    })
+                }).then(function (response) {
+                    return response.json().then(function (data) {
+                        return { ok: response.ok, data: data };
+                    });
+                }).then(function (result) {
+                    inquirySubmitBtn.disabled = false;
+                    inquirySubmitBtn.textContent = 'Submit email';
+
+                    if (!result.ok) {
+                        if (requirementsEmailError) {
+                            requirementsEmailError.textContent = (result.data && result.data.message)
+                                ? result.data.message
+                                : ((result.data && result.data.errors && result.data.errors.email && result.data.errors.email[0])
+                                    ? result.data.errors.email[0]
+                                    : 'Unable to submit your email. Please try again.');
+                            requirementsEmailError.classList.add('is-visible');
+                        }
+                        return;
+                    }
+
+                    requirementsEmailPanel.classList.remove('is-visible');
+                    requirementsDonePanel.classList.add('is-visible');
+                    const doneMessage = document.getElementById('requirements-done-message');
+                    if (doneMessage) {
+                        doneMessage.textContent = result.data.message || 'Thank you. We have emailed you next steps. You will now be redirected to the scholarship page.';
+                    }
+
+                    window.setTimeout(function () {
+                        window.location.href = result.data.redirect_url || @json(route('welfare.impact.mfls'));
+                    }, 2200);
+                }).catch(function () {
+                    inquirySubmitBtn.disabled = false;
+                    inquirySubmitBtn.textContent = 'Submit email';
+                    if (requirementsEmailError) {
+                        requirementsEmailError.textContent = 'Unable to submit your email. Please try again.';
+                        requirementsEmailError.classList.add('is-visible');
+                    }
+                });
+            });
+        }
+
+        if (programmeSelect.value) {
+            currentProgramme = programmeSelect.value.trim();
+            if (readRequirementsConfirmed(currentProgramme)) {
+                requirementsConfirmed = true;
+            } else {
+                openRequirementsForProgramme(currentProgramme, { force: true });
+            }
+        }
+    }
+
     if (mflsForm) {
         mflsForm.addEventListener('submit', function (event) {
             if (citizenshipBlocked || getSelectedCitizenship() === 'Non-Malaysian') {
                 event.preventDefault();
                 showEligibilityModal();
+                return;
+            }
+
+            if (programmeSelect && requirementsModal && partnerId) {
+                const programme = programmeSelect.value.trim();
+                if (!programme) {
+                    return;
+                }
+                if (!requirementsConfirmed && !readRequirementsConfirmed(programme)) {
+                    event.preventDefault();
+                    pendingSubmitAfterConfirm = true;
+                    openRequirementsForProgramme(programme, { force: true });
+                }
             }
         });
     }
