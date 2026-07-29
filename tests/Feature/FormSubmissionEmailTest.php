@@ -323,18 +323,19 @@ class FormSubmissionEmailTest extends TestCase
             'current_cgpa_result' => '7A 2B',
             'academic_transcript' => UploadedFile::fake()->create('transcript.pdf', 100, 'application/pdf'),
             'programme_course_applied' => 'FIL (Foundation in Law)',
-            'applied_to_university' => '0',
-            'household_income' => '< RM2,000',
+            'household_income' => 'Below RM 2,000',
             'father_guardian_name' => 'Father Name',
             'father_guardian_occupation' => 'Driver',
             'mother_guardian_name' => 'Mother Name',
             'mother_guardian_occupation' => 'Homemaker',
+            'proof_of_income' => [
+                UploadedFile::fake()->create('income-father.pdf', 100, 'application/pdf'),
+                UploadedFile::fake()->create('income-mother.pdf', 100, 'application/pdf'),
+            ],
+            'government_assistance_status' => 'Sumbangan Tunai Rahmah (STR)',
+            'proof_of_government_assistance' => UploadedFile::fake()->create('str-proof.pdf', 100, 'application/pdf'),
             'number_of_dependents' => '4',
             'other_scholarship_details' => 'None',
-            'leadership_roles' => 'School prefect, club president, NGO volunteer',
-            'involvement_level' => 'Leader',
-            'community_service_involvement' => 'Weekly tutoring for underprivileged students.',
-            'community_contribution' => $wordParagraph,
             'leadership_experience_statement' => $wordParagraph,
             'scholar_selection_statement' => $wordParagraph,
             'declaration_confirmed' => '1',
@@ -381,21 +382,18 @@ class FormSubmissionEmailTest extends TestCase
         });
     }
 
-    public function test_mfls_scholarship_email_formats_boolean_fields_as_yes_no()
+    public function test_mfls_scholarship_email_formats_partner_and_programme_fields()
     {
         $mail = new FormSubmissionMail('MFLS Scholarship Application', [
             'partner_institution_name' => 'Sunway University',
             'programme_course_applied' => 'Diploma in Culinary Arts',
-            'applied_to_university' => '1',
-            'received_offer_letter' => '0',
             'full_name' => 'Ahmad Student',
         ], true);
 
         $rows = collect($mail->formattedData)->keyBy('label');
 
-        $this->assertSame('Yes', $rows['Applied to Participating University?']['value']);
-        $this->assertSame('No', $rows['Received Offer Letter?']['value']);
         $this->assertSame('Sunway University', strip_tags($rows['Partner Institution']['value']));
+        $this->assertSame('Diploma in Culinary Arts', strip_tags($rows['Selected Programme']['value']));
     }
 
     public function test_mfls_scholarship_rejects_non_malaysian_citizenship()
@@ -421,18 +419,19 @@ class FormSubmissionEmailTest extends TestCase
             'current_cgpa_result' => '7A 2B',
             'academic_transcript' => UploadedFile::fake()->create('transcript.pdf', 100, 'application/pdf'),
             'programme_course_applied' => 'FIL (Foundation in Law)',
-            'applied_to_university' => '0',
-            'household_income' => '< RM2,000',
+            'household_income' => 'Below RM 2,000',
             'father_guardian_name' => 'Father Name',
             'father_guardian_occupation' => 'Driver',
             'mother_guardian_name' => 'Mother Name',
             'mother_guardian_occupation' => 'Homemaker',
+            'proof_of_income' => [
+                UploadedFile::fake()->create('income-father.pdf', 100, 'application/pdf'),
+                UploadedFile::fake()->create('income-mother.pdf', 100, 'application/pdf'),
+            ],
+            'government_assistance_status' => 'Sumbangan Tunai Rahmah (STR)',
+            'proof_of_government_assistance' => UploadedFile::fake()->create('str-proof.pdf', 100, 'application/pdf'),
             'number_of_dependents' => '4',
             'other_scholarship_details' => 'None',
-            'leadership_roles' => 'School prefect, club president, NGO volunteer',
-            'involvement_level' => 'Leader',
-            'community_service_involvement' => 'Weekly tutoring for underprivileged students.',
-            'community_contribution' => $wordParagraph,
             'leadership_experience_statement' => $wordParagraph,
             'scholar_selection_statement' => $wordParagraph,
             'declaration_confirmed' => '1',
@@ -463,18 +462,19 @@ class FormSubmissionEmailTest extends TestCase
             'current_cgpa_result' => '7A 2B',
             'academic_transcript' => UploadedFile::fake()->create('transcript.pdf', 100, 'application/pdf'),
             'programme_course_applied' => 'FIL (Foundation in Law)',
-            'applied_to_university' => '0',
-            'household_income' => '< RM2,000',
+            'household_income' => 'Below RM 2,000',
             'father_guardian_name' => 'Father Name',
             'father_guardian_occupation' => 'Driver',
             'mother_guardian_name' => 'Mother Name',
             'mother_guardian_occupation' => 'Homemaker',
+            'proof_of_income' => [
+                UploadedFile::fake()->create('income-father.pdf', 100, 'application/pdf'),
+                UploadedFile::fake()->create('income-mother.pdf', 100, 'application/pdf'),
+            ],
+            'government_assistance_status' => 'Sumbangan Tunai Rahmah (STR)',
+            'proof_of_government_assistance' => UploadedFile::fake()->create('str-proof.pdf', 100, 'application/pdf'),
             'number_of_dependents' => '4',
             'other_scholarship_details' => 'None',
-            'leadership_roles' => 'School prefect, club president, NGO volunteer',
-            'involvement_level' => 'Leader',
-            'community_service_involvement' => 'Weekly tutoring for underprivileged students.',
-            'community_contribution' => $wordParagraph,
             'leadership_experience_statement' => $wordParagraph,
             'scholar_selection_statement' => $wordParagraph,
             'declaration_confirmed' => '1',

@@ -233,35 +233,56 @@
 .requirements-actions .btn-danger {
     background: #d43c18;
 }
-.requirements-email-panel,
-.requirements-done-panel {
-    display: none;
+.requirements-appeal-modal h3 {
+    color: #0c5930;
+    text-align: center;
 }
-.requirements-email-panel.is-visible,
-.requirements-done-panel.is-visible {
-    display: block;
+.requirements-appeal-modal > p {
+    font-size: 14px;
+    color: #444;
+    line-height: 22px;
+    margin: 0 0 16px;
+    text-align: left;
 }
-.requirements-check-panel.is-hidden {
-    display: none;
+.requirements-appeal-steps {
+    margin: 0 0 18px;
+    padding: 14px 16px;
+    background: #f7f9f8;
+    border: 1px solid #e6ece8;
+    border-radius: 8px;
+    text-align: left;
 }
-.requirements-email-panel label {
-    display: block;
-    font-size: 13.5px;
-    font-weight: 600;
+.requirements-appeal-steps h5 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #0c5930;
+    margin: 0 0 10px;
+}
+.requirements-appeal-steps ul {
+    margin: 0;
+    padding-left: 18px;
     color: #333;
+    font-size: 14px;
+    line-height: 22px;
+}
+.requirements-appeal-steps li {
     margin-bottom: 8px;
 }
-.requirements-email-panel .form-control {
-    margin-bottom: 8px;
+.requirements-appeal-steps li:last-child {
+    margin-bottom: 0;
 }
-.requirements-email-error {
-    color: #b83210;
-    font-size: 12.5px;
-    margin: 0 0 12px;
-    display: none;
+.requirements-appeal-steps a {
+    color: #d43c18;
+    font-weight: 700;
+    text-decoration: none;
 }
-.requirements-email-error.is-visible {
-    display: block;
+.requirements-appeal-steps a:hover {
+    text-decoration: underline;
+}
+.requirements-appeal-steps strong {
+    font-weight: 700;
 }
 .requirements-loading {
     text-align: center;
@@ -419,6 +440,7 @@
                                 @endforeach
                             @endif
                         </select>
+                        <small class="field-hint" id="programme-requirements-loading-hint" hidden>Loading programme requirements…</small>
                         @error('programme_course_applied')<span class="field-error">{{ $message }}</span>@enderror
                     </div>
                 @else
@@ -492,10 +514,6 @@
                             <input type="radio" name="citizenship" value="Permanent Resident" {{ old('citizenship') === 'Permanent Resident' ? 'checked' : '' }}>
                             Permanent Resident
                         </label>
-                        <label class="radio-label">
-                            <input type="radio" name="citizenship" value="Non-Malaysian" {{ old('citizenship') === 'Non-Malaysian' ? 'checked' : '' }}>
-                            Non-Malaysian
-                        </label>
                     </div>
                     @error('citizenship')<span class="field-error">{{ $message }}</span>@enderror
                 </div>
@@ -550,7 +568,7 @@
                     <label for="current_qualification">Current Qualification (Year 2025/2026)</label>
                     <select id="current_qualification" name="current_qualification" class="form-control" required>
                         <option value="">-- Choose Qualification --</option>
-                        @foreach(['SPM', 'STPM', 'Foundation', 'Diploma', 'Degree'] as $qualification)
+                        @foreach(['SPM', 'STPM', 'IGCSE', 'Foundation', 'Diploma', 'Degree'] as $qualification)
                             <option value="{{ $qualification }}" {{ old('current_qualification') === $qualification ? 'selected' : '' }}>{{ $qualification }}</option>
                         @endforeach
                     </select>
@@ -568,43 +586,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="academic_transcript">Please upload the Academic Transcript</label>
-                    <input type="file" id="academic_transcript" name="academic_transcript" class="form-control" style="padding: 10px 16px;" required>
-                    <small class="field-hint">PDF, JPG, PNG, DOC, DOCX. Max size: 20MB.</small>
-                </div>
-
-                <div class="form-group">
-                    <label>Have you applied to a participating university?</label>
-                    <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="applied_to_university" value="1" {{ old('applied_to_university') === '1' ? 'checked' : '' }} required>
-                            Yes
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="applied_to_university" value="0" {{ old('applied_to_university') === '0' ? 'checked' : '' }}>
-                            No
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Have you received an Offer Letter?</label>
-                    <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="received_offer_letter" value="1" {{ old('received_offer_letter') === '1' ? 'checked' : '' }}>
-                            Yes
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="received_offer_letter" value="0" {{ old('received_offer_letter') === '0' ? 'checked' : '' }}>
-                            No
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="offer_letter">Upload Offer Letter (if available)</label>
-                    <input type="file" id="offer_letter" name="offer_letter" class="form-control" style="padding: 10px 16px;">
-                    <small class="field-hint">PDF, JPG, PNG, DOC, DOCX. Max size: 20MB.</small>
+                    <label for="academic_transcript">Upload Academic Certificate/Transcript <span aria-hidden="true">*</span></label>
+                    <input type="file" id="academic_transcript" name="academic_transcript" class="form-control @error('academic_transcript') is-invalid @enderror" style="padding: 10px 16px;" required>
+                    <small class="field-hint">PDF, JPG, PNG, DOC, DOCX. Max size: 20MB. Required.</small>
+                    @error('academic_transcript')<span class="field-error">{{ $message }}</span>@enderror
                 </div>
 
                 <div class="form-section-title">Section 3: Financial Background</div>
@@ -612,7 +597,7 @@
                 <div class="form-group">
                     <label>Household Income</label>
                     <div class="radio-group" style="flex-direction: column; gap: 12px;">
-                        @foreach(['< RM2,000', 'RM2,001 – RM4,000', 'RM4,001 – RM8,000', '> RM8,000'] as $income)
+                        @foreach(['Below RM 2,000', 'RM 2,001 to RM 5,000'] as $income)
                             <label class="radio-label">
                                 <input type="radio" name="household_income" value="{{ $income }}" {{ old('household_income') === $income ? 'checked' : '' }} required>
                                 {{ $income }}
@@ -644,9 +629,35 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="proof_of_income">Upload Proof of Income (Slip / statutory declaration)</label>
-                    <input type="file" id="proof_of_income" name="proof_of_income" class="form-control" style="padding: 10px 16px;">
-                    <small class="field-hint">PDF, JPG, PNG, DOC, DOCX. Max size: 20MB.</small>
+                    <label for="proof_of_income">Upload Proof of Income <span aria-hidden="true">*</span></label>
+                    <small class="field-hint" style="display:block; margin-bottom: 8px;">Requirement: Please upload proof of income for both parents if both are currently working.</small>
+                    <input type="file" id="proof_of_income" name="proof_of_income[]" class="form-control @error('proof_of_income') is-invalid @enderror @error('proof_of_income.*') is-invalid @enderror" multiple style="padding: 10px 16px;" required>
+                    <small class="field-hint">You can upload multiple files. PDF, JPG, PNG, DOC, DOCX. Max size: 20MB per file. Required.</small>
+                    @error('proof_of_income')<span class="field-error">{{ $message }}</span>@enderror
+                    @error('proof_of_income.*')<span class="field-error">{{ $message }}</span>@enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="government_assistance_status">Proof of Government Assistance / Welfare Status <span aria-hidden="true">*</span></label>
+                    <select id="government_assistance_status" name="government_assistance_status" class="form-control @error('government_assistance_status') is-invalid @enderror" required>
+                        <option value="">-- Choose Status --</option>
+                        @foreach([
+                            'Sumbangan Tunai Rahmah (STR)',
+                            'Bantuan Sara Hidup (BSH)',
+                            'Sumbangan Asas Rahmah (SARA)',
+                            'Zakat / Baitulmal Assistance Recipient',
+                        ] as $status)
+                            <option value="{{ $status }}" {{ old('government_assistance_status') === $status ? 'selected' : '' }}>{{ $status }}</option>
+                        @endforeach
+                    </select>
+                    @error('government_assistance_status')<span class="field-error">{{ $message }}</span>@enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="proof_of_government_assistance">Upload Proof of Government Assistance / Welfare <span aria-hidden="true">*</span></label>
+                    <input type="file" id="proof_of_government_assistance" name="proof_of_government_assistance" class="form-control @error('proof_of_government_assistance') is-invalid @enderror" style="padding: 10px 16px;" required>
+                    <small class="field-hint">PDF, JPG, PNG, DOC, DOCX. Max size: 20MB. Required.</small>
+                    @error('proof_of_government_assistance')<span class="field-error">{{ $message }}</span>@enderror
                 </div>
 
                 <div class="form-group">
@@ -659,36 +670,7 @@
                     <textarea id="other_scholarship_details" name="other_scholarship_details" rows="3" class="form-control" style="font-family: inherit;" required>{{ old('other_scholarship_details') }}</textarea>
                 </div>
 
-                <div class="form-section-title">Section 4: Leadership &amp; Involvement</div>
-
-                <div class="form-group">
-                    <label for="leadership_roles">List up to 3 leadership roles (e.g. school prefect, NGO volunteer, club president)</label>
-                    <textarea id="leadership_roles" name="leadership_roles" rows="4" class="form-control" style="font-family: inherit;" required>{{ old('leadership_roles') }}</textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="involvement_level">Level of involvement (Leader / Active / Occasional / None)</label>
-                    <select id="involvement_level" name="involvement_level" class="form-control" required>
-                        <option value="">-- Choose Level --</option>
-                        @foreach(['Leader', 'Active', 'Occasional', 'None'] as $level)
-                            <option value="{{ $level }}" {{ old('involvement_level') === $level ? 'selected' : '' }}>{{ $level }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="community_service_involvement">Community service involvement</label>
-                    <textarea id="community_service_involvement" name="community_service_involvement" rows="4" class="form-control" style="font-family: inherit;" required>{{ old('community_service_involvement') }}</textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="community_contribution">Describe your contribution to community (150–200 words)</label>
-                    <textarea id="community_contribution" name="community_contribution" rows="6" class="form-control @error('community_contribution') is-invalid @enderror word-count-field" style="font-family: inherit;" data-min-words="150" data-max-words="200" maxlength="5000" required>{{ old('community_contribution') }}</textarea>
-                    <div class="word-count" id="community_contribution_count">0 words (required: 150–200)</div>
-                    @error('community_contribution')<span class="field-error">{{ $message }}</span>@enderror
-                </div>
-
-                <div class="form-section-title">Section 5: Personal Statement</div>
+                <div class="form-section-title">Section 4: Personal Statement</div>
 
                 <div class="form-group">
                     <label for="leadership_experience_statement">Describe one leadership experience where you made an impact (150–200 words)</label>
@@ -704,21 +686,7 @@
                     @error('scholar_selection_statement')<span class="field-error">{{ $message }}</span>@enderror
                 </div>
 
-                <div class="form-section-title">Section 6: Supporting Documents</div>
-
-                <div class="form-group">
-                    <label for="recommendation_letter">Upload recommendation letter (optional)</label>
-                    <input type="file" id="recommendation_letter" name="recommendation_letter" class="form-control" style="padding: 10px 16px;">
-                    <small class="field-hint">PDF, JPG, PNG, DOC, DOCX. Max size: 20MB.</small>
-                </div>
-
-                <div class="form-group">
-                    <label for="relevant_certificates">Upload relevant certificates (optional)</label>
-                    <input type="file" id="relevant_certificates" name="relevant_certificates[]" class="form-control" multiple style="padding: 10px 16px;">
-                    <small class="field-hint">You can upload multiple files. PDF, JPG, PNG, DOC, DOCX. Max size: 20MB per file.</small>
-                </div>
-
-                <div class="form-section-title">Section 7: Declaration</div>
+                <div class="form-section-title">Section 5: Declaration</div>
 
                 <div class="declaration-box">
                     <p>I declare that all information provided is true and accurate. I understand that any false information may result in disqualification.</p>
@@ -736,14 +704,6 @@
     </div>
 </div>
 
-<div class="eligibility-modal-overlay" id="citizenship-eligibility-modal" role="dialog" aria-modal="true" aria-labelledby="eligibility-modal-title">
-    <div class="eligibility-modal">
-        <h3 id="eligibility-modal-title">Not Eligible</h3>
-        <p>The MFLS Scholarship is open to Malaysian citizens and Permanent Residents (PR) of Indian Muslim heritage only. You are not eligible to proceed with this application.</p>
-        <button type="button" id="eligibility-modal-close">Understood</button>
-    </div>
-</div>
-
 @if ($selectedPartner)
 <div class="eligibility-modal-overlay" id="programme-requirements-modal" role="dialog" aria-modal="true" aria-labelledby="requirements-modal-title">
     <div class="eligibility-modal requirements-modal">
@@ -754,27 +714,31 @@
 
         <div id="requirements-check-panel">
             <ul class="requirements-list" id="requirements-list"></ul>
-            <p class="requirements-question" id="requirements-question">Do you fulfil these programme requirements?</p>
-            <div class="requirements-actions" id="requirements-actions">
+            <p class="requirements-question" id="requirements-question" hidden>Do you fulfil these programme requirements?</p>
+            <div class="requirements-actions" id="requirements-actions" hidden>
                 <button type="button" id="requirements-fulfill-yes">Yes, I fulfil them</button>
                 <button type="button" class="btn-danger" id="requirements-fulfill-no">No, I do not</button>
             </div>
             <p class="requirements-status-note" id="requirements-status-note" hidden></p>
         </div>
+    </div>
+</div>
 
-        <div id="requirements-email-panel" class="requirements-email-panel">
-            <p>Please enter your email address. We will send you guidance on next steps and ask you to contact us with your personal information so we can check feasibility and revert to you.</p>
-            <label for="requirements-inquiry-email">Email address</label>
-            <input type="email" id="requirements-inquiry-email" class="form-control" placeholder="name@example.com" maxlength="255" autocomplete="email">
-            <p class="requirements-email-error" id="requirements-email-error">Please enter a valid email address.</p>
-            <div class="requirements-actions">
-                <button type="button" id="requirements-inquiry-submit">Submit email</button>
-                <button type="button" class="btn-secondary" id="requirements-inquiry-back">Back</button>
-            </div>
+<div class="eligibility-modal-overlay" id="programme-appeal-modal" role="dialog" aria-modal="true" aria-labelledby="appeal-modal-title">
+    <div class="eligibility-modal requirements-modal requirements-appeal-modal">
+        <h3 id="appeal-modal-title">Let’s Explore Other Options!</h3>
+        <p>Your profile does not quite match our standard criteria, but your journey does not have to stop here. We welcome you to submit an appeal for further review.</p>
+        <div class="requirements-appeal-steps">
+            <h5>How to Appeal</h5>
+            <ul>
+                <li><strong>Email to:</strong> <a href="mailto:scholarships@mukmin.org?subject=APPEAL-MFLS">scholarships@mukmin.org</a></li>
+                <li><strong>Subject:</strong> APPEAL-MFLS</li>
+                <li><strong>Body:</strong> Share your story, your specific request, and why you believe you are a strong candidate.</li>
+            </ul>
         </div>
-
-        <div id="requirements-done-panel" class="requirements-done-panel">
-            <p id="requirements-done-message">Thank you. We have emailed you next steps. You will now be redirected to the scholarship page.</p>
+        <div class="requirements-actions">
+            <button type="button" id="requirements-appeal-close">Return to scholarship page</button>
+            <button type="button" class="btn-secondary" id="requirements-appeal-back">Back</button>
         </div>
     </div>
 </div>
@@ -783,99 +747,39 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const citizenshipRadios = document.querySelectorAll('input[name="citizenship"]');
-    const eligibilityModal = document.getElementById('citizenship-eligibility-modal');
-    const eligibilityModalClose = document.getElementById('eligibility-modal-close');
     const mflsForm = document.getElementById('mfls-form');
-    const submitBtn = document.getElementById('mfls-submit-btn');
-    let citizenshipBlocked = false;
-
-    function getSelectedCitizenship() {
-        const selected = document.querySelector('input[name="citizenship"]:checked');
-        return selected ? selected.value : '';
-    }
-
-    function showEligibilityModal() {
-        citizenshipBlocked = true;
-        if (submitBtn) {
-            submitBtn.disabled = true;
-        }
-        if (eligibilityModal) {
-            eligibilityModal.classList.add('is-visible');
-        }
-    }
-
-    function hideEligibilityModal() {
-        if (eligibilityModal) {
-            eligibilityModal.classList.remove('is-visible');
-        }
-        citizenshipRadios.forEach(function (radio) {
-            radio.checked = false;
-        });
-        citizenshipBlocked = false;
-        if (submitBtn && !submitBtn.hasAttribute('data-partner-disabled')) {
-            submitBtn.disabled = false;
-        }
-    }
-
-    citizenshipRadios.forEach(function (radio) {
-        radio.addEventListener('change', function () {
-            if (this.value === 'Non-Malaysian') {
-                showEligibilityModal();
-            } else {
-                citizenshipBlocked = false;
-                if (submitBtn && !submitBtn.hasAttribute('data-partner-disabled')) {
-                    submitBtn.disabled = false;
-                }
-            }
-        });
-    });
-
-    if (eligibilityModalClose) {
-        eligibilityModalClose.addEventListener('click', hideEligibilityModal);
-    }
-
-    if (eligibilityModal) {
-        eligibilityModal.addEventListener('click', function (event) {
-            if (event.target === eligibilityModal) {
-                hideEligibilityModal();
-            }
-        });
-    }
-
-    if (getSelectedCitizenship() === 'Non-Malaysian') {
-        showEligibilityModal();
-    }
 
     const programmeSelect = document.getElementById('programme_course_applied');
+    const programmeLoadingHint = document.getElementById('programme-requirements-loading-hint');
     const requirementsModal = document.getElementById('programme-requirements-modal');
+    const appealModal = document.getElementById('programme-appeal-modal');
     const requirementsProgrammeName = document.getElementById('requirements-programme-name');
     const requirementsList = document.getElementById('requirements-list');
     const requirementsLoading = document.getElementById('requirements-loading');
     const requirementsCheckPanel = document.getElementById('requirements-check-panel');
-    const requirementsEmailPanel = document.getElementById('requirements-email-panel');
-    const requirementsDonePanel = document.getElementById('requirements-done-panel');
     const requirementsQuestion = document.getElementById('requirements-question');
     const requirementsActions = document.getElementById('requirements-actions');
     const requirementsStatusNote = document.getElementById('requirements-status-note');
-    const requirementsInquiryEmail = document.getElementById('requirements-inquiry-email');
-    const requirementsEmailError = document.getElementById('requirements-email-error');
     const partnerIdInput = document.querySelector('input[name="partner_id"]');
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')
-        ? document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        : (document.querySelector('input[name="_token"]') ? document.querySelector('input[name="_token"]').value : '');
 
     const requirementsUrl = @json(route('welfare.mfls-scholarship.programme-requirements'));
-    const inquiryUrl = @json(route('welfare.mfls-scholarship.requirements-inquiry'));
+    const scholarshipPageUrl = @json(route('welfare.impact.mfls'));
     const partnerId = partnerIdInput ? partnerIdInput.value : '';
 
     let requirementsConfirmed = !programmeSelect || !requirementsModal || !partnerId;
     let requirementsRequestId = 0;
     let currentProgramme = '';
     let pendingSubmitAfterConfirm = false;
+    let lastRequirementsData = null;
+    const requirementsCache = Object.create(null);
+    const requirementsInflight = Object.create(null);
 
     function requirementsStorageKey(programme) {
         return 'mfls_req_ok:' + partnerId + ':' + programme;
+    }
+
+    function cacheKey(programme) {
+        return partnerId + '::' + programme;
     }
 
     function readRequirementsConfirmed(programme) {
@@ -904,6 +808,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function setProgrammeLoading(isLoading) {
+        if (programmeSelect) {
+            programmeSelect.setAttribute('aria-busy', isLoading ? 'true' : 'false');
+        }
+        if (programmeLoadingHint) {
+            programmeLoadingHint.hidden = !isLoading;
+        }
+    }
+
     function showRequirementsModal() {
         if (requirementsModal) {
             requirementsModal.classList.add('is-visible');
@@ -916,31 +829,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function resetRequirementsPanels() {
-        if (requirementsCheckPanel) {
-            requirementsCheckPanel.classList.remove('is-hidden');
+    function showAppealModal() {
+        if (appealModal) {
+            appealModal.classList.add('is-visible');
         }
-        if (requirementsEmailPanel) {
-            requirementsEmailPanel.classList.remove('is-visible');
-        }
-        if (requirementsDonePanel) {
-            requirementsDonePanel.classList.remove('is-visible');
-        }
-        if (requirementsEmailError) {
-            requirementsEmailError.classList.remove('is-visible');
-        }
-        if (requirementsInquiryEmail) {
-            requirementsInquiryEmail.value = '';
-        }
-        if (requirementsStatusNote) {
-            requirementsStatusNote.hidden = true;
-            requirementsStatusNote.textContent = '';
-        }
-        if (requirementsQuestion) {
-            requirementsQuestion.hidden = false;
-        }
-        if (requirementsActions) {
-            requirementsActions.hidden = false;
+    }
+
+    function hideAppealModal() {
+        if (appealModal) {
+            appealModal.classList.remove('is-visible');
         }
     }
 
@@ -972,9 +869,90 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function presentRequirementsModal(programme, data) {
+        lastRequirementsData = data;
+        currentProgramme = programme;
+        if (requirementsProgrammeName) {
+            requirementsProgrammeName.textContent = programme;
+        }
+        if (requirementsStatusNote) {
+            requirementsStatusNote.hidden = true;
+            requirementsStatusNote.textContent = '';
+        }
+        if (requirementsLoading) {
+            requirementsLoading.hidden = true;
+        }
+        renderRequirements(data);
+        if (requirementsQuestion) {
+            requirementsQuestion.hidden = false;
+        }
+        if (requirementsActions) {
+            requirementsActions.hidden = false;
+        }
+        hideAppealModal();
+        showRequirementsModal();
+    }
+
+    function fetchProgrammeRequirements(programme) {
+        const key = cacheKey(programme);
+        if (Object.prototype.hasOwnProperty.call(requirementsCache, key)) {
+            return Promise.resolve(requirementsCache[key]);
+        }
+        if (requirementsInflight[key]) {
+            return requirementsInflight[key];
+        }
+
+        const url = requirementsUrl + '?partner=' + encodeURIComponent(partnerId) + '&programme=' + encodeURIComponent(programme);
+        requirementsInflight[key] = fetch(url, {
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).then(function (response) {
+            return response.json().then(function (data) {
+                return { ok: response.ok, data: data };
+            });
+        }).then(function (result) {
+            const payload = (result.ok && result.data && result.data.found) ? result.data : null;
+            requirementsCache[key] = payload;
+            delete requirementsInflight[key];
+            return payload;
+        }).catch(function () {
+            delete requirementsInflight[key];
+            requirementsCache[key] = null;
+            return null;
+        });
+
+        return requirementsInflight[key];
+    }
+
+    function prefetchPartnerRequirements() {
+        if (!programmeSelect || !partnerId) {
+            return;
+        }
+        Array.prototype.forEach.call(programmeSelect.options, function (option) {
+            const programme = (option.value || '').trim();
+            if (programme) {
+                fetchProgrammeRequirements(programme);
+            }
+        });
+    }
+
+    function openAppealInstead() {
+        pendingSubmitAfterConfirm = false;
+        requirementsConfirmed = false;
+        if (currentProgramme) {
+            writeRequirementsConfirmed(currentProgramme, false);
+        }
+        hideRequirementsModal();
+        showAppealModal();
+    }
+
     function confirmRequirementsAndContinue() {
         requirementsConfirmed = true;
         writeRequirementsConfirmed(currentProgramme, true);
+        setProgrammeLoading(false);
+        hideAppealModal();
         hideRequirementsModal();
 
         if (pendingSubmitAfterConfirm && mflsForm) {
@@ -1001,80 +979,49 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
+        // Instant reopen from cache (e.g. Back from appeal).
+        const cached = requirementsCache[cacheKey(programme)];
+        if (cached) {
+            requirementsConfirmed = false;
+            writeRequirementsConfirmed(programme, false);
+            setProgrammeLoading(false);
+            presentRequirementsModal(programme, cached);
+            return;
+        }
+
         requirementsConfirmed = false;
         writeRequirementsConfirmed(programme, false);
-        resetRequirementsPanels();
-        requirementsProgrammeName.textContent = programme;
-        requirementsList.innerHTML = '';
-        requirementsLoading.hidden = false;
-        requirementsCheckPanel.classList.remove('is-hidden');
-        showRequirementsModal();
+        hideAppealModal();
+        hideRequirementsModal();
+        setProgrammeLoading(true);
 
         const requestId = ++requirementsRequestId;
-        const url = requirementsUrl + '?partner=' + encodeURIComponent(partnerId) + '&programme=' + encodeURIComponent(programme);
-
-        fetch(url, {
-            headers: {
-                'Accept': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        }).then(function (response) {
-            return response.json().then(function (data) {
-                return { ok: response.ok, status: response.status, data: data };
-            });
-        }).then(function (result) {
+        fetchProgrammeRequirements(programme).then(function (data) {
             if (requestId !== requirementsRequestId) {
                 return;
             }
-            requirementsLoading.hidden = true;
+            setProgrammeLoading(false);
 
-            if (!result.ok) {
-                requirementsList.innerHTML = '';
-                appendRequirementItem('Notice', (result.data && result.data.message) ? result.data.message : 'Unable to load programme requirements right now. You may continue with your application.');
-                requirementsQuestion.hidden = true;
-                requirementsActions.hidden = true;
-                requirementsStatusNote.hidden = false;
-                requirementsStatusNote.textContent = 'You can continue filling the application form.';
-                window.setTimeout(confirmRequirementsAndContinue, 800);
+            if (!data) {
+                confirmRequirementsAndContinue();
                 return;
             }
 
-            if (!result.data.found) {
-                requirementsList.innerHTML = '';
-                appendRequirementItem('Notice', result.data.message || 'Detailed requirements are not available for this programme.');
-                requirementsQuestion.hidden = true;
-                requirementsActions.hidden = true;
-                requirementsStatusNote.hidden = false;
-                requirementsStatusNote.textContent = 'You can continue filling the application form.';
-                window.setTimeout(confirmRequirementsAndContinue, 800);
-                return;
-            }
-
-            renderRequirements(result.data);
-            requirementsQuestion.hidden = false;
-            requirementsActions.hidden = false;
-        }).catch(function () {
-            if (requestId !== requirementsRequestId) {
-                return;
-            }
-            requirementsLoading.hidden = true;
-            requirementsList.innerHTML = '';
-            appendRequirementItem('Notice', 'Unable to load programme requirements right now. You may continue with your application.');
-            requirementsQuestion.hidden = true;
-            requirementsActions.hidden = true;
-            requirementsStatusNote.hidden = false;
-            requirementsStatusNote.textContent = 'You can continue filling the application form.';
-            window.setTimeout(confirmRequirementsAndContinue, 800);
+            presentRequirementsModal(programme, data);
         });
     }
 
     if (programmeSelect && requirementsModal) {
+        prefetchPartnerRequirements();
+
         programmeSelect.addEventListener('change', function () {
             const programme = this.value.trim();
             pendingSubmitAfterConfirm = false;
             if (!programme) {
                 requirementsConfirmed = false;
                 currentProgramme = '';
+                setProgrammeLoading(false);
+                hideAppealModal();
                 hideRequirementsModal();
                 return;
             }
@@ -1083,8 +1030,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const yesBtn = document.getElementById('requirements-fulfill-yes');
         const noBtn = document.getElementById('requirements-fulfill-no');
-        const inquirySubmitBtn = document.getElementById('requirements-inquiry-submit');
-        const inquiryBackBtn = document.getElementById('requirements-inquiry-back');
+        const appealBackBtn = document.getElementById('requirements-appeal-back');
+        const appealCloseBtn = document.getElementById('requirements-appeal-close');
 
         if (yesBtn) {
             yesBtn.addEventListener('click', function () {
@@ -1094,93 +1041,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (noBtn) {
             noBtn.addEventListener('click', function () {
-                pendingSubmitAfterConfirm = false;
-                requirementsCheckPanel.classList.add('is-hidden');
-                requirementsEmailPanel.classList.add('is-visible');
-                if (requirementsInquiryEmail) {
-                    requirementsInquiryEmail.focus();
+                openAppealInstead();
+            });
+        }
+
+        if (appealBackBtn) {
+            appealBackBtn.addEventListener('click', function () {
+                hideAppealModal();
+                if (lastRequirementsData && currentProgramme) {
+                    presentRequirementsModal(currentProgramme, lastRequirementsData);
+                } else if (currentProgramme) {
+                    openRequirementsForProgramme(currentProgramme, { force: true });
                 }
             });
         }
 
-        if (inquiryBackBtn) {
-            inquiryBackBtn.addEventListener('click', function () {
-                requirementsEmailPanel.classList.remove('is-visible');
-                requirementsCheckPanel.classList.remove('is-hidden');
-                if (requirementsEmailError) {
-                    requirementsEmailError.classList.remove('is-visible');
-                }
-            });
-        }
-
-        if (inquirySubmitBtn) {
-            inquirySubmitBtn.addEventListener('click', function () {
-                const email = requirementsInquiryEmail ? requirementsInquiryEmail.value.trim() : '';
-                const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-                if (!emailValid) {
-                    if (requirementsEmailError) {
-                        requirementsEmailError.classList.add('is-visible');
-                    }
-                    return;
-                }
-                if (requirementsEmailError) {
-                    requirementsEmailError.classList.remove('is-visible');
-                }
-
-                inquirySubmitBtn.disabled = true;
-                inquirySubmitBtn.textContent = 'Submitting…';
-
-                fetch(inquiryUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    body: JSON.stringify({
-                        partner_id: partnerId,
-                        programme: currentProgramme,
-                        email: email
-                    })
-                }).then(function (response) {
-                    return response.json().then(function (data) {
-                        return { ok: response.ok, data: data };
-                    });
-                }).then(function (result) {
-                    inquirySubmitBtn.disabled = false;
-                    inquirySubmitBtn.textContent = 'Submit email';
-
-                    if (!result.ok) {
-                        if (requirementsEmailError) {
-                            requirementsEmailError.textContent = (result.data && result.data.message)
-                                ? result.data.message
-                                : ((result.data && result.data.errors && result.data.errors.email && result.data.errors.email[0])
-                                    ? result.data.errors.email[0]
-                                    : 'Unable to submit your email. Please try again.');
-                            requirementsEmailError.classList.add('is-visible');
-                        }
-                        return;
-                    }
-
-                    requirementsEmailPanel.classList.remove('is-visible');
-                    requirementsDonePanel.classList.add('is-visible');
-                    const doneMessage = document.getElementById('requirements-done-message');
-                    if (doneMessage) {
-                        doneMessage.textContent = result.data.message || 'Thank you. We have emailed you next steps. You will now be redirected to the scholarship page.';
-                    }
-
-                    window.setTimeout(function () {
-                        window.location.href = result.data.redirect_url || @json(route('welfare.impact.mfls'));
-                    }, 2200);
-                }).catch(function () {
-                    inquirySubmitBtn.disabled = false;
-                    inquirySubmitBtn.textContent = 'Submit email';
-                    if (requirementsEmailError) {
-                        requirementsEmailError.textContent = 'Unable to submit your email. Please try again.';
-                        requirementsEmailError.classList.add('is-visible');
-                    }
-                });
+        if (appealCloseBtn) {
+            appealCloseBtn.addEventListener('click', function () {
+                window.location.href = scholarshipPageUrl;
             });
         }
 
@@ -1196,12 +1074,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (mflsForm) {
         mflsForm.addEventListener('submit', function (event) {
-            if (citizenshipBlocked || getSelectedCitizenship() === 'Non-Malaysian') {
-                event.preventDefault();
-                showEligibilityModal();
-                return;
-            }
-
             if (programmeSelect && requirementsModal && partnerId) {
                 const programme = programmeSelect.value.trim();
                 if (!programme) {

@@ -146,8 +146,8 @@ class AdminDashboardController extends Controller
             ])
             ->values()
             ->all();
-        $submissionFilterQualifications = ['SPM', 'STPM', 'Foundation', 'Diploma', 'Degree'];
-        $submissionFilterHouseholdIncomes = ['< RM2,000', 'RM2,001 – RM4,000', 'RM4,001 – RM8,000', '> RM8,000'];
+        $submissionFilterQualifications = ['SPM', 'STPM', 'IGCSE', 'Foundation', 'Diploma', 'Degree'];
+        $submissionFilterHouseholdIncomes = ['Below RM 2,000', 'RM 2,001 to RM 5,000'];
         $submissionFilterEntityTypes = [
             'Individual',
             'Non-registered NGO',
@@ -849,7 +849,7 @@ class AdminDashboardController extends Controller
                     break;
 
                 case 'mfls':
-                    fputcsv($file, ['ID', 'Date', 'Email', 'Full Name', 'NRIC', 'DOB', 'Gender', 'Age', 'Citizenship', 'Marital Status', 'Phone', 'Address', 'State', 'Postcode', 'Partner Institution', 'Selected Programme', 'Current Qualification', 'Institution', 'CGPA/Result', 'Applied to University', 'Offer Letter Received', 'Household Income', 'Father Name', 'Father Occupation', 'Mother Name', 'Mother Occupation', 'Dependents', 'Other Scholarship', 'Leadership Roles', 'Involvement Level', 'Community Service', 'Status']);
+                    fputcsv($file, ['ID', 'Date', 'Email', 'Full Name', 'NRIC', 'DOB', 'Gender', 'Age', 'Citizenship', 'Marital Status', 'Phone', 'Address', 'State', 'Postcode', 'Partner Institution', 'Selected Programme', 'Current Qualification', 'Institution', 'CGPA/Result', 'Household Income', 'Father Name', 'Father Occupation', 'Mother Name', 'Mother Occupation', 'Dependents', 'Other Scholarship', 'Status']);
                     foreach (MflsScholarshipSubmission::all() as $item) {
                         fputcsv($file, [
                             $item->id,
@@ -871,8 +871,6 @@ class AdminDashboardController extends Controller
                             $item->current_qualification,
                             $item->institution_name,
                             $item->current_cgpa_result,
-                            $item->applied_to_university ? 'Yes' : 'No',
-                            $item->received_offer_letter === null ? '' : ($item->received_offer_letter ? 'Yes' : 'No'),
                             $item->household_income,
                             $item->father_guardian_name,
                             $item->father_guardian_occupation,
@@ -880,9 +878,6 @@ class AdminDashboardController extends Controller
                             $item->mother_guardian_occupation,
                             $item->number_of_dependents,
                             $item->other_scholarship_details,
-                            $item->leadership_roles,
-                            $item->involvement_level,
-                            $item->community_service_involvement,
                             SubmissionStatus::label($item->status)
                         ]);
                     }

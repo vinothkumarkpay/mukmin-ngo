@@ -146,7 +146,7 @@ class FormSubmissionMail extends Mailable
         'current_qualification' => 'Current Qualification (Year 2025/2026)',
         'institution_name' => 'Institution Name',
         'current_cgpa_result' => 'Current CGPA / Final Result',
-        'academic_transcript' => 'Academic Transcript',
+        'academic_transcript' => 'Academic Certificate/Transcript',
         'programme_course_applied' => 'Selected Programme',
         'applied_to_university' => 'Applied to Participating University?',
         'received_offer_letter' => 'Received Offer Letter?',
@@ -157,6 +157,8 @@ class FormSubmissionMail extends Mailable
         'mother_guardian_name' => 'Mother/Guardian Name',
         'mother_guardian_occupation' => 'Mother/Guardian Occupation',
         'proof_of_income' => 'Proof of Income',
+        'government_assistance_status' => 'Proof of Government Assistance / Welfare Status',
+        'proof_of_government_assistance' => 'Proof of Government Assistance / Welfare',
         'number_of_dependents' => 'Number of Dependents in Household',
         'other_scholarship_details' => 'Other Scholarship Details',
         'leadership_roles' => 'Leadership Roles',
@@ -173,8 +175,6 @@ class FormSubmissionMail extends Mailable
      * Form fields stored as booleans (may arrive as 0/1 from HTTP validation).
      */
     protected static $booleanFields = [
-        'applied_to_university',
-        'received_offer_letter',
         'declaration_confirmed',
         'contact_consent',
         'is_registered_ros',
@@ -285,16 +285,18 @@ class FormSubmissionMail extends Mailable
             }
         }
 
-        foreach (['academic_transcript', 'offer_letter', 'proof_of_income', 'recommendation_letter'] as $fileField) {
+        foreach (['academic_transcript', 'offer_letter', 'proof_of_government_assistance', 'recommendation_letter'] as $fileField) {
             if (!empty($this->formData[$fileField]) && Storage::disk('public')->exists($this->formData[$fileField])) {
                 $email->attach(Storage::disk('public')->path($this->formData[$fileField]));
             }
         }
 
-        if (!empty($this->formData['relevant_certificates']) && is_array($this->formData['relevant_certificates'])) {
-            foreach ($this->formData['relevant_certificates'] as $path) {
-                if (Storage::disk('public')->exists($path)) {
-                    $email->attach(Storage::disk('public')->path($path));
+        foreach (['proof_of_income', 'relevant_certificates'] as $multiFileField) {
+            if (!empty($this->formData[$multiFileField]) && is_array($this->formData[$multiFileField])) {
+                foreach ($this->formData[$multiFileField] as $path) {
+                    if (Storage::disk('public')->exists($path)) {
+                        $email->attach(Storage::disk('public')->path($path));
+                    }
                 }
             }
         }
@@ -331,7 +333,7 @@ class FormSubmissionMail extends Mailable
             }
             
             // Format single uploaded files as HTML link
-            if (in_array($key, ['registration_certificate', 'committee_members', 'academic_transcript', 'offer_letter', 'proof_of_income', 'recommendation_letter'], true)) {
+            if (in_array($key, ['registration_certificate', 'committee_members', 'academic_transcript', 'offer_letter', 'proof_of_government_assistance', 'recommendation_letter'], true)) {
                 $url = $value ? asset('storage/' . $value) : 'Not provided';
                 $formatted[] = [
                     'label' => self::$labels[$key] ?? ucwords(str_replace('_', ' ', $key)),
@@ -342,7 +344,7 @@ class FormSubmissionMail extends Mailable
             }
             
             // Format uploaded document lists as HTML links
-            if ($key === 'supporting_documents' || $key === 'relevant_certificates') {
+            if ($key === 'supporting_documents' || $key === 'relevant_certificates' || $key === 'proof_of_income') {
                 $links = [];
                 if (is_array($value)) {
                     foreach ($value as $index => $path) {

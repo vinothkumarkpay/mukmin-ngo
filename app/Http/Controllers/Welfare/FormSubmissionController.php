@@ -755,7 +755,7 @@ class FormSubmissionController extends Controller
             'full_address' => 'required|string|min:10|max:1000',
             'state' => ['required', 'string', Rule::in($states)],
             'postcode' => 'required|string|max:10',
-            'current_qualification' => 'required|string|in:SPM,STPM,Foundation,Diploma,Degree',
+            'current_qualification' => 'required|string|in:SPM,STPM,IGCSE,Foundation,Diploma,Degree',
             'institution_name' => 'required|string|min:2|max:255',
             'current_cgpa_result' => 'required|string|min:1|max:255',
             'academic_transcript' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
@@ -766,26 +766,28 @@ class FormSubmissionController extends Controller
                 'max:255',
                 Rule::in($partnerProgrammes),
             ],
-            'applied_to_university' => 'required|boolean',
-            'received_offer_letter' => 'nullable|boolean',
-            'offer_letter' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
-            'household_income' => ['required', 'string', Rule::in(['< RM2,000', 'RM2,001 – RM4,000', 'RM4,001 – RM8,000', '> RM8,000'])],
+            'household_income' => ['required', 'string', Rule::in(['Below RM 2,000', 'RM 2,001 to RM 5,000'])],
             'father_guardian_name' => ['required', 'string', 'min:2', 'max:255', 'regex:/^[\p{L}\s\'\-\.@]+$/u'],
             'father_guardian_occupation' => 'required|string|min:2|max:255',
             'mother_guardian_name' => ['required', 'string', 'min:2', 'max:255', 'regex:/^[\p{L}\s\'\-\.@]+$/u'],
             'mother_guardian_occupation' => 'required|string|min:2|max:255',
-            'proof_of_income' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
+            'proof_of_income' => 'required|array|min:1|max:10',
+            'proof_of_income.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
+            'government_assistance_status' => [
+                'required',
+                'string',
+                Rule::in([
+                    'Sumbangan Tunai Rahmah (STR)',
+                    'Bantuan Sara Hidup (BSH)',
+                    'Sumbangan Asas Rahmah (SARA)',
+                    'Zakat / Baitulmal Assistance Recipient',
+                ]),
+            ],
+            'proof_of_government_assistance' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
             'number_of_dependents' => 'required|integer|min:0|max:20',
             'other_scholarship_details' => 'required|string|min:2|max:2000',
-            'leadership_roles' => 'required|string|min:10|max:2000',
-            'involvement_level' => 'required|string|in:Leader,Active,Occasional,None',
-            'community_service_involvement' => 'required|string|min:10|max:2000',
-            'community_contribution' => ['required', 'string', 'max:5000', $this->wordCountBetweenRule(150, 200)],
             'leadership_experience_statement' => ['required', 'string', 'max:5000', $this->wordCountBetweenRule(150, 200)],
             'scholar_selection_statement' => ['required', 'string', 'max:5000', $this->wordCountBetweenRule(150, 200)],
-            'recommendation_letter' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
-            'relevant_certificates' => 'nullable|array|max:10',
-            'relevant_certificates.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
             'declaration_confirmed' => 'required|accepted',
         ], [
             'email.required' => 'Please enter your email address.',
@@ -801,18 +803,25 @@ class FormSubmissionController extends Controller
             'contact_number.regex' => 'Please enter a valid Malaysian mobile number.',
             'citizenship.in' => 'The MFLS Scholarship is open to Malaysian citizens and Permanent Residents only.',
             'full_address.min' => 'Please enter your complete residential address.',
-            'academic_transcript.required' => 'Please upload your academic transcript.',
-            'academic_transcript.mimes' => 'Academic transcript must be a PDF, JPG, PNG, DOC, or DOCX file.',
-            'academic_transcript.max' => 'Academic transcript must not exceed 20MB.',
+            'academic_transcript.required' => 'Please upload your academic certificate/transcript.',
+            'academic_transcript.mimes' => 'Academic certificate/transcript must be a PDF, JPG, PNG, DOC, or DOCX file.',
+            'academic_transcript.max' => 'Academic certificate/transcript must not exceed 20MB.',
+            'proof_of_income.required' => 'Please upload proof of income.',
+            'proof_of_income.min' => 'Please upload at least one proof of income file.',
+            'proof_of_income.*.mimes' => 'Proof of income must be a PDF, JPG, PNG, DOC, or DOCX file.',
+            'proof_of_income.*.max' => 'Each proof of income file must not exceed 20MB.',
+            'government_assistance_status.required' => 'Please select your government assistance / welfare status.',
+            'government_assistance_status.in' => 'Please select a valid government assistance / welfare status.',
+            'proof_of_government_assistance.required' => 'Please upload proof of government assistance / welfare.',
+            'proof_of_government_assistance.mimes' => 'Proof of government assistance must be a PDF, JPG, PNG, DOC, or DOCX file.',
+            'proof_of_government_assistance.max' => 'Proof of government assistance must not exceed 20MB.',
             'programme_course_applied.in' => 'Please select a valid programme for the chosen institution.',
             'declaration_confirmed.accepted' => 'You must agree to the declaration before submitting.',
         ]);
 
         $fileFields = [
             'academic_transcript',
-            'offer_letter',
-            'proof_of_income',
-            'recommendation_letter',
+            'proof_of_government_assistance',
         ];
 
         unset($validated['partner_id']);
@@ -826,12 +835,12 @@ class FormSubmissionController extends Controller
             }
         }
 
-        if ($request->hasFile('relevant_certificates')) {
-            $certificatePaths = [];
-            foreach ($request->file('relevant_certificates') as $file) {
-                $certificatePaths[] = $file->store('documents', 'public');
+        if ($request->hasFile('proof_of_income')) {
+            $incomePaths = [];
+            foreach ($request->file('proof_of_income') as $file) {
+                $incomePaths[] = $file->store('documents', 'public');
             }
-            $validated['relevant_certificates'] = $certificatePaths;
+            $validated['proof_of_income'] = $incomePaths;
         }
 
         $this->applyDefaultSubmissionStatus($validated);

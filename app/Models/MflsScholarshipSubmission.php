@@ -39,6 +39,8 @@ class MflsScholarshipSubmission extends Model
         'mother_guardian_name',
         'mother_guardian_occupation',
         'proof_of_income',
+        'government_assistance_status',
+        'proof_of_government_assistance',
         'number_of_dependents',
         'other_scholarship_details',
         'leadership_roles',
@@ -56,6 +58,7 @@ class MflsScholarshipSubmission extends Model
     protected $casts = [
         'applied_to_university' => 'boolean',
         'received_offer_letter' => 'boolean',
+        'proof_of_income' => 'array',
         'relevant_certificates' => 'array',
         'declaration_confirmed' => 'boolean',
         'dob' => 'date',

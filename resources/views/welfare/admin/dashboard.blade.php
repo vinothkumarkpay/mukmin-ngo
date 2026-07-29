@@ -1223,9 +1223,9 @@
                         val = formatBooleanDisplay(val) ?? '-';
                     } else if (typeof val === 'boolean') {
                         val = val ? 'Yes' : 'No';
-                    } else if (['registration_certificate', 'committee_members', 'academic_transcript', 'offer_letter', 'proof_of_income', 'recommendation_letter'].includes(key)) {
+                    } else if (['registration_certificate', 'committee_members', 'academic_transcript', 'offer_letter', 'proof_of_government_assistance', 'recommendation_letter'].includes(key)) {
                         val = getFileLinkHtml(val);
-                    } else if (key === 'supporting_documents' || key === 'relevant_certificates') {
+                    } else if (key === 'supporting_documents' || key === 'relevant_certificates' || key === 'proof_of_income') {
                         if (Array.isArray(val)) {
                             let linksHtml = '<div style="display:flex; flex-direction:column; gap:6px;">';
                             val.forEach(file => {

@@ -2,10 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Mail\MflsRequirementsInquiryMail;
 use App\Services\Welfare\MflsPartnerDocumentService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class MflsProgrammeRequirementsTest extends TestCase
@@ -28,8 +26,12 @@ class MflsProgrammeRequirementsTest extends TestCase
         $response->assertSee('Do you fulfil these programme requirements?', false);
         $response->assertSee('Yes, I fulfil them', false);
         $response->assertSee('No, I do not', false);
+        $response->assertSee('id="programme-appeal-modal"', false);
+        $response->assertSee('Let’s Explore Other Options!', false);
+        $response->assertSee('scholarships@mukmin.org', false);
+        $response->assertSee('APPEAL-MFLS', false);
         $response->assertSee('programme-requirements', false);
-        $response->assertSee('requirements-inquiry', false);
+        $response->assertDontSee('requirements-inquiry', false);
     }
 
     public function test_programme_requirements_endpoint_returns_excel_details(): void
@@ -56,31 +58,5 @@ class MflsProgrammeRequirementsTest extends TestCase
         ]));
 
         $response->assertStatus(422);
-    }
-
-    public function test_requirements_inquiry_sends_emails_and_returns_redirect(): void
-    {
-        Mail::fake();
-
-        $response = $this->postJson(route('welfare.mfls-scholarship.requirements-inquiry'), [
-            'partner_id' => 'bac',
-            'programme' => 'FIL (Foundation in Law)',
-            'email' => 'applicant@example.com',
-        ]);
-
-        $response->assertOk();
-        $response->assertJsonPath('ok', true);
-        $response->assertJsonPath('redirect_url', route('welfare.impact.mfls'));
-
-        Mail::assertSent(MflsRequirementsInquiryMail::class, function (MflsRequirementsInquiryMail $mail) {
-            return $mail->applicantEmail === 'applicant@example.com'
-                && $mail->programmeName === 'FIL (Foundation in Law)'
-                && $mail->isForSupport === false;
-        });
-
-        Mail::assertSent(MflsRequirementsInquiryMail::class, function (MflsRequirementsInquiryMail $mail) {
-            return $mail->isForSupport === true
-                && $mail->applicantEmail === 'applicant@example.com';
-        });
     }
 }

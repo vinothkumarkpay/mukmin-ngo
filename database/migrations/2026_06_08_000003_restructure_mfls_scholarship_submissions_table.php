@@ -30,7 +30,7 @@ class RestructureMflsScholarshipSubmissionsTable extends Migration
             $table->string('current_cgpa_result');
             $table->string('academic_transcript')->nullable();
             $table->string('programme_course_applied');
-            $table->boolean('applied_to_university');
+            $table->boolean('applied_to_university')->nullable();
             $table->boolean('received_offer_letter')->nullable();
             $table->string('offer_letter')->nullable();
 
@@ -45,10 +45,10 @@ class RestructureMflsScholarshipSubmissionsTable extends Migration
             $table->text('other_scholarship_details');
 
             // Section 4: Leadership & Involvement
-            $table->text('leadership_roles');
-            $table->string('involvement_level');
-            $table->text('community_service_involvement');
-            $table->text('community_contribution');
+                    $table->text('leadership_roles')->nullable();
+                    $table->string('involvement_level')->nullable();
+                    $table->text('community_service_involvement')->nullable();
+                    $table->text('community_contribution')->nullable();
 
             // Section 5: Personal Statement
             $table->text('leadership_experience_statement');
