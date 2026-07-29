@@ -586,7 +586,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="academic_transcript">Upload Academic Certificate/Transcript <span aria-hidden="true">*</span></label>
+                    <label for="academic_transcript">Upload Academic Certificate/Transcript</label>
                     <input type="file" id="academic_transcript" name="academic_transcript" class="form-control @error('academic_transcript') is-invalid @enderror" style="padding: 10px 16px;" required>
                     <small class="field-hint">PDF, JPG, PNG, DOC, DOCX. Max size: 20MB. Required.</small>
                     @error('academic_transcript')<span class="field-error">{{ $message }}</span>@enderror
@@ -629,7 +629,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="proof_of_income">Upload Proof of Income <span aria-hidden="true">*</span></label>
+                    <label for="proof_of_income">Upload Proof of Income</label>
                     <small class="field-hint" style="display:block; margin-bottom: 8px;">Requirement: Please upload proof of income for both parents if both are currently working.</small>
                     <input type="file" id="proof_of_income" name="proof_of_income[]" class="form-control @error('proof_of_income') is-invalid @enderror @error('proof_of_income.*') is-invalid @enderror" multiple style="padding: 10px 16px;" required>
                     <small class="field-hint">You can upload multiple files. PDF, JPG, PNG, DOC, DOCX. Max size: 20MB per file. Required.</small>
@@ -638,7 +638,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="government_assistance_status">Proof of Government Assistance / Welfare Status <span aria-hidden="true">*</span></label>
+                    <label for="government_assistance_status">Proof of Government Assistance / Welfare Status</label>
                     <select id="government_assistance_status" name="government_assistance_status" class="form-control @error('government_assistance_status') is-invalid @enderror" required>
                         <option value="">-- Choose Status --</option>
                         @foreach([
@@ -654,7 +654,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="proof_of_government_assistance">Upload Proof of Government Assistance / Welfare <span aria-hidden="true">*</span></label>
+                    <label for="proof_of_government_assistance">Upload Proof of Government Assistance / Welfare</label>
                     <input type="file" id="proof_of_government_assistance" name="proof_of_government_assistance" class="form-control @error('proof_of_government_assistance') is-invalid @enderror" style="padding: 10px 16px;" required>
                     <small class="field-hint">PDF, JPG, PNG, DOC, DOCX. Max size: 20MB. Required.</small>
                     @error('proof_of_government_assistance')<span class="field-error">{{ $message }}</span>@enderror
@@ -737,7 +737,7 @@
             </ul>
         </div>
         <div class="requirements-actions">
-            <button type="button" id="requirements-appeal-close">Return to scholarship page</button>
+            <button type="button" id="requirements-appeal-close">Return to Scholarship</button>
             <button type="button" class="btn-secondary" id="requirements-appeal-back">Back</button>
         </div>
     </div>
