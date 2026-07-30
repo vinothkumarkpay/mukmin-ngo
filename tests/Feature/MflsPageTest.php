@@ -30,8 +30,11 @@ class MflsPageTest extends TestCase
         $response->assertSee('Worry not! We may still be able to help you.', false);
         $response->assertSee('Submit an Education Aid Application', false);
         $response->assertSee(route('welfare.community-aid'), false);
-        $response->assertSee('SG ACADEMY', false);
-        $response->assertSee('Drone Training (Certified by Civil Aviation)', false);
+        $response->assertSee('ASIA DRONE TECHNICAL ACADEMY', false);
+        $response->assertSee('SKM LEVEL 2 H512-001-2:2019 (Drone Handling) + SKM LEVEL 3 H512-0013:2019 (Drone Commanding)', false);
+        $response->assertSee('AUTOTRONICS CENTER OF EXCELLENCE', false);
+        $response->assertSee('Certified SEDA PV Technician', false);
+        $response->assertSee('SKM LEVEL 3 G452-007-3:2019 (Electric And Hybrid Car Servicing)', false);
         $response->assertSee('assess eligibility and shortlist qualified candidates', false);
         $response->assertSee('Apply Now', false);
         $response->assertSee('More Info', false);

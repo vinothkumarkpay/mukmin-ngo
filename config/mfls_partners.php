@@ -90,14 +90,22 @@ return [
             ],
         ],
         [
-            'id' => 'sg-academy',
-            'name' => 'SG ACADEMY',
-            'logo' => 'welfare/img/mfls/partners/sg-academy.webp',
-            'info' => 'Industry-certified training programmes in drone operations, EV competency and artificial intelligence.',
+            'id' => 'asia-drone',
+            'name' => 'ASIA DRONE TECHNICAL ACADEMY',
+            'logo' => 'welfare/img/mfls/partners/asia-drone-technical-academy.png',
+            'info' => 'SKM-certified training programmes in drone handling and drone commanding.',
             'programmes' => [
-                'Drone Training (Certified by Civil Aviation)',
-                'EV Competency Training (Certified by Autotronics EV Center)',
-                'Artificial Intelligence Proficiency (Certified by SG AI Academy)',
+                'SKM LEVEL 2 H512-001-2:2019 (Drone Handling) + SKM LEVEL 3 H512-0013:2019 (Drone Commanding)',
+            ],
+        ],
+        [
+            'id' => 'autotronics',
+            'name' => 'AUTOTRONICS CENTER OF EXCELLENCE',
+            'logo' => 'welfare/img/mfls/partners/autotronics-center-of-excellence.png',
+            'info' => 'Industry-certified training in solar PV technician competency and electric/hybrid vehicle servicing.',
+            'programmes' => [
+                'Certified SEDA PV Technician',
+                'SKM LEVEL 3 G452-007-3:2019 (Electric And Hybrid Car Servicing)',
             ],
         ],
         [
