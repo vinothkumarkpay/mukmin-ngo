@@ -768,8 +768,8 @@
         <div class="slider-container">
             <div class="slide active">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="{{ asset('welfare/img/banner-imtf-mobile.jpg') }}">
-                    <img src="{{ asset('welfare/img/banner-imtf.jpeg') }}" alt="Official Launch of #IMTF2030 — Indian Muslim Transformational Framework">
+                    <source media="(max-width: 768px)" srcset="{{ asset('welfare/img/banner-mukminskills.png') }}">
+                    <img src="{{ asset('welfare/img/banner-mukminskills.png') }}" alt="MUKMIN Skills">
                 </picture>
             </div>
             <a href="{{ route('welfare.about') }}" class="slide">
