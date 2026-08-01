@@ -768,7 +768,7 @@
         <div class="slider-container">
             <div class="slide active">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="{{ asset('welfare/img/banner-mukminskills.png') }}">
+                    <source media="(max-width: 768px)" srcset="{{ asset('welfare/img/banner-mukminskills-mobile.png') }}">
                     <img src="{{ asset('welfare/img/banner-mukminskills.png') }}" alt="MUKMIN Skills">
                 </picture>
             </div>
