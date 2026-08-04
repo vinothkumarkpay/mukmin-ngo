@@ -906,6 +906,14 @@ document.addEventListener('DOMContentLoaded', function () {
         showRequirementsModal();
     }
 
+    function fallbackRequirementsPayload(programme, message) {
+        return {
+            found: false,
+            programme: programme,
+            message: message || 'Detailed requirements for this programme could not be loaded right now. You may continue if you believe you fulfil the typical entry criteria.'
+        };
+    }
+
     function fetchProgrammeRequirements(programme) {
         const key = cacheKey(programme);
         if (Object.prototype.hasOwnProperty.call(requirementsCache, key)) {
@@ -917,6 +925,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // POST body (not query string): some hosts strip GET query params when the
         // programme name contains multiple parenthesis groups, e.g. "(LLB) (Hons)".
+        const controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+        const timeoutId = controller ? window.setTimeout(function () {
+            controller.abort();
+        }, 15000) : null;
+
         requirementsInflight[key] = fetch(requirementsUrl, {
             method: 'POST',
             headers: {
@@ -928,7 +941,8 @@ document.addEventListener('DOMContentLoaded', function () {
             body: JSON.stringify({
                 partner: partnerId,
                 programme: programme
-            })
+            }),
+            signal: controller ? controller.signal : undefined
         }).then(function (response) {
             return response.json().then(function (data) {
                 return { ok: response.ok, data: data };
@@ -936,17 +950,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 return { ok: false, data: null };
             });
         }).then(function (result) {
-            // Cache both found and not-found payloads so the modal still opens
-            // when Excel has no exact row (user can confirm/continue).
-            const payload = (result.ok && result.data && typeof result.data.found !== 'undefined')
-                ? result.data
-                : null;
-            requirementsCache[key] = payload;
+            if (timeoutId) {
+                window.clearTimeout(timeoutId);
+            }
             delete requirementsInflight[key];
-            return payload;
+
+            // Only cache successful payloads. Never cache failures as null —
+            // that permanently skipped the modal after a flaky prefetch.
+            if (result.ok && result.data && typeof result.data.found !== 'undefined') {
+                requirementsCache[key] = result.data;
+                return result.data;
+            }
+
+            return null;
         }).catch(function () {
+            if (timeoutId) {
+                window.clearTimeout(timeoutId);
+            }
             delete requirementsInflight[key];
-            requirementsCache[key] = null;
             return null;
         });
 
@@ -957,12 +978,28 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!programmeSelect || !partnerId) {
             return;
         }
+
+        // Prefetch sequentially (not all at once). Bursting 30+ POSTs caused
+        // some requests to fail/hang; failed results used to skip the modal.
+        const queue = [];
         Array.prototype.forEach.call(programmeSelect.options, function (option) {
             const programme = (option.value || '').trim();
             if (programme) {
-                fetchProgrammeRequirements(programme);
+                queue.push(programme);
             }
         });
+
+        function runNext() {
+            if (!queue.length) {
+                return;
+            }
+            const programme = queue.shift();
+            fetchProgrammeRequirements(programme).finally(function () {
+                window.setTimeout(runNext, 50);
+            });
+        }
+
+        runNext();
     }
 
     function openAppealInstead() {
@@ -1028,20 +1065,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            if (!data) {
-                setProgrammeLoading(false);
-                confirmRequirementsAndContinue();
-                return;
-            }
-
             setProgrammeLoading(false);
-            presentRequirementsModal(programme, data);
+            // Always open the modal — never silently continue on a failed fetch.
+            presentRequirementsModal(programme, data || fallbackRequirementsPayload(programme));
         }).catch(function () {
             if (requestId !== requirementsRequestId) {
                 return;
             }
             setProgrammeLoading(false);
-            confirmRequirementsAndContinue();
+            presentRequirementsModal(programme, fallbackRequirementsPayload(programme));
         });
     }
 
