@@ -40,6 +40,9 @@
                         <label style="display: block; font-weight: 500; margin-bottom: 5px; color: var(--color-heading);">Message</label>
                         <textarea name="message" rows="5" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s; font-family: inherit;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';" required></textarea>
                     </div>
+					<div>
+						@include('welfare.partials.recaptcha')
+					</div>
                     <div>
                         <button type="submit" class="btn btn-primary" style="border: none; border-radius: 4px; font-size: 15px; width: 100%; line-height: 20px; padding: 12px 28px;">Send Message</button>
                     </div>
