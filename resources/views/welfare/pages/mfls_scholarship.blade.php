@@ -886,7 +886,16 @@ document.addEventListener('DOMContentLoaded', function () {
         if (requirementsLoading) {
             requirementsLoading.hidden = true;
         }
-        renderRequirements(data);
+        if (data && data.found === false) {
+            renderRequirements({
+                academic_requirements: data.message || 'Detailed requirements for this programme are not listed right now. You may continue if you believe you fulfil the typical entry criteria.',
+                financial_requirement: '',
+                scholarship_coverage: '',
+                course_fee: ''
+            });
+        } else {
+            renderRequirements(data || {});
+        }
         if (requirementsQuestion) {
             requirementsQuestion.hidden = false;
         }
@@ -927,7 +936,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 return { ok: false, data: null };
             });
         }).then(function (result) {
-            const payload = (result.ok && result.data && result.data.found) ? result.data : null;
+            // Cache both found and not-found payloads so the modal still opens
+            // when Excel has no exact row (user can confirm/continue).
+            const payload = (result.ok && result.data && typeof result.data.found !== 'undefined')
+                ? result.data
+                : null;
             requirementsCache[key] = payload;
             delete requirementsInflight[key];
             return payload;

@@ -265,6 +265,7 @@ class MflsPartnerDocumentService
         }
 
         $needle = $this->normalizeProgrammeKey($programmeName);
+        $needleTokens = $this->programmeTokens($programmeName);
         $best = null;
         $bestScore = 0.0;
 
@@ -275,6 +276,12 @@ class MflsPartnerDocumentService
             }
 
             if ($candidate === $needle) {
+                return $row;
+            }
+
+            // Token containment: "Degree in Radiography" matches
+            // "Degree in Medical Imaging (Radiography)".
+            if ($this->programmeTokensContained($needleTokens, $this->programmeTokens($row['programme']))) {
                 return $row;
             }
 
@@ -291,6 +298,37 @@ class MflsPartnerDocumentService
         }
 
         return null;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function programmeTokens(string $value): array
+    {
+        $normalized = strtolower($this->normalizeCellValue($value));
+        $normalized = preg_replace('/[^a-z0-9]+/', ' ', $normalized) ?? '';
+        $parts = preg_split('/\s+/', trim($normalized)) ?: [];
+
+        return array_values(array_filter($parts, static fn (string $token): bool => strlen($token) >= 3));
+    }
+
+    /**
+     * @param  array<int, string>  $needleTokens
+     * @param  array<int, string>  $candidateTokens
+     */
+    private function programmeTokensContained(array $needleTokens, array $candidateTokens): bool
+    {
+        if ($needleTokens === [] || $candidateTokens === []) {
+            return false;
+        }
+
+        foreach ($needleTokens as $token) {
+            if (!in_array($token, $candidateTokens, true)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private function normalizeCellValue($value): string

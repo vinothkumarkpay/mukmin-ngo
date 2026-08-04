@@ -83,6 +83,45 @@ class MflsProgrammeRequirementsTest extends TestCase
         ]);
     }
 
+    public function test_programme_requirements_matches_mahsa_radiography_alias(): void
+    {
+        $response = $this->postJson(route('welfare.mfls-scholarship.programme-requirements'), [
+            'partner' => 'mahsa',
+            'programme' => 'Degree in Medical Imaging (Radiography)',
+        ]);
+
+        $response->assertOk();
+        $response->assertJson([
+            'found' => true,
+            'programme' => 'Degree in Medical Imaging (Radiography)',
+        ]);
+        $this->assertNotEmpty($response->json('academic_requirements'));
+    }
+
+    public function test_programme_requirements_matches_short_radiography_name_via_tokens(): void
+    {
+        $service = app(MflsPartnerDocumentService::class);
+
+        $match = $service->findProgrammeRequirements('mahsa', 'Degree in Radiography');
+
+        $this->assertNotNull($match);
+        $this->assertSame('Degree in Medical Imaging (Radiography)', $match['programme']);
+    }
+
+    public function test_programme_requirements_matches_hospital_management_alias(): void
+    {
+        $response = $this->postJson(route('welfare.mfls-scholarship.programme-requirements'), [
+            'partner' => 'mahsa',
+            'programme' => 'Master in Business Administration (Hospital Management)',
+        ]);
+
+        $response->assertOk();
+        $response->assertJson([
+            'found' => true,
+        ]);
+        $this->assertStringContainsString('Hospital Management', $response->json('matched_programme'));
+    }
+
     public function test_programme_requirements_endpoint_rejects_invalid_programme(): void
     {
         $response = $this->postJson(route('welfare.mfls-scholarship.programme-requirements'), [
