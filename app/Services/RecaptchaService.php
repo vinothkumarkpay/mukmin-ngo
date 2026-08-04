@@ -13,7 +13,7 @@ class RecaptchaService
             && filled(config('services.recaptcha.site_key'));
     }
 
-    public function verify(?string $token, ?string $remoteIp = null): bool
+    public function verify(?string $token, ?string $remoteIp = null, string $expectedAction = 'donate'): bool
     {
         if (! $this->isEnabled()) {
             return true;
@@ -42,7 +42,39 @@ class RecaptchaService
 
             $payload = $response->json();
 
-            return (bool) ($payload['success'] ?? false);
+            if (! ($payload['success'] ?? false)) {
+                Log::info('reCAPTCHA verification rejected', [
+                    'error_codes' => $payload['error-codes'] ?? [],
+                ]);
+
+                return false;
+            }
+
+            $minScore = (float) config('services.recaptcha.min_score', 0.5);
+            $score = isset($payload['score']) ? (float) $payload['score'] : null;
+
+            // v3 responses include score; v2 checkbox responses do not.
+            if ($score !== null && $score < $minScore) {
+                Log::info('reCAPTCHA score below threshold', [
+                    'score' => $score,
+                    'min_score' => $minScore,
+                    'action' => $payload['action'] ?? null,
+                ]);
+
+                return false;
+            }
+
+            $action = $payload['action'] ?? null;
+            if ($action !== null && $action !== $expectedAction) {
+                Log::info('reCAPTCHA action mismatch', [
+                    'expected' => $expectedAction,
+                    'actual' => $action,
+                ]);
+
+                return false;
+            }
+
+            return true;
         } catch (\Throwable $e) {
             Log::error('reCAPTCHA verification error', [
                 'error' => $e->getMessage(),
