@@ -346,6 +346,9 @@
     margin-top: 5px;
     font-size: 12.5px;
 }
+.field-hint[hidden] {
+    display: none !important;
+}
 .field-error {
     color: #b83210;
     font-size: 12.5px;
@@ -765,6 +768,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const requirementsUrl = @json(route('welfare.mfls-scholarship.programme-requirements'));
     const scholarshipPageUrl = @json(route('welfare.impact.mfls'));
     const partnerId = partnerIdInput ? partnerIdInput.value : '';
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
 
     let requirementsConfirmed = !programmeSelect || !requirementsModal || !partnerId;
     let requirementsRequestId = 0;
@@ -902,15 +906,25 @@ document.addEventListener('DOMContentLoaded', function () {
             return requirementsInflight[key];
         }
 
-        const url = requirementsUrl + '?partner=' + encodeURIComponent(partnerId) + '&programme=' + encodeURIComponent(programme);
-        requirementsInflight[key] = fetch(url, {
+        // POST body (not query string): some hosts strip GET query params when the
+        // programme name contains multiple parenthesis groups, e.g. "(LLB) (Hons)".
+        requirementsInflight[key] = fetch(requirementsUrl, {
+            method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
-            }
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify({
+                partner: partnerId,
+                programme: programme
+            })
         }).then(function (response) {
             return response.json().then(function (data) {
                 return { ok: response.ok, data: data };
+            }).catch(function () {
+                return { ok: false, data: null };
             });
         }).then(function (result) {
             const payload = (result.ok && result.data && result.data.found) ? result.data : null;
@@ -1000,14 +1014,21 @@ document.addEventListener('DOMContentLoaded', function () {
             if (requestId !== requirementsRequestId) {
                 return;
             }
-            setProgrammeLoading(false);
 
             if (!data) {
+                setProgrammeLoading(false);
                 confirmRequirementsAndContinue();
                 return;
             }
 
+            setProgrammeLoading(false);
             presentRequirementsModal(programme, data);
+        }).catch(function () {
+            if (requestId !== requirementsRequestId) {
+                return;
+            }
+            setProgrammeLoading(false);
+            confirmRequirementsAndContinue();
         });
     }
 

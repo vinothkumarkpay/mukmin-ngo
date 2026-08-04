@@ -36,10 +36,10 @@ class MflsProgrammeRequirementsTest extends TestCase
 
     public function test_programme_requirements_endpoint_returns_excel_details(): void
     {
-        $response = $this->getJson(route('welfare.mfls-scholarship.programme-requirements', [
+        $response = $this->postJson(route('welfare.mfls-scholarship.programme-requirements'), [
             'partner' => 'bac',
             'programme' => 'FIL (Foundation in Law)',
-        ]));
+        ]);
 
         $response->assertOk();
         $response->assertJson([
@@ -50,12 +50,31 @@ class MflsProgrammeRequirementsTest extends TestCase
         ]);
     }
 
+    public function test_programme_requirements_endpoint_accepts_names_with_multiple_parentheses(): void
+    {
+        $response = $this->postJson(route('welfare.mfls-scholarship.programme-requirements'), [
+            'partner' => 'bac',
+            'programme' => 'University of London Bachelor of Laws (LLB) (Hons)',
+        ]);
+
+        $response->assertOk();
+        $response->assertJson([
+            'found' => true,
+            'programme' => 'University of London Bachelor of Laws (LLB) (Hons)',
+        ]);
+        $response->assertJsonStructure([
+            'academic_requirements',
+            'financial_requirement',
+            'scholarship_coverage',
+        ]);
+    }
+
     public function test_programme_requirements_endpoint_rejects_invalid_programme(): void
     {
-        $response = $this->getJson(route('welfare.mfls-scholarship.programme-requirements', [
+        $response = $this->postJson(route('welfare.mfls-scholarship.programme-requirements'), [
             'partner' => 'bac',
             'programme' => 'Not A Real Programme',
-        ]));
+        ]);
 
         $response->assertStatus(422);
     }
