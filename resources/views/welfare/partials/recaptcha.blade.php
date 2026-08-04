@@ -3,10 +3,10 @@
 @endphp
 
 @if($recaptchaEnabled)
-    <div>
+    <div style="display: flex; flex-direction: column; align-items: center;">
         <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
         @error('g-recaptcha-response')
-            <div style="color: #b91c1c; font-size: 0.875rem; margin-top: 8px;">{{ $message }}</div>
+            <div style="color: #b91c1c; font-size: 0.875rem; margin-top: 8px; text-align: center;">{{ $message }}</div>
         @enderror
     </div>
 
