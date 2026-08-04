@@ -72,6 +72,8 @@
                 <textarea name="message" rows="3" placeholder="Share a note with your donation" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 4px; outline: none; transition: border-color 0.3s; resize: vertical;" onfocus="this.style.borderColor='var(--color-primary)';" onblur="this.style.borderColor='var(--color-border)';">{{ old('message') }}</textarea>
             </div>
 
+            @include('welfare.partials.recaptcha')
+
             <div>
                 <button type="submit" class="btn btn-primary" style="border: none; border-radius: 4px; font-size: 16px; width: 100%; line-height: 20px; padding: 12px 28px;">
                     Proceed to Payment <i class="fas fa-chevron-right" style="margin-left: 6px;"></i>

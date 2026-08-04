@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Welfare;
 use App\Http\Controllers\Controller;
 use App\Models\Donation;
 use App\Services\KiplePayService;
+use App\Services\RecaptchaService;
 use App\Services\Welfare\DonationPaymentCallbackHandler;
 use App\Services\Welfare\DonationPaymentReturnHandler;
 use App\Services\Welfare\DonationPaymentNotifier;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class DonationController extends Controller
 {
@@ -17,7 +19,7 @@ class DonationController extends Controller
         return view('welfare.pages.donate');
     }
 
-    public function store(Request $request, DonationPaymentNotifier $notifier)
+    public function store(Request $request, DonationPaymentNotifier $notifier, RecaptchaService $recaptcha)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -25,7 +27,14 @@ class DonationController extends Controller
             'phone' => 'required|string|max:30',
             'amount' => 'required|numeric|min:1|max:999999',
             'message' => 'nullable|string|max:1200',
+            'g-recaptcha-response' => $recaptcha->isEnabled() ? 'required|string' : 'nullable',
         ]);
+
+        if (! $recaptcha->verify($request->input('g-recaptcha-response'), $request->ip())) {
+            throw ValidationException::withMessages([
+                'g-recaptcha-response' => 'Please complete the captcha verification and try again.',
+            ]);
+        }
 
         $orderNo = 'MUKMIN-' . strtoupper(uniqid());
 
