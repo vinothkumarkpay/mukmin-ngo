@@ -92,8 +92,9 @@ Route::name('welfare.')->group(function () {
     Route::post('/community-aid/submit', [FormSubmissionController::class, 'submitCommunityAid'])->name('community-aid.submit');
 
     Route::get('/mfls-scholarship-application', [FormSubmissionController::class, 'mflsScholarship'])->name('mfls-scholarship');
-    // POST avoids WAFs that strip query strings containing multiple "(...)" groups (e.g. LLB (Hons)).
-    Route::post('/mfls-scholarship-application/programme-requirements', [FormSubmissionController::class, 'mflsProgrammeRequirements'])->name('mfls-scholarship.programme-requirements');
+    // POST is preferred (JS uses it): some hosts strip GET query strings with multiple "(...)" groups.
+    // GET remains allowed so direct links / cached clients do not 405.
+    Route::match(['get', 'post'], '/mfls-scholarship-application/programme-requirements', [FormSubmissionController::class, 'mflsProgrammeRequirements'])->name('mfls-scholarship.programme-requirements');
     Route::post('/mfls-scholarship-application/requirements-inquiry', [FormSubmissionController::class, 'submitMflsRequirementsInquiry'])->name('mfls-scholarship.requirements-inquiry');
     Route::post('/mfls-scholarship-application/submit', [FormSubmissionController::class, 'submitMflsScholarship'])->name('mfls-scholarship.submit');
 

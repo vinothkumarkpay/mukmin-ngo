@@ -50,6 +50,20 @@ class MflsProgrammeRequirementsTest extends TestCase
         ]);
     }
 
+    public function test_programme_requirements_endpoint_accepts_get_for_simple_names(): void
+    {
+        $response = $this->getJson(route('welfare.mfls-scholarship.programme-requirements', [
+            'partner' => 'bac',
+            'programme' => 'FIL (Foundation in Law)',
+        ]));
+
+        $response->assertOk();
+        $response->assertJson([
+            'found' => true,
+            'programme' => 'FIL (Foundation in Law)',
+        ]);
+    }
+
     public function test_programme_requirements_endpoint_accepts_names_with_multiple_parentheses(): void
     {
         $response = $this->postJson(route('welfare.mfls-scholarship.programme-requirements'), [
