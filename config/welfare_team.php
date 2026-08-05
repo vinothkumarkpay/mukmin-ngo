@@ -111,7 +111,7 @@ return [
             'org' => 'Central Executive Committee',
         ],
         [
-            'name' => 'Dato’ KK Shabutheen Bin Kirudu Mohamed',
+            'name' => 'Dato’ Seri KK Shabutheen Bin Kirudu Mohamed',
             'role' => 'Vice President',
             'org' => 'Central Executive Committee',
         ],
@@ -230,7 +230,7 @@ return [
         ['name' => 'Datuk Haji Mohammed Mosin bin Abdul Razak', 'role' => 'Chairman', 'tag' => 'Community Engagement'],
         ['name' => 'Dato’ Abdul Hamid P.V. Abdu', 'role' => 'Chairman', 'tag' => 'Economic Development'],
         ['name' => 'Datuk Wira Naina Mohamed Bin Sultan Abdul Kadir', 'role' => 'Chairman', 'tag' => 'Entrepreneurship, Innovation & SME Development'],
-        ['name' => 'Dato’ KK Shabutheen Bin Kirudu Mohamed', 'role' => 'Chairman', 'tag' => 'Social Development'],
+        ['name' => 'Dato’ Seri KK Shabutheen Bin Kirudu Mohamed', 'role' => 'Chairman', 'tag' => 'Social Development'],
         ['name' => 'Dato’ Seri Shaik Aqmal Bin Shaik Allaudin', 'role' => 'Chairman', 'tag' => 'Government Affairs'],
         ['name' => 'Dato’ (Is) Mohd Kassim Bin Aliah', 'role' => 'Chairman', 'tag' => 'Religious Affairs'],
         ['name' => 'Prof Madya Dr. Siti Sabariah binti Buhari', 'role' => 'Chairman', 'tag' => 'Women & Family Development'],
