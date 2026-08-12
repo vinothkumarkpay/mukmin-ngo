@@ -182,7 +182,7 @@ return [
         ['name' => 'Tuan Hj Mohamed Nasir Mohamed Shahabudin', 'role' => 'EXCO Member', 'tag' => 'Executive Committee'],
         ['name' => 'Tuan Abdul Rahman Mohamed Abdul Kader', 'role' => 'EXCO Member', 'tag' => 'Executive Committee'],
         ['name' => 'Tuan Hj Mohamed Hasan Othuman', 'role' => 'EXCO Member', 'tag' => 'Executive Committee'],
-        ['name' => 'Tuan Hj Munower Sadiq M.K.E Kader Sultan', 'role' => 'EXCO Member', 'tag' => 'Executive Committee'],
+        ['name' => "Dato' Hj Munower Sadiq M.K.E Kader Sultan", 'role' => 'EXCO Member', 'tag' => 'Executive Committee'],
         ['name' => "Dato' (IS) Mohd Kassim Aliah", 'role' => 'EXCO Member', 'tag' => 'Executive Committee'],
         ['name' => "Dato' Dr Hj Mohamed Nizam Abdullah", 'role' => 'EXCO Member', 'tag' => 'Executive Committee'],
         ['name' => 'Datuk Yaacob Bahatiar Abdullah', 'role' => 'EXCO Member', 'tag' => 'Executive Committee'],
