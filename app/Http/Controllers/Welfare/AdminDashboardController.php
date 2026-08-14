@@ -52,7 +52,7 @@ class AdminDashboardController extends Controller
             ->pluck('id')
             ->all();
 
-        // 1. Gather stats
+        // 1. Gather stats (+ per-status breakdowns for Overview cards)
         $stats = [
             'feedback' => FeedbackSubmission::count(),
             'ordinary' => OrdinaryMemberSubmission::count(),
@@ -64,6 +64,19 @@ class AdminDashboardController extends Controller
             'aid' => CommunityAidSubmission::count(),
             'mfls' => MflsScholarshipSubmission::count(),
             'donations' => Donation::count(),
+        ];
+
+        $statBreakdowns = [
+            'feedback' => $this->submissionStatusBreakdown(FeedbackSubmission::class),
+            'ordinary' => $this->submissionStatusBreakdown(OrdinaryMemberSubmission::class),
+            'friends' => $this->submissionStatusBreakdown(FriendMemberSubmission::class),
+            'mentor' => $this->submissionStatusBreakdown(MentorSubmission::class),
+            'partner' => $this->submissionStatusBreakdown(PartnerSubmission::class),
+            'volunteer' => $this->submissionStatusBreakdown(VolunteerSubmission::class),
+            'contact' => $this->submissionStatusBreakdown(ContactSubmission::class),
+            'aid' => $this->submissionStatusBreakdown(CommunityAidSubmission::class),
+            'mfls' => $this->submissionStatusBreakdown(MflsScholarshipSubmission::class),
+            'donations' => $this->donationStatusBreakdown(),
         ];
 
         $submissionFilters = $this->resolveSubmissionFilters($request);
@@ -159,6 +172,7 @@ class AdminDashboardController extends Controller
 
         return view('welfare.admin.dashboard', compact(
             'stats',
+            'statBreakdowns',
             'feedback',
             'ordinary',
             'friends',
@@ -185,6 +199,60 @@ class AdminDashboardController extends Controller
             'submissionFilterHouseholdIncomes',
             'submissionFilterEntityTypes',
         ))->with('submissionStatusOptions', SubmissionStatus::options());
+    }
+
+    /**
+     * @param  class-string  $modelClass
+     * @return array<string, int>
+     */
+    private function submissionStatusBreakdown(string $modelClass): array
+    {
+        $counts = array_fill_keys(SubmissionStatus::values(), 0);
+
+        $raw = $modelClass::query()
+            ->selectRaw('status, COUNT(*) as aggregate')
+            ->groupBy('status')
+            ->pluck('aggregate', 'status');
+
+        foreach ($raw as $status => $count) {
+            $normalized = SubmissionStatus::normalize($status !== null && $status !== '' ? (string) $status : null);
+            if (! array_key_exists($normalized, $counts)) {
+                $counts[$normalized] = 0;
+            }
+            $counts[$normalized] += (int) $count;
+        }
+
+        return $counts;
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    private function donationStatusBreakdown(): array
+    {
+        $counts = [
+            'pending' => 0,
+            'paid' => 0,
+            'failed' => 0,
+        ];
+
+        $raw = Donation::query()
+            ->selectRaw('status, COUNT(*) as aggregate')
+            ->groupBy('status')
+            ->pluck('aggregate', 'status');
+
+        foreach ($raw as $status => $count) {
+            $key = strtolower(trim((string) ($status ?? 'pending')));
+            if ($key === '') {
+                $key = 'pending';
+            }
+            if (! array_key_exists($key, $counts)) {
+                $counts[$key] = 0;
+            }
+            $counts[$key] += (int) $count;
+        }
+
+        return $counts;
     }
 
     /**

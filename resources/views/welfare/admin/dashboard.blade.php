@@ -58,92 +58,125 @@
                 <div class="stats-grid">
                     @if($canPanel('panel-feedback'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-feedback')">
-                        <div class="stat-icon"><i class="fas fa-comment-dots"></i></div>
-                        <div class="stat-info">
-                            <h3>{{ $stats['feedback'] }}</h3>
-                            <p>Feedback & Ideas</p>
+                        <div class="stat-card-main">
+                            <div class="stat-icon"><i class="fas fa-comment-dots"></i></div>
+                            <div class="stat-info">
+                                <h3>{{ $stats['feedback'] }}</h3>
+                                <p>Feedback & Ideas</p>
+                            </div>
                         </div>
+                        @include('welfare.admin.partials.stat-status-breakdown', ['breakdown' => $statBreakdowns['feedback'] ?? []])
                     </div>
                     @endif
                     @if($canPanel('panel-ordinary'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-ordinary')">
-                        <div class="stat-icon"><i class="fas fa-building"></i></div>
-                        <div class="stat-info">
-                            <h3>{{ $stats['ordinary'] }}</h3>
-                            <p>Ordinary Members</p>
+                        <div class="stat-card-main">
+                            <div class="stat-icon"><i class="fas fa-building"></i></div>
+                            <div class="stat-info">
+                                <h3>{{ $stats['ordinary'] }}</h3>
+                                <p>Ordinary Members</p>
+                            </div>
                         </div>
+                        @include('welfare.admin.partials.stat-status-breakdown', ['breakdown' => $statBreakdowns['ordinary'] ?? []])
                     </div>
                     @endif
                     @if($canPanel('panel-friends'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-friends')">
-                        <div class="stat-icon"><i class="fas fa-user-friends"></i></div>
-                        <div class="stat-info">
-                            <h3>{{ $stats['friends'] }}</h3>
-                            <p>Friends of MUKMIN</p>
+                        <div class="stat-card-main">
+                            <div class="stat-icon"><i class="fas fa-user-friends"></i></div>
+                            <div class="stat-info">
+                                <h3>{{ $stats['friends'] }}</h3>
+                                <p>Friends of MUKMIN</p>
+                            </div>
                         </div>
+                        @include('welfare.admin.partials.stat-status-breakdown', ['breakdown' => $statBreakdowns['friends'] ?? []])
                     </div>
                     @endif
                     @if($canPanel('panel-mentor'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-mentor')">
-                        <div class="stat-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-                        <div class="stat-info">
-                            <h3>{{ $stats['mentor'] }}</h3>
-                            <p>Mentors Registered</p>
+                        <div class="stat-card-main">
+                            <div class="stat-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                            <div class="stat-info">
+                                <h3>{{ $stats['mentor'] }}</h3>
+                                <p>Mentors Registered</p>
+                            </div>
                         </div>
+                        @include('welfare.admin.partials.stat-status-breakdown', ['breakdown' => $statBreakdowns['mentor'] ?? []])
                     </div>
                     @endif
                     @if($canPanel('panel-partner'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-partner')">
-                        <div class="stat-icon"><i class="fas fa-handshake-angle"></i></div>
-                        <div class="stat-info">
-                            <h3>{{ $stats['partner'] }}</h3>
-                            <p>Partnerships</p>
+                        <div class="stat-card-main">
+                            <div class="stat-icon"><i class="fas fa-handshake-angle"></i></div>
+                            <div class="stat-info">
+                                <h3>{{ $stats['partner'] }}</h3>
+                                <p>Partnerships</p>
+                            </div>
                         </div>
+                        @include('welfare.admin.partials.stat-status-breakdown', ['breakdown' => $statBreakdowns['partner'] ?? []])
                     </div>
                     @endif
                     @if($canPanel('panel-volunteer'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-volunteer')">
-                        <div class="stat-icon"><i class="fas fa-hand-holding-heart"></i></div>
-                        <div class="stat-info">
-                            <h3>{{ $stats['volunteer'] }}</h3>
-                            <p>Volunteers Registered</p>
+                        <div class="stat-card-main">
+                            <div class="stat-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                            <div class="stat-info">
+                                <h3>{{ $stats['volunteer'] }}</h3>
+                                <p>Volunteers Registered</p>
+                            </div>
                         </div>
+                        @include('welfare.admin.partials.stat-status-breakdown', ['breakdown' => $statBreakdowns['volunteer'] ?? []])
                     </div>
                     @endif
                     @if($canPanel('panel-aid'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-aid')">
-                        <div class="stat-icon"><i class="fas fa-hand-holding-medical"></i></div>
-                        <div class="stat-info">
-                            <h3>{{ $stats['aid'] }}</h3>
-                            <p>Community Aid Requests</p>
+                        <div class="stat-card-main">
+                            <div class="stat-icon"><i class="fas fa-hand-holding-medical"></i></div>
+                            <div class="stat-info">
+                                <h3>{{ $stats['aid'] }}</h3>
+                                <p>Community Aid Requests</p>
+                            </div>
                         </div>
+                        @include('welfare.admin.partials.stat-status-breakdown', ['breakdown' => $statBreakdowns['aid'] ?? []])
                     </div>
                     @endif
                     @if($canPanel('panel-mfls'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-mfls')">
-                        <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
-                        <div class="stat-info">
-                            <h3>{{ $stats['mfls'] }}</h3>
-                            <p>MFLS Scholarship Applications</p>
+                        <div class="stat-card-main">
+                            <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
+                            <div class="stat-info">
+                                <h3>{{ $stats['mfls'] }}</h3>
+                                <p>MFLS Scholarship Applications</p>
+                            </div>
                         </div>
+                        @include('welfare.admin.partials.stat-status-breakdown', ['breakdown' => $statBreakdowns['mfls'] ?? []])
                     </div>
                     @endif
                     @if($canPanel('panel-payments'))
                     <div class="stat-card" onclick="window.location='{{ route('welfare.admin.donation-payments') }}'">
-                        <div class="stat-icon"><i class="fas fa-credit-card"></i></div>
-                        <div class="stat-info">
-                            <h3>{{ $stats['donations'] }}</h3>
-                            <p>Donation Payments</p>
+                        <div class="stat-card-main">
+                            <div class="stat-icon"><i class="fas fa-credit-card"></i></div>
+                            <div class="stat-info">
+                                <h3>{{ $stats['donations'] }}</h3>
+                                <p>Donation Payments</p>
+                            </div>
                         </div>
+                        @include('welfare.admin.partials.stat-status-breakdown', [
+                            'breakdown' => $statBreakdowns['donations'] ?? [],
+                            'kind' => 'donation',
+                        ])
                     </div>
                     @endif
                     @if($canPanel('panel-contact'))
                     <div class="stat-card" onclick="navigateToDashboardTab('panel-contact')">
-                        <div class="stat-icon"><i class="fas fa-envelope"></i></div>
-                        <div class="stat-info">
-                            <h3>{{ $stats['contact'] }}</h3>
-                            <p>Contact Messages</p>
+                        <div class="stat-card-main">
+                            <div class="stat-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="stat-info">
+                                <h3>{{ $stats['contact'] }}</h3>
+                                <p>Contact Messages</p>
+                            </div>
                         </div>
+                        @include('welfare.admin.partials.stat-status-breakdown', ['breakdown' => $statBreakdowns['contact'] ?? []])
                     </div>
                     @endif
                 </div>
@@ -1564,6 +1597,40 @@
             }
         });
     });
+
+    // Status chips: tap to show labels on touch devices (hover alone does not work on mobile)
+    (function initStatStatusChipTooltips() {
+        const chips = document.querySelectorAll('.stat-status-chip');
+        if (!chips.length) return;
+
+        function closeAllChips(except) {
+            chips.forEach(function(chip) {
+                if (chip !== except) {
+                    chip.classList.remove('is-open');
+                }
+            });
+        }
+
+        chips.forEach(function(chip) {
+            chip.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                const willOpen = !chip.classList.contains('is-open');
+                closeAllChips(chip);
+                chip.classList.toggle('is-open', willOpen);
+            });
+        });
+
+        document.addEventListener('click', function() {
+            closeAllChips();
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeAllChips();
+            }
+        });
+    })();
 </script>
 @endpush
 @endsection

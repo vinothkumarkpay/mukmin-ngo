@@ -18,7 +18,7 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
     <!-- Admin CSS -->
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v={{ @filemtime(public_path('css/admin.css')) ?: time() }}">
     @stack('styles')
 </head>
 <body>
