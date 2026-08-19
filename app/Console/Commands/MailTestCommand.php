@@ -96,6 +96,7 @@ class MailTestCommand extends Command
             'partner_institution_name' => 'Mail Test Institution',
             'current_qualification' => 'SPM',
             'institution_name' => 'SMK Test',
+            'year_of_completion' => 2024,
             'current_cgpa_result' => '8A 1B',
             'programme_course_applied' => 'Mail Test Programme',
             'household_income' => 'Below RM 2,000',

@@ -368,6 +368,63 @@
     color: #b83210;
     font-weight: 600;
 }
+.sibling-information-section > label {
+    margin-bottom: 6px;
+}
+.sibling-entry {
+    border: 1px solid #e6ece8;
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 14px;
+    background: #fcfdfd;
+}
+.sibling-entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+.sibling-entry-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0c5930;
+}
+.btn-remove-sibling {
+    background: #ffffff;
+    color: #b83210;
+    border: 1px solid #f0c4b8;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn-remove-sibling:hover {
+    background: #fff8f6;
+}
+.btn-add-sibling {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid #0c5930;
+    background: #ffffff;
+    color: #0c5930;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.btn-add-sibling:hover {
+    background: #0c5930;
+    color: #ffffff;
+}
+.sibling-status-fields[hidden] {
+    display: none !important;
+}
 @media (max-width: 768px) {
     .grid-2 {
         grid-template-columns: 1fr;
@@ -584,6 +641,12 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="year_of_completion">Year of Completion</label>
+                    <input type="number" id="year_of_completion" name="year_of_completion" class="form-control @error('year_of_completion') is-invalid @enderror" value="{{ old('year_of_completion') }}" min="1980" max="{{ date('Y') + 1 }}" inputmode="numeric" placeholder="e.g. {{ date('Y') }}" @unless($selectedPartner) disabled @endunless required>
+                    @error('year_of_completion')<span class="field-error">{{ $message }}</span>@enderror
+                </div>
+
+                <div class="form-group">
                     <label for="current_cgpa_result">Current CGPA / Final Result (SPM equivalent allowed)</label>
                     <input type="text" id="current_cgpa_result" name="current_cgpa_result" class="form-control" value="{{ old('current_cgpa_result') }}" required>
                 </div>
@@ -595,7 +658,7 @@
                     @error('academic_transcript')<span class="field-error">{{ $message }}</span>@enderror
                 </div>
 
-                <div class="form-section-title">Section 3: Financial Background</div>
+                <div class="form-section-title">Section 3: Socioeconomic Background</div>
 
                 <div class="form-group">
                     <label>Household Income</label>
@@ -667,6 +730,115 @@
                     <label for="number_of_dependents">Number of Dependents in Household</label>
                     <input type="number" id="number_of_dependents" name="number_of_dependents" class="form-control" min="0" max="20" value="{{ old('number_of_dependents') }}" required>
                 </div>
+
+                @php
+                    $siblingRows = old('sibling_information');
+                    if (!is_array($siblingRows) || count($siblingRows) === 0) {
+                        $siblingRows = [[]];
+                    }
+                @endphp
+
+                <div class="form-group sibling-information-section">
+                    <label>Sibling Information</label>
+                    <small class="field-hint">Add details for each sibling. Click + to add another.</small>
+                    <div id="sibling-information-list">
+                        @foreach ($siblingRows as $index => $sibling)
+                            <div class="sibling-entry" data-sibling-entry>
+                                <div class="sibling-entry-header">
+                                    <span class="sibling-entry-title">Sibling {{ $index + 1 }}</span>
+                                    <button type="button" class="btn-remove-sibling" data-remove-sibling @if(count($siblingRows) === 1) hidden @endif aria-label="Remove sibling">Remove</button>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sibling_name_{{ $index }}">Name</label>
+                                    <input type="text" id="sibling_name_{{ $index }}" name="sibling_information[{{ $index }}][name]" class="form-control @error('sibling_information.'.$index.'.name') is-invalid @enderror" value="{{ $sibling['name'] ?? '' }}" maxlength="255">
+                                    @error('sibling_information.'.$index.'.name')<span class="field-error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="grid-2">
+                                    <div class="form-group">
+                                        <label for="sibling_age_{{ $index }}">Age</label>
+                                        <input type="number" id="sibling_age_{{ $index }}" name="sibling_information[{{ $index }}][age]" class="form-control @error('sibling_information.'.$index.'.age') is-invalid @enderror" value="{{ $sibling['age'] ?? '' }}" min="0" max="100">
+                                        @error('sibling_information.'.$index.'.age')<span class="field-error">{{ $message }}</span>@enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sibling_status_{{ $index }}">Status</label>
+                                        <select id="sibling_status_{{ $index }}" name="sibling_information[{{ $index }}][status]" class="form-control sibling-status-select @error('sibling_information.'.$index.'.status') is-invalid @enderror" data-sibling-status>
+                                            <option value="">-- Choose Status --</option>
+                                            <option value="Studying" {{ ($sibling['status'] ?? '') === 'Studying' ? 'selected' : '' }}>Studying</option>
+                                            <option value="Working" {{ ($sibling['status'] ?? '') === 'Working' ? 'selected' : '' }}>Working</option>
+                                        </select>
+                                        @error('sibling_information.'.$index.'.status')<span class="field-error">{{ $message }}</span>@enderror
+                                    </div>
+                                </div>
+                                <div class="sibling-status-fields sibling-studying-fields" data-sibling-studying @unless(($sibling['status'] ?? '') === 'Studying') hidden @endunless>
+                                    <div class="form-group">
+                                        <label for="sibling_program_{{ $index }}">Programme</label>
+                                        <input type="text" id="sibling_program_{{ $index }}" name="sibling_information[{{ $index }}][program]" class="form-control @error('sibling_information.'.$index.'.program') is-invalid @enderror" value="{{ $sibling['program'] ?? '' }}" maxlength="255">
+                                        @error('sibling_information.'.$index.'.program')<span class="field-error">{{ $message }}</span>@enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sibling_university_{{ $index }}">University</label>
+                                        <input type="text" id="sibling_university_{{ $index }}" name="sibling_information[{{ $index }}][university]" class="form-control @error('sibling_information.'.$index.'.university') is-invalid @enderror" value="{{ $sibling['university'] ?? '' }}" maxlength="255">
+                                        @error('sibling_information.'.$index.'.university')<span class="field-error">{{ $message }}</span>@enderror
+                                    </div>
+                                </div>
+                                <div class="sibling-status-fields sibling-working-fields" data-sibling-working @unless(($sibling['status'] ?? '') === 'Working') hidden @endunless>
+                                    <div class="form-group">
+                                        <label for="sibling_profession_{{ $index }}">Profession</label>
+                                        <input type="text" id="sibling_profession_{{ $index }}" name="sibling_information[{{ $index }}][profession]" class="form-control @error('sibling_information.'.$index.'.profession') is-invalid @enderror" value="{{ $sibling['profession'] ?? '' }}" maxlength="255">
+                                        @error('sibling_information.'.$index.'.profession')<span class="field-error">{{ $message }}</span>@enderror
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    @if ($errors->has('sibling_information'))
+                        <span class="field-error">{{ $errors->first('sibling_information') }}</span>
+                    @endif
+                    <button type="button" id="add-sibling-btn" class="btn-add-sibling" aria-label="Add sibling">+</button>
+                </div>
+
+                <template id="sibling-entry-template">
+                    <div class="sibling-entry" data-sibling-entry>
+                        <div class="sibling-entry-header">
+                            <span class="sibling-entry-title">Sibling __NUMBER__</span>
+                            <button type="button" class="btn-remove-sibling" data-remove-sibling aria-label="Remove sibling">Remove</button>
+                        </div>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="sibling_information[__INDEX__][name]" class="form-control" maxlength="255">
+                        </div>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label>Age</label>
+                                <input type="number" name="sibling_information[__INDEX__][age]" class="form-control" min="0" max="100">
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select name="sibling_information[__INDEX__][status]" class="form-control sibling-status-select" data-sibling-status>
+                                    <option value="">-- Choose Status --</option>
+                                    <option value="Studying">Studying</option>
+                                    <option value="Working">Working</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="sibling-status-fields sibling-studying-fields" data-sibling-studying hidden>
+                            <div class="form-group">
+                                <label>Programme</label>
+                                <input type="text" name="sibling_information[__INDEX__][program]" class="form-control" maxlength="255">
+                            </div>
+                            <div class="form-group">
+                                <label>University</label>
+                                <input type="text" name="sibling_information[__INDEX__][university]" class="form-control" maxlength="255">
+                            </div>
+                        </div>
+                        <div class="sibling-status-fields sibling-working-fields" data-sibling-working hidden>
+                            <div class="form-group">
+                                <label>Profession</label>
+                                <input type="text" name="sibling_information[__INDEX__][profession]" class="form-control" maxlength="255">
+                            </div>
+                        </div>
+                    </div>
+                </template>
 
                 <div class="form-group">
                     <label for="other_scholarship_details">Are you receiving any other scholarship? If yes, kindly specify.</label>
@@ -1179,6 +1351,96 @@ document.addEventListener('DOMContentLoaded', function () {
         field.addEventListener('input', updateCount);
         updateCount();
     });
+
+    const siblingList = document.getElementById('sibling-information-list');
+    const addSiblingBtn = document.getElementById('add-sibling-btn');
+    const siblingTemplate = document.getElementById('sibling-entry-template');
+
+    function updateSiblingStatusFields(entry) {
+        const statusSelect = entry.querySelector('[data-sibling-status]');
+        const studyingFields = entry.querySelector('[data-sibling-studying]');
+        const workingFields = entry.querySelector('[data-sibling-working]');
+        if (!statusSelect || !studyingFields || !workingFields) {
+            return;
+        }
+
+        const status = statusSelect.value;
+        studyingFields.hidden = status !== 'Studying';
+        workingFields.hidden = status !== 'Working';
+    }
+
+    function reindexSiblingEntries() {
+        if (!siblingList) {
+            return;
+        }
+
+        const entries = siblingList.querySelectorAll('[data-sibling-entry]');
+        entries.forEach(function (entry, index) {
+            const title = entry.querySelector('.sibling-entry-title');
+            if (title) {
+                title.textContent = 'Sibling ' + (index + 1);
+            }
+
+            entry.querySelectorAll('[name^="sibling_information["]').forEach(function (field) {
+                field.name = field.name.replace(/sibling_information\[\d+\]/, 'sibling_information[' + index + ']');
+            });
+
+            const removeBtn = entry.querySelector('[data-remove-sibling]');
+            if (removeBtn) {
+                removeBtn.hidden = entries.length === 1;
+            }
+        });
+    }
+
+    function bindSiblingEntry(entry) {
+        const statusSelect = entry.querySelector('[data-sibling-status]');
+        const removeBtn = entry.querySelector('[data-remove-sibling]');
+
+        if (statusSelect) {
+            statusSelect.addEventListener('change', function () {
+                updateSiblingStatusFields(entry);
+            });
+        }
+
+        if (removeBtn) {
+            removeBtn.addEventListener('click', function () {
+                entry.remove();
+                if (!siblingList.querySelector('[data-sibling-entry]')) {
+                    addSiblingEntry();
+                } else {
+                    reindexSiblingEntries();
+                }
+            });
+        }
+
+        updateSiblingStatusFields(entry);
+    }
+
+    function addSiblingEntry() {
+        if (!siblingList || !siblingTemplate) {
+            return;
+        }
+
+        const index = siblingList.querySelectorAll('[data-sibling-entry]').length;
+        const html = siblingTemplate.innerHTML
+            .replace(/__INDEX__/g, String(index))
+            .replace(/__NUMBER__/g, String(index + 1));
+
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = html.trim();
+        const entry = wrapper.firstElementChild;
+        siblingList.appendChild(entry);
+        bindSiblingEntry(entry);
+        reindexSiblingEntries();
+    }
+
+    if (siblingList) {
+        siblingList.querySelectorAll('[data-sibling-entry]').forEach(bindSiblingEntry);
+    }
+
+    if (addSiblingBtn) {
+        addSiblingBtn.addEventListener('click', addSiblingEntry);
+    }
 });
 </script>
 @endpush

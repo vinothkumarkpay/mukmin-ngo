@@ -64,7 +64,7 @@ class MflsPageTest extends TestCase
         $response->assertDontSee('Divorced', false);
         $response->assertDontSee('e.g. 0123456789', false);
         $response->assertSee('Section 2: Academic Information', false);
-        $response->assertSee('Section 3: Financial Background', false);
+        $response->assertSee('Section 3: Socioeconomic Background', false);
         $response->assertSee('Section 4: Personal Statement', false);
         $response->assertSee('Section 5: Declaration', false);
         $response->assertDontSee('Section 4: Leadership', false);
@@ -72,6 +72,8 @@ class MflsPageTest extends TestCase
         $response->assertDontSee('Section 6: Declaration', false);
         $response->assertDontSee('Section 7: Declaration', false);
         $response->assertSee('Current Qualification (Year 2025/2026)', false);
+        $response->assertSee('Year of Completion', false);
+        $response->assertSee('Sibling Information', false);
         $response->assertSee('MUKMIN-FIKRAH Scholar', false);
     }
 

@@ -917,7 +917,7 @@ class AdminDashboardController extends Controller
                     break;
 
                 case 'mfls':
-                    fputcsv($file, ['ID', 'Date', 'Email', 'Full Name', 'NRIC', 'DOB', 'Gender', 'Age', 'Citizenship', 'Marital Status', 'Phone', 'Address', 'State', 'Postcode', 'Partner Institution', 'Selected Programme', 'Current Qualification', 'Institution', 'CGPA/Result', 'Household Income', 'Father Name', 'Father Occupation', 'Mother Name', 'Mother Occupation', 'Dependents', 'Other Scholarship', 'Status']);
+                    fputcsv($file, ['ID', 'Date', 'Email', 'Full Name', 'NRIC', 'DOB', 'Gender', 'Age', 'Citizenship', 'Marital Status', 'Phone', 'Address', 'State', 'Postcode', 'Partner Institution', 'Selected Programme', 'Current Qualification', 'Institution', 'Year of Completion', 'CGPA/Result', 'Household Income', 'Father Name', 'Father Occupation', 'Mother Name', 'Mother Occupation', 'Dependents', 'Sibling Information', 'Other Scholarship', 'Status']);
                     foreach (MflsScholarshipSubmission::all() as $item) {
                         fputcsv($file, [
                             $item->id,
@@ -938,6 +938,7 @@ class AdminDashboardController extends Controller
                             $item->programme_course_applied,
                             $item->current_qualification,
                             $item->institution_name,
+                            $item->year_of_completion,
                             $item->current_cgpa_result,
                             $item->household_income,
                             $item->father_guardian_name,
@@ -945,6 +946,7 @@ class AdminDashboardController extends Controller
                             $item->mother_guardian_name,
                             $item->mother_guardian_occupation,
                             $item->number_of_dependents,
+                            $item->sibling_information ? json_encode($item->sibling_information) : '',
                             $item->other_scholarship_details,
                             SubmissionStatus::label($item->status)
                         ]);

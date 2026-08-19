@@ -1302,6 +1302,24 @@
                             }
                             bearersHtml += '</div>';
                             val = bearersHtml;
+                        } else if (key === 'sibling_information' && Array.isArray(val)) {
+                            let siblingsHtml = '<div style="display:flex; flex-direction:column; gap:10px;">';
+                            val.forEach((sibling, index) => {
+                                siblingsHtml += `<div style="padding:10px 12px; background:#f7f9f8; border:1px solid #e6ece8; border-radius:8px;">`;
+                                siblingsHtml += `<div><strong>Sibling ${index + 1}</strong></div>`;
+                                siblingsHtml += `<div><strong>Name:</strong> ${escapeHtml(sibling.name || '-')}</div>`;
+                                siblingsHtml += `<div><strong>Age:</strong> ${escapeHtml(sibling.age ?? '-')}</div>`;
+                                siblingsHtml += `<div><strong>Status:</strong> ${escapeHtml(sibling.status || '-')}</div>`;
+                                if (sibling.status === 'Studying') {
+                                    siblingsHtml += `<div><strong>Programme:</strong> ${escapeHtml(sibling.program || '-')}</div>`;
+                                    siblingsHtml += `<div><strong>University:</strong> ${escapeHtml(sibling.university || '-')}</div>`;
+                                } else if (sibling.status === 'Working') {
+                                    siblingsHtml += `<div><strong>Profession:</strong> ${escapeHtml(sibling.profession || '-')}</div>`;
+                                }
+                                siblingsHtml += `</div>`;
+                            });
+                            siblingsHtml += '</div>';
+                            val = siblingsHtml;
                         } else {
                             val = Array.isArray(val) ? val.join(', ') : JSON.stringify(val);
                         }

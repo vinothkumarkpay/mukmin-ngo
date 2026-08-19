@@ -737,6 +737,33 @@ class FormSubmissionController extends Controller
 
         $states = $this->malaysianStateOptions();
 
+        $siblingInput = collect($request->input('sibling_information', []))
+            ->map(function ($entry) {
+                if (!is_array($entry)) {
+                    return null;
+                }
+
+                return [
+                    'name' => trim((string) ($entry['name'] ?? '')),
+                    'age' => $entry['age'] ?? null,
+                    'status' => trim((string) ($entry['status'] ?? '')),
+                    'program' => trim((string) ($entry['program'] ?? '')),
+                    'university' => trim((string) ($entry['university'] ?? '')),
+                    'profession' => trim((string) ($entry['profession'] ?? '')),
+                ];
+            })
+            ->filter(function ($entry) {
+                return $entry && (
+                    $entry['name'] !== '' ||
+                    ($entry['age'] !== null && $entry['age'] !== '') ||
+                    $entry['status'] !== ''
+                );
+            })
+            ->values()
+            ->all();
+
+        $request->merge(['sibling_information' => $siblingInput]);
+
         $validated = $request->validate([
             'partner_id' => ['required', 'string', function (string $attribute, $value, \Closure $fail) use ($mflsPartners) {
                 if (!$mflsPartners->isValidPartnerId((string) $value)) {
@@ -757,6 +784,7 @@ class FormSubmissionController extends Controller
             'postcode' => 'required|string|max:10',
             'current_qualification' => 'required|string|in:SPM,STPM,IGCSE,Foundation,Diploma,Degree',
             'institution_name' => 'required|string|min:2|max:255',
+            'year_of_completion' => 'required|integer|min:1980|max:' . (date('Y') + 1),
             'current_cgpa_result' => 'required|string|min:1|max:255',
             'academic_transcript' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
             'programme_course_applied' => [
@@ -785,6 +813,40 @@ class FormSubmissionController extends Controller
             ],
             'proof_of_government_assistance' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480',
             'number_of_dependents' => 'required|integer|min:0|max:20',
+            'sibling_information' => [
+                'nullable',
+                'array',
+                'max:10',
+                function (string $attribute, $value, \Closure $fail) {
+                    if (!is_array($value)) {
+                        return;
+                    }
+
+                    foreach ($value as $index => $sibling) {
+                        $num = $index + 1;
+                        $status = $sibling['status'] ?? '';
+
+                        if ($status === 'Studying') {
+                            if (empty(trim((string) ($sibling['program'] ?? '')))) {
+                                $fail("Sibling {$num}: please enter the programme.");
+                            }
+                            if (empty(trim((string) ($sibling['university'] ?? '')))) {
+                                $fail("Sibling {$num}: please enter the university.");
+                            }
+                        }
+
+                        if ($status === 'Working' && empty(trim((string) ($sibling['profession'] ?? '')))) {
+                            $fail("Sibling {$num}: please enter the profession.");
+                        }
+                    }
+                },
+            ],
+            'sibling_information.*.name' => ['required', 'string', 'min:2', 'max:255', 'regex:/^[\p{L}\s\'\-\.@]+$/u'],
+            'sibling_information.*.age' => 'required|integer|min:0|max:100',
+            'sibling_information.*.status' => 'required|string|in:Studying,Working',
+            'sibling_information.*.program' => 'nullable|string|max:255',
+            'sibling_information.*.university' => 'nullable|string|max:255',
+            'sibling_information.*.profession' => 'nullable|string|max:255',
             'other_scholarship_details' => 'required|string|min:2|max:2000',
             'leadership_experience_statement' => ['required', 'string', 'max:5000', $this->wordCountBetweenRule(150, 200)],
             'scholar_selection_statement' => ['required', 'string', 'max:5000', $this->wordCountBetweenRule(150, 200)],
@@ -842,6 +904,26 @@ class FormSubmissionController extends Controller
             }
             $validated['proof_of_income'] = $incomePaths;
         }
+
+        $validated['sibling_information'] = collect($validated['sibling_information'] ?? [])
+            ->map(function (array $sibling) {
+                $entry = [
+                    'name' => $sibling['name'],
+                    'age' => (int) $sibling['age'],
+                    'status' => $sibling['status'],
+                ];
+
+                if ($sibling['status'] === 'Studying') {
+                    $entry['program'] = $sibling['program'];
+                    $entry['university'] = $sibling['university'];
+                } else {
+                    $entry['profession'] = $sibling['profession'];
+                }
+
+                return $entry;
+            })
+            ->values()
+            ->all() ?: null;
 
         $this->applyDefaultSubmissionStatus($validated);
         MflsScholarshipSubmission::create($validated);

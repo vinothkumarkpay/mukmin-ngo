@@ -145,6 +145,7 @@ class FormSubmissionMail extends Mailable
         'marital_status_other' => 'Marital Status (Other)',
         'current_qualification' => 'Current Qualification (Year 2025/2026)',
         'institution_name' => 'Institution Name',
+        'year_of_completion' => 'Year of Completion',
         'current_cgpa_result' => 'Current CGPA / Final Result',
         'academic_transcript' => 'Academic Certificate/Transcript',
         'programme_course_applied' => 'Selected Programme',
@@ -160,6 +161,7 @@ class FormSubmissionMail extends Mailable
         'government_assistance_status' => 'Proof of Government Assistance / Welfare Status',
         'proof_of_government_assistance' => 'Proof of Government Assistance / Welfare',
         'number_of_dependents' => 'Number of Dependents in Household',
+        'sibling_information' => 'Sibling Information',
         'other_scholarship_details' => 'Other Scholarship Details',
         'leadership_roles' => 'Leadership Roles',
         'involvement_level' => 'Level of Involvement',
@@ -357,6 +359,45 @@ class FormSubmissionMail extends Mailable
                     'value' => !empty($links) ? implode(' | ', $links) : 'Not provided',
                     'is_html' => true
                 ];
+                continue;
+            }
+
+            // Format sibling information
+            if ($key === 'sibling_information' && is_array($value)) {
+                foreach ($value as $index => $sibling) {
+                    if (!is_array($sibling)) {
+                        continue;
+                    }
+
+                    $infoStr = '';
+                    if (!empty($sibling['name'])) {
+                        $infoStr .= '<strong>Name:</strong> ' . e($sibling['name']) . '<br>';
+                    }
+                    if (isset($sibling['age'])) {
+                        $infoStr .= '<strong>Age:</strong> ' . e($sibling['age']) . '<br>';
+                    }
+                    if (!empty($sibling['status'])) {
+                        $infoStr .= '<strong>Status:</strong> ' . e($sibling['status']) . '<br>';
+                    }
+                    if (($sibling['status'] ?? '') === 'Studying') {
+                        if (!empty($sibling['program'])) {
+                            $infoStr .= '<strong>Programme:</strong> ' . e($sibling['program']) . '<br>';
+                        }
+                        if (!empty($sibling['university'])) {
+                            $infoStr .= '<strong>University:</strong> ' . e($sibling['university']);
+                        }
+                    } elseif (!empty($sibling['profession'])) {
+                        $infoStr .= '<strong>Profession:</strong> ' . e($sibling['profession']);
+                    }
+
+                    if ($infoStr !== '') {
+                        $formatted[] = [
+                            'label' => 'Sibling ' . ($index + 1),
+                            'value' => $infoStr,
+                            'is_html' => true,
+                        ];
+                    }
+                }
                 continue;
             }
 
