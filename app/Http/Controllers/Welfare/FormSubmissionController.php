@@ -782,7 +782,7 @@ class FormSubmissionController extends Controller
             'full_address' => 'required|string|min:10|max:1000',
             'state' => ['required', 'string', Rule::in($states)],
             'postcode' => 'required|string|max:10',
-            'current_qualification' => 'required|string|in:SPM,STPM,IGCSE,Foundation,Diploma,Degree',
+            'current_qualification' => 'required|string|in:SPM,IGCSE,STPM,Matriculation,Foundation,Diploma,Degree',
             'institution_name' => 'required|string|min:2|max:255',
             'year_of_completion' => 'required|integer|min:1980|max:' . (date('Y') + 1),
             'current_cgpa_result' => 'required|string|min:1|max:255',

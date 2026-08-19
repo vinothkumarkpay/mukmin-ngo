@@ -72,6 +72,7 @@ class MflsPageTest extends TestCase
         $response->assertDontSee('Section 6: Declaration', false);
         $response->assertDontSee('Section 7: Declaration', false);
         $response->assertSee('Current Qualification (Year 2025/2026)', false);
+        $response->assertSee('Matriculation', false);
         $response->assertSee('Year of Completion', false);
         $response->assertSee('Sibling Information', false);
         $response->assertSee('MUKMIN-FIKRAH Scholar', false);

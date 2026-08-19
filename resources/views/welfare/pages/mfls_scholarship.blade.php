@@ -628,7 +628,7 @@
                     <label for="current_qualification">Current Qualification (Year 2025/2026)</label>
                     <select id="current_qualification" name="current_qualification" class="form-control" required>
                         <option value="">-- Choose Qualification --</option>
-                        @foreach(['SPM', 'STPM', 'IGCSE', 'Foundation', 'Diploma', 'Degree'] as $qualification)
+                        @foreach(['SPM', 'IGCSE', 'STPM', 'Matriculation', 'Foundation', 'Diploma', 'Degree'] as $qualification)
                             <option value="{{ $qualification }}" {{ old('current_qualification') === $qualification ? 'selected' : '' }}>{{ $qualification }}</option>
                         @endforeach
                     </select>
