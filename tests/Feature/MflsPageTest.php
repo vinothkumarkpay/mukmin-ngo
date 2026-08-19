@@ -75,6 +75,9 @@ class MflsPageTest extends TestCase
         $response->assertSee('Matriculation', false);
         $response->assertSee('Year of Completion', false);
         $response->assertSee('Sibling Information', false);
+        $response->assertSee('Not Working', false);
+        $response->assertSee('Not Yet in School', false);
+        $response->assertSee('Reason', false);
         $response->assertSee('MUKMIN-FIKRAH Scholar', false);
     }
 

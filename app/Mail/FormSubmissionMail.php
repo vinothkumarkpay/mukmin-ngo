@@ -386,8 +386,10 @@ class FormSubmissionMail extends Mailable
                         if (!empty($sibling['university'])) {
                             $infoStr .= '<strong>University:</strong> ' . e($sibling['university']);
                         }
-                    } elseif (!empty($sibling['profession'])) {
+                    } elseif (($sibling['status'] ?? '') === 'Working' && !empty($sibling['profession'])) {
                         $infoStr .= '<strong>Profession:</strong> ' . e($sibling['profession']);
+                    } elseif (($sibling['status'] ?? '') === 'Not Working' && !empty($sibling['reason'])) {
+                        $infoStr .= '<strong>Reason:</strong> ' . e($sibling['reason']);
                     }
 
                     if ($infoStr !== '') {

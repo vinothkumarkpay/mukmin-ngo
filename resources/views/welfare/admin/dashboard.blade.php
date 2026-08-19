@@ -1315,6 +1315,8 @@
                                     siblingsHtml += `<div><strong>University:</strong> ${escapeHtml(sibling.university || '-')}</div>`;
                                 } else if (sibling.status === 'Working') {
                                     siblingsHtml += `<div><strong>Profession:</strong> ${escapeHtml(sibling.profession || '-')}</div>`;
+                                } else if (sibling.status === 'Not Working') {
+                                    siblingsHtml += `<div><strong>Reason:</strong> ${escapeHtml(sibling.reason || '-')}</div>`;
                                 }
                                 siblingsHtml += `</div>`;
                             });

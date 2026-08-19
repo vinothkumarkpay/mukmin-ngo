@@ -765,6 +765,8 @@
                                             <option value="">-- Choose Status --</option>
                                             <option value="Studying" {{ ($sibling['status'] ?? '') === 'Studying' ? 'selected' : '' }}>Studying</option>
                                             <option value="Working" {{ ($sibling['status'] ?? '') === 'Working' ? 'selected' : '' }}>Working</option>
+                                            <option value="Not Working" {{ ($sibling['status'] ?? '') === 'Not Working' ? 'selected' : '' }}>Not Working</option>
+                                            <option value="Not Yet in School" {{ ($sibling['status'] ?? '') === 'Not Yet in School' ? 'selected' : '' }}>Not Yet in School</option>
                                         </select>
                                         @error('sibling_information.'.$index.'.status')<span class="field-error">{{ $message }}</span>@enderror
                                     </div>
@@ -786,6 +788,13 @@
                                         <label for="sibling_profession_{{ $index }}">Profession</label>
                                         <input type="text" id="sibling_profession_{{ $index }}" name="sibling_information[{{ $index }}][profession]" class="form-control @error('sibling_information.'.$index.'.profession') is-invalid @enderror" value="{{ $sibling['profession'] ?? '' }}" maxlength="255">
                                         @error('sibling_information.'.$index.'.profession')<span class="field-error">{{ $message }}</span>@enderror
+                                    </div>
+                                </div>
+                                <div class="sibling-status-fields sibling-not-working-fields" data-sibling-not-working @unless(($sibling['status'] ?? '') === 'Not Working') hidden @endunless>
+                                    <div class="form-group">
+                                        <label for="sibling_reason_{{ $index }}">Reason</label>
+                                        <input type="text" id="sibling_reason_{{ $index }}" name="sibling_information[{{ $index }}][reason]" class="form-control @error('sibling_information.'.$index.'.reason') is-invalid @enderror" value="{{ $sibling['reason'] ?? '' }}" maxlength="255" placeholder="Please state why they are not currently working">
+                                        @error('sibling_information.'.$index.'.reason')<span class="field-error">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
                             </div>
@@ -818,6 +827,8 @@
                                     <option value="">-- Choose Status --</option>
                                     <option value="Studying">Studying</option>
                                     <option value="Working">Working</option>
+                                    <option value="Not Working">Not Working</option>
+                                    <option value="Not Yet in School">Not Yet in School</option>
                                 </select>
                             </div>
                         </div>
@@ -835,6 +846,12 @@
                             <div class="form-group">
                                 <label>Profession</label>
                                 <input type="text" name="sibling_information[__INDEX__][profession]" class="form-control" maxlength="255">
+                            </div>
+                        </div>
+                        <div class="sibling-status-fields sibling-not-working-fields" data-sibling-not-working hidden>
+                            <div class="form-group">
+                                <label>Reason</label>
+                                <input type="text" name="sibling_information[__INDEX__][reason]" class="form-control" maxlength="255" placeholder="Please state why they are not currently working">
                             </div>
                         </div>
                     </div>
@@ -1360,13 +1377,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const statusSelect = entry.querySelector('[data-sibling-status]');
         const studyingFields = entry.querySelector('[data-sibling-studying]');
         const workingFields = entry.querySelector('[data-sibling-working]');
-        if (!statusSelect || !studyingFields || !workingFields) {
+        const notWorkingFields = entry.querySelector('[data-sibling-not-working]');
+        if (!statusSelect || !studyingFields || !workingFields || !notWorkingFields) {
             return;
         }
 
         const status = statusSelect.value;
         studyingFields.hidden = status !== 'Studying';
         workingFields.hidden = status !== 'Working';
+        notWorkingFields.hidden = status !== 'Not Working';
     }
 
     function reindexSiblingEntries() {

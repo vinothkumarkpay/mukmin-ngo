@@ -750,6 +750,7 @@ class FormSubmissionController extends Controller
                     'program' => trim((string) ($entry['program'] ?? '')),
                     'university' => trim((string) ($entry['university'] ?? '')),
                     'profession' => trim((string) ($entry['profession'] ?? '')),
+                    'reason' => trim((string) ($entry['reason'] ?? '')),
                 ];
             })
             ->filter(function ($entry) {
@@ -838,15 +839,20 @@ class FormSubmissionController extends Controller
                         if ($status === 'Working' && empty(trim((string) ($sibling['profession'] ?? '')))) {
                             $fail("Sibling {$num}: please enter the profession.");
                         }
+
+                        if ($status === 'Not Working' && empty(trim((string) ($sibling['reason'] ?? '')))) {
+                            $fail("Sibling {$num}: please enter the reason.");
+                        }
                     }
                 },
             ],
             'sibling_information.*.name' => ['required', 'string', 'min:2', 'max:255', 'regex:/^[\p{L}\s\'\-\.@]+$/u'],
             'sibling_information.*.age' => 'required|integer|min:0|max:100',
-            'sibling_information.*.status' => 'required|string|in:Studying,Working',
+            'sibling_information.*.status' => 'required|string|in:Studying,Working,Not Working,Not Yet in School',
             'sibling_information.*.program' => 'nullable|string|max:255',
             'sibling_information.*.university' => 'nullable|string|max:255',
             'sibling_information.*.profession' => 'nullable|string|max:255',
+            'sibling_information.*.reason' => 'nullable|string|max:255',
             'other_scholarship_details' => 'required|string|min:2|max:2000',
             'leadership_experience_statement' => ['required', 'string', 'max:5000', $this->wordCountBetweenRule(150, 200)],
             'scholar_selection_statement' => ['required', 'string', 'max:5000', $this->wordCountBetweenRule(150, 200)],
@@ -916,8 +922,10 @@ class FormSubmissionController extends Controller
                 if ($sibling['status'] === 'Studying') {
                     $entry['program'] = $sibling['program'];
                     $entry['university'] = $sibling['university'];
-                } else {
+                } elseif ($sibling['status'] === 'Working') {
                     $entry['profession'] = $sibling['profession'];
+                } elseif ($sibling['status'] === 'Not Working') {
+                    $entry['reason'] = $sibling['reason'];
                 }
 
                 return $entry;

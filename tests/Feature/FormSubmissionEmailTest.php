@@ -336,6 +336,21 @@ class FormSubmissionEmailTest extends TestCase
             'government_assistance_status' => 'Sumbangan Tunai Rahmah (STR)',
             'proof_of_government_assistance' => UploadedFile::fake()->create('str-proof.pdf', 100, 'application/pdf'),
             'number_of_dependents' => '4',
+            'sibling_information' => [
+                [
+                    'name' => 'Aisyah Student',
+                    'age' => '19',
+                    'status' => 'Studying',
+                    'program' => 'Foundation in Arts',
+                    'university' => 'Example University',
+                ],
+                [
+                    'name' => 'Hakim Student',
+                    'age' => '24',
+                    'status' => 'Not Working',
+                    'reason' => 'Searching for a job',
+                ],
+            ],
             'other_scholarship_details' => 'None',
             'leadership_experience_statement' => $wordParagraph,
             'scholar_selection_statement' => $wordParagraph,
@@ -352,9 +367,17 @@ class FormSubmissionEmailTest extends TestCase
             'programme_course_applied' => 'FIL (Foundation in Law)',
         ]);
 
+        $submission = \App\Models\MflsScholarshipSubmission::where('email', 'mfls@example.com')->firstOrFail();
+        $this->assertIsArray($submission->sibling_information);
+        $this->assertSame('Studying', $submission->sibling_information[0]['status']);
+        $this->assertSame('Foundation in Arts', $submission->sibling_information[0]['program']);
+        $this->assertSame('Not Working', $submission->sibling_information[1]['status']);
+        $this->assertSame('Searching for a job', $submission->sibling_information[1]['reason']);
+
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
             $labels = array_column($mail->formattedData, 'label');
+            $rows = collect($mail->formattedData)->keyBy('label');
             $hasAttachments = count($mail->diskAttachments) >= 1 || count($mail->attachments) >= 1 || count($mail->rawAttachments) >= 1;
             return $mail->hasTo('mfls@example.com') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
@@ -364,6 +387,9 @@ class FormSubmissionEmailTest extends TestCase
                    in_array('Selected Programme', $labels, true) &&
                    in_array('Age', $labels, true) &&
                    in_array('Citizenship', $labels, true) &&
+                   isset($rows['Sibling 1'], $rows['Sibling 2']) &&
+                   str_contains(strip_tags($rows['Sibling 1']['value']), 'Foundation in Arts') &&
+                   str_contains(strip_tags($rows['Sibling 2']['value']), 'Searching for a job') &&
                    $hasAttachments;
         });
 
