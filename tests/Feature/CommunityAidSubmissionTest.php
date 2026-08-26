@@ -316,6 +316,100 @@ class CommunityAidSubmissionTest extends TestCase
         $response->assertSee('1 result', false);
     }
 
+    public function test_form_page_includes_education_aid_sections(): void
+    {
+        $response = $this->get(route('welfare.community-aid'));
+
+        $response->assertStatus(200);
+        $response->assertSee('education-aid-sections', false);
+        $response->assertSee('Section 1: Education Information', false);
+        $response->assertSee('Section 2: Education Cost &amp; Aid Request', false);
+        $response->assertSee('Section 3: Socioeconomic Background', false);
+        $response->assertSee('Section 4: Document Upload', false);
+        $response->assertSee('general-aid-sections', false);
+    }
+
+    public function test_successful_education_aid_submission_saves_education_fields(): void
+    {
+        $formData = [
+            'full_name' => 'Ahmad Education',
+            'nric_passport' => '980101015555',
+            'gender' => 'Male',
+            'dob' => '1998-01-01',
+            'nationality' => 'Malaysian',
+            'occupation' => 'Student',
+            'contact_number' => '+60176543210',
+            'email' => 'ahmad.edu@example.com',
+            'full_address' => '12 Campus Road, Selangor',
+            'state_residency' => 'Selangor',
+            'type_of_aid' => ['Education Aid'],
+            'university_institution' => 'Universiti Malaya',
+            'programme_name' => 'Bachelor of Computer Science',
+            'programme_level' => 'Degree',
+            'faculty_school' => 'Faculty of Computer Science',
+            'current_year_semester' => 'Currently Studying',
+            'intake_date' => '2024-09-01',
+            'expected_graduation_date' => '2027-07-31',
+            'current_cgpa_result' => '3.45',
+            'student_id' => 'UM12345',
+            'current_student_status' => 'Full-time',
+            'education_expense_types' => ['Tuition / Programme Fees', 'Accommodation'],
+            'total_programme_tuition_fees' => '25000',
+            'total_amount_already_paid' => '10000',
+            'current_outstanding_amount' => '15000',
+            'amount_due_immediately' => '5000',
+            'amount_requested_from_mukmin' => '5000',
+            'payment_deadline' => '2026-09-30',
+            'purpose_of_request' => 'Need assistance for tuition fees this semester.',
+            'payment_not_made_consequence' => 'I may be barred from sitting examinations.',
+            'household_income' => 'Below RM 2,000',
+            'father_guardian_name' => 'Ali bin Abu',
+            'father_guardian_occupation' => 'Driver',
+            'mother_guardian_name' => 'Siti binti Omar',
+            'mother_guardian_occupation' => 'Homemaker',
+            'proof_of_income' => [UploadedFile::fake()->create('income.pdf', 200)],
+            'government_assistance_status' => 'Sumbangan Tunai Rahmah (STR)',
+            'proof_of_government_assistance' => UploadedFile::fake()->create('gov.pdf', 200),
+            'number_of_dependents' => '3',
+            'other_scholarship_details' => 'None',
+            'nric_front' => UploadedFile::fake()->create('nric_front.jpg', 100),
+            'nric_back' => UploadedFile::fake()->create('nric_back.jpg', 100),
+            'academic_result' => UploadedFile::fake()->create('spm.pdf', 100),
+            'latest_academic_transcript' => UploadedFile::fake()->create('transcript.pdf', 100),
+            'university_offer_letter' => UploadedFile::fake()->create('offer.pdf', 100),
+            'student_id_confirmation' => UploadedFile::fake()->create('student_id.pdf', 100),
+            'university_fee_statement' => UploadedFile::fake()->create('fees.pdf', 100),
+            'official_invoice' => UploadedFile::fake()->create('invoice.pdf', 100),
+            'outstanding_balance_statement' => UploadedFile::fake()->create('balance.pdf', 100),
+            'emergency_contact_name' => 'Siti binti Omar',
+            'emergency_contact_relationship' => 'Mother',
+            'emergency_contact_phone' => '+60112223334',
+            'declaration_confirmed' => '1',
+        ];
+
+        $response = $this->post(route('welfare.community-aid.submit'), $formData);
+
+        $response->assertStatus(200);
+        $response->assertViewIs('welfare.pages.form_success');
+
+        $this->assertDatabaseHas('community_aid_submissions', [
+            'full_name' => 'Ahmad Education',
+            'email' => 'ahmad.edu@example.com',
+            'university_institution' => 'Universiti Malaya',
+            'programme_name' => 'Bachelor of Computer Science',
+            'programme_level' => 'Degree',
+            'amount_requested_from_mukmin' => '5000.00',
+            'who_benefits' => 'Individual',
+        ]);
+
+        $submission = CommunityAidSubmission::where('email', 'ahmad.edu@example.com')->first();
+        $this->assertNotNull($submission);
+        $this->assertSame(['Tuition / Programme Fees', 'Accommodation'], $submission->education_expense_types);
+        $this->assertNotEmpty($submission->nric_front);
+        $this->assertNotEmpty($submission->proof_of_income);
+        Storage::disk('public')->assertExists($submission->nric_front);
+    }
+
     private function actingAsAdmin()
     {
         $user = \App\Models\User::factory()->create();

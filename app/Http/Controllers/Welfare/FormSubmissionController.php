@@ -561,7 +561,51 @@ class FormSubmissionController extends Controller
 
     public function submitCommunityAid(Request $request)
     {
-        $validated = $request->validate([
+        $aidTypes = collect($request->input('type_of_aid', []));
+        $isEducationAid = $aidTypes->contains('Education Aid');
+        $hasOtherAid = $aidTypes->contains(function ($type) {
+            return $type !== 'Education Aid';
+        });
+        // General III/IV required unless Education Aid is the only selection
+        $needsGeneralSections = !$isEducationAid || $hasOtherAid;
+        $isEducationOnly = $isEducationAid && !$hasOtherAid;
+
+        if ($isEducationAid) {
+            $siblingInput = collect($request->input('sibling_information', []))
+                ->map(function ($entry) {
+                    if (!is_array($entry)) {
+                        return null;
+                    }
+
+                    return [
+                        'name' => trim((string) ($entry['name'] ?? '')),
+                        'age' => $entry['age'] ?? null,
+                        'status' => trim((string) ($entry['status'] ?? '')),
+                        'program' => trim((string) ($entry['program'] ?? '')),
+                        'university' => trim((string) ($entry['university'] ?? '')),
+                        'profession' => trim((string) ($entry['profession'] ?? '')),
+                        'reason' => trim((string) ($entry['reason'] ?? '')),
+                    ];
+                })
+                ->filter(function ($entry) {
+                    return $entry && (
+                        $entry['name'] !== '' ||
+                        ($entry['age'] !== null && $entry['age'] !== '') ||
+                        $entry['status'] !== ''
+                    );
+                })
+                ->values()
+                ->all();
+
+            $request->merge(['sibling_information' => $siblingInput]);
+        }
+
+        $eduRequired = $isEducationAid ? 'required' : 'nullable';
+        $generalRequired = $needsGeneralSections ? 'required' : 'nullable';
+        $fileRule = 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480';
+        $docFileRule = 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:2048'; // 2MB for Section 4 Document Upload
+
+        $rules = [
             'full_name' => 'required|string|max:255',
             'nric_passport' => $this->requiredNricOrPassportRule(),
             'gender' => 'required|string|in:Male,Female',
@@ -575,10 +619,10 @@ class FormSubmissionController extends Controller
             'state_residency' => 'required|string|max:50',
             'type_of_aid' => 'required|array|min:1',
             'type_of_aid_other' => 'nullable|string|max:255',
-            'situation_description' => 'required|string',
-            'who_benefits' => 'required|string|in:Individual,Family,Community / Group,Organisation / Institution',
+            'situation_description' => $generalRequired . '|string',
+            'who_benefits' => $generalRequired . '|string|in:Individual,Family,Community / Group,Organisation / Institution',
             'number_of_beneficiaries' => 'nullable|integer|min:1',
-            'received_aid_before' => 'required|boolean',
+            'received_aid_before' => $generalRequired . '|boolean',
             'received_aid_before_details' => 'nullable|string',
             'supporting_files' => 'nullable|array',
             'supporting_files.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,zip,ppt,pptx|max:20480',
@@ -586,7 +630,226 @@ class FormSubmissionController extends Controller
             'emergency_contact_relationship' => 'required|string|max:255',
             'emergency_contact_phone' => $this->requiredPhoneRule(),
             'declaration_confirmed' => 'required|accepted',
-        ]);
+
+            // Education Aid — Section 1
+            'university_institution' => $eduRequired . '|string|max:255',
+            'programme_name' => $eduRequired . '|string|max:255',
+            'programme_level' => [
+                $eduRequired,
+                'string',
+                Rule::in(['Foundation', 'Certificate', 'Diploma', 'Degree', 'Postgraduate', 'Professional Qualification', 'TVET / Skills', 'Other']),
+            ],
+            'faculty_school' => $eduRequired . '|string|max:255',
+            'current_year_semester' => [
+                $eduRequired,
+                'string',
+                Rule::in(['Newly Accepted', 'Currently Studying', 'Continuing Student', 'Final Year', 'Other']),
+            ],
+            'intake_date' => $eduRequired . '|date',
+            'expected_graduation_date' => $eduRequired . '|date|after_or_equal:intake_date',
+            'current_cgpa_result' => $eduRequired . '|string|max:255',
+            'student_id' => $eduRequired . '|string|max:255',
+            'current_student_status' => [
+                $eduRequired,
+                'string',
+                Rule::in(['Full-time', 'Part-time', 'Distance / Online Learning', 'Deferred', 'Other']),
+            ],
+
+            // Education Aid — Section 2
+            'education_expense_types' => $eduRequired . '|array|min:1',
+            'education_expense_types.*' => [
+                'string',
+                Rule::in([
+                    'Tuition / Programme Fees',
+                    'Registration / Admission Fees',
+                    'Examination Fees',
+                    'Accommodation',
+                    'Professional / Academic Fees',
+                    'Other compulsory education-related expense',
+                ]),
+            ],
+            'education_expense_other' => [
+                Rule::requiredIf(function () use ($request, $isEducationAid) {
+                    return $isEducationAid && in_array(
+                        'Other compulsory education-related expense',
+                        $request->input('education_expense_types', []),
+                        true
+                    );
+                }),
+                'nullable',
+                'string',
+                'max:500',
+            ],
+            'total_programme_tuition_fees' => $eduRequired . '|numeric|min:0',
+            'total_amount_already_paid' => $eduRequired . '|numeric|min:0',
+            'current_outstanding_amount' => $eduRequired . '|numeric|min:0',
+            'amount_due_immediately' => $eduRequired . '|numeric|min:0',
+            'amount_requested_from_mukmin' => $eduRequired . '|numeric|min:0',
+            'payment_deadline' => $eduRequired . '|date',
+            'purpose_of_request' => $eduRequired . '|string|min:2',
+            'payment_not_made_consequence' => $eduRequired . '|string|min:2',
+
+            // Education Aid — Section 3 (socioeconomic)
+            'household_income' => [
+                $eduRequired,
+                'string',
+                Rule::in(['Below RM 2,000', 'RM 2,001 to RM 5,000']),
+            ],
+            'father_guardian_name' => $eduRequired . '|string|min:2|max:255',
+            'father_guardian_occupation' => $eduRequired . '|string|min:2|max:255',
+            'mother_guardian_name' => $eduRequired . '|string|min:2|max:255',
+            'mother_guardian_occupation' => $eduRequired . '|string|min:2|max:255',
+            'proof_of_income' => $eduRequired . '|array|min:1|max:10',
+            'proof_of_income.*' => $fileRule,
+            'government_assistance_status' => [
+                $eduRequired,
+                'string',
+                Rule::in([
+                    'Sumbangan Tunai Rahmah (STR)',
+                    'Bantuan Sara Hidup (BSH)',
+                    'Sumbangan Asas Rahmah (SARA)',
+                    'Zakat / Baitulmal Assistance Recipient',
+                ]),
+            ],
+            'proof_of_government_assistance' => $eduRequired . '|' . $fileRule,
+            'number_of_dependents' => $eduRequired . '|integer|min:0|max:20',
+            'sibling_information' => [
+                'nullable',
+                'array',
+                'max:10',
+                function (string $attribute, $value, \Closure $fail) use ($isEducationAid) {
+                    if (!$isEducationAid || !is_array($value)) {
+                        return;
+                    }
+
+                    foreach ($value as $index => $sibling) {
+                        $num = $index + 1;
+                        $status = $sibling['status'] ?? '';
+
+                        if ($status === 'Studying') {
+                            if (empty(trim((string) ($sibling['program'] ?? '')))) {
+                                $fail("Sibling {$num}: please enter the programme.");
+                            }
+                            if (empty(trim((string) ($sibling['university'] ?? '')))) {
+                                $fail("Sibling {$num}: please enter the university.");
+                            }
+                        }
+
+                        if ($status === 'Working' && empty(trim((string) ($sibling['profession'] ?? '')))) {
+                            $fail("Sibling {$num}: please enter the profession.");
+                        }
+
+                        if ($status === 'Not Working' && empty(trim((string) ($sibling['reason'] ?? '')))) {
+                            $fail("Sibling {$num}: please enter the reason.");
+                        }
+                    }
+                },
+            ],
+            'sibling_information.*.name' => ['required', 'string', 'min:2', 'max:255'],
+            'sibling_information.*.age' => 'required|integer|min:0|max:100',
+            'sibling_information.*.status' => 'required|string|in:Studying,Working,Not Working,Not Yet in School',
+            'sibling_information.*.program' => 'nullable|string|max:255',
+            'sibling_information.*.university' => 'nullable|string|max:255',
+            'sibling_information.*.profession' => 'nullable|string|max:255',
+            'sibling_information.*.reason' => 'nullable|string|max:255',
+            'other_scholarship_details' => $eduRequired . '|string|min:2|max:2000',
+
+            // Education Aid — Section 4 (documents, max 2MB each)
+            'nric_front' => $eduRequired . '|' . $docFileRule,
+            'nric_back' => $eduRequired . '|' . $docFileRule,
+            'academic_result' => $eduRequired . '|' . $docFileRule,
+            'latest_academic_transcript' => $eduRequired . '|' . $docFileRule,
+            'university_offer_letter' => $eduRequired . '|' . $docFileRule,
+            'student_id_confirmation' => $eduRequired . '|' . $docFileRule,
+            'university_fee_statement' => $eduRequired . '|' . $docFileRule,
+            'official_invoice' => $eduRequired . '|' . $docFileRule,
+            'outstanding_balance_statement' => $eduRequired . '|' . $docFileRule,
+            'payment_deadline_notice' => 'nullable|' . $docFileRule,
+            'additional_supporting_documents' => 'nullable|array|max:10',
+            'additional_supporting_documents.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,zip|max:2048',
+        ];
+
+        // Sibling row rules only apply when education aid and rows are present
+        if (!$isEducationAid) {
+            unset(
+                $rules['sibling_information.*.name'],
+                $rules['sibling_information.*.age'],
+                $rules['sibling_information.*.status'],
+                $rules['sibling_information.*.program'],
+                $rules['sibling_information.*.university'],
+                $rules['sibling_information.*.profession'],
+                $rules['sibling_information.*.reason']
+            );
+        }
+
+        $validated = $request->validate($rules);
+
+        if ($isEducationAid) {
+            $singleFileFields = [
+                'proof_of_government_assistance',
+                'nric_front',
+                'nric_back',
+                'academic_result',
+                'latest_academic_transcript',
+                'university_offer_letter',
+                'student_id_confirmation',
+                'university_fee_statement',
+                'official_invoice',
+                'outstanding_balance_statement',
+                'payment_deadline_notice',
+            ];
+
+            foreach ($singleFileFields as $field) {
+                if ($request->hasFile($field)) {
+                    $validated[$field] = $request->file($field)->store('documents', 'public');
+                }
+            }
+
+            if ($request->hasFile('proof_of_income')) {
+                $incomePaths = [];
+                foreach ($request->file('proof_of_income') as $file) {
+                    $incomePaths[] = $file->store('documents', 'public');
+                }
+                $validated['proof_of_income'] = $incomePaths;
+            }
+
+            if ($request->hasFile('additional_supporting_documents')) {
+                $extraPaths = [];
+                foreach ($request->file('additional_supporting_documents') as $file) {
+                    $extraPaths[] = $file->store('documents', 'public');
+                }
+                $validated['additional_supporting_documents'] = $extraPaths;
+            }
+
+            $validated['sibling_information'] = collect($validated['sibling_information'] ?? [])
+                ->map(function (array $sibling) {
+                    $entry = [
+                        'name' => $sibling['name'],
+                        'age' => (int) $sibling['age'],
+                        'status' => $sibling['status'],
+                    ];
+
+                    if ($sibling['status'] === 'Studying') {
+                        $entry['program'] = $sibling['program'];
+                        $entry['university'] = $sibling['university'];
+                    } elseif ($sibling['status'] === 'Working') {
+                        $entry['profession'] = $sibling['profession'];
+                    } elseif ($sibling['status'] === 'Not Working') {
+                        $entry['reason'] = $sibling['reason'];
+                    }
+
+                    return $entry;
+                })
+                ->values()
+                ->all() ?: null;
+
+            // Education-only: fill legacy columns from education fields
+            if ($isEducationOnly) {
+                $validated['situation_description'] = $validated['purpose_of_request'];
+                $validated['who_benefits'] = 'Individual';
+                $validated['received_aid_before'] = false;
+            }
+        }
 
         if ($request->hasFile('supporting_files')) {
             $filePaths = [];
@@ -595,6 +858,8 @@ class FormSubmissionController extends Controller
             }
             $validated['supporting_documents'] = $filePaths;
         }
+
+        unset($validated['supporting_files']);
 
         $this->applyDefaultSubmissionStatus($validated);
         \App\Models\CommunityAidSubmission::create($validated);

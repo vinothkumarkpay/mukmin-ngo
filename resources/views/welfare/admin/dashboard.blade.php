@@ -1240,7 +1240,75 @@
                 for (let key in data) {
                     if (['id', 'created_at', 'updated_at', 'status'].includes(key)) continue;
 
-                    let label = key.replace(/_/g, ' ').toUpperCase();
+                    const fieldLabels = {
+                        full_name: 'Full Name',
+                        nric_passport: 'NRIC / Passport',
+                        gender: 'Gender',
+                        dob: 'Date of Birth',
+                        nationality: 'Nationality',
+                        occupation: 'Occupation',
+                        monthly_income: 'Monthly Household Income',
+                        contact_number: 'Contact Number',
+                        email: 'Email',
+                        full_address: 'Full Address',
+                        state_residency: 'State',
+                        type_of_aid: 'Type of Aid Required',
+                        type_of_aid_other: 'Other Type of Aid',
+                        university_institution: 'University / Institution',
+                        programme_name: 'Programme Name',
+                        programme_level: 'Programme Level',
+                        faculty_school: 'Faculty / School',
+                        current_year_semester: 'Current Year / Semester',
+                        intake_date: 'Intake Date',
+                        expected_graduation_date: 'Expected Graduation Date',
+                        current_cgpa_result: 'Current CGPA / Latest Result',
+                        student_id: 'Student ID',
+                        current_student_status: 'Current Student Status',
+                        education_expense_types: 'Education Expenses Requested',
+                        education_expense_other: 'Other Education Expense Details',
+                        total_programme_tuition_fees: 'Total Programme / Tuition Fees (RM)',
+                        total_amount_already_paid: 'Total Amount Already Paid (RM)',
+                        current_outstanding_amount: 'Current Outstanding Amount (RM)',
+                        amount_due_immediately: 'Amount Due Immediately (RM)',
+                        amount_requested_from_mukmin: 'Amount Requested from MUKMIN (RM)',
+                        payment_deadline: 'Payment Deadline',
+                        purpose_of_request: 'Purpose of Request',
+                        payment_not_made_consequence: 'Consequence if Payment Not Made',
+                        household_income: 'Household Income',
+                        father_guardian_name: 'Father/Guardian Name',
+                        father_guardian_occupation: 'Father/Guardian Occupation',
+                        mother_guardian_name: 'Mother/Guardian Name',
+                        mother_guardian_occupation: 'Mother/Guardian Occupation',
+                        proof_of_income: 'Proof of Income',
+                        government_assistance_status: 'Government Assistance / Welfare Status',
+                        proof_of_government_assistance: 'Proof of Government Assistance / Welfare',
+                        number_of_dependents: 'Number of Dependents',
+                        sibling_information: 'Sibling Information',
+                        other_scholarship_details: 'Other Scholarship Details',
+                        nric_front: 'NRIC — Front',
+                        nric_back: 'NRIC — Back',
+                        academic_result: 'SPM / STPM / Diploma / Relevant Academic Result',
+                        latest_academic_transcript: 'Latest Academic Transcript / Result',
+                        university_offer_letter: 'University Offer Letter / Confirmation of Enrolment',
+                        student_id_confirmation: 'Student ID / Current Student Confirmation',
+                        university_fee_statement: 'Official University Fee Statement',
+                        official_invoice: 'Official Invoice / Payment Notice',
+                        outstanding_balance_statement: 'Statement Showing Outstanding Balance',
+                        payment_deadline_notice: 'Payment Deadline / Demand Notice',
+                        additional_supporting_documents: 'Additional Supporting Documents',
+                        situation_description: 'Current Situation & Assistance Required',
+                        who_benefits: 'Who Will Benefit',
+                        number_of_beneficiaries: 'Number of Beneficiaries',
+                        received_aid_before: 'Has Received Aid Before',
+                        received_aid_before_details: 'Previous Aid Details',
+                        supporting_documents: 'Supporting Documents',
+                        emergency_contact_name: 'Emergency Contact Name',
+                        emergency_contact_relationship: 'Emergency Contact Relationship',
+                        emergency_contact_phone: 'Emergency Contact Phone',
+                        declaration_confirmed: 'Declaration Confirmed',
+                    };
+
+                    let label = fieldLabels[key] || key.replace(/_/g, ' ').toUpperCase();
                     let val = data[key];
 
                     if (type === 'donation' && key === 'payment_payload' && val && typeof val === 'object') {
@@ -1256,9 +1324,9 @@
                         val = formatBooleanDisplay(val) ?? '-';
                     } else if (typeof val === 'boolean') {
                         val = val ? 'Yes' : 'No';
-                    } else if (['registration_certificate', 'committee_members', 'academic_transcript', 'offer_letter', 'proof_of_government_assistance', 'recommendation_letter'].includes(key)) {
+                    } else if (['registration_certificate', 'committee_members', 'academic_transcript', 'offer_letter', 'proof_of_government_assistance', 'recommendation_letter', 'nric_front', 'nric_back', 'academic_result', 'latest_academic_transcript', 'university_offer_letter', 'student_id_confirmation', 'university_fee_statement', 'official_invoice', 'outstanding_balance_statement', 'payment_deadline_notice'].includes(key)) {
                         val = getFileLinkHtml(val);
-                    } else if (key === 'supporting_documents' || key === 'relevant_certificates' || key === 'proof_of_income') {
+                    } else if (key === 'supporting_documents' || key === 'relevant_certificates' || key === 'proof_of_income' || key === 'additional_supporting_documents') {
                         if (Array.isArray(val)) {
                             let linksHtml = '<div style="display:flex; flex-direction:column; gap:6px;">';
                             val.forEach(file => {

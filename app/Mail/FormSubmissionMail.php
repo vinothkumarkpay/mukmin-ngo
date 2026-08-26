@@ -137,6 +137,37 @@ class FormSubmissionMail extends Mailable
         'number_of_beneficiaries' => 'Number of Beneficiaries',
         'received_aid_before' => 'Has Received Aid Before',
         'received_aid_before_details' => 'Previous Aid Details',
+        'university_institution' => 'University / Institution',
+        'programme_name' => 'Programme Name',
+        'programme_level' => 'Programme Level',
+        'faculty_school' => 'Faculty / School',
+        'current_year_semester' => 'Current Year / Semester',
+        'intake_date' => 'Intake Date',
+        'expected_graduation_date' => 'Expected Graduation Date',
+        'student_id' => 'Student ID',
+        'current_student_status' => 'Current Student Status',
+        'current_cgpa_result' => 'Current CGPA / Latest Result',
+        'education_expense_types' => 'Education Expenses Requested',
+        'education_expense_other' => 'Other Education Expense Details',
+        'total_programme_tuition_fees' => 'Total Programme / Tuition Fees (RM)',
+        'total_amount_already_paid' => 'Total Amount Already Paid (RM)',
+        'current_outstanding_amount' => 'Current Outstanding Amount (RM)',
+        'amount_due_immediately' => 'Amount Due Immediately (RM)',
+        'amount_requested_from_mukmin' => 'Amount Requested from MUKMIN (RM)',
+        'payment_deadline' => 'Payment Deadline',
+        'purpose_of_request' => 'Purpose of Request',
+        'payment_not_made_consequence' => 'Consequence if Payment Not Made',
+        'nric_front' => 'NRIC — Front',
+        'nric_back' => 'NRIC — Back',
+        'academic_result' => 'SPM / STPM / Diploma / Relevant Academic Result',
+        'latest_academic_transcript' => 'Latest Academic Transcript / Result',
+        'university_offer_letter' => 'University Offer Letter / Confirmation of Enrolment',
+        'student_id_confirmation' => 'Student ID / Current Student Confirmation',
+        'university_fee_statement' => 'Official University Fee Statement',
+        'official_invoice' => 'Official Invoice / Payment Notice',
+        'outstanding_balance_statement' => 'Statement Showing Outstanding Balance',
+        'payment_deadline_notice' => 'Payment Deadline / Demand Notice',
+        'additional_supporting_documents' => 'Additional Supporting Documents',
 
         // MFLS Scholarship
         'partner_institution_id' => 'Partner Institution ID',
@@ -287,13 +318,28 @@ class FormSubmissionMail extends Mailable
             }
         }
 
-        foreach (['academic_transcript', 'offer_letter', 'proof_of_government_assistance', 'recommendation_letter'] as $fileField) {
+        foreach ([
+            'academic_transcript',
+            'offer_letter',
+            'proof_of_government_assistance',
+            'recommendation_letter',
+            'nric_front',
+            'nric_back',
+            'academic_result',
+            'latest_academic_transcript',
+            'university_offer_letter',
+            'student_id_confirmation',
+            'university_fee_statement',
+            'official_invoice',
+            'outstanding_balance_statement',
+            'payment_deadline_notice',
+        ] as $fileField) {
             if (!empty($this->formData[$fileField]) && Storage::disk('public')->exists($this->formData[$fileField])) {
                 $email->attach(Storage::disk('public')->path($this->formData[$fileField]));
             }
         }
 
-        foreach (['proof_of_income', 'relevant_certificates'] as $multiFileField) {
+        foreach (['proof_of_income', 'relevant_certificates', 'additional_supporting_documents'] as $multiFileField) {
             if (!empty($this->formData[$multiFileField]) && is_array($this->formData[$multiFileField])) {
                 foreach ($this->formData[$multiFileField] as $path) {
                     if (Storage::disk('public')->exists($path)) {
@@ -335,7 +381,24 @@ class FormSubmissionMail extends Mailable
             }
             
             // Format single uploaded files as HTML link
-            if (in_array($key, ['registration_certificate', 'committee_members', 'academic_transcript', 'offer_letter', 'proof_of_government_assistance', 'recommendation_letter'], true)) {
+            if (in_array($key, [
+                'registration_certificate',
+                'committee_members',
+                'academic_transcript',
+                'offer_letter',
+                'proof_of_government_assistance',
+                'recommendation_letter',
+                'nric_front',
+                'nric_back',
+                'academic_result',
+                'latest_academic_transcript',
+                'university_offer_letter',
+                'student_id_confirmation',
+                'university_fee_statement',
+                'official_invoice',
+                'outstanding_balance_statement',
+                'payment_deadline_notice',
+            ], true)) {
                 $url = $value ? asset('storage/' . $value) : 'Not provided';
                 $formatted[] = [
                     'label' => self::$labels[$key] ?? ucwords(str_replace('_', ' ', $key)),
@@ -346,7 +409,7 @@ class FormSubmissionMail extends Mailable
             }
             
             // Format uploaded document lists as HTML links
-            if ($key === 'supporting_documents' || $key === 'relevant_certificates' || $key === 'proof_of_income') {
+            if ($key === 'supporting_documents' || $key === 'relevant_certificates' || $key === 'proof_of_income' || $key === 'additional_supporting_documents') {
                 $links = [];
                 if (is_array($value)) {
                     foreach ($value as $index => $path) {

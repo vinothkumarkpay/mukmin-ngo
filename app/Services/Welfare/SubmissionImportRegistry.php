@@ -159,6 +159,10 @@ class SubmissionImportRegistry
                 'Ahmad bin Ali', '900101011234', 'Male', '1990-01-01', 'Malaysian',
                 'Driver', 'RM 2000', '+60123456789', 'ahmad@example.com',
                 'No 1, Jalan Example', 'Selangor', 'Financial Assistance, Food Aid', '',
+                // Education fields (optional — leave blank for non-education aid)
+                '', '', '', '', '', '', '', '', '', '',
+                '', '', '', '', '', '', '', '', '', '',
+                '', '', '', '', '', '', '', '', '',
                 'Sample situation description', 'Family', '4', 'No', '',
                 'Siti binti Omar', 'Spouse', '+60198765432',
             ],
@@ -288,6 +292,15 @@ class SubmissionImportRegistry
             case 'aid':
                 $data['declaration_confirmed'] = true;
                 $data['status'] = SubmissionStatus::default();
+                if (empty($data['situation_description']) && !empty($data['purpose_of_request'])) {
+                    $data['situation_description'] = $data['purpose_of_request'];
+                }
+                if (empty($data['who_benefits'])) {
+                    $data['who_benefits'] = 'Individual';
+                }
+                if (!array_key_exists('received_aid_before', $data)) {
+                    $data['received_aid_before'] = false;
+                }
                 break;
 
             case 'mfls':
@@ -516,17 +529,50 @@ class SubmissionImportRegistry
                     'dob' => ['label' => 'DOB', 'required' => true, 'type' => 'date'],
                     'nationality' => ['label' => 'Nationality', 'required' => true],
                     'occupation' => ['label' => 'Occupation', 'required' => true],
-                    'monthly_income' => ['label' => 'Monthly Income', 'required' => true],
+                    'monthly_income' => ['label' => 'Monthly Income'],
                     'contact_number' => ['label' => 'Phone', 'required' => true],
                     'email' => ['label' => 'Email', 'required' => true],
                     'full_address' => ['label' => 'Address', 'required' => true],
                     'state_residency' => ['label' => 'State', 'required' => true],
                     'type_of_aid' => ['label' => 'Type of Aid', 'required' => true, 'type' => 'list'],
                     'type_of_aid_other' => ['label' => 'Type of Aid Other'],
-                    'situation_description' => ['label' => 'Situation', 'required' => true],
-                    'who_benefits' => ['label' => 'Who Benefits', 'required' => true],
+                    // Education Aid — Section 1
+                    'university_institution' => ['label' => 'University/Institution'],
+                    'programme_name' => ['label' => 'Programme Name'],
+                    'programme_level' => ['label' => 'Programme Level'],
+                    'faculty_school' => ['label' => 'Faculty/School'],
+                    'current_year_semester' => ['label' => 'Current Year/Semester'],
+                    'intake_date' => ['label' => 'Intake Date', 'type' => 'date'],
+                    'expected_graduation_date' => ['label' => 'Expected Graduation Date', 'type' => 'date'],
+                    'current_cgpa_result' => ['label' => 'CGPA/Result'],
+                    'student_id' => ['label' => 'Student ID'],
+                    'current_student_status' => ['label' => 'Student Status'],
+                    // Education Aid — Section 2
+                    'education_expense_types' => ['label' => 'Education Expense Types', 'type' => 'list'],
+                    'education_expense_other' => ['label' => 'Education Expense Other'],
+                    'total_programme_tuition_fees' => ['label' => 'Total Programme/Tuition Fees'],
+                    'total_amount_already_paid' => ['label' => 'Total Amount Already Paid'],
+                    'current_outstanding_amount' => ['label' => 'Current Outstanding Amount'],
+                    'amount_due_immediately' => ['label' => 'Amount Due Immediately'],
+                    'amount_requested_from_mukmin' => ['label' => 'Amount Requested from MUKMIN'],
+                    'payment_deadline' => ['label' => 'Payment Deadline', 'type' => 'date'],
+                    'purpose_of_request' => ['label' => 'Purpose of Request'],
+                    'payment_not_made_consequence' => ['label' => 'Consequence if Payment Not Made'],
+                    // Education Aid — Section 3
+                    'household_income' => ['label' => 'Household Income'],
+                    'father_guardian_name' => ['label' => 'Father/Guardian Name'],
+                    'father_guardian_occupation' => ['label' => 'Father/Guardian Occupation'],
+                    'mother_guardian_name' => ['label' => 'Mother/Guardian Name'],
+                    'mother_guardian_occupation' => ['label' => 'Mother/Guardian Occupation'],
+                    'government_assistance_status' => ['label' => 'Government Assistance Status'],
+                    'number_of_dependents' => ['label' => 'Number of Dependents', 'type' => 'integer'],
+                    'sibling_information' => ['label' => 'Sibling Information', 'type' => 'json'],
+                    'other_scholarship_details' => ['label' => 'Other Scholarship Details'],
+                    // General III–IV
+                    'situation_description' => ['label' => 'Situation'],
+                    'who_benefits' => ['label' => 'Who Benefits'],
                     'number_of_beneficiaries' => ['label' => 'Beneficiaries Count'],
-                    'received_aid_before' => ['label' => 'Received Aid Before', 'required' => true, 'type' => 'boolean'],
+                    'received_aid_before' => ['label' => 'Received Aid Before', 'type' => 'boolean'],
                     'received_aid_before_details' => ['label' => 'Previous Aid Details'],
                     'emergency_contact_name' => ['label' => 'Emergency Name', 'required' => true],
                     'emergency_contact_relationship' => ['label' => 'Emergency Relationship', 'required' => true],

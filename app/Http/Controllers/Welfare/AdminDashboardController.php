@@ -888,7 +888,22 @@ class AdminDashboardController extends Controller
                     break;
 
                 case 'aid':
-                    fputcsv($file, ['ID', 'Date', 'Full Name', 'NRIC/Passport', 'Gender', 'DOB', 'Nationality', 'Occupation', 'Monthly Income', 'Phone', 'Email', 'Address', 'State', 'Type of Aid', 'Type of Aid Other', 'Situation', 'Who Benefits', 'Beneficiaries Count', 'Received Aid Before', 'Previous Aid Details', 'Status']);
+                    fputcsv($file, [
+                        'ID', 'Date', 'Full Name', 'NRIC/Passport', 'Gender', 'DOB', 'Nationality', 'Occupation', 'Monthly Income', 'Phone', 'Email', 'Address', 'State',
+                        'Type of Aid', 'Type of Aid Other',
+                        // Education — Section 1
+                        'University/Institution', 'Programme Name', 'Programme Level', 'Faculty/School', 'Current Year/Semester', 'Intake Date', 'Expected Graduation Date', 'CGPA/Result', 'Student ID', 'Student Status',
+                        // Education — Section 2
+                        'Education Expense Types', 'Education Expense Other', 'Total Programme/Tuition Fees (RM)', 'Total Amount Already Paid (RM)', 'Current Outstanding Amount (RM)', 'Amount Due Immediately (RM)', 'Amount Requested from MUKMIN (RM)', 'Payment Deadline', 'Purpose of Request', 'Consequence if Payment Not Made',
+                        // Education — Section 3 (socioeconomic)
+                        'Household Income', 'Father/Guardian Name', 'Father/Guardian Occupation', 'Mother/Guardian Name', 'Mother/Guardian Occupation', 'Proof of Income', 'Government Assistance Status', 'Proof of Government Assistance', 'Number of Dependents', 'Sibling Information', 'Other Scholarship Details',
+                        // Education — Section 4 (documents)
+                        'NRIC Front', 'NRIC Back', 'Academic Result', 'Latest Academic Transcript', 'University Offer Letter', 'Student ID Confirmation', 'University Fee Statement', 'Official Invoice', 'Outstanding Balance Statement', 'Payment Deadline Notice', 'Additional Supporting Documents',
+                        // General III–IV
+                        'Situation', 'Who Benefits', 'Beneficiaries Count', 'Received Aid Before', 'Previous Aid Details', 'Supporting Documents',
+                        // Emergency + status
+                        'Emergency Name', 'Emergency Relationship', 'Emergency Phone', 'Status',
+                    ]);
                     foreach (CommunityAidSubmission::all() as $item) {
                         fputcsv($file, [
                             $item->id,
@@ -906,11 +921,57 @@ class AdminDashboardController extends Controller
                             $item->state_residency,
                             is_array($item->type_of_aid) ? implode(', ', $item->type_of_aid) : $item->type_of_aid,
                             $item->type_of_aid_other,
+                            $item->university_institution,
+                            $item->programme_name,
+                            $item->programme_level,
+                            $item->faculty_school,
+                            $item->current_year_semester,
+                            $item->intake_date ? $item->intake_date->format('Y-m-d') : '',
+                            $item->expected_graduation_date ? $item->expected_graduation_date->format('Y-m-d') : '',
+                            $item->current_cgpa_result,
+                            $item->student_id,
+                            $item->current_student_status,
+                            is_array($item->education_expense_types) ? implode(', ', $item->education_expense_types) : $item->education_expense_types,
+                            $item->education_expense_other,
+                            $item->total_programme_tuition_fees,
+                            $item->total_amount_already_paid,
+                            $item->current_outstanding_amount,
+                            $item->amount_due_immediately,
+                            $item->amount_requested_from_mukmin,
+                            $item->payment_deadline ? $item->payment_deadline->format('Y-m-d') : '',
+                            $item->purpose_of_request,
+                            $item->payment_not_made_consequence,
+                            $item->household_income,
+                            $item->father_guardian_name,
+                            $item->father_guardian_occupation,
+                            $item->mother_guardian_name,
+                            $item->mother_guardian_occupation,
+                            is_array($item->proof_of_income) ? implode(', ', $item->proof_of_income) : $item->proof_of_income,
+                            $item->government_assistance_status,
+                            $item->proof_of_government_assistance,
+                            $item->number_of_dependents,
+                            is_array($item->sibling_information) ? json_encode($item->sibling_information, JSON_UNESCAPED_UNICODE) : $item->sibling_information,
+                            $item->other_scholarship_details,
+                            $item->nric_front,
+                            $item->nric_back,
+                            $item->academic_result,
+                            $item->latest_academic_transcript,
+                            $item->university_offer_letter,
+                            $item->student_id_confirmation,
+                            $item->university_fee_statement,
+                            $item->official_invoice,
+                            $item->outstanding_balance_statement,
+                            $item->payment_deadline_notice,
+                            is_array($item->additional_supporting_documents) ? implode(', ', $item->additional_supporting_documents) : $item->additional_supporting_documents,
                             $item->situation_description,
                             $item->who_benefits,
                             $item->number_of_beneficiaries,
-                            $item->received_aid_before ? 'Yes' : 'No',
+                            is_null($item->received_aid_before) ? '' : ($item->received_aid_before ? 'Yes' : 'No'),
                             $item->received_aid_before_details,
+                            is_array($item->supporting_documents) ? implode(', ', $item->supporting_documents) : $item->supporting_documents,
+                            $item->emergency_contact_name,
+                            $item->emergency_contact_relationship,
+                            $item->emergency_contact_phone,
                             SubmissionStatus::label($item->status)
                         ]);
                     }
