@@ -55,6 +55,8 @@ class MflsPageTest extends TestCase
         $response->assertSee('Select Programme', false);
         $response->assertSee('FIL (Foundation in Law)', false);
         $response->assertSee('Section 1: Personal Information', false);
+        $response->assertSee('NRIC — Front', false);
+        $response->assertSee('NRIC — Back', false);
         $response->assertSee('Age', false);
         $response->assertSee('Citizenship', false);
         $response->assertSee('Postcode', false);

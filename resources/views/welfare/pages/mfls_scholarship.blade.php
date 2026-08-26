@@ -542,6 +542,21 @@
                     </div>
                 </div>
 
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="nric_front">NRIC — Front</label>
+                        <input type="file" id="nric_front" name="nric_front" class="form-control @error('nric_front') is-invalid @enderror" style="padding: 10px 16px;" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" required>
+                        <small class="field-hint">PDF, JPG, PNG, DOC, DOCX. Max size: 2MB.</small>
+                        @error('nric_front')<span class="field-error">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="nric_back">NRIC — Back</label>
+                        <input type="file" id="nric_back" name="nric_back" class="form-control @error('nric_back') is-invalid @enderror" style="padding: 10px 16px;" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" required>
+                        <small class="field-hint">PDF, JPG, PNG, DOC, DOCX. Max size: 2MB.</small>
+                        @error('nric_back')<span class="field-error">{{ $message }}</span>@enderror
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label>Gender</label>
                     <div class="radio-group">

@@ -1043,6 +1043,8 @@ class FormSubmissionController extends Controller
             'email' => $this->requiredEmailRule(),
             'full_name' => ['required', 'string', 'min:2', 'max:255', 'regex:/^[\p{L}\s\'\-\.@]+$/u'],
             'nric_passport' => $this->malaysianNricRule(),
+            'nric_front' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:2048',
+            'nric_back' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:2048',
             'dob' => 'required|date|before_or_equal:today|after:1950-01-01',
             'gender' => 'required|string|in:Male,Female',
             'age' => 'required|integer|min:15|max:60',
@@ -1133,6 +1135,12 @@ class FormSubmissionController extends Controller
             'full_name.regex' => 'Full name may only contain letters, spaces, and common punctuation.',
             'nric_passport.required' => 'Please enter your NRIC number.',
             'nric_passport.digits' => 'NRIC must be exactly 12 digits without dashes (e.g. 900101145555).',
+            'nric_front.required' => 'Please upload a copy of the front of your NRIC.',
+            'nric_front.mimes' => 'NRIC front must be a PDF, JPG, PNG, DOC, or DOCX file.',
+            'nric_front.max' => 'NRIC front must not exceed 2MB.',
+            'nric_back.required' => 'Please upload a copy of the back of your NRIC.',
+            'nric_back.mimes' => 'NRIC back must be a PDF, JPG, PNG, DOC, or DOCX file.',
+            'nric_back.max' => 'NRIC back must not exceed 2MB.',
             'dob.required' => 'Please enter your date of birth.',
             'dob.before_or_equal' => 'Date of birth cannot be in the future.',
             'dob.after' => 'Please enter a valid date of birth.',
@@ -1157,6 +1165,8 @@ class FormSubmissionController extends Controller
         ]);
 
         $fileFields = [
+            'nric_front',
+            'nric_back',
             'academic_transcript',
             'proof_of_government_assistance',
         ];

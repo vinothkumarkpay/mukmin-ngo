@@ -978,7 +978,7 @@ class AdminDashboardController extends Controller
                     break;
 
                 case 'mfls':
-                    fputcsv($file, ['ID', 'Date', 'Email', 'Full Name', 'NRIC', 'DOB', 'Gender', 'Age', 'Citizenship', 'Marital Status', 'Phone', 'Address', 'State', 'Postcode', 'Partner Institution', 'Selected Programme', 'Current Qualification', 'Institution', 'Year of Completion', 'CGPA/Result', 'Household Income', 'Father Name', 'Father Occupation', 'Mother Name', 'Mother Occupation', 'Dependents', 'Sibling Information', 'Other Scholarship', 'Status']);
+                    fputcsv($file, ['ID', 'Date', 'Email', 'Full Name', 'NRIC', 'NRIC Front', 'NRIC Back', 'DOB', 'Gender', 'Age', 'Citizenship', 'Marital Status', 'Phone', 'Address', 'State', 'Postcode', 'Partner Institution', 'Selected Programme', 'Current Qualification', 'Institution', 'Year of Completion', 'CGPA/Result', 'Household Income', 'Father Name', 'Father Occupation', 'Mother Name', 'Mother Occupation', 'Dependents', 'Sibling Information', 'Other Scholarship', 'Status']);
                     foreach (MflsScholarshipSubmission::all() as $item) {
                         fputcsv($file, [
                             $item->id,
@@ -986,6 +986,8 @@ class AdminDashboardController extends Controller
                             $item->email,
                             $item->full_name,
                             $item->nric_passport,
+                            $item->nric_front,
+                            $item->nric_back,
                             $item->dob ? $item->dob->format('Y-m-d') : '',
                             $item->gender,
                             $item->age,

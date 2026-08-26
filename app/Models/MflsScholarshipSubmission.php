@@ -13,6 +13,8 @@ class MflsScholarshipSubmission extends Model
         'email',
         'full_name',
         'nric_passport',
+        'nric_front',
+        'nric_back',
         'dob',
         'gender',
         'age',
