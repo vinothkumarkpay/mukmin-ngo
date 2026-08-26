@@ -602,6 +602,7 @@ class FormSubmissionController extends Controller
 
         $eduRequired = $isEducationAid ? 'required' : 'nullable';
         $generalRequired = $needsGeneralSections ? 'required' : 'nullable';
+        $emergencyRequired = $isEducationOnly ? 'nullable' : 'required';
         $fileRule = 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480';
         $docFileRule = 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:2048'; // 2MB for Section 4 Document Upload
 
@@ -626,9 +627,9 @@ class FormSubmissionController extends Controller
             'received_aid_before_details' => 'nullable|string',
             'supporting_files' => 'nullable|array',
             'supporting_files.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,zip,ppt,pptx|max:20480',
-            'emergency_contact_name' => 'required|string|max:255',
-            'emergency_contact_relationship' => 'required|string|max:255',
-            'emergency_contact_phone' => $this->requiredPhoneRule(),
+            'emergency_contact_name' => $emergencyRequired . '|string|max:255',
+            'emergency_contact_relationship' => $emergencyRequired . '|string|max:255',
+            'emergency_contact_phone' => $isEducationOnly ? 'nullable|string|max:30' : $this->requiredPhoneRule(),
             'declaration_confirmed' => 'required|accepted',
 
             // Education Aid — Section 1
@@ -848,6 +849,9 @@ class FormSubmissionController extends Controller
                 $validated['situation_description'] = $validated['purpose_of_request'];
                 $validated['who_benefits'] = 'Individual';
                 $validated['received_aid_before'] = false;
+                $validated['emergency_contact_name'] = $validated['emergency_contact_name'] ?? $validated['full_name'];
+                $validated['emergency_contact_relationship'] = $validated['emergency_contact_relationship'] ?? 'Applicant';
+                $validated['emergency_contact_phone'] = $validated['emergency_contact_phone'] ?? $validated['contact_number'];
             }
         }
 

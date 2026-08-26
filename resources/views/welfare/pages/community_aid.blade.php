@@ -846,26 +846,28 @@
                     </div>
                 </div>
 
-                <!-- SECTION 5: EMERGENCY CONTACT -->
-                <div class="form-section-title" id="emergency-contact-section-title">V. Emergency Contact</div>
+                <!-- EMERGENCY CONTACT (hidden when Education Aid is the only selection) -->
+                <div id="emergency-contact-section">
+                    <div class="form-section-title" id="emergency-contact-section-title">V. Emergency Contact</div>
 
-                <div class="grid-2">
-                    <div class="form-group">
-                        <label for="emergency_contact_name">Full Name</label>
-                        <input type="text" id="emergency_contact_name" name="emergency_contact_name" class="form-control" placeholder="Name as per NRIC" value="{{ old('emergency_contact_name') }}" required>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="emergency_contact_name">Full Name</label>
+                            <input type="text" id="emergency_contact_name" name="emergency_contact_name" class="form-control" placeholder="Name as per NRIC" value="{{ old('emergency_contact_name') }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="emergency_contact_relationship">Relationship</label>
+                            <input type="text" id="emergency_contact_relationship" name="emergency_contact_relationship" class="form-control" value="{{ old('emergency_contact_relationship') }}" required>
+                        </div>
                     </div>
+
                     <div class="form-group">
-                        <label for="emergency_contact_relationship">Relationship</label>
-                        <input type="text" id="emergency_contact_relationship" name="emergency_contact_relationship" class="form-control" value="{{ old('emergency_contact_relationship') }}" required>
+                        <label for="emergency_contact_phone">Contact Number</label>
+                        <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" class="form-control" placeholder="e.g. +60123456789" value="{{ old('emergency_contact_phone') }}" required>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="emergency_contact_phone">Contact Number</label>
-                    <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" class="form-control" placeholder="e.g. +60123456789" value="{{ old('emergency_contact_phone') }}" required>
-                </div>
-
-                <!-- SECTION 6: DECLARATION & CONSENT -->
+                <!-- DECLARATION & CONSENT -->
                 <div class="form-section-title" id="declaration-section-title">VI. Declaration & Consent</div>
 
                 <div class="declaration-box">
@@ -1002,25 +1004,33 @@ document.addEventListener('DOMContentLoaded', function () {
         const showEducation = isEducationAidSelected();
         // Show III & IV for non-education aids, or when Education Aid is combined with other aid types
         const showGeneral = !showEducation || hasNonEducationAidSelected();
+        // Emergency contact is hidden when Education Aid is the only selection
+        const showEmergency = showGeneral || !showEducation;
+        const emergencySection = document.getElementById('emergency-contact-section');
 
         educationAidSections.style.display = showEducation ? 'block' : 'none';
         generalAidSections.style.display = showGeneral ? 'block' : 'none';
+        if (emergencySection) {
+            emergencySection.style.display = showEmergency ? 'block' : 'none';
+        }
 
         setRequiredIn(educationAidSections, showEducation);
         setRequiredIn(generalAidSections, showGeneral);
+        setRequiredIn(emergencySection, showEmergency);
 
-        // When Education Aid is the only selection, III/IV (Details/Supporting) are hidden —
-        // Emergency & Declaration take III & IV after education Sections 1–4.
-        const emergencyTitle = document.getElementById('emergency-contact-section-title');
+        // Education Aid only: Sections 1–4, then III. Declaration (Emergency hidden)
+        // Otherwise keep V / VI when general III–IV are present
         const declarationTitle = document.getElementById('declaration-section-title');
-        if (emergencyTitle && declarationTitle) {
+        const emergencyTitle = document.getElementById('emergency-contact-section-title');
+        if (declarationTitle) {
             if (showEducation && !showGeneral) {
-                emergencyTitle.textContent = 'III. Emergency Contact';
-                declarationTitle.textContent = 'IV. Declaration & Consent';
+                declarationTitle.textContent = 'III. Declaration & Consent';
             } else {
-                emergencyTitle.textContent = 'V. Emergency Contact';
                 declarationTitle.textContent = 'VI. Declaration & Consent';
             }
+        }
+        if (emergencyTitle) {
+            emergencyTitle.textContent = 'V. Emergency Contact';
         }
 
         if (showGeneral) {

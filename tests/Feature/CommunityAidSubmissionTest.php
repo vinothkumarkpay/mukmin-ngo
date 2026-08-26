@@ -381,9 +381,6 @@ class CommunityAidSubmissionTest extends TestCase
             'university_fee_statement' => UploadedFile::fake()->create('fees.pdf', 100),
             'official_invoice' => UploadedFile::fake()->create('invoice.pdf', 100),
             'outstanding_balance_statement' => UploadedFile::fake()->create('balance.pdf', 100),
-            'emergency_contact_name' => 'Siti binti Omar',
-            'emergency_contact_relationship' => 'Mother',
-            'emergency_contact_phone' => '+60112223334',
             'declaration_confirmed' => '1',
         ];
 
@@ -400,6 +397,9 @@ class CommunityAidSubmissionTest extends TestCase
             'programme_level' => 'Degree',
             'amount_requested_from_mukmin' => '5000.00',
             'who_benefits' => 'Individual',
+            'emergency_contact_name' => 'Ahmad Education',
+            'emergency_contact_relationship' => 'Applicant',
+            'emergency_contact_phone' => '+60176543210',
         ]);
 
         $submission = CommunityAidSubmission::where('email', 'ahmad.edu@example.com')->first();
