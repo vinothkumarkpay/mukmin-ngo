@@ -447,7 +447,7 @@
                             <label for="programme_level">Programme Level</label>
                             <select id="programme_level" name="programme_level" class="form-control">
                                 <option value="">-- Choose Programme Level --</option>
-                                @foreach(['Foundation', 'Certificate', 'Diploma', 'Degree', 'Postgraduate', 'Professional Qualification', 'TVET / Skills', 'Other'] as $level)
+                                @foreach(['Foundation', 'Matriculation', 'Certificate', 'Diploma', 'Degree', 'Postgraduate', 'Professional Qualification', 'TVET / Skills', 'Other'] as $level)
                                     <option value="{{ $level }}" {{ old('programme_level') === $level ? 'selected' : '' }}>{{ $level }}</option>
                                 @endforeach
                             </select>
@@ -477,6 +477,11 @@
                                 @endforeach
                             </select>
                         </div>
+                    </div>
+
+                    <div class="form-group" id="current-student-status-other-group" style="display: none;">
+                        <label for="current_student_status_other">Please specify Current Student Status</label>
+                        <input type="text" id="current_student_status_other" name="current_student_status_other" class="form-control" value="{{ old('current_student_status_other') }}" maxlength="255">
                     </div>
 
                     <div class="grid-2">
@@ -919,7 +924,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (el.name && el.name.indexOf('sibling_information') === 0) {
                 return;
             }
-            if (el.name === 'education_expense_other') {
+            if (el.name === 'education_expense_other' || el.name === 'current_student_status_other') {
                 return;
             }
             if (enabled) {
@@ -988,6 +993,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function toggleCurrentStudentStatusOther() {
+        const otherGroup = document.getElementById('current-student-status-other-group');
+        const otherInput = document.getElementById('current_student_status_other');
+        const statusSelect = document.getElementById('current_student_status');
+        if (!otherGroup || !otherInput || !statusSelect) return;
+
+        const educationVisible = educationAidSections && educationAidSections.style.display !== 'none';
+        const isOther = statusSelect.value === 'Other';
+
+        if (educationVisible && isOther) {
+            otherGroup.style.display = 'block';
+            otherInput.setAttribute('required', 'required');
+        } else {
+            otherGroup.style.display = 'none';
+            otherInput.removeAttribute('required');
+        }
+    }
+
     function isEducationAidSelected() {
         return Array.from(document.querySelectorAll('#aid-dropdown input[name="type_of_aid[]"]:checked'))
             .some(cb => cb.value === 'Education Aid');
@@ -1038,6 +1061,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         toggleEducationExpenseOther();
+        toggleCurrentStudentStatusOther();
     }
 
     function toggleEducationAidSections() {
@@ -1121,6 +1145,11 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('input[name="education_expense_types[]"]').forEach(function (cb) {
         cb.addEventListener('change', toggleEducationExpenseOther);
     });
+
+    const currentStudentStatusSelect = document.getElementById('current_student_status');
+    if (currentStudentStatusSelect) {
+        currentStudentStatusSelect.addEventListener('change', toggleCurrentStudentStatusOther);
+    }
 
     // Sibling information (Education Aid socioeconomic section)
     const siblingList = document.getElementById('sibling-information-list');
@@ -1217,6 +1246,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     toggleReceivedAidDetails();
     toggleEducationExpenseOther();
+    toggleCurrentStudentStatusOther();
     toggleEducationAidSections();
 });
 </script>

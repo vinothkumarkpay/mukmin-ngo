@@ -892,7 +892,7 @@ class AdminDashboardController extends Controller
                         'ID', 'Date', 'Full Name', 'NRIC/Passport', 'Gender', 'DOB', 'Nationality', 'Occupation', 'Monthly Income', 'Phone', 'Email', 'Address', 'State',
                         'Type of Aid', 'Type of Aid Other',
                         // Education — Section 1
-                        'University/Institution', 'Programme Name', 'Programme Level', 'Faculty/School', 'Current Year/Semester', 'Intake Date', 'Expected Graduation Date', 'CGPA/Result', 'Student ID', 'Student Status',
+                        'University/Institution', 'Programme Name', 'Programme Level', 'Faculty/School', 'Current Year/Semester', 'Intake Date', 'Expected Graduation Date', 'CGPA/Result', 'Student ID', 'Student Status', 'Student Status Other',
                         // Education — Section 2
                         'Education Expense Types', 'Education Expense Other', 'Total Programme/Tuition Fees (RM)', 'Total Amount Already Paid (RM)', 'Current Outstanding Amount (RM)', 'Amount Due Immediately (RM)', 'Amount Requested from MUKMIN (RM)', 'Payment Deadline', 'Purpose of Request', 'Consequence if Payment Not Made',
                         // Education — Section 3 (socioeconomic)
@@ -931,6 +931,7 @@ class AdminDashboardController extends Controller
                             $item->current_cgpa_result,
                             $item->student_id,
                             $item->current_student_status,
+                            $item->current_student_status_other,
                             is_array($item->education_expense_types) ? implode(', ', $item->education_expense_types) : $item->education_expense_types,
                             $item->education_expense_other,
                             $item->total_programme_tuition_fees,

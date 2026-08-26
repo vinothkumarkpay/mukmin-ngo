@@ -638,7 +638,7 @@ class FormSubmissionController extends Controller
             'programme_level' => [
                 $eduRequired,
                 'string',
-                Rule::in(['Foundation', 'Certificate', 'Diploma', 'Degree', 'Postgraduate', 'Professional Qualification', 'TVET / Skills', 'Other']),
+                Rule::in(['Foundation', 'Matriculation', 'Certificate', 'Diploma', 'Degree', 'Postgraduate', 'Professional Qualification', 'TVET / Skills', 'Other']),
             ],
             'faculty_school' => $eduRequired . '|string|max:255',
             'current_year_semester' => [
@@ -654,6 +654,14 @@ class FormSubmissionController extends Controller
                 $eduRequired,
                 'string',
                 Rule::in(['Full-time', 'Part-time', 'Distance / Online Learning', 'Deferred', 'Other']),
+            ],
+            'current_student_status_other' => [
+                Rule::requiredIf(function () use ($request, $isEducationAid) {
+                    return $isEducationAid && $request->input('current_student_status') === 'Other';
+                }),
+                'nullable',
+                'string',
+                'max:255',
             ],
 
             // Education Aid — Section 2

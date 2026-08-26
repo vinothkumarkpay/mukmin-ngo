@@ -160,7 +160,7 @@ class SubmissionImportRegistry
                 'Driver', 'RM 2000', '+60123456789', 'ahmad@example.com',
                 'No 1, Jalan Example', 'Selangor', 'Financial Assistance, Food Aid', '',
                 // Education fields (optional — leave blank for non-education aid)
-                '', '', '', '', '', '', '', '', '', '',
+                '', '', '', '', '', '', '', '', '', '', '',
                 '', '', '', '', '', '', '', '', '', '',
                 '', '', '', '', '', '', '', '', '',
                 'Sample situation description', 'Family', '4', 'No', '',
@@ -547,6 +547,7 @@ class SubmissionImportRegistry
                     'current_cgpa_result' => ['label' => 'CGPA/Result'],
                     'student_id' => ['label' => 'Student ID'],
                     'current_student_status' => ['label' => 'Student Status'],
+                    'current_student_status_other' => ['label' => 'Student Status Other'],
                     // Education Aid — Section 2
                     'education_expense_types' => ['label' => 'Education Expense Types', 'type' => 'list'],
                     'education_expense_other' => ['label' => 'Education Expense Other'],

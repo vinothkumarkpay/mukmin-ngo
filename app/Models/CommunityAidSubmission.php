@@ -34,6 +34,7 @@ class CommunityAidSubmission extends Model
         'current_cgpa_result',
         'student_id',
         'current_student_status',
+        'current_student_status_other',
         // Education Aid — Section 2
         'education_expense_types',
         'education_expense_other',

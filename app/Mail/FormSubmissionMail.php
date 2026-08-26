@@ -146,6 +146,7 @@ class FormSubmissionMail extends Mailable
         'expected_graduation_date' => 'Expected Graduation Date',
         'student_id' => 'Student ID',
         'current_student_status' => 'Current Student Status',
+        'current_student_status_other' => 'Current Student Status (Other)',
         'current_cgpa_result' => 'Current CGPA / Latest Result',
         'education_expense_types' => 'Education Expenses Requested',
         'education_expense_other' => 'Other Education Expense Details',

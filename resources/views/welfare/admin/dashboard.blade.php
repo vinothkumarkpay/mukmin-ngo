@@ -1264,6 +1264,7 @@
                         current_cgpa_result: 'Current CGPA / Latest Result',
                         student_id: 'Student ID',
                         current_student_status: 'Current Student Status',
+                        current_student_status_other: 'Current Student Status (Other)',
                         education_expense_types: 'Education Expenses Requested',
                         education_expense_other: 'Other Education Expense Details',
                         total_programme_tuition_fees: 'Total Programme / Tuition Fees (RM)',
