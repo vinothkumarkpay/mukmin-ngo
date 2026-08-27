@@ -65,6 +65,7 @@ class CommunityAidSubmission extends Model
         'latest_academic_transcript',
         'university_offer_letter',
         'student_id_confirmation',
+        'applicant_photo',
         'university_fee_statement',
         'official_invoice',
         'outstanding_balance_statement',

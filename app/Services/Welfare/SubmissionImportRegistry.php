@@ -292,6 +292,9 @@ class SubmissionImportRegistry
             case 'aid':
                 $data['declaration_confirmed'] = true;
                 $data['status'] = SubmissionStatus::default();
+                if (!empty($data['type_of_aid']) && !is_array($data['type_of_aid'])) {
+                    $data['type_of_aid'] = [$data['type_of_aid']];
+                }
                 if (empty($data['situation_description']) && !empty($data['purpose_of_request'])) {
                     $data['situation_description'] = $data['purpose_of_request'];
                 }
@@ -534,7 +537,7 @@ class SubmissionImportRegistry
                     'email' => ['label' => 'Email', 'required' => true],
                     'full_address' => ['label' => 'Address', 'required' => true],
                     'state_residency' => ['label' => 'State', 'required' => true],
-                    'type_of_aid' => ['label' => 'Type of Aid', 'required' => true, 'type' => 'list'],
+                    'type_of_aid' => ['label' => 'Type of Aid', 'required' => true, 'type' => 'string'],
                     'type_of_aid_other' => ['label' => 'Type of Aid Other'],
                     // Education Aid — Section 1
                     'university_institution' => ['label' => 'University/Institution'],

@@ -561,14 +561,13 @@ class FormSubmissionController extends Controller
 
     public function submitCommunityAid(Request $request)
     {
-        $aidTypes = collect($request->input('type_of_aid', []));
-        $isEducationAid = $aidTypes->contains('Education Aid');
-        $hasOtherAid = $aidTypes->contains(function ($type) {
-            return $type !== 'Education Aid';
-        });
-        // General III/IV required unless Education Aid is the only selection
-        $needsGeneralSections = !$isEducationAid || $hasOtherAid;
-        $isEducationOnly = $isEducationAid && !$hasOtherAid;
+        $aidType = $request->input('type_of_aid');
+        if (is_array($aidType)) {
+            $aidType = $aidType[0] ?? '';
+        }
+        $isEducationAid = $aidType === 'Education Aid';
+        $needsGeneralSections = !$isEducationAid;
+        $isEducationOnly = $isEducationAid;
 
         if ($isEducationAid) {
             $siblingInput = collect($request->input('sibling_information', []))
@@ -605,6 +604,7 @@ class FormSubmissionController extends Controller
         $emergencyRequired = $isEducationOnly ? 'nullable' : 'required';
         $fileRule = 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480';
         $docFileRule = 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:2048'; // 2MB for Section 4 Document Upload
+        $photoFileRule = 'file|mimes:jpg,jpeg,png|max:2048';
 
         $rules = [
             'full_name' => 'required|string|max:255',
@@ -618,8 +618,21 @@ class FormSubmissionController extends Controller
             'email' => $this->requiredEmailRule(),
             'full_address' => 'required|string',
             'state_residency' => 'required|string|max:50',
-            'type_of_aid' => 'required|array|min:1',
-            'type_of_aid_other' => 'nullable|string|max:255',
+            'type_of_aid' => [
+                'required',
+                'string',
+                Rule::in([
+                    'Education Aid',
+                    'Social Aid',
+                    'Healthcare Aid',
+                    'Emergency / Crisis Support',
+                    'Financial Assistance',
+                    'Food & Basic Necessities',
+                    'Community Support Programme',
+                    'Others',
+                ]),
+            ],
+            'type_of_aid_other' => 'nullable|required_if:type_of_aid,Others|string|max:255',
             'situation_description' => $generalRequired . '|string',
             'who_benefits' => $generalRequired . '|string|in:Individual,Family,Community / Group,Organisation / Institution',
             'number_of_beneficiaries' => 'nullable|integer|min:1',
@@ -770,6 +783,7 @@ class FormSubmissionController extends Controller
             'latest_academic_transcript' => $eduRequired . '|' . $docFileRule,
             'university_offer_letter' => $eduRequired . '|' . $docFileRule,
             'student_id_confirmation' => $eduRequired . '|' . $docFileRule,
+            'applicant_photo' => $eduRequired . '|' . $photoFileRule,
             'university_fee_statement' => $eduRequired . '|' . $docFileRule,
             'official_invoice' => $eduRequired . '|' . $docFileRule,
             'outstanding_balance_statement' => $eduRequired . '|' . $docFileRule,
@@ -792,6 +806,7 @@ class FormSubmissionController extends Controller
         }
 
         $validated = $request->validate($rules);
+        $validated['type_of_aid'] = [$validated['type_of_aid']];
 
         if ($isEducationAid) {
             $singleFileFields = [
@@ -802,6 +817,7 @@ class FormSubmissionController extends Controller
                 'latest_academic_transcript',
                 'university_offer_letter',
                 'student_id_confirmation',
+                'applicant_photo',
                 'university_fee_statement',
                 'official_invoice',
                 'outstanding_balance_statement',

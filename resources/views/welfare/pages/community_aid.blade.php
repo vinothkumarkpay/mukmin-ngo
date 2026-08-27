@@ -115,62 +115,6 @@
     background: #b83210;
 }
 
-/* Custom Dropdown */
-.custom-dropdown-container {
-    position: relative;
-    width: 100%;
-}
-.dropdown-trigger {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid #d2d8d5;
-    border-radius: 6px;
-    background: #fcfdfd;
-    text-align: left;
-    font-size: 14px;
-    color: #555;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.3s ease;
-}
-.dropdown-trigger:focus, .custom-dropdown-container.open .dropdown-trigger {
-    border-color: #d43c18;
-    background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(212, 60, 24, 0.08);
-}
-.dropdown-trigger i {
-    font-size: 12px;
-    color: #888;
-    transition: transform 0.3s ease;
-}
-.custom-dropdown-container.open .dropdown-trigger i {
-    transform: rotate(180deg);
-}
-.dropdown-options-list {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    margin-top: 5px;
-    max-height: 250px;
-    overflow-y: auto;
-    z-index: 100;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-    display: none;
-    padding: 8px 0;
-}
-.custom-dropdown-container.open .dropdown-options-list {
-    display: block;
-}
-.dropdown-option-item:hover {
-    background: #fdf6f4;
-}
-
 .checkbox-stack {
     display: flex;
     flex-direction: column;
@@ -405,22 +349,22 @@
                 <!-- SECTION 2: TYPE OF AID REQUIRED -->
                 <div class="form-section-title">II. Type of Aid Required</div>
 
+                @php
+                    $aidTypes = ['Education Aid', 'Social Aid', 'Healthcare Aid', 'Emergency / Crisis Support', 'Financial Assistance', 'Food & Basic Necessities', 'Community Support Programme', 'Others'];
+                    $selectedAidType = old('type_of_aid');
+                    if (is_array($selectedAidType)) {
+                        $selectedAidType = $selectedAidType[0] ?? '';
+                    }
+                @endphp
+
                 <div class="form-group">
-                    <label>Select Types of Aid Required (Dropdown List)</label>
-                    <div class="custom-dropdown-container" id="aid-dropdown">
-                        <div class="dropdown-trigger" data-placeholder="Choose types of aid...">
-                            <span class="trigger-text">Choose types of aid...</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="dropdown-options-list">
-                            @foreach(['Education Aid', 'Social Aid', 'Healthcare Aid', 'Emergency / Crisis Support', 'Financial Assistance', 'Food & Basic Necessities', 'Community Support Programme', 'Others'] as $aidType)
-                                <div class="dropdown-option-item">
-                                    <input type="checkbox" name="type_of_aid[]" value="{{ $aidType }}" id="aid-{{ $loop->index }}" {{ is_array(old('type_of_aid')) && in_array($aidType, old('type_of_aid')) ? 'checked' : '' }}>
-                                    <span for="aid-{{ $loop->index }}">{{ $aidType }}</span>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
+                    <label for="type_of_aid">Select Type of Aid Required</label>
+                    <select id="type_of_aid" name="type_of_aid" class="form-control" required>
+                        <option value="">-- Choose type of aid --</option>
+                        @foreach($aidTypes as $aidType)
+                            <option value="{{ $aidType }}" {{ $selectedAidType === $aidType ? 'selected' : '' }}>{{ $aidType }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="form-group" id="other-aid-group" style="display: none;">
@@ -775,6 +719,12 @@
                         </div>
                     @endforeach
 
+                    <div class="form-group">
+                        <label for="applicant_photo">Applicant Photo</label>
+                        <input type="file" id="applicant_photo" name="applicant_photo" class="form-control" style="padding: 10px 16px;" accept=".jpg,.jpeg,.png">
+                        <small class="field-hint">Passport-style photo. JPG or PNG only. Max size: 2MB.</small>
+                    </div>
+
                     <div class="doc-subsection-title">Education Cost Documents</div>
                     @foreach([
                         'university_fee_statement' => 'Official University Fee Statement',
@@ -1011,24 +961,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function isEducationAidSelected() {
-        return Array.from(document.querySelectorAll('#aid-dropdown input[name="type_of_aid[]"]:checked'))
-            .some(cb => cb.value === 'Education Aid');
-    }
-
-    function hasNonEducationAidSelected() {
-        return Array.from(document.querySelectorAll('#aid-dropdown input[name="type_of_aid[]"]:checked'))
-            .some(cb => cb.value !== 'Education Aid');
+    function getSelectedAidType() {
+        const select = document.getElementById('type_of_aid');
+        return select ? select.value : '';
     }
 
     function syncAidSections() {
         if (!generalAidSections || !educationAidSections) return;
 
-        const showEducation = isEducationAidSelected();
-        // Show III & IV for non-education aids, or when Education Aid is combined with other aid types
-        const showGeneral = !showEducation || hasNonEducationAidSelected();
-        // Emergency contact is hidden when Education Aid is the only selection
-        const showEmergency = showGeneral || !showEducation;
+        const selectedAid = getSelectedAidType();
+        const showEducation = selectedAid === 'Education Aid';
+        const showGeneral = selectedAid !== '' && selectedAid !== 'Education Aid';
+        const showEmergency = !showEducation;
         const emergencySection = document.getElementById('emergency-contact-section');
 
         educationAidSections.style.display = showEducation ? 'block' : 'none';
@@ -1068,75 +1012,28 @@ document.addEventListener('DOMContentLoaded', function () {
         syncAidSections();
     }
 
-    // Custom Dropdown triggers
-    const dropdowns = document.querySelectorAll('.custom-dropdown-container');
+    const typeOfAidSelect = document.getElementById('type_of_aid');
+    if (typeOfAidSelect) {
+        function onAidTypeChange() {
+            const otherGroup = document.getElementById('other-aid-group');
+            const otherInput = document.getElementById('type_of_aid_other');
 
-    dropdowns.forEach(dropdown => {
-        const trigger = dropdown.querySelector('.dropdown-trigger');
-        const checkboxes = dropdown.querySelectorAll('input[type="checkbox"]');
-        const triggerText = trigger.querySelector('.trigger-text');
-
-        trigger.addEventListener('click', function (e) {
-            e.stopPropagation();
-            dropdowns.forEach(other => {
-                if (other !== dropdown) other.classList.remove('open');
-            });
-            dropdown.classList.toggle('open');
-        });
-
-        function updateText() {
-            const checked = Array.from(checkboxes).filter(cb => cb.checked);
-            if (checked.length === 0) {
-                triggerText.textContent = trigger.getAttribute('data-placeholder') || 'Select options';
-            } else if (checked.length <= 2) {
-                triggerText.textContent = checked.map(cb => cb.parentNode.textContent.trim()).join(', ');
-            } else {
-                triggerText.textContent = checked.length + ' options selected';
-            }
-
-            if (dropdown.id === 'aid-dropdown') {
-                const hasOther = checked.some(cb => cb.value.toLowerCase() === 'others');
-                const otherGroup = document.getElementById('other-aid-group');
-                const otherInput = document.getElementById('type_of_aid_other');
-
-                if (hasOther) {
+            if (otherGroup && otherInput) {
+                if (typeOfAidSelect.value === 'Others') {
                     otherGroup.style.display = 'block';
                     otherInput.setAttribute('required', 'required');
                 } else {
                     otherGroup.style.display = 'none';
                     otherInput.removeAttribute('required');
                 }
-
-                toggleEducationAidSections();
             }
+
+            toggleEducationAidSections();
         }
 
-        dropdown.addEventListener('change', updateText);
-
-        dropdown.querySelectorAll('.dropdown-option-item').forEach(item => {
-            item.addEventListener('click', function (e) {
-                e.stopPropagation();
-                if (e.target.type !== 'checkbox') {
-                    const cb = item.querySelector('input[type="checkbox"]');
-                    cb.checked = !cb.checked;
-                    cb.dispatchEvent(new Event('change', { bubbles: true }));
-                }
-            });
-        });
-
-        updateText();
-    });
-
-    document.addEventListener('click', function () {
-        dropdowns.forEach(d => d.classList.remove('open'));
-    });
-
-    // Direct listener as a reliable fallback for Education Aid toggle
-    document.querySelectorAll('#aid-dropdown input[name="type_of_aid[]"]').forEach(function (cb) {
-        cb.addEventListener('change', function () {
-            toggleEducationAidSections();
-        });
-    });
+        typeOfAidSelect.addEventListener('change', onAidTypeChange);
+        onAidTypeChange();
+    }
 
     receivedAidRadios.forEach(radio => {
         radio.addEventListener('change', toggleReceivedAidDetails);

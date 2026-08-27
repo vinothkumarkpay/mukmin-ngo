@@ -1292,6 +1292,7 @@
                         latest_academic_transcript: 'Latest Academic Transcript / Result',
                         university_offer_letter: 'University Offer Letter / Confirmation of Enrolment',
                         student_id_confirmation: 'Student ID / Current Student Confirmation',
+                        applicant_photo: 'Applicant Photo',
                         university_fee_statement: 'Official University Fee Statement',
                         official_invoice: 'Official Invoice / Payment Notice',
                         outstanding_balance_statement: 'Statement Showing Outstanding Balance',
@@ -1325,7 +1326,7 @@
                         val = formatBooleanDisplay(val) ?? '-';
                     } else if (typeof val === 'boolean') {
                         val = val ? 'Yes' : 'No';
-                    } else if (['registration_certificate', 'committee_members', 'academic_transcript', 'offer_letter', 'proof_of_government_assistance', 'recommendation_letter', 'nric_front', 'nric_back', 'academic_result', 'latest_academic_transcript', 'university_offer_letter', 'student_id_confirmation', 'university_fee_statement', 'official_invoice', 'outstanding_balance_statement', 'payment_deadline_notice'].includes(key)) {
+                    } else if (['registration_certificate', 'committee_members', 'academic_transcript', 'offer_letter', 'proof_of_government_assistance', 'recommendation_letter', 'nric_front', 'nric_back', 'academic_result', 'latest_academic_transcript', 'university_offer_letter', 'student_id_confirmation', 'applicant_photo', 'university_fee_statement', 'official_invoice', 'outstanding_balance_statement', 'payment_deadline_notice'].includes(key)) {
                         val = getFileLinkHtml(val);
                     } else if (key === 'supporting_documents' || key === 'relevant_certificates' || key === 'proof_of_income' || key === 'additional_supporting_documents') {
                         if (Array.isArray(val)) {

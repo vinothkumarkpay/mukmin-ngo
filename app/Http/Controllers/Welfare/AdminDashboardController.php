@@ -898,7 +898,7 @@ class AdminDashboardController extends Controller
                         // Education — Section 3 (socioeconomic)
                         'Household Income', 'Father/Guardian Name', 'Father/Guardian Occupation', 'Mother/Guardian Name', 'Mother/Guardian Occupation', 'Proof of Income', 'Government Assistance Status', 'Proof of Government Assistance', 'Number of Dependents', 'Sibling Information', 'Other Scholarship Details',
                         // Education — Section 4 (documents)
-                        'NRIC Front', 'NRIC Back', 'Academic Result', 'Latest Academic Transcript', 'University Offer Letter', 'Student ID Confirmation', 'University Fee Statement', 'Official Invoice', 'Outstanding Balance Statement', 'Payment Deadline Notice', 'Additional Supporting Documents',
+                        'NRIC Front', 'NRIC Back', 'Academic Result', 'Latest Academic Transcript', 'University Offer Letter', 'Student ID Confirmation', 'Applicant Photo', 'University Fee Statement', 'Official Invoice', 'Outstanding Balance Statement', 'Payment Deadline Notice', 'Additional Supporting Documents',
                         // General III–IV
                         'Situation', 'Who Benefits', 'Beneficiaries Count', 'Received Aid Before', 'Previous Aid Details', 'Supporting Documents',
                         // Emergency + status
@@ -959,6 +959,7 @@ class AdminDashboardController extends Controller
                             $item->latest_academic_transcript,
                             $item->university_offer_letter,
                             $item->student_id_confirmation,
+                            $item->applicant_photo,
                             $item->university_fee_statement,
                             $item->official_invoice,
                             $item->outstanding_balance_statement,

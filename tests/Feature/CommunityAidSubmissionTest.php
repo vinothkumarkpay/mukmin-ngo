@@ -63,7 +63,7 @@ class CommunityAidSubmissionTest extends TestCase
             'email' => 'janesmith@example.com',
             'full_address' => '789 Hope Avenue, Kuala Lumpur',
             'state_residency' => 'Wilayah Persekutuan Kuala Lumpur',
-            'type_of_aid' => ['Healthcare Aid', 'Financial Assistance'],
+            'type_of_aid' => 'Healthcare Aid',
             'situation_description' => 'Medical assistance needed for chronic illness.',
             'who_benefits' => 'Individual',
             'number_of_beneficiaries' => '1',
@@ -326,7 +326,8 @@ class CommunityAidSubmissionTest extends TestCase
         $response->assertSee('Section 2: Education Cost &amp; Aid Request', false);
         $response->assertSee('Section 3: Socioeconomic Background', false);
         $response->assertSee('Section 4: Document Upload', false);
-        $response->assertSee('general-aid-sections', false);
+        $response->assertSee('Select Type of Aid Required', false);
+        $response->assertSee('Applicant Photo', false);
     }
 
     public function test_successful_education_aid_submission_saves_education_fields(): void
@@ -342,7 +343,7 @@ class CommunityAidSubmissionTest extends TestCase
             'email' => 'ahmad.edu@example.com',
             'full_address' => '12 Campus Road, Selangor',
             'state_residency' => 'Selangor',
-            'type_of_aid' => ['Education Aid'],
+            'type_of_aid' => 'Education Aid',
             'university_institution' => 'Universiti Malaya',
             'programme_name' => 'Bachelor of Computer Science',
             'programme_level' => 'Degree',
@@ -378,6 +379,7 @@ class CommunityAidSubmissionTest extends TestCase
             'latest_academic_transcript' => UploadedFile::fake()->create('transcript.pdf', 100),
             'university_offer_letter' => UploadedFile::fake()->create('offer.pdf', 100),
             'student_id_confirmation' => UploadedFile::fake()->create('student_id.pdf', 100),
+            'applicant_photo' => UploadedFile::fake()->image('applicant_photo.jpg', 400, 500)->size(100),
             'university_fee_statement' => UploadedFile::fake()->create('fees.pdf', 100),
             'official_invoice' => UploadedFile::fake()->create('invoice.pdf', 100),
             'outstanding_balance_statement' => UploadedFile::fake()->create('balance.pdf', 100),
@@ -406,8 +408,10 @@ class CommunityAidSubmissionTest extends TestCase
         $this->assertNotNull($submission);
         $this->assertSame(['Tuition / Programme Fees', 'Accommodation'], $submission->education_expense_types);
         $this->assertNotEmpty($submission->nric_front);
+        $this->assertNotEmpty($submission->applicant_photo);
         $this->assertNotEmpty($submission->proof_of_income);
         Storage::disk('public')->assertExists($submission->nric_front);
+        Storage::disk('public')->assertExists($submission->applicant_photo);
     }
 
     private function actingAsAdmin()
