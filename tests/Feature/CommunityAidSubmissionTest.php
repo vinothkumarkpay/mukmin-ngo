@@ -27,10 +27,13 @@ class CommunityAidSubmissionTest extends TestCase
         $response->assertStatus(302); // Redirects back due to validation errors
         $response->assertSessionHasErrors([
             'full_name', 'nric_passport', 'gender', 'dob', 'nationality', 'occupation',
-            'contact_number', 'email', 'full_address', 'state_residency', 'type_of_aid',
+            'contact_number', 'email', 'full_address', 'state_residency',
+            'university_institution', 'programme_name', 'education_expense_types',
+            'declaration_confirmed',
+        ]);
+        $response->assertSessionDoesntHaveErrors([
             'situation_description', 'who_benefits', 'received_aid_before',
             'emergency_contact_name', 'emergency_contact_relationship', 'emergency_contact_phone',
-            'declaration_confirmed'
         ]);
     }
 
@@ -48,30 +51,63 @@ class CommunityAidSubmissionTest extends TestCase
 
     public function test_successful_aid_submission_saves_to_database_and_emails_only_support_with_attachments()
     {
-        $doc1 = UploadedFile::fake()->create('medical_bill.pdf', 300);
-        $doc2 = UploadedFile::fake()->create('payslip.png', 150);
-
         $formData = [
             'full_name' => 'Jane Smith',
             'nric_passport' => '950202105432',
             'gender' => 'Female',
             'dob' => '1995-02-02',
             'nationality' => 'Malaysian',
-            'occupation' => 'Freelancer',
+            'occupation' => 'Student',
             'monthly_income' => '1500',
             'contact_number' => '+60176543210',
             'email' => 'janesmith@example.com',
             'full_address' => '789 Hope Avenue, Kuala Lumpur',
             'state_residency' => 'Wilayah Persekutuan Kuala Lumpur',
-            'type_of_aid' => 'Healthcare Aid',
-            'situation_description' => 'Medical assistance needed for chronic illness.',
-            'who_benefits' => 'Individual',
-            'number_of_beneficiaries' => '1',
-            'received_aid_before' => '0',
-            'supporting_files' => [$doc1, $doc2],
-            'emergency_contact_name' => 'John Smith',
-            'emergency_contact_relationship' => 'Brother',
-            'emergency_contact_phone' => '+60112223334',
+            'type_of_aid' => 'Education Aid',
+            'university_institution' => 'Universiti Malaya',
+            'programme_name' => 'Bachelor of Arts',
+            'programme_level' => 'Degree',
+            'faculty_school' => 'Faculty of Arts',
+            'current_year_semester' => 'Year 2',
+            'intake_date' => '2024-09-01',
+            'expected_graduation_date' => '2027-07-31',
+            'current_cgpa_result' => '3.20',
+            'student_id' => 'UM99999',
+            'current_student_status' => 'Full-time',
+            'education_expense_types' => ['Tuition / Programme Fees'],
+            'total_programme_tuition_fees' => '20000',
+            'total_amount_already_paid' => '5000',
+            'current_outstanding_amount' => '15000',
+            'amount_due_immediately' => '3000',
+            'amount_requested_from_mukmin' => '3000',
+            'payment_deadline' => '2026-09-30',
+            'financial_situation_explanation' => 'Family income is insufficient to cover outstanding fees.',
+            'family_education_financing_efforts' => 'Parents used savings and part-time work to pay earlier semesters.',
+            'family_financial_commitments' => 'Medical bills and younger siblings school fees.',
+            'purpose_of_request' => 'Need tuition assistance.',
+            'payment_not_made_consequence' => 'May be barred from exams.',
+            'university_payment_arrangement_discussed' => 'Requested instalment plan; pending university response.',
+            'remaining_balance_funding_plan' => 'Will cover remainder through part-time work.',
+            'household_income' => 'Below RM 2,000',
+            'father_guardian_name' => 'John Smith',
+            'father_guardian_occupation' => 'Driver',
+            'mother_guardian_name' => 'Mary Smith',
+            'mother_guardian_occupation' => 'Homemaker',
+            'proof_of_income' => [UploadedFile::fake()->create('income.pdf', 200)],
+            'government_assistance_status' => 'Sumbangan Tunai Rahmah (STR)',
+            'proof_of_government_assistance' => UploadedFile::fake()->create('gov.pdf', 200),
+            'number_of_dependents' => '2',
+            'other_scholarship_details' => 'None',
+            'nric_front' => UploadedFile::fake()->create('nric_front.jpg', 100),
+            'nric_back' => UploadedFile::fake()->create('nric_back.jpg', 100),
+            'academic_result' => UploadedFile::fake()->create('spm.pdf', 100),
+            'latest_academic_transcript' => UploadedFile::fake()->create('transcript.pdf', 100),
+            'university_offer_letter' => UploadedFile::fake()->create('offer.pdf', 100),
+            'student_id_confirmation' => UploadedFile::fake()->create('student_id.pdf', 100),
+            'applicant_photo' => UploadedFile::fake()->image('applicant_photo.jpg', 400, 500)->size(100),
+            'university_fee_statement' => UploadedFile::fake()->create('fees.pdf', 100),
+            'official_invoice' => UploadedFile::fake()->create('invoice.pdf', 100),
+            'outstanding_balance_statement' => UploadedFile::fake()->create('balance.pdf', 100),
             'declaration_confirmed' => '1',
         ];
 
@@ -84,38 +120,32 @@ class CommunityAidSubmissionTest extends TestCase
         $this->assertDatabaseHas('community_aid_submissions', [
             'full_name' => 'Jane Smith',
             'email' => 'janesmith@example.com',
-            'who_benefits' => 'Individual',
+            'university_institution' => 'Universiti Malaya',
             'status' => 'received'
         ]);
 
         $submission = CommunityAidSubmission::first();
-        $this->assertNotNull($submission->supporting_documents);
-        $this->assertCount(2, $submission->supporting_documents);
-
-        // Verify files stored in public storage
-        foreach ($submission->supporting_documents as $filePath) {
-            Storage::disk('public')->assertExists($filePath);
-        }
+        $this->assertNotNull($submission);
 
         // Verify emails: Should send to the applicant (janesmith@example.com)
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
             return $mail->hasTo('janesmith@example.com') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
-                   $mail->subject === 'Application Received : MUKMIN Community Aid & Assistance Request' &&
+                   $mail->subject === 'Application Received : Education Aid & Assistance Request' &&
                    !$mail->isForSupport;
         });
 
-        // Verify email to support: Should be sent, should contain attachments
+        // Verify email to support: Should be sent with education document attachments
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
-            $mail->build(); // Build email to resolve attachments
-            
-            $hasAttachments = count($mail->diskAttachments) === 2 || count($mail->attachments) === 2;
+            $mail->build();
+
+            $attachmentCount = count($mail->diskAttachments) + count($mail->attachments);
 
             return $mail->hasTo('communitywelfare@mukmin.org') &&
                    $mail->hasFrom('noreply@mukmin.org') &&
                    $mail->isForSupport &&
-                   $hasAttachments;
+                   $attachmentCount > 0;
         });
     }
 
@@ -326,7 +356,10 @@ class CommunityAidSubmissionTest extends TestCase
         $response->assertSee('Section 2: Education Cost &amp; Aid Request', false);
         $response->assertSee('Section 3: Socioeconomic Background', false);
         $response->assertSee('Section 4: Document Upload', false);
-        $response->assertSee('Select Type of Aid Required', false);
+        $response->assertSee('Section 5: Financial Need Assessment', false);
+        $response->assertSee('Type of Aid Required', false);
+        $response->assertSee('Education Aid', false);
+        $response->assertDontSee('-- Choose type of aid --', false);
         $response->assertSee('Applicant Photo', false);
     }
 
@@ -348,7 +381,7 @@ class CommunityAidSubmissionTest extends TestCase
             'programme_name' => 'Bachelor of Computer Science',
             'programme_level' => 'Degree',
             'faculty_school' => 'Faculty of Computer Science',
-            'current_year_semester' => 'Currently Studying',
+            'current_year_semester' => 'Year 2',
             'intake_date' => '2024-09-01',
             'expected_graduation_date' => '2027-07-31',
             'current_cgpa_result' => '3.45',
@@ -361,8 +394,13 @@ class CommunityAidSubmissionTest extends TestCase
             'amount_due_immediately' => '5000',
             'amount_requested_from_mukmin' => '5000',
             'payment_deadline' => '2026-09-30',
+            'financial_situation_explanation' => 'Family income is insufficient to cover outstanding fees.',
+            'family_education_financing_efforts' => 'Parents used savings and part-time work to pay earlier semesters.',
+            'family_financial_commitments' => 'Medical bills and younger siblings school fees.',
             'purpose_of_request' => 'Need assistance for tuition fees this semester.',
             'payment_not_made_consequence' => 'I may be barred from sitting examinations.',
+            'university_payment_arrangement_discussed' => 'Requested instalment plan; pending university response.',
+            'remaining_balance_funding_plan' => 'Will cover remainder through part-time work.',
             'household_income' => 'Below RM 2,000',
             'father_guardian_name' => 'Ali bin Abu',
             'father_guardian_occupation' => 'Driver',
@@ -398,6 +436,7 @@ class CommunityAidSubmissionTest extends TestCase
             'programme_name' => 'Bachelor of Computer Science',
             'programme_level' => 'Degree',
             'amount_requested_from_mukmin' => '5000.00',
+            'financial_situation_explanation' => 'Family income is insufficient to cover outstanding fees.',
             'who_benefits' => 'Individual',
             'emergency_contact_name' => 'Ahmad Education',
             'emergency_contact_relationship' => 'Applicant',

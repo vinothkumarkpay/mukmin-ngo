@@ -892,13 +892,15 @@ class AdminDashboardController extends Controller
                         'ID', 'Date', 'Full Name', 'NRIC/Passport', 'Gender', 'DOB', 'Nationality', 'Occupation', 'Monthly Income', 'Phone', 'Email', 'Address', 'State',
                         'Type of Aid', 'Type of Aid Other',
                         // Education — Section 1
-                        'University/Institution', 'Programme Name', 'Programme Level', 'Faculty/School', 'Current Year/Semester', 'Intake Date', 'Expected Graduation Date', 'CGPA/Result', 'Student ID', 'Student Status', 'Student Status Other',
+                        'University/Institution', 'Programme Name', 'Programme Level', 'Faculty/School', 'Current Year/Semester', 'Current Year/Semester Other', 'Intake Date', 'Expected Graduation Date', 'CGPA/Result', 'Student ID', 'Student Status', 'Student Status Other',
                         // Education — Section 2
-                        'Education Expense Types', 'Education Expense Other', 'Total Programme/Tuition Fees (RM)', 'Total Amount Already Paid (RM)', 'Current Outstanding Amount (RM)', 'Amount Due Immediately (RM)', 'Amount Requested from MUKMIN (RM)', 'Payment Deadline', 'Purpose of Request', 'Consequence if Payment Not Made',
+                        'Education Expense Types', 'Education Expense Other', 'Total Programme/Tuition Fees (RM)', 'Total Amount Already Paid (RM)', 'Current Outstanding Amount (RM)', 'Amount Due Immediately (RM)', 'Amount Requested from MUKMIN (RM)', 'Payment Deadline',
                         // Education — Section 3 (socioeconomic)
                         'Household Income', 'Father/Guardian Name', 'Father/Guardian Occupation', 'Mother/Guardian Name', 'Mother/Guardian Occupation', 'Proof of Income', 'Government Assistance Status', 'Proof of Government Assistance', 'Number of Dependents', 'Sibling Information', 'Other Scholarship Details',
                         // Education — Section 4 (documents)
                         'NRIC Front', 'NRIC Back', 'Academic Result', 'Latest Academic Transcript', 'University Offer Letter', 'Student ID Confirmation', 'Applicant Photo', 'University Fee Statement', 'Official Invoice', 'Outstanding Balance Statement', 'Payment Deadline Notice', 'Additional Supporting Documents',
+                        // Education — Section 5 (financial need assessment)
+                        'Financial Situation Explanation', 'Family Education Financing Efforts', 'Family Financial Commitments', 'What Payment Is Required For', 'Consequence If Payment Not Made', 'University Payment Arrangement Discussed', 'Remaining Balance Funding Plan',
                         // General III–IV
                         'Situation', 'Who Benefits', 'Beneficiaries Count', 'Received Aid Before', 'Previous Aid Details', 'Supporting Documents',
                         // Emergency + status
@@ -926,6 +928,7 @@ class AdminDashboardController extends Controller
                             $item->programme_level,
                             $item->faculty_school,
                             $item->current_year_semester,
+                            $item->current_year_semester_other,
                             $item->intake_date ? $item->intake_date->format('Y-m-d') : '',
                             $item->expected_graduation_date ? $item->expected_graduation_date->format('Y-m-d') : '',
                             $item->current_cgpa_result,
@@ -940,8 +943,6 @@ class AdminDashboardController extends Controller
                             $item->amount_due_immediately,
                             $item->amount_requested_from_mukmin,
                             $item->payment_deadline ? $item->payment_deadline->format('Y-m-d') : '',
-                            $item->purpose_of_request,
-                            $item->payment_not_made_consequence,
                             $item->household_income,
                             $item->father_guardian_name,
                             $item->father_guardian_occupation,
@@ -965,6 +966,13 @@ class AdminDashboardController extends Controller
                             $item->outstanding_balance_statement,
                             $item->payment_deadline_notice,
                             is_array($item->additional_supporting_documents) ? implode(', ', $item->additional_supporting_documents) : $item->additional_supporting_documents,
+                            $item->financial_situation_explanation,
+                            $item->family_education_financing_efforts,
+                            $item->family_financial_commitments,
+                            $item->purpose_of_request,
+                            $item->payment_not_made_consequence,
+                            $item->university_payment_arrangement_discussed,
+                            $item->remaining_balance_funding_plan,
                             $item->situation_description,
                             $item->who_benefits,
                             $item->number_of_beneficiaries,

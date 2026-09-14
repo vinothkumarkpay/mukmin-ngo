@@ -29,6 +29,7 @@ class CommunityAidSubmission extends Model
         'programme_level',
         'faculty_school',
         'current_year_semester',
+        'current_year_semester_other',
         'intake_date',
         'expected_graduation_date',
         'current_cgpa_result',
@@ -44,8 +45,6 @@ class CommunityAidSubmission extends Model
         'amount_due_immediately',
         'amount_requested_from_mukmin',
         'payment_deadline',
-        'purpose_of_request',
-        'payment_not_made_consequence',
         // Education Aid — Section 3 (socioeconomic)
         'household_income',
         'father_guardian_name',
@@ -71,6 +70,14 @@ class CommunityAidSubmission extends Model
         'outstanding_balance_statement',
         'payment_deadline_notice',
         'additional_supporting_documents',
+        // Education Aid — Section 5 (financial need assessment)
+        'financial_situation_explanation',
+        'family_education_financing_efforts',
+        'family_financial_commitments',
+        'purpose_of_request',
+        'payment_not_made_consequence',
+        'university_payment_arrangement_discussed',
+        'remaining_balance_funding_plan',
         // General aid
         'situation_description',
         'who_benefits',

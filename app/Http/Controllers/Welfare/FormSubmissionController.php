@@ -561,13 +561,13 @@ class FormSubmissionController extends Controller
 
     public function submitCommunityAid(Request $request)
     {
-        $aidType = $request->input('type_of_aid');
-        if (is_array($aidType)) {
-            $aidType = $aidType[0] ?? '';
-        }
-        $isEducationAid = $aidType === 'Education Aid';
-        $needsGeneralSections = !$isEducationAid;
-        $isEducationOnly = $isEducationAid;
+        // Form is Education Aid only — ignore any other submitted aid type.
+        $request->merge(['type_of_aid' => 'Education Aid']);
+
+        $aidType = 'Education Aid';
+        $isEducationAid = true;
+        $needsGeneralSections = false;
+        $isEducationOnly = true;
 
         if ($isEducationAid) {
             $siblingInput = collect($request->input('sibling_information', []))
@@ -621,18 +621,9 @@ class FormSubmissionController extends Controller
             'type_of_aid' => [
                 'required',
                 'string',
-                Rule::in([
-                    'Education Aid',
-                    'Social Aid',
-                    'Healthcare Aid',
-                    'Emergency / Crisis Support',
-                    'Financial Assistance',
-                    'Food & Basic Necessities',
-                    'Community Support Programme',
-                    'Others',
-                ]),
+                Rule::in(['Education Aid']),
             ],
-            'type_of_aid_other' => 'nullable|required_if:type_of_aid,Others|string|max:255',
+            'type_of_aid_other' => 'nullable|string|max:255',
             'situation_description' => $generalRequired . '|string',
             'who_benefits' => $generalRequired . '|string|in:Individual,Family,Community / Group,Organisation / Institution',
             'number_of_beneficiaries' => 'nullable|integer|min:1',
@@ -657,7 +648,15 @@ class FormSubmissionController extends Controller
             'current_year_semester' => [
                 $eduRequired,
                 'string',
-                Rule::in(['Newly Accepted', 'Currently Studying', 'Continuing Student', 'Final Year', 'Other']),
+                Rule::in(['Newly Accepted', 'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5', 'Other']),
+            ],
+            'current_year_semester_other' => [
+                Rule::requiredIf(function () use ($request, $isEducationAid) {
+                    return $isEducationAid && $request->input('current_year_semester') === 'Other';
+                }),
+                'nullable',
+                'string',
+                'max:255',
             ],
             'intake_date' => $eduRequired . '|date',
             'expected_graduation_date' => $eduRequired . '|date|after_or_equal:intake_date',
@@ -708,8 +707,6 @@ class FormSubmissionController extends Controller
             'amount_due_immediately' => $eduRequired . '|numeric|min:0',
             'amount_requested_from_mukmin' => $eduRequired . '|numeric|min:0',
             'payment_deadline' => $eduRequired . '|date',
-            'purpose_of_request' => $eduRequired . '|string|min:2',
-            'payment_not_made_consequence' => $eduRequired . '|string|min:2',
 
             // Education Aid — Section 3 (socioeconomic)
             'household_income' => [
@@ -790,6 +787,15 @@ class FormSubmissionController extends Controller
             'payment_deadline_notice' => 'nullable|' . $docFileRule,
             'additional_supporting_documents' => 'nullable|array|max:10',
             'additional_supporting_documents.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,zip|max:2048',
+
+            // Education Aid — Section 5 (financial need assessment)
+            'financial_situation_explanation' => $eduRequired . '|string|min:2',
+            'family_education_financing_efforts' => $eduRequired . '|string|min:2',
+            'family_financial_commitments' => $eduRequired . '|string|min:2',
+            'purpose_of_request' => $eduRequired . '|string|min:2',
+            'payment_not_made_consequence' => $eduRequired . '|string|min:2',
+            'university_payment_arrangement_discussed' => $eduRequired . '|string|min:2',
+            'remaining_balance_funding_plan' => $eduRequired . '|string|min:2',
         ];
 
         // Sibling row rules only apply when education aid and rows are present
@@ -892,11 +898,11 @@ class FormSubmissionController extends Controller
         $this->applyDefaultSubmissionStatus($validated);
         \App\Models\CommunityAidSubmission::create($validated);
 
-        $this->sendFormSubmissionEmails('Community Aid & Assistance Request', $validated, $validated['email'], $validated['full_name'], 'community-aid');
+        $this->sendFormSubmissionEmails('Education Aid & Assistance Request', $validated, $validated['email'], $validated['full_name'], 'community-aid');
 
         return view('welfare.pages.form_success', [
             'title' => 'Request Submitted Successfully',
-            'message' => 'Your request for MUKMIN Community Aid & Assistance has been received. Our welfare department will review your details and contact you or your emergency contact if additional verification is required.',
+            'message' => 'Your request for Education Aid & Assistance has been received. Our welfare department will review your details and contact you or your emergency contact if additional verification is required.',
         ]);
     }
 

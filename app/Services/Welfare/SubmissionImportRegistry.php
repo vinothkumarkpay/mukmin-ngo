@@ -524,7 +524,7 @@ class SubmissionImportRegistry
                 ],
             ],
             'aid' => [
-                'title' => 'Community Aid Request',
+                'title' => 'Education Aid & Assistance Request',
                 'columns' => [
                     'full_name' => ['label' => 'Full Name', 'required' => true],
                     'nric_passport' => ['label' => 'NRIC/Passport', 'required' => true],
@@ -545,6 +545,7 @@ class SubmissionImportRegistry
                     'programme_level' => ['label' => 'Programme Level'],
                     'faculty_school' => ['label' => 'Faculty/School'],
                     'current_year_semester' => ['label' => 'Current Year/Semester'],
+                    'current_year_semester_other' => ['label' => 'Current Year/Semester Other'],
                     'intake_date' => ['label' => 'Intake Date', 'type' => 'date'],
                     'expected_graduation_date' => ['label' => 'Expected Graduation Date', 'type' => 'date'],
                     'current_cgpa_result' => ['label' => 'CGPA/Result'],
@@ -560,8 +561,6 @@ class SubmissionImportRegistry
                     'amount_due_immediately' => ['label' => 'Amount Due Immediately'],
                     'amount_requested_from_mukmin' => ['label' => 'Amount Requested from MUKMIN'],
                     'payment_deadline' => ['label' => 'Payment Deadline', 'type' => 'date'],
-                    'purpose_of_request' => ['label' => 'Purpose of Request'],
-                    'payment_not_made_consequence' => ['label' => 'Consequence if Payment Not Made'],
                     // Education Aid — Section 3
                     'household_income' => ['label' => 'Household Income'],
                     'father_guardian_name' => ['label' => 'Father/Guardian Name'],
@@ -572,6 +571,14 @@ class SubmissionImportRegistry
                     'number_of_dependents' => ['label' => 'Number of Dependents', 'type' => 'integer'],
                     'sibling_information' => ['label' => 'Sibling Information', 'type' => 'json'],
                     'other_scholarship_details' => ['label' => 'Other Scholarship Details'],
+                    // Education Aid — Section 5: Financial Need Assessment
+                    'financial_situation_explanation' => ['label' => 'Financial situation & why assistance is required'],
+                    'family_education_financing_efforts' => ['label' => 'What family has done to finance education'],
+                    'family_financial_commitments' => ['label' => 'Other financial commitments affecting education'],
+                    'purpose_of_request' => ['label' => 'What is the payment required for?'],
+                    'payment_not_made_consequence' => ['label' => 'What happens if payment is not made by deadline?'],
+                    'university_payment_arrangement_discussed' => ['label' => 'Payment arrangement discussed with university'],
+                    'remaining_balance_funding_plan' => ['label' => 'How remaining balance will be funded'],
                     // General III–IV
                     'situation_description' => ['label' => 'Situation'],
                     'who_benefits' => ['label' => 'Who Benefits'],

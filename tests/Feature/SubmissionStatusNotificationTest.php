@@ -39,7 +39,7 @@ class SubmissionStatusNotificationTest extends TestCase
             $mail->build();
 
             return $mail->hasTo('jane@example.com')
-                && $mail->formTitle === 'Community Aid & Assistance Request'
+                && $mail->formTitle === 'Education Aid & Assistance Request'
                 && $mail->status === 'approved'
                 && $mail->statusLabel === 'Approved'
                 && str_contains($mail->subject, 'Approved');

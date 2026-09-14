@@ -217,7 +217,7 @@
                 <label for="filter_aid_type">Aid type</label>
                 <div class="payments-input-wrap">
                     <i class="fas fa-hands-helping"></i>
-                    <input type="text" name="filter_aid_type" id="filter_aid_type" value="{{ request('filter_aid_type') }}" placeholder="e.g. Financial Assistance…" autocomplete="off" @unless($showAid) disabled @endunless>
+                    <input type="text" name="filter_aid_type" id="filter_aid_type" value="{{ request('filter_aid_type') }}" placeholder="e.g. Education Aid…" autocomplete="off" @unless($showAid) disabled @endunless>
                 </div>
             </div>
         </div>

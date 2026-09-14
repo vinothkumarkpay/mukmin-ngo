@@ -44,7 +44,7 @@ return [
             'permission' => 'submissions.volunteer.view',
         ],
         'panel-aid' => [
-            'label' => 'Community Aid Requests',
+            'label' => 'Education Aid Requests',
             'icon' => 'fa-hand-holding-medical',
             'permission' => 'submissions.aid.view',
         ],
@@ -141,10 +141,10 @@ return [
         'submissions.volunteer.import' => ['label' => 'Import volunteer submissions', 'group' => 'Volunteers'],
         'submissions.volunteer.status' => ['label' => 'Update volunteer status', 'group' => 'Volunteers'],
 
-        'submissions.aid.view' => ['label' => 'View community aid submissions', 'group' => 'Community Aid'],
-        'submissions.aid.export' => ['label' => 'Export community aid submissions', 'group' => 'Community Aid'],
-        'submissions.aid.import' => ['label' => 'Import community aid submissions', 'group' => 'Community Aid'],
-        'submissions.aid.status' => ['label' => 'Update community aid status', 'group' => 'Community Aid'],
+        'submissions.aid.view' => ['label' => 'View education aid submissions', 'group' => 'Education Aid'],
+        'submissions.aid.export' => ['label' => 'Export education aid submissions', 'group' => 'Education Aid'],
+        'submissions.aid.import' => ['label' => 'Import education aid submissions', 'group' => 'Education Aid'],
+        'submissions.aid.status' => ['label' => 'Update education aid status', 'group' => 'Education Aid'],
 
         'submissions.mfls.view' => ['label' => 'View MFLS scholarship submissions', 'group' => 'MFLS Scholarships'],
         'submissions.mfls.export' => ['label' => 'Export MFLS scholarship submissions', 'group' => 'MFLS Scholarships'],

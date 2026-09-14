@@ -134,7 +134,7 @@
                             <div class="stat-icon"><i class="fas fa-hand-holding-medical"></i></div>
                             <div class="stat-info">
                                 <h3>{{ $stats['aid'] }}</h3>
-                                <p>Community Aid Requests</p>
+                                <p>Education Aid Requests</p>
                             </div>
                         </div>
                         @include('welfare.admin.partials.stat-status-breakdown', ['breakdown' => $statBreakdowns['aid'] ?? []])
@@ -638,12 +638,12 @@
             </div>
             @endif
 
-            <!-- 10. COMMUNITY AID PANEL -->
+            <!-- 10. EDUCATION AID PANEL -->
             @if($canPanel('panel-aid'))
             <div class="dashboard-panel" id="panel-aid">
                 <div class="dashboard-card">
                     <div class="card-header">
-                        <h3>Community Aid & Assistance Requests</h3>
+                        <h3>Education Aid & Assistance Requests</h3>
                         <div class="card-actions">
                             <a href="{{ route('welfare.admin.export', 'aid') }}" class="btn-admin btn-admin-secondary">
                                 <i class="fas fa-download"></i> Export CSV
@@ -1259,6 +1259,7 @@
                         programme_level: 'Programme Level',
                         faculty_school: 'Faculty / School',
                         current_year_semester: 'Current Year / Semester',
+                        current_year_semester_other: 'Current Year / Semester (Other)',
                         intake_date: 'Intake Date',
                         expected_graduation_date: 'Expected Graduation Date',
                         current_cgpa_result: 'Current CGPA / Latest Result',
@@ -1273,8 +1274,6 @@
                         amount_due_immediately: 'Amount Due Immediately (RM)',
                         amount_requested_from_mukmin: 'Amount Requested from MUKMIN (RM)',
                         payment_deadline: 'Payment Deadline',
-                        purpose_of_request: 'Purpose of Request',
-                        payment_not_made_consequence: 'Consequence if Payment Not Made',
                         household_income: 'Household Income',
                         father_guardian_name: 'Father/Guardian Name',
                         father_guardian_occupation: 'Father/Guardian Occupation',
@@ -1298,6 +1297,13 @@
                         outstanding_balance_statement: 'Statement Showing Outstanding Balance',
                         payment_deadline_notice: 'Payment Deadline / Demand Notice',
                         additional_supporting_documents: 'Additional Supporting Documents',
+                        financial_situation_explanation: 'Please explain your current financial situation and why you require assistance from MUKMIN at this point in your studies.',
+                        family_education_financing_efforts: 'What have you and your family already done to finance your education?',
+                        family_financial_commitments: 'What other financial commitments are currently affecting your family\'s ability to support your education?',
+                        purpose_of_request: 'What is the payment required for?',
+                        payment_not_made_consequence: 'What will happen if the payment is not made by the deadline?',
+                        university_payment_arrangement_discussed: 'Have you discussed any payment arrangement, instalment plan or alternative with the university?',
+                        remaining_balance_funding_plan: 'If MUKMIN does not provide the full amount requested, how will you fund the remaining balance?',
                         situation_description: 'Current Situation & Assistance Required',
                         who_benefits: 'Who Will Benefit',
                         number_of_beneficiaries: 'Number of Beneficiaries',

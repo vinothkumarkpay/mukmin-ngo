@@ -19,7 +19,7 @@ class SubmissionStatusNotifier
         'partner' => 'Partnership & Collaboration Proposal',
         'volunteer' => 'Volunteer Registration',
         'contact' => 'Contact Us',
-        'aid' => 'Community Aid & Assistance Request',
+        'aid' => 'Education Aid & Assistance Request',
         'mfls' => 'MFLS Scholarship Application',
     ];
 

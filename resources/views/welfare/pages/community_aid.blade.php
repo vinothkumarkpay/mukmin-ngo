@@ -1,6 +1,6 @@
 ﻿@extends('welfare.layouts.app')
 
-@section('title', 'Community Aid & Assistance Request Form - Pertubuhan Gabungan MUKMIN Nasional')
+@section('title', 'Education Aid & Assistance Request Form - Pertubuhan Gabungan MUKMIN Nasional')
 
 @section('content')
 @include('welfare.partials.form-controls-styles')
@@ -252,7 +252,7 @@
     <div class="container">
         <div class="form-card">
             <div class="form-header">
-                <h2>MUKMIN Community Aid & Assistance Request Form</h2>
+                <h2>Education Aid & Assistance Request Form</h2>
                 <p>This form is intended for individuals, families, or communities seeking assistance and support through MUKMIN’s humanitarian, welfare, education, healthcare, and community aid initiatives.</p>
             </div>
 
@@ -346,34 +346,17 @@
                     </select>
                 </div>
 
-                <!-- SECTION 2: TYPE OF AID REQUIRED -->
+                <!-- SECTION 2: TYPE OF AID REQUIRED (fixed to Education Aid) -->
                 <div class="form-section-title">II. Type of Aid Required</div>
 
-                @php
-                    $aidTypes = ['Education Aid', 'Social Aid', 'Healthcare Aid', 'Emergency / Crisis Support', 'Financial Assistance', 'Food & Basic Necessities', 'Community Support Programme', 'Others'];
-                    $selectedAidType = old('type_of_aid');
-                    if (is_array($selectedAidType)) {
-                        $selectedAidType = $selectedAidType[0] ?? '';
-                    }
-                @endphp
-
                 <div class="form-group">
-                    <label for="type_of_aid">Select Type of Aid Required</label>
-                    <select id="type_of_aid" name="type_of_aid" class="form-control" required>
-                        <option value="">-- Choose type of aid --</option>
-                        @foreach($aidTypes as $aidType)
-                            <option value="{{ $aidType }}" {{ $selectedAidType === $aidType ? 'selected' : '' }}>{{ $aidType }}</option>
-                        @endforeach
-                    </select>
+                    <label for="type_of_aid_display">Type of Aid Required</label>
+                    <input type="text" id="type_of_aid_display" class="form-control" value="Education Aid" readonly>
+                    <input type="hidden" id="type_of_aid" name="type_of_aid" value="Education Aid">
                 </div>
 
-                <div class="form-group" id="other-aid-group" style="display: none;">
-                    <label for="type_of_aid_other">Please specify "Other" Type of Aid</label>
-                    <input type="text" id="type_of_aid_other" name="type_of_aid_other" class="form-control" value="{{ old('type_of_aid_other') }}">
-                </div>
-
-                <!-- EDUCATION AID: SECTIONS 1–4 (shown when Education Aid selected) -->
-                <div id="education-aid-sections" style="display: none;">
+                <!-- EDUCATION AID: SECTIONS 1–4 -->
+                <div id="education-aid-sections">
                     <div class="form-section-title">Section 1: Education Information</div>
 
                     <div class="form-group">
@@ -407,7 +390,7 @@
                             <label for="current_year_semester">Current Year / Semester</label>
                             <select id="current_year_semester" name="current_year_semester" class="form-control">
                                 <option value="">-- Choose Status --</option>
-                                @foreach(['Newly Accepted', 'Currently Studying', 'Continuing Student', 'Final Year', 'Other'] as $yearStatus)
+                                @foreach(['Newly Accepted', 'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5', 'Other'] as $yearStatus)
                                     <option value="{{ $yearStatus }}" {{ old('current_year_semester') === $yearStatus ? 'selected' : '' }}>{{ $yearStatus }}</option>
                                 @endforeach
                             </select>
@@ -421,6 +404,11 @@
                                 @endforeach
                             </select>
                         </div>
+                    </div>
+
+                    <div class="form-group" id="current-year-semester-other-group" style="display: none;">
+                        <label for="current_year_semester_other">Please specify Current Year / Semester</label>
+                        <input type="text" id="current_year_semester_other" name="current_year_semester_other" class="form-control" value="{{ old('current_year_semester_other') }}" maxlength="255">
                     </div>
 
                     <div class="form-group" id="current-student-status-other-group" style="display: none;">
@@ -498,17 +486,6 @@
                             <label for="payment_deadline">Payment Deadline</label>
                             <input type="date" id="payment_deadline" name="payment_deadline" class="form-control" value="{{ old('payment_deadline') }}">
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="purpose_of_request">Purpose of Request</label>
-                        <small class="field-hint" style="margin-bottom: 8px;">What is the specific education expense for which you are requesting assistance?</small>
-                        <textarea id="purpose_of_request" name="purpose_of_request" rows="4" class="form-control" style="font-family: inherit;">{{ old('purpose_of_request') }}</textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="payment_not_made_consequence">What happens if this payment is not made?</label>
-                        <textarea id="payment_not_made_consequence" name="payment_not_made_consequence" rows="4" class="form-control" style="font-family: inherit;">{{ old('payment_not_made_consequence') }}</textarea>
                     </div>
 
                     <div class="form-section-title">Section 3: Socioeconomic Background</div>
@@ -746,21 +723,58 @@
                         <input type="file" id="additional_supporting_documents" name="additional_supporting_documents[]" class="form-control" multiple style="padding: 10px 16px;" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.zip">
                         <small class="field-hint">Optional. Multiple files allowed. PDF, JPG, PNG, DOC, DOCX, ZIP. Max size: 2MB per file.</small>
                     </div>
+
+                    <div class="form-section-title">Section 5: Financial Need Assessment</div>
+
+                    <div class="form-group">
+                        <label for="financial_situation_explanation">Please explain your current financial situation and why you require assistance from MUKMIN at this point in your studies.</label>
+                        <textarea id="financial_situation_explanation" name="financial_situation_explanation" rows="4" class="form-control" style="font-family: inherit;">{{ old('financial_situation_explanation') }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="family_education_financing_efforts">What have you and your family already done to finance your education?</label>
+                        <textarea id="family_education_financing_efforts" name="family_education_financing_efforts" rows="4" class="form-control" style="font-family: inherit;">{{ old('family_education_financing_efforts') }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="family_financial_commitments">What other financial commitments are currently affecting your family's ability to support your education?</label>
+                        <textarea id="family_financial_commitments" name="family_financial_commitments" rows="4" class="form-control" style="font-family: inherit;">{{ old('family_financial_commitments') }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="purpose_of_request">What is the payment required for?</label>
+                        <textarea id="purpose_of_request" name="purpose_of_request" rows="4" class="form-control" style="font-family: inherit;">{{ old('purpose_of_request') }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="payment_not_made_consequence">What will happen if the payment is not made by the deadline?</label>
+                        <textarea id="payment_not_made_consequence" name="payment_not_made_consequence" rows="4" class="form-control" style="font-family: inherit;">{{ old('payment_not_made_consequence') }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="university_payment_arrangement_discussed">Have you discussed any payment arrangement, instalment plan or alternative with the university?</label>
+                        <textarea id="university_payment_arrangement_discussed" name="university_payment_arrangement_discussed" rows="4" class="form-control" style="font-family: inherit;">{{ old('university_payment_arrangement_discussed') }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="remaining_balance_funding_plan">If MUKMIN does not provide the full amount requested, how will you fund the remaining balance?</label>
+                        <textarea id="remaining_balance_funding_plan" name="remaining_balance_funding_plan" rows="4" class="form-control" style="font-family: inherit;">{{ old('remaining_balance_funding_plan') }}</textarea>
+                    </div>
                 </div>
 
-                <!-- GENERAL AID: SECTIONS III–IV (hidden when Education Aid is the only selection) -->
-                <div id="general-aid-sections">
+                <!-- GENERAL AID: SECTIONS III–IV (not used — Education Aid only) -->
+                <div id="general-aid-sections" style="display: none;" aria-hidden="true">
                     <div class="form-section-title">III. Details of Assistance Required</div>
 
                     <div class="form-group">
                         <label for="situation_description">Please describe your current situation and the type of assistance required:</label>
-                        <textarea id="situation_description" name="situation_description" rows="5" class="form-control" style="font-family: inherit;" required>{{ old('situation_description') }}</textarea>
+                        <textarea id="situation_description" name="situation_description" rows="5" class="form-control" style="font-family: inherit;">{{ old('situation_description') }}</textarea>
                     </div>
 
                     <div class="grid-2">
                         <div class="form-group">
                             <label for="who_benefits">Who will benefit from this assistance?</label>
-                            <select id="who_benefits" name="who_benefits" class="form-control" required>
+                            <select id="who_benefits" name="who_benefits" class="form-control">
                                 <option value="">-- Select Beneficiary Type --</option>
                                 @foreach(['Individual', 'Family', 'Community / Group', 'Organisation / Institution'] as $benefitType)
                                     <option value="{{ $benefitType }}" {{ old('who_benefits') == $benefitType ? 'selected' : '' }}>{{ $benefitType }}</option>
@@ -779,7 +793,7 @@
                         <label>Have you previously received aid or assistance from any organisation?</label>
                         <div class="radio-group">
                             <label class="radio-label">
-                                <input type="radio" name="received_aid_before" value="1" {{ old('received_aid_before') === '1' ? 'checked' : '' }} required>
+                                <input type="radio" name="received_aid_before" value="1" {{ old('received_aid_before') === '1' ? 'checked' : '' }}>
                                 Yes
                             </label>
                             <label class="radio-label">
@@ -801,29 +815,29 @@
                     </div>
                 </div>
 
-                <!-- EMERGENCY CONTACT (hidden when Education Aid is the only selection) -->
-                <div id="emergency-contact-section">
+                <!-- EMERGENCY CONTACT (not used — Education Aid only) -->
+                <div id="emergency-contact-section" style="display: none;" aria-hidden="true">
                     <div class="form-section-title" id="emergency-contact-section-title">V. Emergency Contact</div>
 
                     <div class="grid-2">
                         <div class="form-group">
                             <label for="emergency_contact_name">Full Name</label>
-                            <input type="text" id="emergency_contact_name" name="emergency_contact_name" class="form-control" placeholder="Name as per NRIC" value="{{ old('emergency_contact_name') }}" required>
+                            <input type="text" id="emergency_contact_name" name="emergency_contact_name" class="form-control" placeholder="Name as per NRIC" value="{{ old('emergency_contact_name') }}">
                         </div>
                         <div class="form-group">
                             <label for="emergency_contact_relationship">Relationship</label>
-                            <input type="text" id="emergency_contact_relationship" name="emergency_contact_relationship" class="form-control" value="{{ old('emergency_contact_relationship') }}" required>
+                            <input type="text" id="emergency_contact_relationship" name="emergency_contact_relationship" class="form-control" value="{{ old('emergency_contact_relationship') }}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="emergency_contact_phone">Contact Number</label>
-                        <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" class="form-control" placeholder="e.g. +60123456789" value="{{ old('emergency_contact_phone') }}" required>
+                        <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" class="form-control" placeholder="e.g. +60123456789" value="{{ old('emergency_contact_phone') }}">
                     </div>
                 </div>
 
                 <!-- DECLARATION & CONSENT -->
-                <div class="form-section-title" id="declaration-section-title">VI. Declaration & Consent</div>
+                <div class="form-section-title" id="declaration-section-title">III. Declaration & Consent</div>
 
                 <div class="declaration-box">
                     <label>
@@ -874,7 +888,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (el.name && el.name.indexOf('sibling_information') === 0) {
                 return;
             }
-            if (el.name === 'education_expense_other' || el.name === 'current_student_status_other') {
+            if (el.name === 'education_expense_other' || el.name === 'current_student_status_other' || el.name === 'current_year_semester_other') {
                 return;
             }
             if (enabled) {
@@ -943,6 +957,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function toggleCurrentYearSemesterOther() {
+        const otherGroup = document.getElementById('current-year-semester-other-group');
+        const otherInput = document.getElementById('current_year_semester_other');
+        const yearSelect = document.getElementById('current_year_semester');
+        if (!otherGroup || !otherInput || !yearSelect) return;
+
+        const educationVisible = educationAidSections && educationAidSections.style.display !== 'none';
+        const isOther = yearSelect.value === 'Other';
+
+        if (educationVisible && isOther) {
+            otherGroup.style.display = 'block';
+            otherInput.setAttribute('required', 'required');
+        } else {
+            otherGroup.style.display = 'none';
+            otherInput.removeAttribute('required');
+        }
+    }
+
     function toggleCurrentStudentStatusOther() {
         const otherGroup = document.getElementById('current-student-status-other-group');
         const otherInput = document.getElementById('current_student_status_other');
@@ -962,8 +994,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function getSelectedAidType() {
-        const select = document.getElementById('type_of_aid');
-        return select ? select.value : '';
+        return 'Education Aid';
     }
 
     function syncAidSections() {
@@ -985,7 +1016,7 @@ document.addEventListener('DOMContentLoaded', function () {
         setRequiredIn(generalAidSections, showGeneral);
         setRequiredIn(emergencySection, showEmergency);
 
-        // Education Aid only: Sections 1–4, then III. Declaration (Emergency hidden)
+        // Education Aid only: Sections 1–5, then III. Declaration (Emergency hidden)
         // Otherwise keep V / VI when general III–IV are present
         const declarationTitle = document.getElementById('declaration-section-title');
         const emergencyTitle = document.getElementById('emergency-contact-section-title');
@@ -1005,6 +1036,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         toggleEducationExpenseOther();
+        toggleCurrentYearSemesterOther();
         toggleCurrentStudentStatusOther();
     }
 
@@ -1042,6 +1074,11 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('input[name="education_expense_types[]"]').forEach(function (cb) {
         cb.addEventListener('change', toggleEducationExpenseOther);
     });
+
+    const currentYearSemesterSelect = document.getElementById('current_year_semester');
+    if (currentYearSemesterSelect) {
+        currentYearSemesterSelect.addEventListener('change', toggleCurrentYearSemesterOther);
+    }
 
     const currentStudentStatusSelect = document.getElementById('current_student_status');
     if (currentStudentStatusSelect) {
@@ -1143,6 +1180,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     toggleReceivedAidDetails();
     toggleEducationExpenseOther();
+    toggleCurrentYearSemesterOther();
     toggleCurrentStudentStatusOther();
     toggleEducationAidSections();
 });
