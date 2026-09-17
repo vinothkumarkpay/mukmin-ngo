@@ -45,9 +45,15 @@
             @endif
 
             @php
-                $emptySubmissionMessage = $submissionStatusFilter
-                    ? 'No submissions found with status "' . \App\Support\SubmissionStatus::label($submissionStatusFilter) . '".'
-                    : 'No submissions found.';
+                if ($submissionStatusFilter) {
+                    $emptySubmissionMessage = 'No submissions found with status "' . (
+                        ($activeTab ?? '') === 'panel-aid'
+                            ? \App\Support\EducationAidStatus::label($submissionStatusFilter)
+                            : \App\Support\SubmissionStatus::label($submissionStatusFilter)
+                    ) . '".';
+                } else {
+                    $emptySubmissionMessage = 'No submissions found.';
+                }
             @endphp
 
             @include('welfare.admin.partials.submissions-status-filter')
@@ -137,7 +143,10 @@
                                 <p>Education Aid Requests</p>
                             </div>
                         </div>
-                        @include('welfare.admin.partials.stat-status-breakdown', ['breakdown' => $statBreakdowns['aid'] ?? []])
+                        @include('welfare.admin.partials.stat-status-breakdown', [
+                            'breakdown' => $statBreakdowns['aid'] ?? [],
+                            'kind' => 'aid',
+                        ])
                     </div>
                     @endif
                     @if($canPanel('panel-mfls'))
@@ -641,6 +650,8 @@
             <!-- 10. EDUCATION AID PANEL -->
             @if($canPanel('panel-aid'))
             <div class="dashboard-panel" id="panel-aid">
+                @include('welfare.admin.education-aid.overview-widgets', ['aidOverview' => $aidOverview ?? []])
+
                 <div class="dashboard-card">
                     <div class="card-header">
                         <h3>Education Aid & Assistance Requests</h3>
@@ -685,7 +696,10 @@
                                                 @include('welfare.admin.partials.status-select', ['type' => 'aid', 'item' => $item])
                                             </td>
                                             <td style="text-align: right;">
-                                                <button onclick="viewDetail('aid', {{ $item->id }})" class="btn-admin btn-admin-primary">View</button>
+                                                <div style="display: inline-flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+                                                    <button type="button" onclick="viewDetail('aid', {{ $item->id }})" class="btn-admin btn-admin-secondary">View</button>
+                                                    <a href="{{ route('welfare.admin.education-aid.review', $item->id) }}" class="btn-admin btn-admin-primary">Review Now</a>
+                                                </div>
                                             </td>
                                         </tr>
                                     @empty
@@ -1006,17 +1020,22 @@
 @push('scripts')
 <script>
     const STATUS_LABELS = @json($submissionStatusOptions);
+    const EDUCATION_AID_STATUS_LABELS = @json($educationAidStatusOptions ?? []);
 
-    function statusBadgeClass(status) {
+    function statusBadgeClass(status, type) {
         const legacyMap = { pending: 'received', under_review: 'reviewing', new: 'received' };
         const normalized = legacyMap[status] || status;
+        if (type === 'aid') {
+            return 'badge badge-aid-' + normalized;
+        }
         return 'badge badge-' + normalized;
     }
 
-    function statusLabel(status) {
+    function statusLabel(status, type) {
         const legacyMap = { pending: 'received', under_review: 'reviewing', new: 'received' };
         const normalized = legacyMap[status] || status;
-        return STATUS_LABELS[normalized] || status.replace(/_/g, ' ');
+        const labels = type === 'aid' ? EDUCATION_AID_STATUS_LABELS : STATUS_LABELS;
+        return labels[normalized] || status.replace(/_/g, ' ');
     }
     // Mobile sidebar
     const sidebarToggle = document.getElementById('sidebar-toggle');
@@ -1409,7 +1428,7 @@
                 }
 
                 if (data.status && type !== 'donation') {
-                    html += `<div class="detail-label">APPLICATION STATUS</div><div class="detail-value" style="font-weight:700;"><span class="${statusBadgeClass(data.status)}">${statusLabel(data.status)}</span></div>`;
+                    html += `<div class="detail-label">APPLICATION STATUS</div><div class="detail-value" style="font-weight:700;"><span class="${statusBadgeClass(data.status, type)}">${statusLabel(data.status, type)}</span></div>`;
                 }
 
                 html += '</div>';

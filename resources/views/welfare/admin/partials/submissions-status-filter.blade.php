@@ -1,9 +1,17 @@
 @php
+    use App\Support\EducationAidStatus;
     use App\Support\SubmissionStatus;
 
+    $currentAdminTab = request('admin_tab', $activeTab ?? 'panel-overview');
+    $isAidTab = $currentAdminTab === 'panel-aid';
     $activeStatus = request('submission_status');
-    $activeStatusNormalized = $activeStatus ? SubmissionStatus::normalize($activeStatus) : null;
-    $activeStatusLabel = $activeStatusNormalized ? SubmissionStatus::label($activeStatusNormalized) : null;
+    $activeStatusNormalized = $activeStatus
+        ? ($isAidTab ? EducationAidStatus::normalize($activeStatus) : SubmissionStatus::normalize($activeStatus))
+        : null;
+    $activeStatusLabel = $activeStatusNormalized
+        ? ($isAidTab ? EducationAidStatus::label($activeStatusNormalized) : SubmissionStatus::label($activeStatusNormalized))
+        : null;
+    $statusFilterOptions = $isAidTab ? EducationAidStatus::options() : SubmissionStatus::options();
 
     $partnerFilterId = request('filter_partner');
     $partnerFilterLabel = null;
@@ -29,7 +37,6 @@
         'Aid type' => request('filter_aid_type'),
     ])->filter(fn ($value) => filled($value));
 
-    $currentAdminTab = request('admin_tab', $activeTab ?? 'panel-overview');
     $hideFilterOn = ['panel-overview', 'panel-options', 'panel-mfls-documents', 'panel-payments'];
     $showFilterCard = ! in_array($currentAdminTab, $hideFilterOn, true);
 
@@ -67,7 +74,7 @@
                     <i class="fas fa-flag"></i>
                     <select name="submission_status" id="filter_submission_status">
                         <option value="">All statuses</option>
-                        @foreach(SubmissionStatus::options() as $value => $label)
+                        @foreach($statusFilterOptions as $value => $label)
                             <option value="{{ $value }}" @selected($activeStatusNormalized === $value)>{{ $label }}</option>
                         @endforeach
                     </select>

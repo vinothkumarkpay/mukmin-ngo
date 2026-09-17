@@ -20,6 +20,7 @@ use App\Services\Welfare\MflsPartnerDocumentService;
 use App\Services\Welfare\SubmissionImportRegistry;
 use App\Services\Welfare\SubmissionImporter;
 use App\Services\Welfare\SubmissionStatusNotifier;
+use App\Support\EducationAidStatus;
 use App\Support\SubmissionStatus;
 use Response;
 
@@ -74,10 +75,12 @@ class AdminDashboardController extends Controller
             'partner' => $this->submissionStatusBreakdown(PartnerSubmission::class),
             'volunteer' => $this->submissionStatusBreakdown(VolunteerSubmission::class),
             'contact' => $this->submissionStatusBreakdown(ContactSubmission::class),
-            'aid' => $this->submissionStatusBreakdown(CommunityAidSubmission::class),
+            'aid' => $this->educationAidStatusBreakdown(),
             'mfls' => $this->submissionStatusBreakdown(MflsScholarshipSubmission::class),
             'donations' => $this->donationStatusBreakdown(),
         ];
+
+        $aidOverview = $this->buildEducationAidOverview();
 
         $submissionFilters = $this->resolveSubmissionFilters($request);
         $hasSubmissionFilters = $this->hasActiveSubmissionFilters($submissionFilters);
@@ -198,7 +201,117 @@ class AdminDashboardController extends Controller
             'submissionFilterQualifications',
             'submissionFilterHouseholdIncomes',
             'submissionFilterEntityTypes',
-        ))->with('submissionStatusOptions', SubmissionStatus::options());
+            'aidOverview',
+        ))->with('submissionStatusOptions', SubmissionStatus::options())
+          ->with('educationAidStatusOptions', EducationAidStatus::options());
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    private function educationAidStatusBreakdown(): array
+    {
+        $counts = array_fill_keys(EducationAidStatus::values(), 0);
+
+        $raw = CommunityAidSubmission::query()
+            ->selectRaw('status, COUNT(*) as aggregate')
+            ->groupBy('status')
+            ->pluck('aggregate', 'status');
+
+        foreach ($raw as $status => $count) {
+            $normalized = EducationAidStatus::normalize($status !== null && $status !== '' ? (string) $status : null);
+            if (! array_key_exists($normalized, $counts)) {
+                $counts[$normalized] = 0;
+            }
+            $counts[$normalized] += (int) $count;
+        }
+
+        return $counts;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function buildEducationAidOverview(): array
+    {
+        $submissions = CommunityAidSubmission::query()
+            ->with('assessment')
+            ->get();
+
+        $statusOf = fn ($item) => EducationAidStatus::normalize($item->status);
+
+        $cases = [
+            'total' => $submissions->count(),
+            'new' => $submissions->filter(fn ($s) => in_array($statusOf($s), [
+                EducationAidStatus::RECEIVED,
+                EducationAidStatus::INITIAL_SCREENING,
+            ], true))->count(),
+            'under_assessment' => $submissions->filter(fn ($s) => in_array($statusOf($s), [
+                EducationAidStatus::ASSESSMENT_PENDING,
+                EducationAidStatus::UNDER_ASSESSMENT,
+                EducationAidStatus::DOCUMENTS_COMPLETE,
+            ], true))->count(),
+            'awaiting_documents' => $submissions->filter(fn ($s) => $statusOf($s) === EducationAidStatus::DOCUMENTS_INCOMPLETE)->count(),
+            'interview_pending' => $submissions->filter(fn ($s) => $statusOf($s) === EducationAidStatus::INTERVIEW_REQUIRED)->count(),
+            'committee_review' => $submissions->filter(fn ($s) => $statusOf($s) === EducationAidStatus::COMMITTEE_REVIEW)->count(),
+            'approved' => $submissions->filter(fn ($s) => in_array($statusOf($s), EducationAidStatus::approvedStatuses(), true))->count(),
+            'rejected' => $submissions->filter(fn ($s) => in_array($statusOf($s), [
+                EducationAidStatus::NOT_APPROVED,
+                EducationAidStatus::ALTERNATIVE_ASSISTANCE,
+            ], true))->count(),
+        ];
+
+        $urgency = [
+            'critical' => 0,
+            'high' => 0,
+            'moderate' => 0,
+            'low' => 0,
+        ];
+
+        foreach ($submissions as $submission) {
+            $level = $submission->assessment->urgency
+                ?? \App\Support\EducationAidUrgency::suggest($submission)['level'];
+            if (! isset($urgency[$level])) {
+                $urgency[$level] = 0;
+            }
+            $urgency[$level]++;
+        }
+
+        $totalRequested = (float) $submissions->sum(fn ($s) => (float) ($s->amount_requested_from_mukmin ?? 0));
+        $totalRecommended = (float) $submissions->sum(fn ($s) => (float) optional($s->assessment)->recommended_amount);
+        $totalApproved = (float) $submissions->sum(fn ($s) => (float) optional($s->assessment)->approved_amount);
+        $totalDisbursed = (float) $submissions
+            ->filter(fn ($s) => in_array($statusOf($s), [EducationAidStatus::PAID, EducationAidStatus::CASE_CLOSED], true))
+            ->sum(fn ($s) => (float) (optional($s->assessment)->approved_amount ?? 0));
+
+        $today = now()->startOfDay();
+        $dueWithin = function (int $days) use ($submissions, $today) {
+            return $submissions->filter(function ($s) use ($days, $today) {
+                if (! $s->payment_deadline) {
+                    return false;
+                }
+                $deadline = $s->payment_deadline->copy()->startOfDay();
+                $diff = $today->diffInDays($deadline, false);
+
+                return $diff >= 0 && $diff <= $days;
+            })->count();
+        };
+
+        return [
+            'cases' => $cases,
+            'urgency' => $urgency,
+            'financial' => [
+                'total_requested' => $totalRequested,
+                'total_recommended' => $totalRecommended,
+                'total_approved' => $totalApproved,
+                'total_disbursed' => $totalDisbursed,
+            ],
+            'deadlines' => [
+                'due_3' => $dueWithin(3),
+                'due_7' => $dueWithin(7),
+                'due_14' => $dueWithin(14),
+            ],
+        ];
     }
 
     /**
@@ -260,9 +373,13 @@ class AdminDashboardController extends Controller
      */
     private function resolveSubmissionFilters(Request $request): array
     {
-        $status = $request->filled('submission_status')
-            ? SubmissionStatus::normalize($request->input('submission_status'))
-            : null;
+        $activeTab = (string) $request->get('admin_tab', 'panel-overview');
+        $status = null;
+        if ($request->filled('submission_status')) {
+            $status = $activeTab === 'panel-aid'
+                ? EducationAidStatus::normalize($request->input('submission_status'))
+                : SubmissionStatus::normalize($request->input('submission_status'));
+        }
 
         return [
             'status' => $status,
@@ -279,6 +396,7 @@ class AdminDashboardController extends Controller
             'entity_type' => trim((string) $request->input('filter_entity_type', '')),
             'ros' => $request->input('filter_ros'),
             'aid_type' => trim((string) $request->input('filter_aid_type', '')),
+            'status_scope' => $activeTab === 'panel-aid' ? 'aid' : 'default',
         ];
     }
 
@@ -288,6 +406,10 @@ class AdminDashboardController extends Controller
     private function hasActiveSubmissionFilters(array $filters): bool
     {
         foreach ($filters as $key => $value) {
+            if ($key === 'status_scope') {
+                continue;
+            }
+
             if ($key === 'ros') {
                 if ($value === '0' || $value === '1' || $value === 0 || $value === 1) {
                     return true;
@@ -315,6 +437,12 @@ class AdminDashboardController extends Controller
             return $results;
         }
 
+        if ($type === 'aid') {
+            return $results
+                ->filter(fn ($item) => EducationAidStatus::matchesFilter($item->status, $filters['status']))
+                ->values();
+        }
+
         return $results
             ->filter(fn ($item) => SubmissionStatus::matchesFilter($item->status, $filters['status']))
             ->values();
@@ -332,7 +460,11 @@ class AdminDashboardController extends Controller
         }
 
         if (! empty($filters['status'])) {
-            $query->whereIn('status', SubmissionStatus::storedValuesFor($filters['status']));
+            if ($type === 'aid') {
+                $query->whereIn('status', EducationAidStatus::storedValuesFor($filters['status']));
+            } else {
+                $query->whereIn('status', SubmissionStatus::storedValuesFor($filters['status']));
+            }
         }
 
         if (! empty($filters['date_from'])) {
@@ -558,9 +690,15 @@ class AdminDashboardController extends Controller
     {
         $this->authorizeSubmission($type, 'status');
 
-        $validated = $request->validate([
-            'status' => SubmissionStatus::validationRule(),
-        ]);
+        if ($type === 'aid') {
+            $validated = $request->validate([
+                'status' => EducationAidStatus::validationRule(),
+            ]);
+        } else {
+            $validated = $request->validate([
+                'status' => SubmissionStatus::validationRule(),
+            ]);
+        }
 
         $submission = $this->findSubmissionForStatusUpdate($type, $id);
 
@@ -570,10 +708,27 @@ class AdminDashboardController extends Controller
 
         $submission->update(['status' => $validated['status']]);
 
+        if ($type === 'aid') {
+            try {
+                $caseService = app(\App\Services\Welfare\EducationAidCaseService::class);
+                $caseService->ensureCaseInitialized($submission);
+                $caseService->recordEvent(
+                    $submission,
+                    'status_changed',
+                    'Status changed to ' . EducationAidStatus::label($validated['status']) . ' from dashboard list.',
+                    ['to' => $validated['status']]
+                );
+            } catch (\Throwable $e) {
+                // Non-fatal: status already saved.
+            }
+        }
+
         return response()->json([
             'success' => true,
             'status' => $validated['status'],
-            'label' => SubmissionStatus::label($validated['status']),
+            'label' => $type === 'aid'
+                ? EducationAidStatus::label($validated['status'])
+                : SubmissionStatus::label($validated['status']),
         ]);
     }
 
@@ -982,7 +1137,7 @@ class AdminDashboardController extends Controller
                             $item->emergency_contact_name,
                             $item->emergency_contact_relationship,
                             $item->emergency_contact_phone,
-                            SubmissionStatus::label($item->status)
+                            EducationAidStatus::label($item->status)
                         ]);
                     }
                     break;

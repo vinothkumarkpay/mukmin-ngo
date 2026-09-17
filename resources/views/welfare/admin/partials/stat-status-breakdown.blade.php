@@ -3,13 +3,16 @@
     $breakdown = $breakdown ?? [];
     $kind = $kind ?? 'submission';
 
-    $meta = $kind === 'donation'
-        ? [
+    if ($kind === 'donation') {
+        $meta = [
             'pending' => 'Pending',
             'paid' => 'Paid',
             'failed' => 'Failed',
-        ]
-        : [
+        ];
+    } elseif ($kind === 'aid') {
+        $meta = \App\Support\EducationAidStatus::options();
+    } else {
+        $meta = [
             \App\Support\SubmissionStatus::RECEIVED => \App\Support\SubmissionStatus::label(\App\Support\SubmissionStatus::RECEIVED),
             \App\Support\SubmissionStatus::REVIEWING => \App\Support\SubmissionStatus::label(\App\Support\SubmissionStatus::REVIEWING),
             \App\Support\SubmissionStatus::PENDING_APPROVAL => \App\Support\SubmissionStatus::label(\App\Support\SubmissionStatus::PENDING_APPROVAL),
@@ -18,6 +21,7 @@
             \App\Support\SubmissionStatus::REJECTED => \App\Support\SubmissionStatus::label(\App\Support\SubmissionStatus::REJECTED),
             \App\Support\SubmissionStatus::COMPLETED => \App\Support\SubmissionStatus::label(\App\Support\SubmissionStatus::COMPLETED),
         ];
+    }
 
     $visible = [];
     foreach ($meta as $status => $label) {

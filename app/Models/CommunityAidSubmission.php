@@ -106,4 +106,29 @@ class CommunityAidSubmission extends Model
         'expected_graduation_date' => 'date',
         'payment_deadline' => 'date',
     ];
+
+    public function assessment()
+    {
+        return $this->hasOne(EducationAidAssessment::class, 'community_aid_submission_id');
+    }
+
+    public function documentChecks()
+    {
+        return $this->hasMany(EducationAidDocumentCheck::class, 'community_aid_submission_id');
+    }
+
+    public function sectionComments()
+    {
+        return $this->hasMany(EducationAidSectionComment::class, 'community_aid_submission_id')->latest();
+    }
+
+    public function caseEvents()
+    {
+        return $this->hasMany(EducationAidCaseEvent::class, 'community_aid_submission_id')->orderBy('created_at', 'desc');
+    }
+
+    public function interviewProposals()
+    {
+        return $this->hasMany(EducationAidInterviewProposal::class, 'community_aid_submission_id')->latest();
+    }
 }

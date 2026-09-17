@@ -3,6 +3,7 @@
 namespace App\Services\Welfare;
 
 use App\Mail\SubmissionStatusUpdateMail;
+use App\Support\EducationAidStatus;
 use App\Support\SubmissionStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
@@ -36,7 +37,13 @@ class SubmissionStatusNotifier
         }
 
         $name = $this->resolveApplicantName($submission);
-        $status = SubmissionStatus::normalize($submission->status);
+        if ($type === 'aid') {
+            $status = EducationAidStatus::normalize($submission->status);
+            $statusLabel = EducationAidStatus::label($status);
+        } else {
+            $status = SubmissionStatus::normalize($submission->status);
+            $statusLabel = SubmissionStatus::label($status);
+        }
         $formTitle = $this->formTitle($type);
 
         try {
@@ -44,7 +51,8 @@ class SubmissionStatusNotifier
                 $formTitle,
                 $name,
                 $status,
-                SubmissionStatus::label($status)
+                $statusLabel,
+                $type
             ));
 
             return true;

@@ -1,7 +1,16 @@
 @php
+    use App\Support\EducationAidStatus;
     use App\Support\SubmissionStatus;
-    $currentStatus = SubmissionStatus::normalize($item->status ?? SubmissionStatus::default());
+
+    $isAid = ($type ?? '') === 'aid';
+    $currentStatus = $isAid
+        ? EducationAidStatus::normalize($item->status ?? EducationAidStatus::default())
+        : SubmissionStatus::normalize($item->status ?? SubmissionStatus::default());
+    $statusOptions = $isAid ? EducationAidStatus::options() : SubmissionStatus::options();
     $canUpdateStatus = auth()->user()->hasPermission('submissions.' . $type . '.status');
+    $readonlyLabel = $isAid
+        ? EducationAidStatus::label($currentStatus)
+        : SubmissionStatus::label($currentStatus);
 @endphp
 <div class="status-cell">
     @if($canUpdateStatus)
@@ -13,11 +22,11 @@
             data-original-value="{{ $currentStatus }}"
             onchange="handleStatusChange(event, '{{ $type }}', {{ $item->id }})"
         >
-            @foreach(SubmissionStatus::options() as $value => $label)
+            @foreach($statusOptions as $value => $label)
                 <option value="{{ $value }}" {{ $currentStatus === $value ? 'selected' : '' }}>{{ $label }}</option>
             @endforeach
         </select>
     @else
-        <span class="status-readonly">{{ SubmissionStatus::label($currentStatus) }}</span>
+        <span class="status-readonly">{{ $readonlyLabel }}</span>
     @endif
 </div>

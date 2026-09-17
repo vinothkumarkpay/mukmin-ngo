@@ -11,6 +11,7 @@ use App\Http\Controllers\Welfare\AdminRoleController;
 use App\Http\Controllers\Welfare\AdminUserController;
 use App\Http\Controllers\Welfare\DonationController;
 use App\Http\Controllers\Welfare\DonationDemoController;
+use App\Http\Controllers\Welfare\EducationAidCaseController;
 use App\Http\Controllers\Welfare\MflsPartnerDocumentController;
 use Illuminate\Support\Facades\Route;
 
@@ -117,6 +118,26 @@ Route::name('welfare.')->group(function () {
         Route::get('/admin/export/{type}', [AdminDashboardController::class, 'exportCsv'])->name('admin.export');
         Route::get('/admin/import/{type}/template', [AdminDashboardController::class, 'downloadImportTemplate'])->name('admin.import.template');
         Route::post('/admin/import/{type}', [AdminDashboardController::class, 'importSubmissions'])->name('admin.import');
+
+        Route::middleware('admin.permission:submissions.aid.view')->group(function () {
+            Route::get('/admin/education-aid/{id}/review', [EducationAidCaseController::class, 'review'])->name('admin.education-aid.review');
+            Route::get('/admin/education-aid/{id}/report', [EducationAidCaseController::class, 'report'])->name('admin.education-aid.report');
+        });
+
+        Route::middleware('admin.permission:submissions.aid.status')->group(function () {
+            Route::post('/admin/education-aid/{id}/start', [EducationAidCaseController::class, 'startAssessment'])->name('admin.education-aid.start');
+            Route::post('/admin/education-aid/{id}/assignment', [EducationAidCaseController::class, 'updateAssignment'])->name('admin.education-aid.assignment');
+            Route::post('/admin/education-aid/{id}/status', [EducationAidCaseController::class, 'updateStatus'])->name('admin.education-aid.status');
+            Route::post('/admin/education-aid/{id}/assessment', [EducationAidCaseController::class, 'updateAssessment'])->name('admin.education-aid.assessment');
+            Route::post('/admin/education-aid/{id}/recommendation', [EducationAidCaseController::class, 'submitRecommendation'])->name('admin.education-aid.recommendation');
+            Route::post('/admin/education-aid/{id}/committee-submit', [EducationAidCaseController::class, 'submitToCommittee'])->name('admin.education-aid.committee-submit');
+            Route::post('/admin/education-aid/{id}/committee-decision', [EducationAidCaseController::class, 'saveCommitteeDecision'])->name('admin.education-aid.committee-decision');
+            Route::post('/admin/education-aid/{id}/documents/{documentKey}', [EducationAidCaseController::class, 'updateDocumentCheck'])->name('admin.education-aid.document');
+            Route::post('/admin/education-aid/{id}/documents-bulk', [EducationAidCaseController::class, 'bulkUpdateDocumentChecks'])->name('admin.education-aid.documents-bulk');
+            Route::post('/admin/education-aid/{id}/comment', [EducationAidCaseController::class, 'addSectionComment'])->name('admin.education-aid.comment');
+            Route::post('/admin/education-aid/{id}/applicant', [EducationAidCaseController::class, 'updateApplicant'])->name('admin.education-aid.applicant');
+            Route::post('/admin/education-aid/{id}/interview', [EducationAidCaseController::class, 'scheduleInterview'])->name('admin.education-aid.interview');
+        });
         
         // Option management routes
         Route::post('/admin/options/add', [AdminDashboardController::class, 'addOption'])->name('admin.options.add');
