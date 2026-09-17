@@ -35,7 +35,7 @@ class EducationAidStatus
         self::APPROVED_PARTIAL => 'Approved – Partial',
         self::DEFERRED_FURTHER_INFO => 'Deferred – Further Information',
         self::ALTERNATIVE_ASSISTANCE => 'Alternative Assistance / Counselling',
-        self::NOT_APPROVED => 'Not Approved',
+        self::NOT_APPROVED => 'Rejected',
         self::PAYMENT_PROCESSING => 'Payment Processing',
         self::PAID => 'Paid',
         self::CASE_CLOSED => 'Case Closed',

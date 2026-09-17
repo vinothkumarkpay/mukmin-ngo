@@ -54,7 +54,15 @@
                 } else {
                     $emptySubmissionMessage = 'No submissions found.';
                 }
+                $showAidOverview = ($activeTab ?? 'panel-overview') === 'panel-aid'
+                    && in_array('panel-aid', $allowedPanelIds, true);
             @endphp
+
+            @if($canPanel('panel-aid'))
+                <div id="education-aid-overview-block" @unless($showAidOverview) style="display: none;" @endunless>
+                    @include('welfare.admin.education-aid.overview-widgets', ['aidOverview' => $aidOverview ?? []])
+                </div>
+            @endif
 
             @include('welfare.admin.partials.submissions-status-filter')
 
@@ -650,8 +658,6 @@
             <!-- 10. EDUCATION AID PANEL -->
             @if($canPanel('panel-aid'))
             <div class="dashboard-panel" id="panel-aid">
-                @include('welfare.admin.education-aid.overview-widgets', ['aidOverview' => $aidOverview ?? []])
-
                 <div class="dashboard-card">
                     <div class="card-header">
                         <h3>Education Aid & Assistance Requests</h3>
@@ -1097,10 +1103,15 @@
 
         const statusFilterCard = document.getElementById('submissions-status-filter-card');
         const statusFilterTabField = document.getElementById('status-filter-admin-tab');
+        const aidOverviewBlock = document.getElementById('education-aid-overview-block');
         const hideStatusFilterOn = ['panel-overview', 'panel-options', 'panel-mfls-documents', 'panel-payments'];
 
         if (statusFilterCard) {
             statusFilterCard.style.display = hideStatusFilterOn.includes(tabId) ? 'none' : '';
+        }
+
+        if (aidOverviewBlock) {
+            aidOverviewBlock.style.display = tabId === 'panel-aid' ? '' : 'none';
         }
 
         if (statusFilterTabField) {
