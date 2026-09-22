@@ -602,7 +602,7 @@ class FormSubmissionController extends Controller
         $eduRequired = $isEducationAid ? 'required' : 'nullable';
         $generalRequired = $needsGeneralSections ? 'required' : 'nullable';
         $emergencyRequired = $isEducationOnly ? 'nullable' : 'required';
-        $fileRule = 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:20480';
+        $fileRule = 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:2048'; // 2MB — keeps total multipart POST within server limits
         $docFileRule = 'file|mimes:pdf,jpg,jpeg,png,doc,docx|max:2048'; // 2MB for Section 4 Document Upload
         $photoFileRule = 'file|mimes:jpg,jpeg,png|max:2048';
 

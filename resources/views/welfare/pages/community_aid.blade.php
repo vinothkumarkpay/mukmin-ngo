@@ -256,6 +256,12 @@
                 <p>This form is intended for individuals, families, or communities seeking assistance and support through MUKMIN’s humanitarian, welfare, education, healthcare, and community aid initiatives.</p>
             </div>
 
+            @if(session('error'))
+                <div style="background: #fdf2f2; border: 1px solid #f5baba; border-radius: 6px; padding: 15px; margin-bottom: 25px; color: #b83210; font-size: 14px;">
+                    <strong>{{ session('error') }}</strong>
+                </div>
+            @endif
+
             @if ($errors->any())
                 <div style="background: #fdf2f2; border: 1px solid #f5baba; border-radius: 6px; padding: 15px; margin-bottom: 25px; color: #b83210; font-size: 14px;">
                     <strong>Please fix the errors below:</strong>
@@ -267,7 +273,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('welfare.community-aid.submit') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('welfare.community-aid.submit') }}" enctype="multipart/form-data" id="community-aid-form">
                 @csrf
 
                 <!-- SECTION 1: APPLICANT DETAILS -->
@@ -528,7 +534,7 @@
                         <label for="proof_of_income">Upload Proof of Income</label>
                         <small class="field-hint" style="margin-bottom: 8px;">Requirement: Please upload proof of income for both parents if both are currently working.</small>
                         <input type="file" id="proof_of_income" name="proof_of_income[]" class="form-control" multiple style="padding: 10px 16px;">
-                        <small class="field-hint">You can upload multiple files. PDF, JPG, PNG, DOC, DOCX. Max size: 20MB per file.</small>
+                        <small class="field-hint">You can upload multiple files. PDF, JPG, PNG, DOC, DOCX. Max size: 2MB per file.</small>
                     </div>
 
                     <div class="form-group">
@@ -549,7 +555,7 @@
                     <div class="form-group">
                         <label for="proof_of_government_assistance">Upload Proof of Government Assistance / Welfare</label>
                         <input type="file" id="proof_of_government_assistance" name="proof_of_government_assistance" class="form-control" style="padding: 10px 16px;">
-                        <small class="field-hint">PDF, JPG, PNG, DOC, DOCX. Max size: 20MB.</small>
+                        <small class="field-hint">PDF, JPG, PNG, DOC, DOCX. Max size: 2MB.</small>
                     </div>
 
                     <div class="form-group">
@@ -869,6 +875,55 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    const MAX_FILE_BYTES = 2 * 1024 * 1024; // 2MB per file
+    const MAX_TOTAL_BYTES = 40 * 1024 * 1024; // 40MB total upload budget
+    const form = document.getElementById('community-aid-form');
+
+    function formatMb(bytes) {
+        return (bytes / (1024 * 1024)).toFixed(1);
+    }
+
+    function validateUploadSizes() {
+        if (!form) return true;
+
+        const fileInputs = form.querySelectorAll('input[type="file"]');
+        let total = 0;
+        const oversized = [];
+
+        fileInputs.forEach(function (input) {
+            if (!input.files || !input.files.length) return;
+            Array.prototype.forEach.call(input.files, function (file) {
+                total += file.size;
+                if (file.size > MAX_FILE_BYTES) {
+                    oversized.push(file.name + ' (' + formatMb(file.size) + 'MB)');
+                }
+            });
+        });
+
+        if (oversized.length) {
+            alert('Each file must be 2MB or smaller.\n\nToo large:\n- ' + oversized.join('\n- '));
+            return false;
+        }
+
+        if (total > MAX_TOTAL_BYTES) {
+            alert(
+                'Total uploaded files are too large (' + formatMb(total) + 'MB).\n' +
+                'Please keep the combined upload under about 40MB by compressing PDFs/images or uploading fewer documents.'
+            );
+            return false;
+        }
+
+        return true;
+    }
+
+    if (form) {
+        form.addEventListener('submit', function (event) {
+            if (!validateUploadSizes()) {
+                event.preventDefault();
+            }
+        });
+    }
+
     const generalAidSections = document.getElementById('general-aid-sections');
     const educationAidSections = document.getElementById('education-aid-sections');
     const receivedAidDetailsGroup = document.getElementById('received-aid-details-group');
