@@ -191,13 +191,13 @@ class CommunityAidSubmissionTest extends TestCase
             'email' => 'janesmith@example.com'
         ]);
 
-        // 3. Check updateStatus API
+        // 3. Check updateStatus API (Education Aid uses aid-specific statuses)
         $response = $this->post(url("/admin/submissions/aid/{$submission->id}/status"), [
-            'status' => 'approved'
+            'status' => 'approved_full'
         ]);
         $response->assertStatus(200);
-        $response->assertJson(['success' => true, 'status' => 'approved']);
-        $this->assertEquals('approved', $submission->fresh()->status);
+        $response->assertJson(['success' => true, 'status' => 'approved_full']);
+        $this->assertEquals('approved_full', $submission->fresh()->status);
 
         // 4. Check CSV Export
         $response = $this->get(route('welfare.admin.export', 'aid'));
@@ -451,6 +451,100 @@ class CommunityAidSubmissionTest extends TestCase
         $this->assertNotEmpty($submission->proof_of_income);
         Storage::disk('public')->assertExists($submission->nric_front);
         Storage::disk('public')->assertExists($submission->applicant_photo);
+    }
+
+    public function test_education_aid_rejects_files_over_two_megabytes()
+    {
+        $formData = [
+            'full_name' => 'Jane Smith',
+            'nric_passport' => '950202105432',
+            'gender' => 'Female',
+            'dob' => '1995-02-02',
+            'nationality' => 'Malaysian',
+            'occupation' => 'Student',
+            'contact_number' => '+60176543210',
+            'email' => 'janesmith@example.com',
+            'full_address' => '789 Hope Avenue, Kuala Lumpur',
+            'state_residency' => 'Wilayah Persekutuan Kuala Lumpur',
+            'type_of_aid' => 'Education Aid',
+            'university_institution' => 'Universiti Malaya',
+            'programme_name' => 'Bachelor of Arts',
+            'programme_level' => 'Degree',
+            'faculty_school' => 'Faculty of Arts',
+            'current_year_semester' => 'Year 2',
+            'intake_date' => '2024-09-01',
+            'expected_graduation_date' => '2027-07-31',
+            'current_cgpa_result' => '3.20',
+            'student_id' => 'UM99999',
+            'current_student_status' => 'Full-time',
+            'education_expense_types' => ['Tuition / Programme Fees'],
+            'total_programme_tuition_fees' => '20000',
+            'total_amount_already_paid' => '5000',
+            'current_outstanding_amount' => '15000',
+            'amount_due_immediately' => '3000',
+            'amount_requested_from_mukmin' => '3000',
+            'payment_deadline' => '2026-09-30',
+            'financial_situation_explanation' => 'Family income is insufficient to cover outstanding fees.',
+            'family_education_financing_efforts' => 'Parents used savings and part-time work to pay earlier semesters.',
+            'family_financial_commitments' => 'Medical bills and younger siblings school fees.',
+            'purpose_of_request' => 'Need tuition assistance.',
+            'payment_not_made_consequence' => 'May be barred from exams.',
+            'university_payment_arrangement_discussed' => 'Requested instalment plan; pending university response.',
+            'remaining_balance_funding_plan' => 'Will cover remainder through part-time work.',
+            'household_income' => 'Below RM 2,000',
+            'father_guardian_name' => 'John Smith',
+            'father_guardian_occupation' => 'Driver',
+            'mother_guardian_name' => 'Mary Smith',
+            'mother_guardian_occupation' => 'Homemaker',
+            'proof_of_income' => [UploadedFile::fake()->create('income.pdf', 3000)], // > 2MB
+            'government_assistance_status' => 'Sumbangan Tunai Rahmah (STR)',
+            'proof_of_government_assistance' => UploadedFile::fake()->create('gov.pdf', 100),
+            'number_of_dependents' => '2',
+            'other_scholarship_details' => 'None',
+            'nric_front' => UploadedFile::fake()->create('nric_front.jpg', 100),
+            'nric_back' => UploadedFile::fake()->create('nric_back.jpg', 100),
+            'academic_result' => UploadedFile::fake()->create('spm.pdf', 100),
+            'latest_academic_transcript' => UploadedFile::fake()->create('transcript.pdf', 100),
+            'university_offer_letter' => UploadedFile::fake()->create('offer.pdf', 100),
+            'student_id_confirmation' => UploadedFile::fake()->create('student_id.pdf', 100),
+            'applicant_photo' => UploadedFile::fake()->image('applicant_photo.jpg', 400, 500)->size(100),
+            'university_fee_statement' => UploadedFile::fake()->create('fees.pdf', 100),
+            'official_invoice' => UploadedFile::fake()->create('invoice.pdf', 100),
+            'outstanding_balance_statement' => UploadedFile::fake()->create('balance.pdf', 100),
+            'declaration_confirmed' => '1',
+        ];
+
+        $response = $this->from(route('welfare.community-aid'))
+            ->post(route('welfare.community-aid.submit'), $formData);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors('proof_of_income.0');
+        $this->assertStringContainsString(
+            '2MB',
+            (string) session('errors')->first('proof_of_income.0')
+        );
+        $this->assertDatabaseCount('community_aid_submissions', 0);
+    }
+
+    public function test_post_too_large_shows_friendly_error_message()
+    {
+        $response = $this->from(route('welfare.community-aid'))
+            ->call(
+                'POST',
+                route('welfare.community-aid.submit'),
+                [],
+                [],
+                [],
+                ['CONTENT_LENGTH' => (string) (70 * 1024 * 1024)]
+            );
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('welfare.community-aid'));
+        $response->assertSessionHas('error');
+        $this->assertStringContainsString(
+            'too large',
+            strtolower((string) session('error'))
+        );
     }
 
     private function actingAsAdmin()

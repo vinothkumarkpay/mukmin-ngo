@@ -811,7 +811,25 @@ class FormSubmissionController extends Controller
             );
         }
 
-        $validated = $request->validate($rules);
+        $validated = $request->validate($rules, [
+            'proof_of_income.*.max' => 'Each proof of income file must not exceed 2MB.',
+            'proof_of_income.*.mimes' => 'Proof of income must be a PDF, JPG, PNG, DOC, or DOCX file.',
+            'proof_of_government_assistance.max' => 'Proof of government assistance must not exceed 2MB.',
+            'proof_of_government_assistance.mimes' => 'Proof of government assistance must be a PDF, JPG, PNG, DOC, or DOCX file.',
+            'nric_front.max' => 'NRIC front must not exceed 2MB.',
+            'nric_back.max' => 'NRIC back must not exceed 2MB.',
+            'academic_result.max' => 'Academic result file must not exceed 2MB.',
+            'latest_academic_transcript.max' => 'Latest academic transcript must not exceed 2MB.',
+            'university_offer_letter.max' => 'University offer letter must not exceed 2MB.',
+            'student_id_confirmation.max' => 'Student ID confirmation must not exceed 2MB.',
+            'applicant_photo.max' => 'Applicant photo must not exceed 2MB.',
+            'applicant_photo.mimes' => 'Applicant photo must be a JPG or PNG image.',
+            'university_fee_statement.max' => 'University fee statement must not exceed 2MB.',
+            'official_invoice.max' => 'Official invoice must not exceed 2MB.',
+            'outstanding_balance_statement.max' => 'Outstanding balance statement must not exceed 2MB.',
+            'payment_deadline_notice.max' => 'Payment deadline notice must not exceed 2MB.',
+            'additional_supporting_documents.*.max' => 'Each additional supporting document must not exceed 2MB.',
+        ]);
         $validated['type_of_aid'] = [$validated['type_of_aid']];
 
         if ($isEducationAid) {
