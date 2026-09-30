@@ -122,6 +122,8 @@ Route::name('welfare.')->group(function () {
         Route::middleware('admin.permission:submissions.aid.view')->group(function () {
             Route::get('/admin/education-aid/{id}/review', [EducationAidCaseController::class, 'review'])->name('admin.education-aid.review');
             Route::get('/admin/education-aid/{id}/report', [EducationAidCaseController::class, 'report'])->name('admin.education-aid.report');
+            Route::get('/admin/education-aid/{id}/files/{fileId}', [EducationAidCaseController::class, 'showDocumentFile'])->name('admin.education-aid.files.show');
+            Route::get('/admin/education-aid/{id}/receipts/{receiptId}', [EducationAidCaseController::class, 'showPaymentReceipt'])->name('admin.education-aid.receipts.show');
         });
 
         Route::middleware('admin.permission:submissions.aid.status')->group(function () {
@@ -134,6 +136,9 @@ Route::name('welfare.')->group(function () {
             Route::post('/admin/education-aid/{id}/committee-decision', [EducationAidCaseController::class, 'saveCommitteeDecision'])->name('admin.education-aid.committee-decision');
             Route::post('/admin/education-aid/{id}/documents/{documentKey}', [EducationAidCaseController::class, 'updateDocumentCheck'])->name('admin.education-aid.document');
             Route::post('/admin/education-aid/{id}/documents-bulk', [EducationAidCaseController::class, 'bulkUpdateDocumentChecks'])->name('admin.education-aid.documents-bulk');
+            Route::post('/admin/education-aid/{id}/documents/{documentKey}/files', [EducationAidCaseController::class, 'uploadDocumentFiles'])->name('admin.education-aid.files.upload');
+            Route::post('/admin/education-aid/{id}/files/{fileId}/rename', [EducationAidCaseController::class, 'renameDocumentFile'])->name('admin.education-aid.files.rename');
+            Route::delete('/admin/education-aid/{id}/files/{fileId}', [EducationAidCaseController::class, 'deleteDocumentFile'])->name('admin.education-aid.files.delete');
             Route::post('/admin/education-aid/{id}/comment', [EducationAidCaseController::class, 'addSectionComment'])->name('admin.education-aid.comment');
             Route::post('/admin/education-aid/{id}/applicant', [EducationAidCaseController::class, 'updateApplicant'])->name('admin.education-aid.applicant');
             Route::post('/admin/education-aid/{id}/interview', [EducationAidCaseController::class, 'scheduleInterview'])->name('admin.education-aid.interview');

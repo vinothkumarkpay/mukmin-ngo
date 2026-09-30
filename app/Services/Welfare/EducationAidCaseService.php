@@ -5,6 +5,7 @@ namespace App\Services\Welfare;
 use App\Models\CommunityAidSubmission;
 use App\Models\EducationAidAssessment;
 use App\Models\EducationAidCaseEvent;
+use App\Models\EducationAidCaseFile;
 use App\Models\EducationAidDocumentCheck;
 use App\Models\User;
 use App\Support\EducationAidStatus;
@@ -40,6 +41,7 @@ class EducationAidCaseService
         }
 
         $this->ensureDocumentChecks($submission);
+        $this->syncApplicationFiles($submission);
         $this->ensureSubmittedEvent($submission);
 
         return $assessment->fresh(['assignee', 'recommendationSubmitter', 'committeeSubmitter']);
@@ -175,14 +177,59 @@ class EducationAidCaseService
             ->get();
     }
 
-    public function fileSubmitted(CommunityAidSubmission $submission, string $key): bool
+    /**
+     * Mirror applicant-uploaded files into case files so they can be renamed alongside admin uploads.
+     */
+    public function syncApplicationFiles(CommunityAidSubmission $submission): void
+    {
+        $existingPaths = EducationAidCaseFile::query()
+            ->where('community_aid_submission_id', $submission->id)
+            ->where('source', EducationAidCaseFile::SOURCE_APPLICATION)
+            ->get()
+            ->map(fn (EducationAidCaseFile $file) => $file->document_key . '|' . $file->path)
+            ->flip();
+
+        foreach (array_keys(EducationAidDocumentCheck::documentCatalog()) as $key) {
+            foreach ($this->applicationPaths($submission, $key) as $path) {
+                if ($existingPaths->has($key . '|' . $path)) {
+                    continue;
+                }
+
+                EducationAidCaseFile::create([
+                    'community_aid_submission_id' => $submission->id,
+                    'document_key' => $key,
+                    'path' => $path,
+                    'display_name' => basename($path),
+                    'original_name' => basename($path),
+                    'source' => EducationAidCaseFile::SOURCE_APPLICATION,
+                ]);
+            }
+        }
+    }
+
+    /** @return list<string> */
+    public function applicationPaths(CommunityAidSubmission $submission, string $key): array
     {
         $value = $submission->getAttribute($key);
-        if (is_array($value)) {
-            return count(array_filter($value)) > 0;
+        $paths = is_array($value) ? $value : [$value];
+
+        return collect($paths)
+            ->filter(fn ($path) => is_string($path) && $path !== '')
+            ->map(fn ($path) => ltrim($path, '/'))
+            ->values()
+            ->all();
+    }
+
+    public function fileSubmitted(CommunityAidSubmission $submission, string $key): bool
+    {
+        if (count($this->applicationPaths($submission, $key)) > 0) {
+            return true;
         }
 
-        return filled($value);
+        return EducationAidCaseFile::query()
+            ->where('community_aid_submission_id', $submission->id)
+            ->where('document_key', $key)
+            ->exists();
     }
 
     public function fileUrl(CommunityAidSubmission $submission, string $key): ?string

@@ -401,6 +401,18 @@
             <span class="label">Committee Remarks</span>
             <span class="value">{{ $assessment->committee_remarks ?: '—' }}</span>
         </div>
+        <div class="ea-report-item full">
+            <span class="label">Payments</span>
+            <span class="value">
+                @forelse($submission->payments as $payment)
+                    {{ $loop->iteration }}. {{ $fmtDate($payment->payment_date) }}
+                    @if($payment->amount !== null) — {{ $fmtMoney($payment->amount) }} @endif
+                    ({{ $payment->receipts->count() }} receipt{{ $payment->receipts->count() === 1 ? '' : 's' }})<br>
+                @empty
+                    —
+                @endforelse
+            </span>
+        </div>
     </div>
 </section>
 

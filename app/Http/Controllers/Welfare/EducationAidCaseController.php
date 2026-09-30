@@ -7,8 +7,11 @@ use App\Http\Controllers\Welfare\Concerns\ChecksAdminAccess;
 use App\Mail\EducationAidInterviewProposalMail;
 use App\Models\CommunityAidSubmission;
 use App\Models\EducationAidAssessment;
+use App\Models\EducationAidCaseFile;
 use App\Models\EducationAidDocumentCheck;
 use App\Models\EducationAidInterviewProposal;
+use App\Models\EducationAidPayment;
+use App\Models\EducationAidPaymentReceipt;
 use App\Models\EducationAidSectionComment;
 use App\Models\User;
 use App\Services\Welfare\EducationAidCaseService;
@@ -18,6 +21,7 @@ use App\Support\EducationAidUrgency;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class EducationAidCaseController extends Controller
@@ -42,6 +46,7 @@ class EducationAidCaseController extends Controller
             'sectionComments.user',
             'caseEvents.user',
             'interviewProposals.creator',
+            'payments.receipts',
         ])->findOrFail($id);
 
         $assessment = $this->cases->ensureCaseInitialized($submission);
@@ -53,14 +58,17 @@ class EducationAidCaseController extends Controller
         $assignees = $this->cases->assignableUsers();
         $canManage = $this->adminUser()->hasPermission('submissions.aid.status');
 
+        $submission->load('caseFiles');
         $documentRows = collect(EducationAidDocumentCheck::documentCatalog())->map(function ($label, $key) use ($submission) {
             $check = $submission->documentChecks->firstWhere('document_key', $key);
+            $files = $submission->caseFiles->where('document_key', $key)->values();
 
             return [
                 'key' => $key,
                 'label' => $label,
-                'submitted' => $this->cases->fileSubmitted($submission, $key),
-                'url' => $this->cases->fileUrl($submission, $key),
+                'submitted' => $files->isNotEmpty(),
+                'files' => $files->map(fn (EducationAidCaseFile $file) => $this->caseFilePayload($submission, $file))->all(),
+                'upload_url' => route('welfare.admin.education-aid.files.upload', ['id' => $submission->id, 'documentKey' => $key]),
                 'check' => $check,
             ];
         })->values();
@@ -295,6 +303,24 @@ class EducationAidCaseController extends Controller
             'committee_remarks' => ['nullable', 'string'],
             'committee_decision_date' => ['required', 'date'],
             'committee_approved_by' => ['required', 'string', 'max:255'],
+            'payments' => ['nullable', 'array', 'max:20'],
+            'payments.*.id' => ['nullable', 'integer'],
+            'payments.*.payment_date' => ['required', 'date'],
+            'payments.*.amount' => ['nullable', 'numeric', 'min:0'],
+            'payments.*.receipts' => ['nullable', 'array', 'max:10'],
+            'payments.*.receipts.*' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
+            'remove_receipts' => ['nullable', 'array'],
+            'remove_receipts.*' => ['integer'],
+        ], [
+            'payments.max' => 'You can record up to 20 payments.',
+            'payments.*.payment_date.required' => 'Please enter a date for every payment, or remove the empty payment row.',
+            'payments.*.payment_date.date' => 'Payment date must be a valid date.',
+            'payments.*.amount.numeric' => 'Payment amount must be a number.',
+            'payments.*.amount.min' => 'Payment amount cannot be negative.',
+            'payments.*.receipts.max' => 'You can upload up to 10 receipts per payment at a time.',
+            'payments.*.receipts.*.mimes' => 'Receipts must be PDF, JPG or PNG files.',
+            'payments.*.receipts.*.max' => 'Each receipt must not exceed 10MB.',
+            'payments.*.receipts.*.uploaded' => 'A receipt failed to upload. It may be larger than the server allows.',
         ]);
 
         if (in_array($validated['committee_decision'], ['approve_full', 'approve_partial'], true)
@@ -302,7 +328,26 @@ class EducationAidCaseController extends Controller
             return back()->with('error', 'Approved amount is required for approval decisions.')->withInput();
         }
 
+        $paymentsInput = $validated['payments'] ?? [];
+        $totalPaid = collect($paymentsInput)->sum(fn ($p) => (float) ($p['amount'] ?? 0));
+        if (($validated['approved_amount'] ?? null) !== null && $validated['approved_amount'] !== ''
+            && $totalPaid > (float) $validated['approved_amount'] + 0.001) {
+            return back()->with('error', sprintf(
+                'Total payments (RM%s) cannot exceed the approved amount (RM%s).',
+                number_format($totalPaid, 2),
+                number_format((float) $validated['approved_amount'], 2)
+            ))->withInput();
+        }
+
+        unset($validated['payments'], $validated['remove_receipts']);
         $assessment->fill($validated)->save();
+
+        $paymentSummary = $this->syncPayments(
+            $submission,
+            $paymentsInput,
+            $request,
+            array_map('intval', $request->input('remove_receipts', []))
+        );
 
         $statusMap = [
             'approve_full' => EducationAidStatus::APPROVED_FULL,
@@ -320,7 +365,117 @@ class EducationAidCaseController extends Controller
             $validated
         );
 
+        if ($paymentSummary !== null) {
+            $this->cases->recordEvent($submission, 'payments_updated', $paymentSummary['description'], $paymentSummary['meta']);
+        }
+
         return back()->with('success', 'Committee decision recorded.');
+    }
+
+    /**
+     * Create/update/delete payout rows to match the submitted form and store any new receipts.
+     *
+     * @param  array<int|string, array<string, mixed>>  $paymentsInput  keyed by form row index
+     * @param  list<int>  $removeReceiptIds
+     * @return array{description: string, meta: array<string, mixed>}|null
+     */
+    private function syncPayments(CommunityAidSubmission $submission, array $paymentsInput, Request $request, array $removeReceiptIds): ?array
+    {
+        $existing = EducationAidPayment::with('receipts')
+            ->where('community_aid_submission_id', $submission->id)
+            ->get()
+            ->keyBy('id');
+
+        $keptIds = [];
+        $added = 0;
+        $updated = 0;
+        $receiptsAdded = 0;
+        $receiptsRemoved = 0;
+
+        foreach ($paymentsInput as $rowKey => $row) {
+            $id = isset($row['id']) ? (int) $row['id'] : null;
+            $attributes = [
+                'payment_date' => $row['payment_date'],
+                'amount' => ($row['amount'] ?? '') === '' ? null : $row['amount'],
+            ];
+
+            if ($id && $existing->has($id)) {
+                $payment = $existing->get($id);
+                $payment->fill($attributes);
+                if ($payment->isDirty()) {
+                    $payment->save();
+                    $updated++;
+                }
+            } else {
+                $payment = EducationAidPayment::create($attributes + [
+                    'community_aid_submission_id' => $submission->id,
+                    'created_by' => $this->adminUser()->id,
+                ]);
+                $added++;
+            }
+            $keptIds[] = $payment->id;
+
+            foreach (array_filter((array) $request->file("payments.{$rowKey}.receipts", [])) as $upload) {
+                EducationAidPaymentReceipt::create([
+                    'education_aid_payment_id' => $payment->id,
+                    'path' => $upload->store('documents/payment-receipts', 'public'),
+                    'display_name' => $this->sanitizeFileName($upload->getClientOriginalName())
+                        ?: ('receipt.' . $upload->extension()),
+                    'uploaded_by' => $this->adminUser()->id,
+                ]);
+                $receiptsAdded++;
+            }
+        }
+
+        foreach ($existing as $payment) {
+            $removePayment = ! in_array($payment->id, $keptIds, true);
+
+            foreach ($payment->receipts as $receipt) {
+                if ($removePayment || in_array($receipt->id, $removeReceiptIds, true)) {
+                    Storage::disk('public')->delete($receipt->path);
+                    $receipt->delete();
+                    $receiptsRemoved++;
+                }
+            }
+
+            if ($removePayment) {
+                $payment->delete();
+            }
+        }
+
+        $removed = $existing->keys()->diff($keptIds)->count();
+        if (! $added && ! $updated && ! $removed && ! $receiptsAdded && ! $receiptsRemoved) {
+            return null;
+        }
+
+        $parts = array_filter([
+            $added ? $added . ' payment(s) added' : null,
+            $updated ? $updated . ' payment(s) updated' : null,
+            $removed ? $removed . ' payment(s) removed' : null,
+            $receiptsAdded ? $receiptsAdded . ' receipt(s) uploaded' : null,
+            $receiptsRemoved ? $receiptsRemoved . ' receipt(s) removed' : null,
+        ]);
+
+        return [
+            'description' => 'Payments updated: ' . implode(', ', $parts) . '.',
+            'meta' => compact('added', 'updated', 'removed', 'receiptsAdded', 'receiptsRemoved'),
+        ];
+    }
+
+    public function showPaymentReceipt($id, $receiptId)
+    {
+        $this->authorizePermission('submissions.aid.view');
+        $submission = CommunityAidSubmission::findOrFail($id);
+
+        $receipt = EducationAidPaymentReceipt::query()
+            ->whereHas('payment', fn ($q) => $q->where('community_aid_submission_id', $submission->id))
+            ->findOrFail($receiptId);
+
+        if (! Storage::disk('public')->exists($receipt->path)) {
+            abort(404, 'Receipt not found.');
+        }
+
+        return Storage::disk('public')->response($receipt->path, $receipt->display_name);
     }
 
     public function updateDocumentCheck(Request $request, $id, $documentKey)
@@ -430,6 +585,201 @@ class EducationAidCaseController extends Controller
             'documents' => $updated,
             'completeness' => $this->completenessPayload($submission),
         ]);
+    }
+
+    public function uploadDocumentFiles(Request $request, $id, $documentKey)
+    {
+        $this->authorizePermission('submissions.aid.status');
+        $submission = CommunityAidSubmission::findOrFail($id);
+        $this->cases->ensureCaseInitialized($submission);
+
+        $catalog = EducationAidDocumentCheck::documentCatalog();
+        if (! array_key_exists($documentKey, $catalog)) {
+            abort(404);
+        }
+
+        $request->validate([
+            'files' => ['required', 'array', 'min:1', 'max:10'],
+            'files.*' => ['file', 'mimes:pdf,jpg,jpeg,png,doc,docx', 'max:10240'],
+        ], [
+            'files.required' => 'Please choose at least one file to upload.',
+            'files.max' => 'You can upload up to 10 files at a time.',
+            'files.*.mimes' => 'Files must be PDF, JPG, PNG, DOC or DOCX.',
+            'files.*.max' => 'Each file must not exceed 10MB.',
+            'files.*.uploaded' => 'A file failed to upload. It may be larger than the server allows.',
+        ]);
+
+        $names = [];
+        foreach ($request->file('files') as $upload) {
+            $displayName = $this->sanitizeFileName($upload->getClientOriginalName())
+                ?: ('document.' . $upload->extension());
+
+            EducationAidCaseFile::create([
+                'community_aid_submission_id' => $submission->id,
+                'document_key' => $documentKey,
+                'path' => $upload->store('documents/case-files', 'public'),
+                'display_name' => $displayName,
+                'original_name' => $upload->getClientOriginalName(),
+                'source' => EducationAidCaseFile::SOURCE_ADMIN,
+                'uploaded_by' => $this->adminUser()->id,
+            ]);
+            $names[] = $displayName;
+        }
+
+        $label = $catalog[$documentKey];
+        $this->cases->recordEvent(
+            $submission,
+            'document_file_uploaded',
+            count($names) . ' file(s) uploaded to ' . $label . ': ' . implode(', ', $names) . '.',
+            ['document_key' => $documentKey, 'files' => $names]
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => count($names) . ' file(s) uploaded to ' . $label . '.',
+            'document' => $this->documentFilesPayload($submission, $documentKey),
+        ]);
+    }
+
+    public function renameDocumentFile(Request $request, $id, $fileId)
+    {
+        $this->authorizePermission('submissions.aid.status');
+        $submission = CommunityAidSubmission::findOrFail($id);
+        $file = $this->findCaseFile($submission, $fileId);
+
+        $validated = $request->validate([
+            'display_name' => ['required', 'string', 'max:200'],
+        ], [
+            'display_name.required' => 'Please enter a file name.',
+            'display_name.max' => 'File name must not exceed 200 characters.',
+        ]);
+
+        $newName = $this->sanitizeFileName($validated['display_name']);
+        if ($newName === '') {
+            return response()->json(['success' => false, 'message' => 'Please enter a valid file name.'], 422);
+        }
+
+        $extension = pathinfo($file->display_name, PATHINFO_EXTENSION)
+            ?: pathinfo($file->path, PATHINFO_EXTENSION);
+        if ($extension !== '' && strcasecmp(pathinfo($newName, PATHINFO_EXTENSION), $extension) !== 0) {
+            $newName .= '.' . $extension;
+        }
+
+        $oldName = $file->display_name;
+        $file->update(['display_name' => $newName]);
+
+        if ($oldName !== $newName) {
+            $label = EducationAidDocumentCheck::documentCatalog()[$file->document_key] ?? $file->document_key;
+            $this->cases->recordEvent(
+                $submission,
+                'document_file_renamed',
+                $label . ': file renamed from "' . $oldName . '" to "' . $newName . '".',
+                ['document_key' => $file->document_key, 'file_id' => $file->id, 'from' => $oldName, 'to' => $newName]
+            );
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'File renamed to ' . $newName . '.',
+            'document' => $this->documentFilesPayload($submission, $file->document_key),
+        ]);
+    }
+
+    public function deleteDocumentFile($id, $fileId)
+    {
+        $this->authorizePermission('submissions.aid.status');
+        $submission = CommunityAidSubmission::findOrFail($id);
+        $file = $this->findCaseFile($submission, $fileId);
+
+        if (! $file->isAdminUpload()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Files submitted with the application cannot be deleted.',
+            ], 422);
+        }
+
+        Storage::disk('public')->delete($file->path);
+        $file->delete();
+
+        $label = EducationAidDocumentCheck::documentCatalog()[$file->document_key] ?? $file->document_key;
+        $this->cases->recordEvent(
+            $submission,
+            'document_file_deleted',
+            $label . ': admin-uploaded file "' . $file->display_name . '" removed.',
+            ['document_key' => $file->document_key, 'file' => $file->display_name]
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => '"' . $file->display_name . '" removed.',
+            'document' => $this->documentFilesPayload($submission, $file->document_key),
+        ]);
+    }
+
+    public function showDocumentFile($id, $fileId)
+    {
+        $this->authorizePermission('submissions.aid.view');
+        $submission = CommunityAidSubmission::findOrFail($id);
+        $file = $this->findCaseFile($submission, $fileId);
+
+        if (! Storage::disk('public')->exists($file->path)) {
+            abort(404, 'File not found.');
+        }
+
+        return Storage::disk('public')->response($file->path, $file->display_name);
+    }
+
+    private function findCaseFile(CommunityAidSubmission $submission, $fileId): EducationAidCaseFile
+    {
+        return EducationAidCaseFile::query()
+            ->where('community_aid_submission_id', $submission->id)
+            ->findOrFail($fileId);
+    }
+
+    private function sanitizeFileName(string $name): string
+    {
+        $name = preg_replace('/[\x00-\x1F\x7F\/\\\\:*?"<>|]+/u', ' ', $name);
+        $name = preg_replace('/\s+/u', ' ', (string) $name);
+
+        return trim((string) $name, " .");
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function documentFilesPayload(CommunityAidSubmission $submission, string $documentKey): array
+    {
+        $files = EducationAidCaseFile::query()
+            ->where('community_aid_submission_id', $submission->id)
+            ->where('document_key', $documentKey)
+            ->orderBy('id')
+            ->get();
+
+        return [
+            'key' => $documentKey,
+            'submitted' => $files->isNotEmpty(),
+            'files' => $files->map(fn (EducationAidCaseFile $file) => $this->caseFilePayload($submission, $file))->all(),
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function caseFilePayload(CommunityAidSubmission $submission, EducationAidCaseFile $file): array
+    {
+        $params = ['id' => $submission->id, 'fileId' => $file->id];
+
+        return [
+            'id' => $file->id,
+            'name' => $file->display_name,
+            'source' => $file->source,
+            'source_label' => $file->sourceLabel(),
+            'url' => route('welfare.admin.education-aid.files.show', $params),
+            'rename_url' => route('welfare.admin.education-aid.files.rename', $params),
+            'delete_url' => $file->isAdminUpload()
+                ? route('welfare.admin.education-aid.files.delete', $params)
+                : null,
+        ];
     }
 
     /**
@@ -606,6 +956,7 @@ class EducationAidCaseController extends Controller
             'documentChecks.verifier',
             'sectionComments.user',
             'caseEvents.user',
+            'payments.receipts',
         ])->findOrFail($id);
 
         $assessment = $this->cases->ensureCaseInitialized($submission);

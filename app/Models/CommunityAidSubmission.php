@@ -117,6 +117,18 @@ class CommunityAidSubmission extends Model
         return $this->hasMany(EducationAidDocumentCheck::class, 'community_aid_submission_id');
     }
 
+    public function caseFiles()
+    {
+        return $this->hasMany(EducationAidCaseFile::class, 'community_aid_submission_id')->orderBy('id');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(EducationAidPayment::class, 'community_aid_submission_id')
+            ->orderBy('payment_date')
+            ->orderBy('id');
+    }
+
     public function sectionComments()
     {
         return $this->hasMany(EducationAidSectionComment::class, 'community_aid_submission_id')->latest();

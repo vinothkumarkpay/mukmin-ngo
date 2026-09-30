@@ -562,6 +562,10 @@
                             </div>
                             <span class="ea-doc-selected-count" id="ea-doc-selected-count">0 selected</span>
                         </div>
+                        <p class="ea-doc-upload-hint">
+                            Use <strong>Upload</strong> on any document to add files (PDF, JPG, PNG, DOC, DOCX, max 10MB each).
+                            Click <i class="fas fa-pen"></i> to rename a file.
+                        </p>
                     @endif
 
                     <div class="table-responsive">
@@ -589,8 +593,29 @@
                                                 <input type="checkbox" class="ea-doc-row-check" aria-label="Select {{ $row['label'] }}">
                                             </td>
                                         @endif
-                                        <td><strong>{{ $row['label'] }}</strong></td>
-                                        <td>
+                                        <td class="ea-doc-name-cell">
+                                            <strong>{{ $row['label'] }}</strong>
+                                            <ul class="ea-doc-file-list">
+                                                @foreach($row['files'] as $file)
+                                                    <li class="ea-doc-file" data-file-id="{{ $file['id'] }}"
+                                                        data-rename-url="{{ $file['rename_url'] }}"
+                                                        data-delete-url="{{ $file['delete_url'] }}">
+                                                        <i class="fas fa-paperclip" aria-hidden="true"></i>
+                                                        <a href="{{ $file['url'] }}" class="ea-doc-file-name" target="_blank" rel="noopener" title="{{ $file['source_label'] }}">{{ $file['name'] }}</a>
+                                                        @if($file['source'] === 'admin')
+                                                            <span class="ea-doc-file-tag">Admin</span>
+                                                        @endif
+                                                        @if($canManage)
+                                                            <button type="button" class="ea-doc-file-btn ea-doc-file-rename" title="Rename file" aria-label="Rename {{ $file['name'] }}"><i class="fas fa-pen"></i></button>
+                                                            @if($file['delete_url'])
+                                                                <button type="button" class="ea-doc-file-btn ea-doc-file-delete" title="Remove file" aria-label="Remove {{ $file['name'] }}"><i class="fas fa-trash-alt"></i></button>
+                                                            @endif
+                                                        @endif
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td class="ea-doc-submitted-cell">
                                             @if(! empty($row['submitted']))
                                                 <span class="badge-admin badge-admin-success">Yes</span>
                                             @else
@@ -612,10 +637,12 @@
                                         </td>
                                         <td>
                                             <div class="ea-doc-actions">
-                                                @if(! empty($row['url']))
-                                                    <a href="{{ $row['url'] }}" class="btn-admin btn-admin-secondary" target="_blank" rel="noopener">View</a>
-                                                @endif
                                                 @if($canManage)
+                                                    <label class="btn-admin btn-admin-secondary ea-doc-upload-btn" title="Upload file(s) for {{ $row['label'] }}">
+                                                        <i class="fas fa-upload"></i> Upload
+                                                        <input type="file" class="ea-doc-upload-input" data-upload-url="{{ $row['upload_url'] }}"
+                                                               accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" multiple hidden>
+                                                    </label>
                                                     <button type="button" class="btn-admin btn-admin-primary ea-doc-save-btn">Save</button>
                                                     <span class="ea-doc-row-status" hidden></span>
                                                 @endif
@@ -722,7 +749,8 @@
                     <h3>Committee Decision</h3>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('welfare.admin.education-aid.committee-decision', $submission->id) }}">
+                    <form method="POST" action="{{ route('welfare.admin.education-aid.committee-decision', $submission->id) }}"
+                          enctype="multipart/form-data" id="ea-committee-decision-form">
                         @csrf
                         <div class="ea-form-grid">
                             <div class="admin-input-group ea-form-full">
@@ -760,6 +788,56 @@
                                 <label for="committee_remarks">Remarks</label>
                                 <textarea name="committee_remarks" id="committee_remarks" rows="3" class="admin-input"
                                           {{ (! $canManage) ? 'disabled' : '' }}>{{ old('committee_remarks', $assessment->committee_remarks) }}</textarea>
+                            </div>
+
+                            @php
+                                $receiptsByPayment = $submission->payments->mapWithKeys(fn ($p) => [$p->id => $p->receipts]);
+                                $removedReceipts = array_map('intval', (array) old('remove_receipts', []));
+                                $paymentRows = is_array(old('payments'))
+                                    ? collect(old('payments'))->values()->map(fn ($r) => [
+                                        'id' => $r['id'] ?? null,
+                                        'payment_date' => $r['payment_date'] ?? '',
+                                        'amount' => $r['amount'] ?? '',
+                                    ])
+                                    : $submission->payments->map(fn ($p) => [
+                                        'id' => $p->id,
+                                        'payment_date' => optional($p->payment_date)->format('Y-m-d'),
+                                        'amount' => $p->amount,
+                                    ])->values();
+                                $totalPaid = $submission->payments->sum(fn ($p) => (float) $p->amount);
+                            @endphp
+                            <div class="admin-input-group ea-form-full ea-payments-group">
+                                <label>Payment Date(s)</label>
+                                <p class="ea-payments-hint">
+                                    Add one row per payout. Receipts: PDF, JPG or PNG, max 10MB each.
+                                    @if($totalPaid > 0)
+                                        <span class="ea-payments-total">Total paid: RM{{ number_format($totalPaid, 2) }}</span>
+                                    @endif
+                                </p>
+                                <div class="ea-payment-list" id="ea-payment-list" data-next-index="{{ $paymentRows->count() }}">
+                                    @foreach($paymentRows as $i => $row)
+                                        @include('welfare.admin.education-aid.partials.payment-row', [
+                                            'index' => $i,
+                                            'row' => $row,
+                                            'receipts' => ! empty($row['id']) ? ($receiptsByPayment[$row['id']] ?? collect()) : collect(),
+                                        ])
+                                    @endforeach
+                                </div>
+                                @if($paymentRows->isEmpty() && ! $canManage)
+                                    <p class="ea-receipt-empty">No payments recorded.</p>
+                                @endif
+                                @if($canManage)
+                                    <button type="button" class="btn-admin btn-admin-secondary ea-add-payment" id="ea-add-payment">
+                                        <i class="fas fa-plus"></i> Add payment date
+                                    </button>
+                                    <template id="ea-payment-template">
+                                        @include('welfare.admin.education-aid.partials.payment-row', [
+                                            'index' => '__INDEX__',
+                                            'row' => [],
+                                            'receipts' => collect(),
+                                        ])
+                                    </template>
+                                @endif
                             </div>
                         </div>
                         @if($canManage)
@@ -1029,6 +1107,107 @@
         showApplicantPanel();
     @endif
 
+    // ---- Committee decision: payouts + receipts ----
+    @if($canManage)
+    (function initPayments() {
+        var form = document.getElementById('ea-committee-decision-form');
+        var list = document.getElementById('ea-payment-list');
+        var addBtn = document.getElementById('ea-add-payment');
+        var template = document.getElementById('ea-payment-template');
+        if (!form || !list || !addBtn || !template) return;
+
+        var MAX_RECEIPT_BYTES = 10 * 1024 * 1024;
+        var nextIndex = parseInt(list.getAttribute('data-next-index') || '0', 10);
+
+        function renumber() {
+            list.querySelectorAll('.ea-payment-row').forEach(function (row, i) {
+                var label = row.querySelector('.ea-payment-no-value');
+                if (label) label.textContent = i + 1;
+            });
+        }
+
+        function addReceiptInput(row) {
+            var index = row.getAttribute('data-index');
+            var wrap = document.createElement('div');
+            wrap.className = 'ea-receipt-new';
+            wrap.innerHTML = '<input type="file" name="payments[' + index + '][receipts][]" accept=".pdf,.jpg,.jpeg,.png" class="admin-input" required>'
+                + '<button type="button" class="ea-receipt-new-remove" title="Cancel this receipt" aria-label="Cancel this receipt"><i class="fas fa-times"></i></button>';
+            row.querySelector('.ea-receipt-new-list').appendChild(wrap);
+            wrap.querySelector('input').click();
+        }
+
+        addBtn.addEventListener('click', function () {
+            var html = template.innerHTML.replace(/__INDEX__/g, String(nextIndex));
+            nextIndex++;
+            var holder = document.createElement('div');
+            holder.innerHTML = html.trim();
+            var row = holder.firstElementChild;
+            list.appendChild(row);
+            renumber();
+            var dateInput = row.querySelector('input[type="date"]');
+            if (dateInput) dateInput.focus();
+        });
+
+        list.addEventListener('click', function (e) {
+            var row = e.target.closest('.ea-payment-row');
+            if (!row) return;
+
+            if (e.target.closest('.ea-add-receipt')) {
+                addReceiptInput(row);
+                return;
+            }
+
+            if (e.target.closest('.ea-receipt-new-remove')) {
+                e.target.closest('.ea-receipt-new').remove();
+                return;
+            }
+
+            var toggle = e.target.closest('.ea-receipt-toggle');
+            if (toggle) {
+                var item = toggle.closest('.ea-receipt');
+                var removed = item.classList.toggle('is-removed');
+                var hidden = item.querySelector('input[name="remove_receipts[]"]');
+                if (removed && !hidden) {
+                    hidden = document.createElement('input');
+                    hidden.type = 'hidden';
+                    hidden.name = 'remove_receipts[]';
+                    hidden.value = item.getAttribute('data-receipt-id');
+                    item.appendChild(hidden);
+                } else if (!removed && hidden) {
+                    hidden.remove();
+                }
+                toggle.title = removed ? 'Undo remove' : 'Remove receipt';
+                toggle.querySelector('i').className = 'fas ' + (removed ? 'fa-undo' : 'fa-times');
+                return;
+            }
+
+            if (e.target.closest('.ea-payment-remove')) {
+                var hasReceipts = row.querySelectorAll('.ea-receipt').length > 0;
+                var message = hasReceipts
+                    ? 'Remove this payment and its receipts? This takes effect when you save the committee decision.'
+                    : 'Remove this payment?';
+                if (confirm(message)) {
+                    row.remove();
+                    renumber();
+                }
+            }
+        });
+
+        form.addEventListener('submit', function (e) {
+            var tooLarge = [];
+            form.querySelectorAll('.ea-receipt-new input[type="file"]').forEach(function (input) {
+                Array.prototype.forEach.call(input.files || [], function (file) {
+                    if (file.size > MAX_RECEIPT_BYTES) tooLarge.push(file.name);
+                });
+            });
+            if (tooLarge.length) {
+                e.preventDefault();
+                alert('Each receipt must not exceed 10MB.\n\nToo large:\n- ' + tooLarge.join('\n- '));
+            }
+        });
+    })();
+    @endif
+
     // ---- Document verification (AJAX, no page refresh) ----
     @if($canManage)
     (function initDocumentVerification() {
@@ -1289,6 +1468,207 @@
                 bulkUpdate(status, selectedKeys());
             });
         }
+
+        // ---- Document files: admin upload, rename, remove ----
+        var MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
+
+        function escapeHtml(value) {
+            return String(value == null ? '' : value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function errorMessageFrom(response, data) {
+            if (response.status === 413) {
+                return 'The file is too large for the server to accept. Please upload a smaller file.';
+            }
+            if (data && data.errors) {
+                var first = Object.keys(data.errors)[0];
+                if (first && data.errors[first] && data.errors[first][0]) {
+                    return data.errors[first][0];
+                }
+            }
+            if (data && data.message) {
+                return data.message;
+            }
+            return 'Something went wrong. Please try again.';
+        }
+
+        function sendRequest(url, method, body) {
+            var headers = {
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+                'X-Requested-With': 'XMLHttpRequest'
+            };
+            if (body && !(body instanceof FormData)) {
+                headers['Content-Type'] = 'application/json';
+                body = JSON.stringify(body);
+            }
+
+            return fetch(url, { method: method, headers: headers, body: body })
+                .then(function (response) {
+                    return response.json().catch(function () { return null; }).then(function (data) {
+                        if (!response.ok || !data || !data.success) {
+                            throw new Error(errorMessageFrom(response, data));
+                        }
+                        return data;
+                    });
+                });
+        }
+
+        function fileItemHtml(file) {
+            var html = '<li class="ea-doc-file" data-file-id="' + file.id + '"'
+                + ' data-rename-url="' + escapeHtml(file.rename_url) + '"'
+                + ' data-delete-url="' + escapeHtml(file.delete_url || '') + '">'
+                + '<i class="fas fa-paperclip" aria-hidden="true"></i>'
+                + '<a href="' + escapeHtml(file.url) + '" class="ea-doc-file-name" target="_blank" rel="noopener" title="' + escapeHtml(file.source_label) + '">' + escapeHtml(file.name) + '</a>';
+            if (file.source === 'admin') {
+                html += '<span class="ea-doc-file-tag">Admin</span>';
+            }
+            html += '<button type="button" class="ea-doc-file-btn ea-doc-file-rename" title="Rename file" aria-label="Rename ' + escapeHtml(file.name) + '"><i class="fas fa-pen"></i></button>';
+            if (file.delete_url) {
+                html += '<button type="button" class="ea-doc-file-btn ea-doc-file-delete" title="Remove file" aria-label="Remove ' + escapeHtml(file.name) + '"><i class="fas fa-trash-alt"></i></button>';
+            }
+            return html + '</li>';
+        }
+
+        function renderDocumentFiles(doc) {
+            if (!doc || !doc.key) return;
+            var row = document.querySelector('.ea-doc-row[data-document-key="' + doc.key + '"]');
+            if (!row) return;
+            var list = row.querySelector('.ea-doc-file-list');
+            if (list) {
+                list.innerHTML = (doc.files || []).map(fileItemHtml).join('');
+            }
+            var submittedCell = row.querySelector('.ea-doc-submitted-cell');
+            if (submittedCell) {
+                submittedCell.innerHTML = doc.submitted
+                    ? '<span class="badge-admin badge-admin-success">Yes</span>'
+                    : '<span class="badge-admin badge-admin-muted">No</span>';
+            }
+            row.classList.add('ea-doc-row-saved');
+            setTimeout(function () { row.classList.remove('ea-doc-row-saved'); }, 900);
+        }
+
+        document.querySelectorAll('.ea-doc-upload-input').forEach(function (input) {
+            input.addEventListener('change', function () {
+                var row = input.closest('.ea-doc-row');
+                var files = Array.prototype.slice.call(input.files || []);
+                if (!files.length || !row) return;
+
+                var tooLarge = files.filter(function (f) { return f.size > MAX_UPLOAD_BYTES; });
+                if (tooLarge.length) {
+                    showToast('Each file must not exceed 10MB. Too large: ' + tooLarge.map(function (f) { return f.name; }).join(', '), true);
+                    input.value = '';
+                    return;
+                }
+
+                var formData = new FormData();
+                files.forEach(function (f) { formData.append('files[]', f); });
+
+                setRowBusy(row, true);
+                sendRequest(input.getAttribute('data-upload-url'), 'POST', formData)
+                    .then(function (data) {
+                        renderDocumentFiles(data.document);
+                        showToast(data.message || 'Uploaded');
+                    })
+                    .catch(function (err) { showToast(err.message, true); })
+                    .finally(function () {
+                        input.value = '';
+                        setRowBusy(row, false);
+                    });
+            });
+        });
+
+        function splitName(name) {
+            var dot = name.lastIndexOf('.');
+            if (dot <= 0) return { base: name, ext: '' };
+            return { base: name.slice(0, dot), ext: name.slice(dot) };
+        }
+
+        function startRename(item) {
+            if (item.classList.contains('is-renaming')) return;
+            var link = item.querySelector('.ea-doc-file-name');
+            if (!link) return;
+            var parts = splitName(link.textContent.trim());
+
+            item.classList.add('is-renaming');
+            var editor = document.createElement('span');
+            editor.className = 'ea-doc-file-editor';
+            editor.innerHTML = '<input type="text" class="admin-input ea-doc-file-input" maxlength="190" aria-label="New file name">'
+                + (parts.ext ? '<span class="ea-doc-file-ext">' + escapeHtml(parts.ext) + '</span>' : '')
+                + '<button type="button" class="ea-doc-file-btn ea-doc-file-rename-save" title="Save name"><i class="fas fa-check"></i></button>'
+                + '<button type="button" class="ea-doc-file-btn ea-doc-file-rename-cancel" title="Cancel"><i class="fas fa-times"></i></button>';
+            link.insertAdjacentElement('afterend', editor);
+
+            var field = editor.querySelector('.ea-doc-file-input');
+            field.value = parts.base;
+            field.focus();
+            field.select();
+
+            function cancel() {
+                editor.remove();
+                item.classList.remove('is-renaming');
+            }
+
+            function save() {
+                var base = field.value.trim();
+                if (!base) {
+                    showToast('Please enter a file name.', true);
+                    field.focus();
+                    return;
+                }
+                editor.querySelectorAll('input, button').forEach(function (el) { el.disabled = true; });
+                sendRequest(item.getAttribute('data-rename-url'), 'POST', { display_name: base + parts.ext })
+                    .then(function (data) {
+                        renderDocumentFiles(data.document);
+                        showToast(data.message || 'File renamed');
+                    })
+                    .catch(function (err) {
+                        showToast(err.message, true);
+                        editor.querySelectorAll('input, button').forEach(function (el) { el.disabled = false; });
+                        field.focus();
+                    });
+            }
+
+            field.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') { e.preventDefault(); save(); }
+                if (e.key === 'Escape') { e.preventDefault(); cancel(); }
+            });
+            editor.querySelector('.ea-doc-file-rename-save').addEventListener('click', save);
+            editor.querySelector('.ea-doc-file-rename-cancel').addEventListener('click', cancel);
+        }
+
+        function deleteFile(item) {
+            var link = item.querySelector('.ea-doc-file-name');
+            var name = link ? link.textContent.trim() : 'this file';
+            if (!confirm('Remove "' + name + '"? This cannot be undone.')) return;
+
+            var row = item.closest('.ea-doc-row');
+            if (row) setRowBusy(row, true);
+            sendRequest(item.getAttribute('data-delete-url'), 'DELETE')
+                .then(function (data) {
+                    renderDocumentFiles(data.document);
+                    showToast(data.message || 'File removed');
+                })
+                .catch(function (err) { showToast(err.message, true); })
+                .finally(function () { if (row) setRowBusy(row, false); });
+        }
+
+        document.querySelectorAll('.ea-doc-file-list').forEach(function (list) {
+            list.addEventListener('click', function (e) {
+                var item = e.target.closest('.ea-doc-file');
+                if (!item) return;
+                if (e.target.closest('.ea-doc-file-rename')) {
+                    startRename(item);
+                } else if (e.target.closest('.ea-doc-file-delete')) {
+                    deleteFile(item);
+                }
+            });
+        });
 
         updateSelectedCount();
     })();
