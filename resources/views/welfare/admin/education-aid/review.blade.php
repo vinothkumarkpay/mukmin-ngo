@@ -1482,8 +1482,12 @@
         }
 
         function errorMessageFrom(response, data) {
-            if (response.status === 413) {
+            var status = response.status;
+            if (status === 413) {
                 return 'The file is too large for the server to accept. Please upload a smaller file.';
+            }
+            if (status === 419) {
+                return 'Your session has expired. Please refresh the page and try again.';
             }
             if (data && data.errors) {
                 var first = Object.keys(data.errors)[0];
@@ -1491,10 +1495,24 @@
                     return data.errors[first][0];
                 }
             }
+            if (status === 403) {
+                return data && data.message === 'Forbidden.'
+                    ? 'You do not have permission to manage this case\'s documents.'
+                    : 'The server blocked this request (403 Forbidden). This is usually the hosting firewall; please contact the server administrator.';
+            }
+            if (status === 401) {
+                return 'You have been logged out. Please log in again.';
+            }
+            if (status === 404) {
+                return 'This file or document could not be found. Please refresh the page.';
+            }
+            if (status >= 500) {
+                return 'The server encountered an error (' + status + '). Please try again or contact the administrator.';
+            }
             if (data && data.message) {
                 return data.message;
             }
-            return 'Something went wrong. Please try again.';
+            return 'Request failed (' + status + '). Please try again.';
         }
 
         function sendRequest(url, method, body) {
@@ -1508,7 +1526,10 @@
                 body = JSON.stringify(body);
             }
 
-            return fetch(url, { method: method, headers: headers, body: body })
+            return fetch(url, { method: method, headers: headers, body: body, credentials: 'same-origin' })
+                .catch(function () {
+                    throw new Error('Could not reach the server. Please check your connection and try again.');
+                })
                 .then(function (response) {
                     return response.json().catch(function () { return null; }).then(function (data) {
                         if (!response.ok || !data || !data.success) {
@@ -1649,7 +1670,7 @@
 
             var row = item.closest('.ea-doc-row');
             if (row) setRowBusy(row, true);
-            sendRequest(item.getAttribute('data-delete-url'), 'DELETE')
+            sendRequest(item.getAttribute('data-delete-url'), 'POST')
                 .then(function (data) {
                     renderDocumentFiles(data.document);
                     showToast(data.message || 'File removed');

@@ -138,7 +138,7 @@ Route::name('welfare.')->group(function () {
             Route::post('/admin/education-aid/{id}/documents-bulk', [EducationAidCaseController::class, 'bulkUpdateDocumentChecks'])->name('admin.education-aid.documents-bulk');
             Route::post('/admin/education-aid/{id}/documents/{documentKey}/files', [EducationAidCaseController::class, 'uploadDocumentFiles'])->name('admin.education-aid.files.upload');
             Route::post('/admin/education-aid/{id}/files/{fileId}/rename', [EducationAidCaseController::class, 'renameDocumentFile'])->name('admin.education-aid.files.rename');
-            Route::delete('/admin/education-aid/{id}/files/{fileId}', [EducationAidCaseController::class, 'deleteDocumentFile'])->name('admin.education-aid.files.delete');
+            Route::post('/admin/education-aid/{id}/files/{fileId}/delete', [EducationAidCaseController::class, 'deleteDocumentFile'])->name('admin.education-aid.files.delete');
             Route::post('/admin/education-aid/{id}/comment', [EducationAidCaseController::class, 'addSectionComment'])->name('admin.education-aid.comment');
             Route::post('/admin/education-aid/{id}/applicant', [EducationAidCaseController::class, 'updateApplicant'])->name('admin.education-aid.applicant');
             Route::post('/admin/education-aid/{id}/interview', [EducationAidCaseController::class, 'scheduleInterview'])->name('admin.education-aid.interview');

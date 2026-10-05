@@ -149,7 +149,7 @@ class EducationAidCaseFilesTest extends TestCase
         $this->get(route('welfare.admin.education-aid.review', $submission->id));
         $applicationFile = EducationAidCaseFile::where('source', 'application')->firstOrFail();
 
-        $this->deleteJson(route('welfare.admin.education-aid.files.delete', ['id' => $submission->id, 'fileId' => $applicationFile->id]))
+        $this->postJson(route('welfare.admin.education-aid.files.delete', ['id' => $submission->id, 'fileId' => $applicationFile->id]))
             ->assertStatus(422)
             ->assertJsonPath('message', 'Files submitted with the application cannot be deleted.');
 
@@ -159,7 +159,7 @@ class EducationAidCaseFilesTest extends TestCase
         );
         $adminFile = EducationAidCaseFile::where('source', 'admin')->firstOrFail();
 
-        $this->deleteJson(route('welfare.admin.education-aid.files.delete', ['id' => $submission->id, 'fileId' => $adminFile->id]))
+        $this->postJson(route('welfare.admin.education-aid.files.delete', ['id' => $submission->id, 'fileId' => $adminFile->id]))
             ->assertOk()
             ->assertJsonPath('document.submitted', false);
 
