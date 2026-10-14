@@ -98,7 +98,7 @@
         <tr><td>Date: {{ $issuedDate }}</td></tr>
     </table>
 
-    <div class="addressee">TO WHOM IT MAY CONCERN</div>
+    <div class="addressee">Dear {{ $member->greeting_name }}</div>
 
     <div class="subject">SUBJECT: OFFICIAL MEMBERSHIP CONFIRMATION - FRIENDS OF MUKMIN</div>
 

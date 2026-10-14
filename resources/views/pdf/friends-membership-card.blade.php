@@ -1,6 +1,7 @@
 @php
     $nameLength = mb_strlen($member->member_name);
-    $nameSize = $nameLength <= 26 ? '8.6pt' : ($nameLength <= 34 ? '7pt' : '5.6pt');
+    $nameSize = $nameLength <= 26 ? '8pt' : ($nameLength <= 34 ? '6.6pt' : '5.4pt');
+    $font = fn (string $weight) => str_replace('\\', '/', resource_path("fonts/Poppins-{$weight}.ttf"));
 @endphp
 <!DOCTYPE html>
 <html>
@@ -8,17 +9,23 @@
     <meta charset="utf-8">
     <title>Membership E-Card - {{ $member->formatted_membership_number }}</title>
     <style>
+        @font-face { font-family: 'Poppins'; font-weight: normal; src: url('{{ $font('Regular') }}') format('truetype'); }
+        @font-face { font-family: 'Poppins'; font-weight: 500; src: url('{{ $font('Medium') }}') format('truetype'); }
+        @font-face { font-family: 'Poppins'; font-weight: 600; src: url('{{ $font('SemiBold') }}') format('truetype'); }
+        @font-face { font-family: 'Poppins'; font-weight: bold; src: url('{{ $font('Bold') }}') format('truetype'); }
+        @font-face { font-family: 'Poppins'; font-weight: 600; font-style: italic; src: url('{{ $font('SemiBoldItalic') }}') format('truetype'); }
+
         @page { margin: 0; }
         html, body {
             margin: 0;
             padding: 0;
-            font-family: Helvetica, Arial, sans-serif;
+            font-family: 'Poppins', Helvetica, Arial, sans-serif;
         }
         .side {
             position: relative;
+            margin: 8pt;
             width: 242.65pt;
             height: 153.07pt;
-            overflow: hidden;
         }
         .side + .side { page-break-before: always; }
         .bg {
@@ -28,54 +35,66 @@
             width: 242.65pt;
             height: 153.07pt;
         }
+        .outline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 241.65pt;
+            height: 152.07pt;
+            border: 0.5pt solid #d5dbe1;
+            border-radius: 9pt;
+        }
 
         .identity {
             position: absolute;
-            top: 65pt;
-            left: 10.8pt;
-            width: 142pt;
+            top: 69pt;
+            left: 10pt;
+            width: 145pt;
         }
         .member-name {
             font-size: {{ $nameSize }};
-            font-weight: bold;
-            color: #0b3d2a;
+            font-weight: 600;
+            color: #111827;
             text-transform: uppercase;
-            line-height: 1.1;
-        }
-        .member-number {
-            margin-top: 1.5pt;
-            font-size: 7.4pt;
-            font-weight: bold;
-            color: #0c7a43;
-        }
-        .field {
-            position: absolute;
-            left: 10.8pt;
-            border-left: 1.4pt solid #c9a54a;
-            padding-left: 4pt;
             line-height: 1.15;
         }
-        .field-category { top: 90.5pt; }
-        .field-validity { top: 104.5pt; }
-        .field-label {
+        .member-nric {
+            margin-top: 1pt;
+            font-size: 5.4pt;
+            color: #1f2937;
+            letter-spacing: 0.3pt;
+        }
+        .validity {
+            position: absolute;
+            top: 99.5pt;
+            left: 10pt;
+            line-height: 1.25;
+        }
+        .validity-label {
+            font-size: 4.2pt;
+            color: #1f2937;
+        }
+        .validity-value {
             font-size: 4.8pt;
-            color: #4a5568;
-        }
-        .field-value {
-            font-size: 5.6pt;
-            color: #1a202c;
-        }
-        .field-validity .field-value {
-            font-weight: bold;
+            font-weight: 600;
+            color: #111827;
             text-transform: uppercase;
+        }
+        .member-number {
+            position: absolute;
+            top: 136.5pt;
+            left: 10pt;
+            font-size: 6.2pt;
+            color: #d9b25f;
+            letter-spacing: 0.2pt;
         }
 
         .terms-title {
             position: absolute;
             top: 13pt;
             left: 14pt;
-            font-size: 6.6pt;
-            font-weight: bold;
+            font-size: 6.2pt;
+            font-weight: 600;
             color: #e0b84f;
             letter-spacing: 0.2pt;
         }
@@ -87,11 +106,11 @@
             border-collapse: collapse;
         }
         .terms td {
-            font-size: 4.7pt;
-            line-height: 1.35;
+            font-size: 4.4pt;
+            line-height: 1.15;
             color: #ffffff;
             vertical-align: top;
-            padding: 0 0 2.6pt 0;
+            padding: 0 0 2.8pt 0;
         }
         .terms td.num {
             width: 7pt;
@@ -100,7 +119,7 @@
             position: absolute;
             bottom: 12pt;
             left: 14pt;
-            font-size: 5pt;
+            font-size: 4.8pt;
             color: #ffffff;
         }
         .website img {
@@ -119,8 +138,8 @@
             position: absolute;
             bottom: 12pt;
             right: 14pt;
-            font-size: 5.4pt;
-            font-weight: bold;
+            font-size: 5pt;
+            font-weight: 600;
             font-style: italic;
             color: #ffffff;
         }
@@ -129,18 +148,18 @@
 <body>
     <div class="side">
         <img class="bg" src="{{ $front }}" alt="">
+        <div class="outline"></div>
         <div class="identity">
             <div class="member-name">{{ $member->member_name }}</div>
-            <div class="member-number">{{ $member->formatted_membership_number }}</div>
+            @if($member->formatted_nric)
+                <div class="member-nric">{{ $member->formatted_nric }}</div>
+            @endif
         </div>
-        <div class="field field-category">
-            <div class="field-label">Membership Category</div>
-            <div class="field-value">{{ $settings['category'] }}</div>
+        <div class="validity">
+            <div class="validity-label">Membership Validity</div>
+            <div class="validity-value">{{ optional($member->membership_end_date)->format('d M Y') }}</div>
         </div>
-        <div class="field field-validity">
-            <div class="field-label">Membership Validity</div>
-            <div class="field-value">{{ optional($member->membership_end_date)->format('d M Y') }}</div>
-        </div>
+        <div class="member-number">{{ $member->formatted_membership_number }}</div>
     </div>
 
     <div class="side">

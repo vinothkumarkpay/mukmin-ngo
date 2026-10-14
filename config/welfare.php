@@ -26,8 +26,8 @@ return [
         'number_start' => (int) env('FOM_MEMBERSHIP_NUMBER_START', 100),
         'number_prefix' => 'MUKMIN-',
         'reference_prefix' => 'MUKMIN/SEC/FOM',
-        // calendar_year: valid until 31 Dec of the approval year; one_year: 12 months from approval.
-        'validity' => env('FOM_MEMBERSHIP_VALIDITY', 'calendar_year'),
+        // Every Friends of MUKMIN membership expires on this date (Y-m-d).
+        'end_date' => env('FOM_MEMBERSHIP_END_DATE', '2027-10-31'),
         'category' => 'Friends of MUKMIN',
         'enquiry_email' => env('FOM_ENQUIRY_EMAIL', 'membership@mukmin.org'),
         'website' => 'www.mukmin.org',

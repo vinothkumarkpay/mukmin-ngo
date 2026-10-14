@@ -58,6 +58,20 @@ class FriendMemberSubmission extends Model
         return trim((string) ($this->org_contact_person_name ?: $this->org_name)) ?: 'Member';
     }
 
+    public function getFormattedNricAttribute(): ?string
+    {
+        if (! $this->isIndividual() || ! $this->ind_nric) {
+            return null;
+        }
+
+        $digits = preg_replace('/\D/', '', (string) $this->ind_nric);
+        if (strlen($digits) !== 12) {
+            return trim((string) $this->ind_nric);
+        }
+
+        return substr($digits, 0, 6) . '-' . substr($digits, 6, 2) . '-' . substr($digits, 8, 4);
+    }
+
     public function getMemberEmailAttribute(): ?string
     {
         $email = $this->isIndividual()

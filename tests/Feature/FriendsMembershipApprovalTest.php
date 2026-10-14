@@ -34,7 +34,7 @@ class FriendsMembershipApprovalTest extends TestCase
         $member->refresh();
         $this->assertSame(100, $member->membership_number);
         $this->assertNotNull($member->welcome_email_sent_at);
-        $this->assertSame(now()->endOfYear()->toDateString(), $member->membership_end_date->toDateString());
+        $this->assertSame('2027-10-31', $member->membership_end_date->toDateString());
 
         Mail::assertSent(FriendsOfMukminWelcomeMail::class, function ($mail) {
             $mail->build();

@@ -8,6 +8,7 @@ use App\Models\FriendMemberSubmission;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -15,8 +16,8 @@ class FriendsMembershipService
 {
     public const WELCOME_EMAIL_SETTING = 'friends.approval_welcome_email_enabled';
 
-    /** CR80 card size in points (85.6mm x 54mm). */
-    private const CARD_SIZE = [0, 0, 242.65, 153.07];
+    /** CR80 card (85.6mm x 54mm = 242.65pt x 153.07pt) plus an 8pt margin on each side. */
+    private const CARD_PAGE_SIZE = [0, 0, 258.65, 169.07];
 
     public function isWelcomeEmailEnabled(): bool
     {
@@ -54,7 +55,7 @@ class FriendsMembershipService
             $locked->forceFill([
                 'membership_number' => max($start, $max + 1),
                 'membership_start_date' => $approvedAt->copy()->startOfDay(),
-                'membership_end_date' => $this->membershipEndDate($approvedAt),
+                'membership_end_date' => $this->membershipEndDate(),
                 'approved_at' => $approvedAt,
             ])->save();
 
@@ -83,12 +84,14 @@ class FriendsMembershipService
 
     public function cardPdf(FriendMemberSubmission $member): string
     {
+        File::ensureDirectoryExists(storage_path('fonts'));
+
         return Pdf::loadView('pdf.friends-membership-card', [
             'member' => $member,
             'front' => $this->imageDataUri(resource_path('images/membership/fom-card-front.png')),
             'back' => $this->imageDataUri(resource_path('images/membership/fom-card-back.png')),
             'settings' => config('welfare.friends_membership'),
-        ])->setPaper(self::CARD_SIZE)->output();
+        ])->setPaper(self::CARD_PAGE_SIZE)->output();
     }
 
     public function letterFilename(FriendMemberSubmission $member): string
@@ -135,13 +138,9 @@ class FriendsMembershipService
         $member->forceFill(['welcome_email_sent_at' => Carbon::now()])->save();
     }
 
-    private function membershipEndDate(Carbon $approvedAt): Carbon
+    public function membershipEndDate(): Carbon
     {
-        if (config('welfare.friends_membership.validity') === 'one_year') {
-            return $approvedAt->copy()->addYear()->subDay()->startOfDay();
-        }
-
-        return $approvedAt->copy()->endOfYear()->startOfDay();
+        return Carbon::parse(config('welfare.friends_membership.end_date', '2027-10-31'))->startOfDay();
     }
 
     private function imageDataUri(string $path): string
