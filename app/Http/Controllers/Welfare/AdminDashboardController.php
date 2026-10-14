@@ -16,6 +16,7 @@ use App\Models\ContactSubmission;
 use App\Models\CommunityAidSubmission;
 use App\Models\Donation;
 use App\Models\MflsScholarshipSubmission;
+use App\Services\Welfare\FriendsMembershipService;
 use App\Services\Welfare\MflsPartnerDocumentService;
 use App\Services\Welfare\SubmissionImportRegistry;
 use App\Services\Welfare\SubmissionImporter;
@@ -203,7 +204,8 @@ class AdminDashboardController extends Controller
             'submissionFilterEntityTypes',
             'aidOverview',
         ))->with('submissionStatusOptions', SubmissionStatus::options())
-          ->with('educationAidStatusOptions', EducationAidStatus::options());
+          ->with('educationAidStatusOptions', EducationAidStatus::options())
+          ->with('friendsWelcomeEmailEnabled', app(FriendsMembershipService::class)->isWelcomeEmailEnabled());
     }
 
     /**
@@ -723,13 +725,62 @@ class AdminDashboardController extends Controller
             }
         }
 
-        return response()->json([
+        $response = [
             'success' => true,
             'status' => $validated['status'],
             'label' => $type === 'aid'
                 ? EducationAidStatus::label($validated['status'])
                 : SubmissionStatus::label($validated['status']),
-        ]);
+        ];
+
+        if ($type === 'friends' && SubmissionStatus::normalize($validated['status']) === SubmissionStatus::APPROVED) {
+            $response['welcome_email'] = $this->handleFriendsApproval($submission);
+        }
+
+        return response()->json($response);
+    }
+
+    /**
+     * Assigns the membership number and, when enabled, sends the welcome email
+     * with the confirmation letter and e-card (only once per member).
+     */
+    private function handleFriendsApproval(FriendMemberSubmission $submission): array
+    {
+        $service = app(FriendsMembershipService::class);
+        $result = ['enabled' => $service->isWelcomeEmailEnabled(), 'sent' => false];
+
+        try {
+            $submission = $service->ensureMembership($submission);
+        } catch (\Throwable $e) {
+            report($e);
+            $result['error'] = 'Status saved, but the membership number could not be assigned.';
+
+            return $result;
+        }
+
+        $result['membership_number'] = $submission->formatted_membership_number;
+
+        if (! $result['enabled']) {
+            return $result;
+        }
+
+        if ($submission->welcome_email_sent_at) {
+            $result['already_sent'] = true;
+
+            return $result;
+        }
+
+        try {
+            $service->sendWelcomeEmail($submission);
+            $result['sent'] = true;
+            $result['email'] = $submission->member_email;
+        } catch (\RuntimeException $e) {
+            $result['error'] = $e->getMessage();
+        } catch (\Throwable $e) {
+            $result['error'] = 'Failed to send the welcome email with membership letter and e-card.';
+        }
+
+        return $result;
     }
 
     public function notifyStatusUpdate($type, $id, SubmissionStatusNotifier $notifier)

@@ -433,6 +433,63 @@ a:hover {
     align-items: center;
     justify-content: flex-end;
 }
+.admin-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    border: 1px solid var(--admin-border);
+    border-radius: 8px;
+    background: #ffffff;
+    font-size: 13px;
+    color: var(--admin-text-dark);
+    cursor: pointer;
+    user-select: none;
+}
+.admin-toggle input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.admin-toggle-track {
+    position: relative;
+    flex-shrink: 0;
+    width: 36px;
+    height: 20px;
+    border-radius: 999px;
+    background: #cbd5e1;
+    transition: background 0.2s;
+}
+.admin-toggle-track::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.2);
+    transition: transform 0.2s;
+}
+.admin-toggle input:checked + .admin-toggle-track {
+    background: #0c7a43;
+}
+.admin-toggle input:checked + .admin-toggle-track::after {
+    transform: translateX(16px);
+}
+.admin-toggle input:focus-visible + .admin-toggle-track {
+    outline: 2px solid #0c7a43;
+    outline-offset: 2px;
+}
+.admin-toggle input:disabled + .admin-toggle-track {
+    opacity: 0.6;
+}
+.admin-toggle-state {
+    font-weight: 600;
+    min-width: 24px;
+}
 .admin-import-form {
     display: inline-flex;
     align-items: center;

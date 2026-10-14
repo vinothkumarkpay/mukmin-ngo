@@ -338,6 +338,14 @@
                     <div class="card-header">
                         <h3>Friends of MUKMIN Applications</h3>
                         <div class="card-actions">
+                            @if(auth()->user()->hasPermission('submissions.friends.status'))
+                                <label class="admin-toggle" title="When on, approving a Friends of MUKMIN application automatically emails the welcome message with the membership confirmation letter and e-card attached.">
+                                    <input type="checkbox" id="friends-welcome-email-toggle" {{ $friendsWelcomeEmailEnabled ? 'checked' : '' }} onchange="updateFriendsWelcomeEmailSetting(this)">
+                                    <span class="admin-toggle-track"></span>
+                                    <span>Approval email with letter &amp; e-card:</span>
+                                    <span class="admin-toggle-state" id="friends-welcome-email-state">{{ $friendsWelcomeEmailEnabled ? 'On' : 'Off' }}</span>
+                                </label>
+                            @endif
                             <a href="{{ route('welfare.admin.export', 'friends') }}" class="btn-admin btn-admin-secondary">
                                 <i class="fas fa-download"></i> Export CSV
                             </a>
@@ -354,12 +362,16 @@
                                         <th>Entity Type</th>
                                         <th>Name / Organisation</th>
                                         <th>Residency / State</th>
+                                        <th>Membership No.</th>
                                         <th class="status-col">Status</th>
                                         <th style="text-align: right;">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse($friends as $item)
+                                        @php
+                                            $friendIsApproved = \App\Support\SubmissionStatus::normalize($item->status) === \App\Support\SubmissionStatus::APPROVED;
+                                        @endphp
                                         <tr id="row-friends-{{ $item->id }}">
                                             <td>#{{ $item->id }}</td>
                                             <td>{{ $item->created_at->format('d M Y') }}</td>
@@ -380,16 +392,22 @@
                                                     {{ $item->org_state }}
                                                 @endif
                                             </td>
+                                            <td id="friends-membership-{{ $item->id }}">{{ $item->formatted_membership_number ?? '—' }}</td>
                                             <td>
                                                 @include('welfare.admin.partials.status-select', ['type' => 'friends', 'item' => $item])
                                             </td>
-                                            <td style="text-align: right;">
+                                            <td style="text-align: right; white-space: nowrap;">
+                                                <span id="friends-docs-{{ $item->id }}">
+                                                    @if($friendIsApproved && $item->membership_number)
+                                                        @include('welfare.admin.partials.friends-membership-actions', ['item' => $item])
+                                                    @endif
+                                                </span>
                                                 <button onclick="viewDetail('friends', {{ $item->id }})" class="btn-admin btn-admin-primary">View</button>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="7" style="text-align: center; color: var(--admin-text-muted);">{{ $emptySubmissionMessage }}</td>
+                                            <td colspan="8" style="text-align: center; color: var(--admin-text-muted);">{{ $emptySubmissionMessage }}</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -1604,6 +1622,21 @@
             if (data.success) {
                 select.value = data.status;
                 select.dataset.originalValue = data.status;
+
+                if (type === 'friends') {
+                    updateFriendsMembershipRow(id, data);
+                }
+
+                const welcomeEmail = data.welcome_email;
+                if (welcomeEmail && welcomeEmail.sent) {
+                    alert(`Membership ${welcomeEmail.membership_number} approved. Welcome email with the membership letter and e-card was sent to ${welcomeEmail.email}.`);
+                    removeRowIfStatusMismatch(select, data.status);
+                    return;
+                }
+                if (welcomeEmail && welcomeEmail.error) {
+                    alert(`Status updated, but the welcome email was not sent: ${welcomeEmail.error}`);
+                }
+
                 pendingEmailNotification = { type, id, status: data.status, label: data.label };
                 document.getElementById('status-email-modal').classList.add('open');
             }
@@ -1614,6 +1647,95 @@
         })
         .finally(() => {
             select.disabled = false;
+        });
+    }
+
+    const FRIENDS_LETTER_URL = @json(route('welfare.admin.friends.membership-letter', ['id' => '__ID__']));
+    const FRIENDS_CARD_URL = @json(route('welfare.admin.friends.membership-card', ['id' => '__ID__']));
+    const CAN_SEND_FRIENDS_WELCOME = @json(auth()->user()->hasPermission('submissions.friends.status'));
+
+    function updateFriendsMembershipRow(id, data) {
+        const docs = document.getElementById(`friends-docs-${id}`);
+        const numberCell = document.getElementById(`friends-membership-${id}`);
+        const membershipNumber = data.welcome_email && data.welcome_email.membership_number;
+
+        if (data.status !== 'approved' || !membershipNumber) {
+            if (docs) docs.innerHTML = '';
+            return;
+        }
+
+        if (numberCell) numberCell.textContent = membershipNumber;
+        if (!docs) return;
+
+        let html = `<a href="${FRIENDS_LETTER_URL.replace('__ID__', id)}" target="_blank" rel="noopener" class="btn-admin btn-admin-secondary" title="View membership confirmation letter (PDF)"><i class="fas fa-file-pdf"></i> Letter</a> `
+            + `<a href="${FRIENDS_CARD_URL.replace('__ID__', id)}" target="_blank" rel="noopener" class="btn-admin btn-admin-secondary" title="View membership e-card (PDF)"><i class="fas fa-id-card"></i> E-Card</a> `;
+        if (CAN_SEND_FRIENDS_WELCOME) {
+            html += `<button type="button" onclick="resendFriendsWelcomeEmail(${id}, this)" class="btn-admin btn-admin-secondary" title="Send welcome email with letter and e-card"><i class="fas fa-envelope"></i></button> `;
+        }
+        docs.innerHTML = html;
+    }
+
+    function updateFriendsWelcomeEmailSetting(checkbox) {
+        const enabled = checkbox.checked;
+        const stateLabel = document.getElementById('friends-welcome-email-state');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        checkbox.disabled = true;
+
+        fetch(@json(route('welfare.admin.friends.welcome-email-setting')), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify({ enabled })
+        })
+        .then(response => response.json().then(data => ({ ok: response.ok, data })))
+        .then(({ ok, data }) => {
+            if (!ok || !data.success) {
+                throw new Error(data.error || data.message || 'Failed to update setting');
+            }
+            if (stateLabel) stateLabel.textContent = data.enabled ? 'On' : 'Off';
+        })
+        .catch(error => {
+            checkbox.checked = !enabled;
+            alert(`Error updating approval email setting: ${error.message}`);
+        })
+        .finally(() => {
+            checkbox.disabled = false;
+        });
+    }
+
+    function resendFriendsWelcomeEmail(id, button) {
+        if (!confirm('Send the welcome email with the membership letter and e-card to this member?')) {
+            return;
+        }
+
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        button.disabled = true;
+
+        fetch(`{{ url('/admin/friends') }}/${id}/welcome-email`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json().then(data => ({ ok: response.ok, data })))
+        .then(({ ok, data }) => {
+            if (!ok) {
+                throw new Error(data.error || data.message || 'Failed to send welcome email');
+            }
+            alert(data.message);
+        })
+        .catch(error => {
+            alert(`Error sending welcome email: ${error.message}`);
+        })
+        .finally(() => {
+            button.disabled = false;
         });
     }
 

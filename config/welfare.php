@@ -20,6 +20,20 @@ return [
     ],
     'aid_applications_open' => (bool) env('AID_APPLICATIONS_OPEN', false),
 
+    'friends_membership' => [
+        // Default for the admin "approval email" toggle until it is changed in the dashboard.
+        'welcome_email_default' => (bool) env('FOM_WELCOME_EMAIL_DEFAULT', true),
+        'number_start' => (int) env('FOM_MEMBERSHIP_NUMBER_START', 100),
+        'number_prefix' => 'MUKMIN-',
+        'reference_prefix' => 'MUKMIN/SEC/FOM',
+        // calendar_year: valid until 31 Dec of the approval year; one_year: 12 months from approval.
+        'validity' => env('FOM_MEMBERSHIP_VALIDITY', 'calendar_year'),
+        'category' => 'Friends of MUKMIN',
+        'enquiry_email' => env('FOM_ENQUIRY_EMAIL', 'membership@mukmin.org'),
+        'website' => 'www.mukmin.org',
+        'social_handle' => '@mukmin.nasional',
+    ],
+
     'phone' => env('WELFARE_PHONE', '+6014 302 1800'),
     'whatsapp_url' => env('WELFARE_WHATSAPP_URL', 'https://wa.me/60143021800?text=Salam.%20I%20would%20like%20to%20inquire%20about%20MUKMIN.%20Kindly%20assist%20me.'),
     'address' => env('WELFARE_ADDRESS', 'No 73, Jalan TPK 2/8, Taman Perindustrian Kinrara, Puchong'),

@@ -12,6 +12,7 @@ use App\Http\Controllers\Welfare\AdminUserController;
 use App\Http\Controllers\Welfare\DonationController;
 use App\Http\Controllers\Welfare\DonationDemoController;
 use App\Http\Controllers\Welfare\EducationAidCaseController;
+use App\Http\Controllers\Welfare\FriendsMembershipController;
 use App\Http\Controllers\Welfare\MflsPartnerDocumentController;
 use Illuminate\Support\Facades\Route;
 
@@ -118,6 +119,11 @@ Route::name('welfare.')->group(function () {
         Route::get('/admin/export/{type}', [AdminDashboardController::class, 'exportCsv'])->name('admin.export');
         Route::get('/admin/import/{type}/template', [AdminDashboardController::class, 'downloadImportTemplate'])->name('admin.import.template');
         Route::post('/admin/import/{type}', [AdminDashboardController::class, 'importSubmissions'])->name('admin.import');
+
+        Route::post('/admin/friends/welcome-email-setting', [FriendsMembershipController::class, 'updateWelcomeEmailSetting'])->name('admin.friends.welcome-email-setting');
+        Route::get('/admin/friends/{id}/membership-letter', [FriendsMembershipController::class, 'letter'])->name('admin.friends.membership-letter');
+        Route::get('/admin/friends/{id}/membership-card', [FriendsMembershipController::class, 'card'])->name('admin.friends.membership-card');
+        Route::post('/admin/friends/{id}/welcome-email', [FriendsMembershipController::class, 'resendWelcomeEmail'])->name('admin.friends.welcome-email');
 
         Route::middleware('admin.permission:submissions.aid.view')->group(function () {
             Route::get('/admin/education-aid/{id}/review', [EducationAidCaseController::class, 'review'])->name('admin.education-aid.review');
