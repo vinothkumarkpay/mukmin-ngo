@@ -18,6 +18,8 @@ return [
         'contact' => 'info@mukmin.org',
         'donation' => 'donate@mukmin.org',
     ],
+    'aid_applications_open' => (bool) env('AID_APPLICATIONS_OPEN', false),
+
     'phone' => env('WELFARE_PHONE', '+6014 302 1800'),
     'whatsapp_url' => env('WELFARE_WHATSAPP_URL', 'https://wa.me/60143021800?text=Salam.%20I%20would%20like%20to%20inquire%20about%20MUKMIN.%20Kindly%20assist%20me.'),
     'address' => env('WELFARE_ADDRESS', 'No 73, Jalan TPK 2/8, Taman Perindustrian Kinrara, Puchong'),

@@ -365,4 +365,70 @@
         });
     }
 
+    /* ---- AID APPLICATIONS CLOSED NOTICE ---- */
+    var aidClosedModal = document.getElementById('aid-applications-closed-modal');
+
+    if (aidClosedModal) {
+        var aidUrl = aidClosedModal.getAttribute('data-aid-url') || '';
+        var homeUrl = aidClosedModal.getAttribute('data-home-url') || '/';
+        var aidClosedClose = document.getElementById('aid-applications-closed-close');
+        var aidClosedOk = document.getElementById('aid-applications-closed-ok');
+
+        function trimPath(path) {
+            return (path || '').replace(/\/$/, '') || '/';
+        }
+
+        function isAidLink(href) {
+            try {
+                return trimPath(new URL(href, window.location.origin).pathname)
+                    === trimPath(new URL(aidUrl, window.location.origin).pathname);
+            } catch (err) {
+                return false;
+            }
+        }
+
+        function openAidClosedModal() {
+            aidClosedModal.hidden = false;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAidClosedModal() {
+            var onHome = trimPath(window.location.pathname)
+                === trimPath(new URL(homeUrl, window.location.origin).pathname);
+            if (!onHome) {
+                window.location.href = homeUrl;
+                return;
+            }
+            aidClosedModal.hidden = true;
+            document.body.style.overflow = '';
+        }
+
+        if (!aidClosedModal.hidden) {
+            document.body.style.overflow = 'hidden';
+        }
+
+        document.querySelectorAll('a[href]').forEach(function (anchor) {
+            if (!isAidLink(anchor.getAttribute('href'))) return;
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                openAidClosedModal();
+            });
+        });
+
+        if (aidClosedClose) aidClosedClose.addEventListener('click', closeAidClosedModal);
+        if (aidClosedOk) aidClosedOk.addEventListener('click', closeAidClosedModal);
+
+        aidClosedModal.addEventListener('click', function (event) {
+            if (event.target === aidClosedModal) {
+                closeAidClosedModal();
+            }
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && !aidClosedModal.hidden) {
+                closeAidClosedModal();
+            }
+        });
+    }
+
 })();

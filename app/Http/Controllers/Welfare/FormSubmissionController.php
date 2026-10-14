@@ -556,11 +556,24 @@ class FormSubmissionController extends Controller
 
     public function communityAid()
     {
+        if (!config('welfare.aid_applications_open')) {
+            return $this->redirectAidApplicationsClosed();
+        }
+
         return view('welfare.pages.community_aid');
+    }
+
+    private function redirectAidApplicationsClosed()
+    {
+        return redirect()->route('welfare.home')->with('aid_applications_closed', true);
     }
 
     public function submitCommunityAid(Request $request)
     {
+        if (!config('welfare.aid_applications_open')) {
+            return $this->redirectAidApplicationsClosed();
+        }
+
         // Form is Education Aid only — ignore any other submitted aid type.
         $request->merge(['type_of_aid' => 'Education Aid']);
 

@@ -19,6 +19,41 @@ class CommunityAidSubmissionTest extends TestCase
         parent::setUp();
         Mail::fake();
         Storage::fake('public');
+        config(['welfare.aid_applications_open' => true]);
+    }
+
+    public function test_closed_aid_form_redirects_home_with_closed_notice()
+    {
+        config(['welfare.aid_applications_open' => false]);
+
+        $response = $this->get(route('welfare.community-aid'));
+        $response->assertRedirect(route('welfare.home'));
+        $response->assertSessionHas('aid_applications_closed', true);
+
+        $home = $this->followRedirects($response);
+        $home->assertSee('The Application Window Is Now Closed', false);
+    }
+
+    public function test_closed_aid_form_rejects_submissions()
+    {
+        config(['welfare.aid_applications_open' => false]);
+
+        $response = $this->post(route('welfare.community-aid.submit'), ['full_name' => 'Jane']);
+        $response->assertRedirect(route('welfare.home'));
+        $this->assertDatabaseCount('community_aid_submissions', 0);
+    }
+
+    public function test_home_page_does_not_gate_aid_link_through_membership_popup_when_closed()
+    {
+        config(['welfare.aid_applications_open' => false]);
+
+        $response = $this->get(route('welfare.home'));
+        $response->assertStatus(200);
+        $response->assertSee('aid-applications-closed-modal', false);
+        $this->assertStringNotContainsString(
+            route('welfare.community-aid') . '|',
+            $response->getContent()
+        );
     }
 
     public function test_form_validation_requires_mandatory_fields()

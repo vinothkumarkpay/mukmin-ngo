@@ -5,13 +5,13 @@
     aria-modal="true"
     aria-labelledby="membership-registration-gate-title"
     data-friends-url="{{ route('welfare.membership.friends') }}"
-    data-form-urls="{{ implode('|', [
-        route('welfare.community-aid'),
+    data-form-urls="{{ implode('|', array_filter([
+        config('welfare.aid_applications_open') ? route('welfare.community-aid') : null,
         route('welfare.feedback'),
         route('welfare.volunteer'),
         route('welfare.mentor'),
         route('welfare.partner'),
-    ]) }}"
+    ])) }}"
     hidden
 >
     <div class="membership-modal">

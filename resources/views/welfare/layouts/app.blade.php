@@ -225,6 +225,7 @@
 
     @include('welfare.partials.whatsapp-support')
     @include('welfare.partials.membership-registration-gate-modal')
+    @include('welfare.partials.aid-applications-closed-modal')
 
     <script src="{{ asset('js/welfare.js') }}"></script>
     @stack('scripts')
