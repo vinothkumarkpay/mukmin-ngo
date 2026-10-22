@@ -110,17 +110,17 @@
                 <p class="form-body">An opportunity to build new friendships, celebrate women's strengths, exchange ideas and explore how we can collectively make a difference in our families and communities.</p>
                 <h2 class="event-details-title">Event Details</h2>
                 <ul class="event-details">
-                    <li><span aria-hidden="true">📅</span> Date: Sunday, 22 November 2026</li>
-                    <li><span aria-hidden="true">🕘</span> Time: 9.30 AM – 5.00 PM</li>
-                    <li><span aria-hidden="true">📍</span> Venue: Asiana Grand Hall 2, Kuala Lumpur</li>
-                    <li><span aria-hidden="true">🎟️</span> Registration Fee: RM30 per person</li>
+                    <li><span aria-hidden="true">📅</span> Date: {{ \App\Support\SisterhoodCollective::EVENT_DATE }}</li>
+                    <li><span aria-hidden="true">🕘</span> Time: {{ \App\Support\SisterhoodCollective::EVENT_TIME }}</li>
+                    <li><span aria-hidden="true">📍</span> Venue: {{ \App\Support\SisterhoodCollective::EVENT_VENUE }}</li>
+                    <li><span aria-hidden="true">🎟️</span> Registration Fee: RM{{ number_format(\App\Support\SisterhoodCollective::FEE, 0) }} per person</li>
                     <li><span aria-hidden="true">👩</span> Open to: Registered Friends of Mukmin Indian Muslim women aged 18 and above</li>
                 </ul>
-                <p class="form-body">Dress Theme: Burgundy &amp; Olive Green. Modest attire complemented by Indian Muslim traditional jewellery or cultural accessories.</p>
+                <p class="form-body">Dress Theme: {{ \App\Support\SisterhoodCollective::EVENT_DRESS }}. Modest attire complemented by Indian Muslim traditional jewellery or cultural accessories.</p>
                 <p>Registration closes on 17 November 2026.</p>
                 <p class="form-body">Come as you are, bring your stories and leave with new connections, fresh inspiration and a shared sense of purpose.</p>
                 <p>Because when women connect, communities grow and generations rise.</p>
-                <p><strong>Organised by MUKMIN Women &amp; Family Development Bureau</strong></p>
+                <p><strong>Organised by {{ \App\Support\SisterhoodCollective::ORGANISER }}</strong></p>
                 </div>
             </div>
 

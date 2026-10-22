@@ -2,11 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Mail\SisterhoodRegistrationMail;
 use App\Models\SisterhoodRegistration;
 use App\Models\User;
 use App\Support\SisterhoodCollective;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class SisterhoodRegistrationTest extends TestCase
@@ -16,6 +18,8 @@ class SisterhoodRegistrationTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        Mail::fake();
 
         config([
             'services.kiplepay.merchant_id' => 'MID',
@@ -34,13 +38,14 @@ class SisterhoodRegistrationTest extends TestCase
         parent::tearDown();
     }
 
-    public function test_home_page_hides_the_registration_link_until_launch(): void
+    public function test_home_page_links_to_the_registration_form(): void
     {
         $response = $this->get(route('welfare.home'));
 
         $response->assertOk();
-        $response->assertDontSee('The Sisterhood Collective 2026', false);
-        $response->assertDontSee(route('welfare.sisterhood.create'), false);
+        $response->assertSee('btn-sisterhood-rounded', false);
+        $response->assertSee(route('welfare.sisterhood.create'), false);
+        $response->assertDontSee('sisterhood-home-banner', false);
     }
 
     public function test_registration_form_lists_the_programme_fields(): void
@@ -85,6 +90,7 @@ class SisterhoodRegistrationTest extends TestCase
         $this->assertFalse($registration->isPaid());
         $this->assertSame('30.00', $registration->amount);
         $this->assertSame('900101011234', $registration->nric_normalized);
+        Mail::assertNothingSent();
     }
 
     public function test_payment_callback_confirms_registration_only_when_payment_succeeds(): void
@@ -98,6 +104,23 @@ class SisterhoodRegistrationTest extends TestCase
         $this->assertTrue($registration->isPaid());
         $this->assertSame('paid', $registration->payment_status);
         $this->assertNotNull($registration->paid_at);
+
+        Mail::assertSent(SisterhoodRegistrationMail::class, function (SisterhoodRegistrationMail $mail) {
+            $html = $this->renderMail($mail);
+
+            return $mail->hasTo('aisha@example.com')
+                && $mail->statusLabel === 'Paid'
+                && str_contains($html, 'Ms. Aisha Rahman')
+                && str_contains($html, SisterhoodCollective::EVENT_DATE)
+                && str_contains($html, SisterhoodCollective::EVENT_TIME)
+                && str_contains($html, SisterhoodCollective::EVENT_VENUE)
+                && str_contains($html, 'RM30.00');
+        });
+
+        $this->post(route('welfare.sisterhood.payment.callback'), $this->gatewayPayload('TSC-PAID', '100'))
+            ->assertOk();
+
+        Mail::assertSent(SisterhoodRegistrationMail::class, 1);
     }
 
     public function test_failed_or_unverified_payment_leaves_registration_incomplete(): void
@@ -108,6 +131,17 @@ class SisterhoodRegistrationTest extends TestCase
         $failed->refresh();
         $this->assertFalse($failed->isPaid());
         $this->assertSame('failed', $failed->payment_status);
+        Mail::assertSent(SisterhoodRegistrationMail::class, function (SisterhoodRegistrationMail $mail) {
+            $html = $this->renderMail($mail);
+
+            return $mail->hasTo('aisha@example.com')
+                && $mail->statusKey === 'failed'
+                && str_contains($html, 'Registration Incomplete')
+                && str_contains($html, SisterhoodCollective::EVENT_TIME)
+                && str_contains($html, SisterhoodCollective::SUPPORT_PHONE)
+                && str_contains($html, 'has not been successfully received')
+                && ! str_contains($html, 'have been successfully received');
+        });
 
         $unverified = $this->makeRegistration('TSC-BADHASH');
         $payload = $this->gatewayPayload('TSC-BADHASH', '100');
@@ -116,6 +150,7 @@ class SisterhoodRegistrationTest extends TestCase
         $unverified->refresh();
         $this->assertSame('pending', $unverified->payment_status);
         $this->assertFalse($unverified->isPaid());
+        Mail::assertSent(SisterhoodRegistrationMail::class, 1);
     }
 
     public function test_return_from_gateway_shows_the_matching_message(): void
@@ -214,12 +249,37 @@ class SisterhoodRegistrationTest extends TestCase
 
         $this->get(route('welfare.admin.sisterhood.show', $registration))
             ->assertSee('Registration updated. Payment is recorded and the registration is confirmed.', false);
+
+        Mail::assertSent(SisterhoodRegistrationMail::class, function (SisterhoodRegistrationMail $mail) {
+            return $mail->hasTo('aisha@example.com') && $mail->statusKey === 'success';
+        });
+
+        $this->put(route('welfare.admin.sisterhood.update', $registration), $this->payload([
+            'preferred_name' => 'Aish',
+            'payment_status' => 'paid',
+            'payment_reference' => 'MANUAL-1',
+            'admin_notes' => 'Paid at the counter.',
+        ]));
+
+        Mail::assertSent(SisterhoodRegistrationMail::class, 1);
     }
 
     public function test_guest_cannot_open_the_admin_section(): void
     {
         $this->get(route('welfare.admin.sisterhood.index'))
             ->assertRedirect(route('welfare.admin.login'));
+    }
+
+    private function renderMail(SisterhoodRegistrationMail $mail): string
+    {
+        return view('emails.sisterhood_registration', [
+            'subject' => $mail->subject,
+            'registration' => $mail->registration,
+            'statusKey' => $mail->statusKey,
+            'statusLabel' => $mail->statusLabel,
+            'registrationRows' => $mail->registrationRows,
+            'eventRows' => $mail->eventRows,
+        ])->render();
     }
 
     private function makeRegistration(string $orderId): SisterhoodRegistration

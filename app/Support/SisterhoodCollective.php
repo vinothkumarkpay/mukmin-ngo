@@ -13,6 +13,16 @@ class SisterhoodCollective
 
     public const SUPPORT_PHONE = '014-3021800';
 
+    public const EVENT_DATE = 'Sunday, 22 November 2026';
+
+    public const EVENT_TIME = '9.30 AM – 5.00 PM';
+
+    public const EVENT_VENUE = 'Asiana Grand Hall 2, Kuala Lumpur';
+
+    public const EVENT_DRESS = 'Burgundy & Olive Green';
+
+    public const ORGANISER = 'MUKMIN Women & Family Development Bureau';
+
     public const PROFESSION_OTHER = 'Other (Please Specify)';
 
     public const EDUCATION_OTHER = 'Other';

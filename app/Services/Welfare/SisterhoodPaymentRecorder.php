@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Log;
 
 class SisterhoodPaymentRecorder
 {
+    private SisterhoodRegistrationNotifier $notifier;
+
+    public function __construct(SisterhoodRegistrationNotifier $notifier)
+    {
+        $this->notifier = $notifier;
+    }
+
     /**
      * Confirm a registration only when the gateway hash matches and the return code is successful.
      * A paid registration is never moved back to failed by a later callback.
@@ -17,6 +24,8 @@ class SisterhoodPaymentRecorder
         if ($registration->isPaid()) {
             return true;
         }
+
+        $previousStatus = (string) $registration->payment_status;
 
         $kiplePay = KiplePayService::make('guest');
         $hashPresent = ! empty($payload['ord_key']) || ! empty($payload['merchant_hashvalue']);
@@ -49,6 +58,8 @@ class SisterhoodPaymentRecorder
         ]);
 
         Log::info('Sisterhood registration ' . $registration->order_id . ' payment status updated to ' . $registration->payment_status);
+
+        $this->notifier->notifyIfStatusChanged($registration, $previousStatus);
 
         return true;
     }

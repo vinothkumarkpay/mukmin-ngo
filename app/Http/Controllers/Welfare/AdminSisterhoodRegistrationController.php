@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Welfare;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Welfare\Concerns\ChecksAdminAccess;
 use App\Models\SisterhoodRegistration;
+use App\Services\Welfare\SisterhoodRegistrationNotifier;
 use App\Support\SisterhoodCollective;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -67,9 +68,10 @@ class AdminSisterhoodRegistrationController extends Controller
         ]);
     }
 
-    public function update(Request $request, SisterhoodRegistration $registration)
+    public function update(Request $request, SisterhoodRegistration $registration, SisterhoodRegistrationNotifier $notifier)
     {
         $this->authorizePermission('sisterhood.manage');
+        $previousStatus = (string) $registration->payment_status;
 
         $validated = $request->validate(
             SisterhoodCollective::adminRules(),
@@ -93,6 +95,7 @@ class AdminSisterhoodRegistrationController extends Controller
             : null;
 
         $registration->update($attributes);
+        $notifier->notifyIfStatusChanged($registration, $previousStatus);
 
         return redirect()
             ->route('welfare.admin.sisterhood.show', $registration)
