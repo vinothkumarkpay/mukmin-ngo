@@ -64,6 +64,12 @@ return [
             'permission' => 'donations.view',
             'route' => 'welfare.admin.donation-payments',
         ],
+        'panel-sisterhood' => [
+            'label' => 'Sisterhood Collective',
+            'icon' => 'fa-users',
+            'permission' => 'sisterhood.view',
+            'route' => 'welfare.admin.sisterhood.index',
+        ],
         'panel-contact' => [
             'label' => 'Contact Messages',
             'icon' => 'fa-envelope',
@@ -160,6 +166,17 @@ return [
             'label' => 'View donation payments',
             'group' => 'Donations',
             'description' => 'Access the donation payments page and records.',
+        ],
+
+        'sisterhood.view' => [
+            'label' => 'View Sisterhood Collective registrations',
+            'group' => 'Sisterhood Collective',
+            'description' => 'View participant registrations and RM30 payment records.',
+        ],
+        'sisterhood.manage' => [
+            'label' => 'Manage Sisterhood Collective registrations',
+            'group' => 'Sisterhood Collective',
+            'description' => 'Edit participant details and payment status.',
         ],
 
         'mfls.documents.view' => ['label' => 'View MFLS partner documents', 'group' => 'MFLS Documents'],

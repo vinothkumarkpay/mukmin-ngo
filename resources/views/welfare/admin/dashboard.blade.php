@@ -169,6 +169,21 @@
                         @include('welfare.admin.partials.stat-status-breakdown', ['breakdown' => $statBreakdowns['mfls'] ?? []])
                     </div>
                     @endif
+                    @if($canPanel('panel-sisterhood'))
+                    <div class="stat-card" onclick="window.location='{{ route('welfare.admin.sisterhood.index') }}'">
+                        <div class="stat-card-main">
+                            <div class="stat-icon"><i class="fas fa-users"></i></div>
+                            <div class="stat-info">
+                                <h3>{{ $stats['sisterhood'] }}</h3>
+                                <p>Sisterhood Collective</p>
+                            </div>
+                        </div>
+                        @include('welfare.admin.partials.stat-status-breakdown', [
+                            'breakdown' => $statBreakdowns['sisterhood'] ?? [],
+                            'kind' => 'donation',
+                        ])
+                    </div>
+                    @endif
                     @if($canPanel('panel-payments'))
                     <div class="stat-card" onclick="window.location='{{ route('welfare.admin.donation-payments') }}'">
                         <div class="stat-card-main">

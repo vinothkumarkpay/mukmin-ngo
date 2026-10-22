@@ -14,6 +14,8 @@ use App\Http\Controllers\Welfare\DonationDemoController;
 use App\Http\Controllers\Welfare\EducationAidCaseController;
 use App\Http\Controllers\Welfare\FriendsMembershipController;
 use App\Http\Controllers\Welfare\MflsPartnerDocumentController;
+use App\Http\Controllers\Welfare\SisterhoodRegistrationController;
+use App\Http\Controllers\Welfare\AdminSisterhoodRegistrationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -90,6 +92,13 @@ Route::name('welfare.')->group(function () {
     Route::get('/volunteer-registration', [FormSubmissionController::class, 'volunteer'])->name('volunteer');
     Route::post('/volunteer-registration/submit', [FormSubmissionController::class, 'submitVolunteer'])->name('volunteer.submit');
 
+    Route::get('/sisterhood-collective', [SisterhoodRegistrationController::class, 'create'])->name('sisterhood.create');
+    Route::post('/sisterhood-collective', [SisterhoodRegistrationController::class, 'store'])->name('sisterhood.store');
+    Route::post('/sisterhood-collective/pay', [SisterhoodRegistrationController::class, 'retry'])->name('sisterhood.retry');
+    Route::get('/sisterhood-collective/result', [SisterhoodRegistrationController::class, 'result'])->name('sisterhood.result');
+    Route::match(['GET', 'POST'], '/sisterhood-collective/payment/return', [SisterhoodRegistrationController::class, 'paymentReturn'])->name('sisterhood.payment.return');
+    Route::match(['GET', 'POST'], '/sisterhood-collective/payment/callback', [SisterhoodRegistrationController::class, 'paymentCallback'])->name('sisterhood.payment.callback');
+
     Route::get('/community-aid', [FormSubmissionController::class, 'communityAid'])->name('community-aid');
     Route::post('/community-aid/submit', [FormSubmissionController::class, 'submitCommunityAid'])->name('community-aid.submit');
 
@@ -113,6 +122,11 @@ Route::name('welfare.')->group(function () {
         Route::get('/admin/donation-payments', [AdminDashboardController::class, 'donationPayments'])
             ->middleware('admin.permission:donations.view')
             ->name('admin.donation-payments');
+
+        Route::get('/admin/sisterhood', [AdminSisterhoodRegistrationController::class, 'index'])->name('admin.sisterhood.index');
+        Route::get('/admin/sisterhood/{registration}', [AdminSisterhoodRegistrationController::class, 'show'])->name('admin.sisterhood.show');
+        Route::get('/admin/sisterhood/{registration}/edit', [AdminSisterhoodRegistrationController::class, 'edit'])->name('admin.sisterhood.edit');
+        Route::put('/admin/sisterhood/{registration}', [AdminSisterhoodRegistrationController::class, 'update'])->name('admin.sisterhood.update');
         Route::get('/admin/submissions/{type}/{id}', [AdminDashboardController::class, 'showSubmission'])->name('admin.submission.detail');
         Route::post('/admin/submissions/{type}/{id}/status', [AdminDashboardController::class, 'updateStatus'])->name('admin.submission.status');
         Route::post('/admin/submissions/{type}/{id}/status/notify', [AdminDashboardController::class, 'notifyStatusUpdate'])->name('admin.submission.status.notify');

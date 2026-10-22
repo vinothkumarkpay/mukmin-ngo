@@ -16,6 +16,7 @@ use App\Models\ContactSubmission;
 use App\Models\CommunityAidSubmission;
 use App\Models\Donation;
 use App\Models\MflsScholarshipSubmission;
+use App\Models\SisterhoodRegistration;
 use App\Services\Welfare\FriendsMembershipService;
 use App\Services\Welfare\MflsPartnerDocumentService;
 use App\Services\Welfare\SubmissionImportRegistry;
@@ -66,6 +67,7 @@ class AdminDashboardController extends Controller
             'aid' => CommunityAidSubmission::count(),
             'mfls' => MflsScholarshipSubmission::count(),
             'donations' => Donation::count(),
+            'sisterhood' => SisterhoodRegistration::count(),
         ];
 
         $statBreakdowns = [
@@ -79,6 +81,7 @@ class AdminDashboardController extends Controller
             'aid' => $this->educationAidStatusBreakdown(),
             'mfls' => $this->submissionStatusBreakdown(MflsScholarshipSubmission::class),
             'donations' => $this->donationStatusBreakdown(),
+            'sisterhood' => $this->sisterhoodStatusBreakdown(),
         ];
 
         $aidOverview = $this->buildEducationAidOverview();
@@ -355,6 +358,36 @@ class AdminDashboardController extends Controller
             ->selectRaw('status, COUNT(*) as aggregate')
             ->groupBy('status')
             ->pluck('aggregate', 'status');
+
+        foreach ($raw as $status => $count) {
+            $key = strtolower(trim((string) ($status ?? 'pending')));
+            if ($key === '') {
+                $key = 'pending';
+            }
+            if (! array_key_exists($key, $counts)) {
+                $counts[$key] = 0;
+            }
+            $counts[$key] += (int) $count;
+        }
+
+        return $counts;
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    private function sisterhoodStatusBreakdown(): array
+    {
+        $counts = [
+            'pending' => 0,
+            'paid' => 0,
+            'failed' => 0,
+        ];
+
+        $raw = SisterhoodRegistration::query()
+            ->selectRaw('payment_status, COUNT(*) as aggregate')
+            ->groupBy('payment_status')
+            ->pluck('aggregate', 'payment_status');
 
         foreach ($raw as $status => $count) {
             $key = strtolower(trim((string) ($status ?? 'pending')));

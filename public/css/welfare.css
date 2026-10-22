@@ -348,6 +348,25 @@ h6 { font-size: 13px; line-height: 20px; }
     background: var(--color-primary-dk);
 }
 
+.btn-sisterhood-rounded {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #6b2d4a;
+    color: var(--color-white) !important;
+    padding: 12px 28px;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 25px;
+    transition: background var(--transition);
+    line-height: 1.2;
+    text-align: center;
+}
+.btn-sisterhood-rounded:hover {
+    background: #541f38;
+}
+
 /* Rounded Scholarship Button */
 .btn-scholarship-rounded {
     display: inline-flex;
@@ -1286,13 +1305,27 @@ section { padding: 60px 0; }
         gap: 0;
         border: none;
     }
-    .btn-register-rounded i {
+    .btn-sisterhood-rounded {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 38px;
+        padding: 0 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+        gap: 0;
+    }
+    .btn-register-rounded i,
+    .btn-sisterhood-rounded i {
         display: none;
     }
     .btn-scholarship-rounded i {
         display: none;
     }
-    .btn-register-rounded .action-text {
+    .btn-register-rounded .action-text,
+    .btn-sisterhood-rounded .action-text {
         display: inline-block;
     }
     .btn-scholarship-rounded .action-text {

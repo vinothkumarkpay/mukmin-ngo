@@ -16,5 +16,7 @@ class VerifyCsrfToken extends Middleware
         'donate/payment/callback',
         'donate-demo/payment/return',
         'donate-demo/payment/callback',
+        'sisterhood-collective/payment/return',
+        'sisterhood-collective/payment/callback',
     ];
 }
