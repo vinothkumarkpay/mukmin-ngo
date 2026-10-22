@@ -39,7 +39,7 @@
             <div class="result-card success">
                 <h1>Registration Successful!</h1>
                 <p>Thank you for registering for The Sisterhood Collective 2026.</p>
-                <p>Your registration and payment of RM30 have been successfully received. We look forward to welcoming you to the programme!</p>
+                <p>Your registration and payment of RM{{ number_format(\App\Support\SisterhoodCollective::FEE, 0) }} have been successfully received. We look forward to welcoming you to the programme!</p>
                 <p>Further details regarding the event will be shared with you in due course.</p>
                 <p>See you there!</p>
                 @if($registration)
@@ -52,7 +52,7 @@
         @else
             <div class="result-card incomplete">
                 <h1>Registration Incomplete</h1>
-                <p>Your registration has not been completed as payment of RM30 has not been successfully received.</p>
+                <p>Your registration has not been completed as payment of RM{{ number_format(\App\Support\SisterhoodCollective::FEE, 0) }} has not been successfully received.</p>
                 <p>Please try again to complete your payment. Your registration will only be confirmed once payment has been successfully processed.</p>
                 <p>If you have already made the payment but are still seeing this message, please contact the <a href="tel:0143021800">014-3021800</a> for assistance.</p>
                 <div class="result-actions">

@@ -73,9 +73,11 @@ class AdminSisterhoodRegistrationController extends Controller
         $this->authorizePermission('sisterhood.manage');
         $previousStatus = (string) $registration->payment_status;
 
+        $request->merge(SisterhoodCollective::capitaliseInput($request->all()));
+
         $validated = $request->validate(
             SisterhoodCollective::adminRules(),
-            [],
+            SisterhoodCollective::validationMessages(),
             SisterhoodCollective::attributeNames()
         );
 
@@ -101,6 +103,6 @@ class AdminSisterhoodRegistrationController extends Controller
             ->route('welfare.admin.sisterhood.show', $registration)
             ->with('success', $registration->isPaid()
                 ? 'Registration updated. Payment is recorded and the registration is confirmed.'
-                : 'Registration updated. It stays incomplete until payment of RM30 is recorded.');
+                : 'Registration updated. It stays incomplete until payment of RM' . number_format(SisterhoodCollective::FEE, 0) . ' is recorded.');
     }
 }

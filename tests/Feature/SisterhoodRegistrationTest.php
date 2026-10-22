@@ -57,7 +57,16 @@ class SisterhoodRegistrationTest extends TestCase
         $response->assertSee('Salutation / Gelaran', false);
         $response->assertSee('Area of Interest', false);
         $response->assertSee('Participation Declaration', false);
-        $response->assertSee('RM30', false);
+        $response->assertSee('Emergency Contact Name', false);
+        $response->assertSee('Emergency Contact Number', false);
+        $response->assertSee('Unit Number', false);
+        $response->assertSee('Address Line 1', false);
+        $response->assertSee('Address Line 2', false);
+        $response->assertSee('Postcode', false);
+        $response->assertSee('Every statement must be marked before you can register.', false);
+        $response->assertDontSee('Emergency Contact Name &amp; Number', false);
+        $response->assertDontSee('<span aria-hidden="true">*</span>', false);
+        $response->assertSee('RM' . number_format(SisterhoodCollective::FEE, 0), false);
         $response->assertSee('class="btn-submit">Register</button>', false);
     }
 
@@ -70,8 +79,53 @@ class SisterhoodRegistrationTest extends TestCase
             ]);
 
         $response->assertRedirect(route('welfare.sisterhood.create'));
-        $response->assertSessionHasErrors(['salutation', 'age', 'email', 'declaration_accurate']);
+        $response->assertSessionHasErrors(['salutation', 'age', 'email', 'unit_number', 'declaration_accurate']);
         $this->assertDatabaseCount('sisterhood_registrations', 0);
+    }
+
+    public function test_invalid_submission_keeps_the_selected_dropdowns(): void
+    {
+        $payload = $this->payload([
+            'salutation' => "Dato'",
+            'profession' => SisterhoodCollective::PROFESSION_OTHER,
+            'profession_other' => '',
+        ]);
+
+        $response = $this->from(route('welfare.sisterhood.create'))
+            ->post(route('welfare.sisterhood.store'), $payload);
+
+        $response->assertRedirect(route('welfare.sisterhood.create'));
+        $response->assertSessionHasErrors('profession_other');
+
+        $this->get(route('welfare.sisterhood.create'))
+            ->assertOk()
+            ->assertSee('value="Dato&#039;" selected', false)
+            ->assertSee('value="' . e(SisterhoodCollective::PROFESSION_OTHER) . '" selected', false)
+            ->assertSee('value="Bachelor&#039;s Degree" selected', false)
+            ->assertSee('value="Selangor" selected', false)
+            ->assertSee('value="Vegetarian" selected', false)
+            ->assertSee('value="WhatsApp" selected', false)
+            ->assertSee('value="Community Welfare" checked', false)
+            ->assertSee('value="All of the above" checked', false)
+            ->assertSee('name="declaration_accurate" value="1" checked', false);
+    }
+
+    public function test_every_declaration_must_be_marked(): void
+    {
+        $payload = $this->payload();
+        unset($payload['declaration_media']);
+
+        $response = $this->from(route('welfare.sisterhood.create'))
+            ->post(route('welfare.sisterhood.store'), $payload);
+
+        $response->assertRedirect(route('welfare.sisterhood.create'));
+        $response->assertSessionHasErrors('declaration_media');
+        $this->assertDatabaseCount('sisterhood_registrations', 0);
+
+        $this->get(route('welfare.sisterhood.create'))
+            ->assertSee('Please mark every participation declaration.', false)
+            ->assertSee('value="AISHA RAHMAN"', false)
+            ->assertSee('value="A-12-3"', false);
     }
 
     public function test_completed_form_starts_a_pending_rm30_payment(): void
@@ -80,7 +134,7 @@ class SisterhoodRegistrationTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('Redirecting to Payment Gateway', false);
-        $response->assertSee('value="30.00"', false);
+        $response->assertSee('value="' . number_format(SisterhoodCollective::FEE, 2, '.', '') . '"', false);
         $response->assertSee('https://sandbox.webcash.com.my/wcgatewayinit.php', false);
 
         $registration = SisterhoodRegistration::first();
@@ -88,8 +142,16 @@ class SisterhoodRegistrationTest extends TestCase
         $this->assertSame('pending', $registration->payment_status);
         $this->assertNull($registration->paid_at);
         $this->assertFalse($registration->isPaid());
-        $this->assertSame('30.00', $registration->amount);
+        $this->assertSame(number_format(SisterhoodCollective::FEE, 2, '.', ''), $registration->amount);
         $this->assertSame('900101011234', $registration->nric_normalized);
+        $this->assertSame('FARAH RAHMAN', $registration->emergency_contact_name);
+        $this->assertSame('AISHA RAHMAN', $registration->full_name);
+        $this->assertSame('aisha@example.com', $registration->email);
+        $this->assertSame('A-12-3', $registration->unit_number);
+        $this->assertSame('12 JALAN MAWAR', $registration->address_line_1);
+        $this->assertNull($registration->address_line_2);
+        $this->assertSame('55100', $registration->postcode);
+        $this->assertSame('0198887766', $registration->emergency_contact_number);
         Mail::assertNothingSent();
     }
 
@@ -110,11 +172,12 @@ class SisterhoodRegistrationTest extends TestCase
 
             return $mail->hasTo('aisha@example.com')
                 && $mail->statusLabel === 'Paid'
-                && str_contains($html, 'Ms. Aisha Rahman')
+                && str_contains($html, 'Ms. AISHA RAHMAN')
+                && str_contains($html, '12 JALAN MAWAR')
                 && str_contains($html, SisterhoodCollective::EVENT_DATE)
                 && str_contains($html, SisterhoodCollective::EVENT_TIME)
                 && str_contains($html, SisterhoodCollective::EVENT_VENUE)
-                && str_contains($html, 'RM30.00');
+                && str_contains($html, 'RM' . number_format(SisterhoodCollective::FEE, 2));
         });
 
         $this->post(route('welfare.sisterhood.payment.callback'), $this->gatewayPayload('TSC-PAID', '100'))
@@ -162,7 +225,7 @@ class SisterhoodRegistrationTest extends TestCase
         $this->get(route('welfare.sisterhood.result'))
             ->assertOk()
             ->assertSee('Registration Successful!', false)
-            ->assertSee('Your registration and payment of RM30 have been successfully received.', false)
+            ->assertSee('Your registration and payment of RM' . number_format(SisterhoodCollective::FEE, 0) . ' have been successfully received.', false)
             ->assertDontSee('Registration Incomplete', false);
 
         $paid->refresh();
@@ -176,9 +239,40 @@ class SisterhoodRegistrationTest extends TestCase
         $this->get(route('welfare.sisterhood.result'))
             ->assertOk()
             ->assertSee('Registration Incomplete', false)
-            ->assertSee('payment of RM30 has not been successfully received', false)
+            ->assertSee('payment of RM' . number_format(SisterhoodCollective::FEE, 0) . ' has not been successfully received', false)
             ->assertSee('014-3021800', false)
             ->assertDontSee('Registration Successful!', false);
+    }
+
+    public function test_browser_return_confirms_a_successful_gateway_code_when_the_hash_does_not_match(): void
+    {
+        $registration = $this->makeRegistration('TSC-LIVE');
+        $payload = $this->gatewayPayload('TSC-LIVE', '100');
+        $payload['ord_key'] = 'gateway-response-hash';
+        $payload['wcID'] = '50540856';
+
+        $this->post(route('welfare.sisterhood.payment.return'), $payload)
+            ->assertRedirect(route('welfare.sisterhood.result'));
+
+        $registration->refresh();
+        $this->assertTrue($registration->isPaid());
+        $this->assertSame('50540856', $registration->payment_reference);
+
+        $this->get(route('welfare.sisterhood.result'))
+            ->assertOk()
+            ->assertSee('Registration Successful!', false);
+
+        $wrongAmount = $this->makeRegistration('TSC-LIVE-AMT');
+        $mismatch = $this->gatewayPayload('TSC-LIVE-AMT', '100');
+        $mismatch['ord_key'] = 'gateway-response-hash';
+        $mismatch['ord_totalamt'] = '99.00';
+
+        $this->post(route('welfare.sisterhood.payment.return'), $mismatch)
+            ->assertRedirect(route('welfare.sisterhood.result'));
+
+        $wrongAmount->refresh();
+        $this->assertFalse($wrongAmount->isPaid());
+        $this->assertSame('pending', $wrongAmount->payment_status);
     }
 
     public function test_direct_result_without_payment_is_incomplete(): void
@@ -226,7 +320,7 @@ class SisterhoodRegistrationTest extends TestCase
 
         $this->get(route('welfare.admin.sisterhood.index'))
             ->assertOk()
-            ->assertSee('Aisha Rahman', false)
+            ->assertSee('AISHA RAHMAN', false)
             ->assertSee('Incomplete', false);
 
         $this->get(route('welfare.admin.sisterhood.show', $registration))
@@ -243,7 +337,7 @@ class SisterhoodRegistrationTest extends TestCase
 
         $registration->refresh();
         $this->assertTrue($registration->isPaid());
-        $this->assertSame('Aish', $registration->preferred_name);
+        $this->assertSame('AISH', $registration->preferred_name);
         $this->assertSame('MANUAL-1', $registration->payment_reference);
         $this->assertSame('Paid at the counter.', $registration->admin_notes);
 
@@ -307,12 +401,16 @@ class SisterhoodRegistrationTest extends TestCase
             'age' => 32,
             'profession' => 'Academic / Educator',
             'education_level' => "Bachelor's Degree",
-            'full_address' => '12 Jalan Mawar, Kuala Lumpur',
+            'unit_number' => 'A-12-3',
+            'address_line_1' => '12 Jalan Mawar',
+            'address_line_2' => '',
+            'postcode' => '55100',
             'state' => 'Selangor',
             'areas_of_interest' => ['Community Welfare'],
             'looking_forward' => ['All of the above'],
             'food_preference' => 'Vegetarian',
-            'emergency_contact' => 'Farah Rahman 0198887766',
+            'emergency_contact_name' => 'Farah Rahman',
+            'emergency_contact_number' => '0198887766',
             'emergency_relationship' => 'Sister',
             'heard_from' => 'WhatsApp',
         ];

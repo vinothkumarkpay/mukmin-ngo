@@ -144,12 +144,12 @@
                     @if($statusKey === 'success')
                         <p>Assalamu alaikum {{ $registration->full_name }},</p>
                         <p>Thank you for registering for The Sisterhood Collective 2026.</p>
-                        <p>Your registration and payment of RM30 have been successfully received. We look forward to welcoming you to the programme.</p>
+                        <p>Your registration and payment of RM{{ number_format(\App\Support\SisterhoodCollective::FEE, 0) }} have been successfully received. We look forward to welcoming you to the programme.</p>
                         <p>Your registration details and the event timing are below. Further details regarding the event will be shared with you in due course.</p>
                         <p>See you there!</p>
                     @else
                         <p>Assalamu alaikum {{ $registration->full_name }},</p>
-                        <p>Your registration has not been completed as payment of RM30 has not been successfully received.</p>
+                        <p>Your registration has not been completed as payment of RM{{ number_format(\App\Support\SisterhoodCollective::FEE, 0) }} has not been successfully received.</p>
                         <p>Please try again to complete your payment. Your registration will only be confirmed once payment has been successfully processed.</p>
                         <p>If you have already made the payment but are still seeing this message, please contact <a href="tel:0143021800">{{ \App\Support\SisterhoodCollective::SUPPORT_PHONE }}</a> for assistance.</p>
                     @endif

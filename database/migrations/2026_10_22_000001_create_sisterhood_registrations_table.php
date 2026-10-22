@@ -23,12 +23,16 @@ class CreateSisterhoodRegistrationsTable extends Migration
             $table->string('profession_other')->nullable();
             $table->string('education_level');
             $table->string('education_other')->nullable();
-            $table->text('full_address');
+            $table->string('unit_number', 50);
+            $table->string('address_line_1');
+            $table->string('address_line_2')->nullable();
+            $table->string('postcode', 10);
             $table->string('state');
             $table->json('areas_of_interest');
             $table->json('looking_forward');
             $table->string('food_preference');
-            $table->string('emergency_contact');
+            $table->string('emergency_contact_name');
+            $table->string('emergency_contact_number', 30);
             $table->string('emergency_relationship');
             $table->string('heard_from');
             $table->string('heard_from_other')->nullable();

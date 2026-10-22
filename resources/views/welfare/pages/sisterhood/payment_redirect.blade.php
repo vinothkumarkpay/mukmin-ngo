@@ -41,7 +41,7 @@
     <div class="redirect-card">
         <div class="spinner"></div>
         <h1>Redirecting to Payment Gateway</h1>
-        <p>Please wait while we redirect you to pay the RM30 registration fee. Do not close this window. Your registration is confirmed only after payment is received.</p>
+        <p>Please wait while we redirect you to pay the RM{{ number_format(\App\Support\SisterhoodCollective::FEE, 0) }} registration fee. Do not close this window. Your registration is confirmed only after payment is received.</p>
 
         <form name="payment_form" action="{{ $paymentData['url'] }}" method="POST">
             @foreach($paymentData['params'] as $key => $value)

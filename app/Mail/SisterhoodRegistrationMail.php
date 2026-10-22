@@ -61,6 +61,13 @@ class SisterhoodRegistrationMail extends Mailable
             ['label' => 'Preferred name', 'value' => $registration->preferred_name],
             ['label' => 'Email', 'value' => $registration->email],
             ['label' => 'Contact number', 'value' => $registration->contact_number],
+            ['label' => 'Unit number', 'value' => $registration->unit_number],
+            ['label' => 'Address line 1', 'value' => $registration->address_line_1],
+            ['label' => 'Address line 2', 'value' => $registration->address_line_2 ?: '—'],
+            ['label' => 'Postcode', 'value' => $registration->postcode],
+            ['label' => 'State', 'value' => $registration->state],
+            ['label' => 'Emergency contact name', 'value' => $registration->emergency_contact_name],
+            ['label' => 'Emergency contact number', 'value' => $registration->emergency_contact_number],
             ['label' => 'Food preference', 'value' => $registration->food_preference],
         ];
 

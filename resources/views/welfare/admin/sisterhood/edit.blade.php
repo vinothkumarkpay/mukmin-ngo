@@ -51,7 +51,7 @@
                             <label for="payment_status">Payment status</label>
                             <select id="payment_status" name="payment_status" class="form-control" required>
                                 @foreach(['pending' => 'Pending', 'paid' => 'Paid', 'failed' => 'Failed'] as $value => $label)
-                                    <option value="{{ $value }}" @selected(old('payment_status', $registration->payment_status) === $value)>{{ $label }}</option>
+                                    <option value="{{ $value }}" {{ old('payment_status', $registration->payment_status) === $value ? 'selected' : '' }}>{{ $label }}</option>
                                 @endforeach
                             </select>
                             <span class="field-hint">The registration is successful only when payment is Paid. Use this when a participant has paid but the gateway confirmation needs to be recorded manually.</span>

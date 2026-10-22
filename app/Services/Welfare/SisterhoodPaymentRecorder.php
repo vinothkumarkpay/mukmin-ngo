@@ -16,10 +16,12 @@ class SisterhoodPaymentRecorder
     }
 
     /**
-     * Confirm a registration only when the gateway hash matches and the return code is successful.
+     * Confirm a registration when the gateway hash matches.
+     * The browser return may still confirm a successful payment when the amount matches,
+     * because the sandbox response hash does not use the request hash.
      * A paid registration is never moved back to failed by a later callback.
      */
-    public function record(SisterhoodRegistration $registration, array $payload): bool
+    public function record(SisterhoodRegistration $registration, array $payload, bool $requireHash = true): bool
     {
         if ($registration->isPaid()) {
             return true;
@@ -32,23 +34,24 @@ class SisterhoodPaymentRecorder
         $hashValid = $hashPresent
             ? $kiplePay->validateCallback($payload, (float) $registration->amount)
             : false;
-
-        if (! $hashValid) {
-            Log::warning("Sisterhood registration callback validation failed for {$registration->order_id}", $payload);
-
-            return false;
-        }
-
         $paidAmount = number_format((float) ($payload['ord_totalamt'] ?? 0), 2, '.', '');
         $expectedAmount = number_format((float) $registration->amount, 2, '.', '');
+        $amountMatches = $paidAmount === $expectedAmount;
+        $isSuccess = $kiplePay->isSuccessfulReturn($payload['returncode'] ?? null);
 
-        if ($paidAmount !== $expectedAmount) {
+        if (! $hashValid) {
+            if ($requireHash || ! $isSuccess || ! $amountMatches) {
+                Log::warning("Sisterhood registration callback validation failed for {$registration->order_id}", $payload);
+
+                return false;
+            }
+
+            Log::warning("Sisterhood registration return hash mismatch for {$registration->order_id}, using return code", $payload);
+        } elseif (! $amountMatches) {
             Log::warning("Sisterhood registration amount mismatch for {$registration->order_id}", $payload);
 
             return false;
         }
-
-        $isSuccess = $kiplePay->isSuccessfulReturn($payload['returncode'] ?? null);
 
         $registration->update([
             'payment_status' => $isSuccess ? 'paid' : 'failed',

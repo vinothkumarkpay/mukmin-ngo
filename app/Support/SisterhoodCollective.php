@@ -9,7 +9,7 @@ use Illuminate\Validation\Rule;
 
 class SisterhoodCollective
 {
-    public const FEE = 30.00;
+    public const FEE = 1.00;
 
     public const SUPPORT_PHONE = '014-3021800';
 
@@ -208,14 +208,18 @@ class SisterhoodCollective
             'profession_other' => ['nullable', 'string', 'max:255', 'required_if:profession,' . self::PROFESSION_OTHER],
             'education_level' => ['required', Rule::in(self::educationLevels())],
             'education_other' => ['nullable', 'string', 'max:255', 'required_if:education_level,' . self::EDUCATION_OTHER],
-            'full_address' => ['required', 'string', 'max:2000'],
+            'unit_number' => ['required', 'string', 'max:50'],
+            'address_line_1' => ['required', 'string', 'max:255'],
+            'address_line_2' => ['nullable', 'string', 'max:255'],
+            'postcode' => ['required', 'string', 'max:10'],
             'state' => ['required', Rule::in(self::states())],
             'areas_of_interest' => ['required', 'array', 'min:1'],
             'areas_of_interest.*' => ['required', Rule::in(self::areasOfInterest())],
             'looking_forward' => ['required', 'array', 'min:1'],
             'looking_forward.*' => ['required', Rule::in(self::lookingForward())],
             'food_preference' => ['required', Rule::in(self::foodPreferences())],
-            'emergency_contact' => ['required', 'string', 'max:255'],
+            'emergency_contact_name' => ['required', 'string', 'max:255'],
+            'emergency_contact_number' => ['required', 'string', 'max:30'],
             'emergency_relationship' => ['required', 'string', 'max:255'],
             'heard_from' => ['required', Rule::in(self::heardFrom())],
             'heard_from_other' => ['nullable', 'string', 'max:255', 'required_if:heard_from,' . self::HEARD_OTHER],
@@ -226,6 +230,50 @@ class SisterhoodCollective
         }
 
         return $rules;
+    }
+
+    public static function validationMessages(): array
+    {
+        $messages = [];
+
+        foreach (array_keys(self::declarations()) as $key) {
+            $messages['declaration_' . $key . '.accepted'] = 'Please mark every participation declaration.';
+        }
+
+        return $messages;
+    }
+
+    public static function capitaliseInput(array $input): array
+    {
+        foreach ([
+            'full_name',
+            'preferred_name',
+            'nric_passport',
+            'profession_other',
+            'education_other',
+            'unit_number',
+            'address_line_1',
+            'address_line_2',
+            'postcode',
+            'emergency_contact_name',
+            'emergency_relationship',
+            'heard_from_other',
+        ] as $key) {
+            if (isset($input[$key]) && is_string($input[$key])) {
+                $input[$key] = self::capitalise($input[$key]);
+            }
+        }
+
+        if (isset($input['email']) && is_string($input['email'])) {
+            $input['email'] = trim($input['email']);
+        }
+
+        return $input;
+    }
+
+    public static function capitalise(?string $value): string
+    {
+        return mb_strtoupper(trim((string) $value), 'UTF-8');
     }
 
     public static function adminRules(): array
@@ -251,12 +299,16 @@ class SisterhoodCollective
             'profession_other' => 'profession details',
             'education_level' => 'education level',
             'education_other' => 'education details',
-            'full_address' => 'full address',
+            'unit_number' => 'unit number',
+            'address_line_1' => 'address line 1',
+            'address_line_2' => 'address line 2',
+            'postcode' => 'postcode',
             'state' => 'state',
             'areas_of_interest' => 'area of interest',
             'looking_forward' => 'what you are looking forward to',
             'food_preference' => 'food preference',
-            'emergency_contact' => 'emergency contact',
+            'emergency_contact_name' => 'emergency contact name',
+            'emergency_contact_number' => 'emergency contact number',
             'emergency_relationship' => 'relationship to participant',
             'heard_from' => 'how you heard about this programme',
             'heard_from_other' => 'how you heard about this programme',
@@ -279,26 +331,30 @@ class SisterhoodCollective
         $heard = (string) ($input['heard_from'] ?? '');
 
         return [
-            'full_name' => trim((string) ($input['full_name'] ?? '')),
+            'full_name' => self::capitalise($input['full_name'] ?? ''),
             'salutation' => (string) ($input['salutation'] ?? ''),
-            'preferred_name' => trim((string) ($input['preferred_name'] ?? '')),
-            'nric_passport' => trim((string) ($input['nric_passport'] ?? '')),
+            'preferred_name' => self::capitalise($input['preferred_name'] ?? ''),
+            'nric_passport' => self::capitalise($input['nric_passport'] ?? ''),
             'email' => trim((string) ($input['email'] ?? '')),
             'contact_number' => trim((string) ($input['contact_number'] ?? '')),
             'age' => (int) ($input['age'] ?? 0),
             'profession' => $profession,
-            'profession_other' => $profession === self::PROFESSION_OTHER ? trim((string) ($input['profession_other'] ?? '')) : null,
+            'profession_other' => $profession === self::PROFESSION_OTHER ? self::capitalise($input['profession_other'] ?? '') : null,
             'education_level' => $education,
-            'education_other' => $education === self::EDUCATION_OTHER ? trim((string) ($input['education_other'] ?? '')) : null,
-            'full_address' => trim((string) ($input['full_address'] ?? '')),
+            'education_other' => $education === self::EDUCATION_OTHER ? self::capitalise($input['education_other'] ?? '') : null,
+            'unit_number' => self::capitalise($input['unit_number'] ?? ''),
+            'address_line_1' => self::capitalise($input['address_line_1'] ?? ''),
+            'address_line_2' => self::capitalise($input['address_line_2'] ?? '') ?: null,
+            'postcode' => self::capitalise($input['postcode'] ?? ''),
             'state' => (string) ($input['state'] ?? ''),
             'areas_of_interest' => array_values($input['areas_of_interest'] ?? []),
             'looking_forward' => array_values($input['looking_forward'] ?? []),
             'food_preference' => (string) ($input['food_preference'] ?? ''),
-            'emergency_contact' => trim((string) ($input['emergency_contact'] ?? '')),
-            'emergency_relationship' => trim((string) ($input['emergency_relationship'] ?? '')),
+            'emergency_contact_name' => self::capitalise($input['emergency_contact_name'] ?? ''),
+            'emergency_contact_number' => trim((string) ($input['emergency_contact_number'] ?? '')),
+            'emergency_relationship' => self::capitalise($input['emergency_relationship'] ?? ''),
             'heard_from' => $heard,
-            'heard_from_other' => $heard === self::HEARD_OTHER ? trim((string) ($input['heard_from_other'] ?? '')) : null,
+            'heard_from_other' => $heard === self::HEARD_OTHER ? self::capitalise($input['heard_from_other'] ?? '') : null,
             'declarations' => array_values(self::declarations()),
         ];
     }

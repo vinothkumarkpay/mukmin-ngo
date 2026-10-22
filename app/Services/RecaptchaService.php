@@ -9,7 +9,8 @@ class RecaptchaService
 {
     public function isEnabled(): bool
     {
-        return filled(config('services.recaptcha.secret_key'))
+        return config('services.recaptcha.enabled')
+            && filled(config('services.recaptcha.secret_key'))
             && filled(config('services.recaptcha.site_key'));
     }
 

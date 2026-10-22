@@ -1,5 +1,5 @@
 @php
-    $recaptchaEnabled = filled(config('services.recaptcha.site_key')) && filled(config('services.recaptcha.secret_key'));
+    $recaptchaEnabled = app(\App\Services\RecaptchaService::class)->isEnabled();
 @endphp
 
 @if($recaptchaEnabled)

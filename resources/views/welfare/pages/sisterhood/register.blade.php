@@ -135,8 +135,8 @@
                 </div>
             @else
                 <div class="fee-note">
-                    <strong>Every question is required.</strong>
-                    <p style="margin: 8px 0 0;">After you submit this form you will be taken to the payment gateway to pay the RM30 registration fee. Your place is confirmed only after that payment is received.</p>
+                    <strong>Every question is required, except address line 2.</strong>
+                    <p style="margin: 8px 0 0;">After you submit this form you will be taken to the payment gateway to pay the RM{{ number_format(\App\Support\SisterhoodCollective::FEE, 0) }} registration fee. Your place is confirmed only after that payment is received.</p>
                 </div>
 
                 @if($errors->any())

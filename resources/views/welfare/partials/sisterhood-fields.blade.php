@@ -39,101 +39,120 @@
 @endphp
 
 <div class="form-group">
-    <label for="full_name">Full Name (as per NRIC/Passport) <span aria-hidden="true">*</span></label>
-    <input type="text" id="full_name" name="full_name" class="form-control" value="{{ $field('full_name') }}" maxlength="255" required>
+    <label for="full_name">Full Name (as per NRIC/Passport)</label>
+    <input type="text" id="full_name" name="full_name" class="form-control autocap" value="{{ $field('full_name') }}" maxlength="255" required autocapitalize="characters">
     @error('full_name')<span class="field-error">{{ $message }}</span>@enderror
 </div>
 
 <div class="form-group">
-    <label for="salutation">Salutation / Gelaran <span aria-hidden="true">*</span></label>
+    <label for="salutation">Salutation / Gelaran</label>
     <select id="salutation" name="salutation" class="form-control" required>
         <option value="">Choose</option>
         @foreach(SisterhoodCollective::salutations() as $option)
-            <option value="{{ $option }}" @selected($field('salutation') === $option)>{{ $option }}</option>
+            <option value="{{ $option }}" {{ $field('salutation') === $option ? 'selected' : '' }}>{{ $option }}</option>
         @endforeach
     </select>
     @error('salutation')<span class="field-error">{{ $message }}</span>@enderror
 </div>
 
 <div class="form-group">
-    <label for="preferred_name">Preferred Name (Nama Panggilan) <span aria-hidden="true">*</span></label>
-    <input type="text" id="preferred_name" name="preferred_name" class="form-control" value="{{ $field('preferred_name') }}" maxlength="255" required>
+    <label for="preferred_name">Preferred Name (Nama Panggilan)</label>
+    <input type="text" id="preferred_name" name="preferred_name" class="form-control autocap" value="{{ $field('preferred_name') }}" maxlength="255" required autocapitalize="characters">
     @error('preferred_name')<span class="field-error">{{ $message }}</span>@enderror
 </div>
 
 <div class="form-group">
-    <label for="nric_passport">NRIC Number / Passport Number <span aria-hidden="true">*</span></label>
-    <input type="text" id="nric_passport" name="nric_passport" class="form-control" value="{{ $field('nric_passport') }}" maxlength="50" required>
+    <label for="nric_passport">NRIC Number / Passport Number</label>
+    <input type="text" id="nric_passport" name="nric_passport" class="form-control autocap" value="{{ $field('nric_passport') }}" maxlength="50" required autocapitalize="characters">
     @error('nric_passport')<span class="field-error">{{ $message }}</span>@enderror
 </div>
 
 <div class="form-group">
-    <label for="email">Email Address <span aria-hidden="true">*</span></label>
+    <label for="email">Email Address</label>
     <input type="email" id="email" name="email" class="form-control" value="{{ $field('email') }}" maxlength="255" required>
     <span class="field-hint">Required for the payment receipt and event updates.</span>
     @error('email')<span class="field-error">{{ $message }}</span>@enderror
 </div>
 
 <div class="form-group">
-    <label for="contact_number">Contact Number (Whatsapp) <span aria-hidden="true">*</span></label>
+    <label for="contact_number">Contact Number (Whatsapp)</label>
     <input type="text" id="contact_number" name="contact_number" class="form-control" value="{{ $field('contact_number') }}" maxlength="30" required>
     @error('contact_number')<span class="field-error">{{ $message }}</span>@enderror
 </div>
 
 <div class="form-group">
-    <label for="age">Age <span aria-hidden="true">*</span></label>
+    <label for="age">Age</label>
     <input type="number" id="age" name="age" class="form-control" value="{{ $field('age') }}" min="18" max="120" required>
     <span class="field-hint">Open to Indian Muslim women aged 18 and above.</span>
     @error('age')<span class="field-error">{{ $message }}</span>@enderror
 </div>
 
 <div class="form-group">
-    <label for="profession">Profession / Occupation <span aria-hidden="true">*</span></label>
+    <label for="profession">Profession / Occupation</label>
     <select id="profession" name="profession" class="form-control" required>
         <option value="">Choose</option>
         @foreach(SisterhoodCollective::professions() as $option)
-            <option value="{{ $option }}" @selected($field('profession') === $option)>{{ $option }}</option>
+            <option value="{{ $option }}" {{ $field('profession') === $option ? 'selected' : '' }}>{{ $option }}</option>
         @endforeach
     </select>
     @error('profession')<span class="field-error">{{ $message }}</span>@enderror
     <label for="profession_other" class="field-hint">If you selected Other, please specify</label>
-    <input type="text" id="profession_other" name="profession_other" class="form-control" value="{{ $field('profession_other') }}" maxlength="255">
+    <input type="text" id="profession_other" name="profession_other" class="form-control autocap" value="{{ $field('profession_other') }}" maxlength="255" autocapitalize="characters">
     @error('profession_other')<span class="field-error">{{ $message }}</span>@enderror
 </div>
 
 <div class="form-group">
-    <label for="education_level">Education Level <span aria-hidden="true">*</span></label>
+    <label for="education_level">Education Level</label>
     <select id="education_level" name="education_level" class="form-control" required>
         <option value="">Choose</option>
         @foreach(SisterhoodCollective::educationLevels() as $option)
-            <option value="{{ $option }}" @selected($field('education_level') === $option)>{{ $option }}</option>
+            <option value="{{ $option }}" {{ $field('education_level') === $option ? 'selected' : '' }}>{{ $option }}</option>
         @endforeach
     </select>
     @error('education_level')<span class="field-error">{{ $message }}</span>@enderror
     <label for="education_other" class="field-hint">If you selected Other, please specify</label>
-    <input type="text" id="education_other" name="education_other" class="form-control" value="{{ $field('education_other') }}" maxlength="255">
+    <input type="text" id="education_other" name="education_other" class="form-control autocap" value="{{ $field('education_other') }}" maxlength="255" autocapitalize="characters">
     @error('education_other')<span class="field-error">{{ $message }}</span>@enderror
 </div>
 
+<div class="form-group">
+    <label for="unit_number">Unit Number</label>
+    <input type="text" id="unit_number" name="unit_number" class="form-control autocap" value="{{ $field('unit_number') }}" maxlength="50" required autocapitalize="characters">
+    @error('unit_number')<span class="field-error">{{ $message }}</span>@enderror
+</div>
+
 <div class="form-group form-group-full">
-    <label for="full_address">Full Address <span aria-hidden="true">*</span></label>
-    <textarea id="full_address" name="full_address" class="form-control" rows="3" maxlength="2000" required>{{ $field('full_address') }}</textarea>
-    @error('full_address')<span class="field-error">{{ $message }}</span>@enderror
+    <label for="address_line_1">Address Line 1</label>
+    <input type="text" id="address_line_1" name="address_line_1" class="form-control autocap" value="{{ $field('address_line_1') }}" maxlength="255" required autocapitalize="characters">
+    @error('address_line_1')<span class="field-error">{{ $message }}</span>@enderror
+</div>
+
+<div class="form-group form-group-full">
+    <label for="address_line_2">Address Line 2</label>
+    <input type="text" id="address_line_2" name="address_line_2" class="form-control autocap" value="{{ $field('address_line_2') }}" maxlength="255" autocapitalize="characters">
+    <span class="field-hint">Optional.</span>
+    @error('address_line_2')<span class="field-error">{{ $message }}</span>@enderror
 </div>
 
 <div class="form-group">
-    <label for="state">State <span aria-hidden="true">*</span></label>
+    <label for="postcode">Postcode</label>
+    <input type="text" id="postcode" name="postcode" class="form-control autocap" value="{{ $field('postcode') }}" maxlength="10" required autocapitalize="characters">
+    @error('postcode')<span class="field-error">{{ $message }}</span>@enderror
+</div>
+
+<div class="form-group">
+    <label for="state">State</label>
     <select id="state" name="state" class="form-control" required>
         <option value="">Choose</option>
         @foreach(SisterhoodCollective::states() as $option)
-            <option value="{{ $option }}" @selected($field('state') === $option)>{{ $option }}</option>
+            <option value="{{ $option }}" {{ $field('state') === $option ? 'selected' : '' }}>{{ $option }}</option>
         @endforeach
     </select>
     @error('state')<span class="field-error">{{ $message }}</span>@enderror
 </div>
 
 <div class="form-group form-group-full">
-    <label id="areas-label" for="areas-trigger">Area of Interest <span aria-hidden="true">*</span></label>
+    <label id="areas-label" for="areas-trigger">Area of Interest</label>
     <div class="custom-dropdown-container" data-placeholder="Choose">
         <input class="dropdown-validity" type="text" required tabindex="-1" autocomplete="off" value="{{ count($areas) ? '1' : '' }}" aria-hidden="true">
         <button type="button" class="dropdown-trigger" id="areas-trigger" aria-labelledby="areas-label" aria-expanded="false">
@@ -142,7 +161,7 @@
         <div class="dropdown-options-list">
             @foreach(SisterhoodCollective::areasOfInterest() as $option)
                 <label class="dropdown-option-item">
-                    <input type="checkbox" name="areas_of_interest[]" value="{{ $option }}" @checked(in_array($option, $areas, true))>
+                    <input type="checkbox" name="areas_of_interest[]" value="{{ $option }}" {{ in_array($option, $areas, true) ? 'checked' : '' }}>
                     <span>{{ $option }}</span>
                 </label>
             @endforeach
@@ -152,7 +171,7 @@
 </div>
 
 <div class="form-group form-group-full">
-    <label id="looking-label" for="looking-trigger">What are you most looking forward to at The Sisterhood Collective? <span aria-hidden="true">*</span></label>
+    <label id="looking-label" for="looking-trigger">What are you most looking forward to at The Sisterhood Collective?</label>
     <div class="custom-dropdown-container" data-placeholder="Choose">
         <input class="dropdown-validity" type="text" required tabindex="-1" autocomplete="off" value="{{ count($looking) ? '1' : '' }}" aria-hidden="true">
         <button type="button" class="dropdown-trigger" id="looking-trigger" aria-labelledby="looking-label" aria-expanded="false">
@@ -161,7 +180,7 @@
         <div class="dropdown-options-list">
             @foreach(SisterhoodCollective::lookingForward() as $option)
                 <label class="dropdown-option-item">
-                    <input type="checkbox" name="looking_forward[]" value="{{ $option }}" @checked(in_array($option, $looking, true))>
+                    <input type="checkbox" name="looking_forward[]" value="{{ $option }}" {{ in_array($option, $looking, true) ? 'checked' : '' }}>
                     <span>{{ $option }}</span>
                 </label>
             @endforeach
@@ -171,57 +190,67 @@
 </div>
 
 <div class="form-group">
-    <label for="food_preference">Food Preference <span aria-hidden="true">*</span></label>
+    <label for="food_preference">Food Preference</label>
     <select id="food_preference" name="food_preference" class="form-control" required>
         <option value="">Choose</option>
         @foreach(SisterhoodCollective::foodPreferences() as $option)
-            <option value="{{ $option }}" @selected($field('food_preference') === $option)>{{ $option }}</option>
+            <option value="{{ $option }}" {{ $field('food_preference') === $option ? 'selected' : '' }}>{{ $option }}</option>
         @endforeach
     </select>
     @error('food_preference')<span class="field-error">{{ $message }}</span>@enderror
 </div>
 
 <div class="form-group">
-    <label for="emergency_contact">Emergency Contact Name &amp; Number <span aria-hidden="true">*</span></label>
-    <input type="text" id="emergency_contact" name="emergency_contact" class="form-control" value="{{ $field('emergency_contact') }}" maxlength="255" required>
-    @error('emergency_contact')<span class="field-error">{{ $message }}</span>@enderror
+    <label for="emergency_contact_name">Emergency Contact Name</label>
+    <input type="text" id="emergency_contact_name" name="emergency_contact_name" class="form-control autocap" value="{{ $field('emergency_contact_name') }}" maxlength="255" required autocapitalize="characters">
+    @error('emergency_contact_name')<span class="field-error">{{ $message }}</span>@enderror
 </div>
 
 <div class="form-group">
-    <label for="emergency_relationship">Relationship to Participant <span aria-hidden="true">*</span></label>
-    <input type="text" id="emergency_relationship" name="emergency_relationship" class="form-control" value="{{ $field('emergency_relationship') }}" maxlength="255" required>
+    <label for="emergency_contact_number">Emergency Contact Number</label>
+    <input type="tel" id="emergency_contact_number" name="emergency_contact_number" class="form-control" value="{{ $field('emergency_contact_number') }}" maxlength="30" required>
+    @error('emergency_contact_number')<span class="field-error">{{ $message }}</span>@enderror
+</div>
+
+<div class="form-group">
+    <label for="emergency_relationship">Relationship to Participant</label>
+    <input type="text" id="emergency_relationship" name="emergency_relationship" class="form-control autocap" value="{{ $field('emergency_relationship') }}" maxlength="255" required autocapitalize="characters">
     @error('emergency_relationship')<span class="field-error">{{ $message }}</span>@enderror
 </div>
 
 <div class="form-group">
-    <label for="heard_from">How did you hear about this programme? <span aria-hidden="true">*</span></label>
+    <label for="heard_from">How did you hear about this programme?</label>
     <select id="heard_from" name="heard_from" class="form-control" required>
         <option value="">Choose</option>
         @foreach(SisterhoodCollective::heardFrom() as $option)
-            <option value="{{ $option }}" @selected($field('heard_from') === $option)>{{ $option }}</option>
+            <option value="{{ $option }}" {{ $field('heard_from') === $option ? 'selected' : '' }}>{{ $option }}</option>
         @endforeach
     </select>
     @error('heard_from')<span class="field-error">{{ $message }}</span>@enderror
     <label for="heard_from_other" class="field-hint">If you selected Other, please specify</label>
-    <input type="text" id="heard_from_other" name="heard_from_other" class="form-control" value="{{ $field('heard_from_other') }}" maxlength="255">
+    <input type="text" id="heard_from_other" name="heard_from_other" class="form-control autocap" value="{{ $field('heard_from_other') }}" maxlength="255" autocapitalize="characters">
     @error('heard_from_other')<span class="field-error">{{ $message }}</span>@enderror
 </div>
 
 <div class="form-group form-group-full declaration-box">
-    <span id="declaration-label">Participation Declaration <span aria-hidden="true">*</span></span>
+    <span id="declaration-label">Participation Declaration</span>
+    <span class="field-hint">Every statement must be marked before you can register.</span>
     <div class="choice-list">
         @foreach(SisterhoodCollective::declarations() as $key => $label)
             <label>
-                <input type="checkbox" name="declaration_{{ $key }}" value="1" @checked($declarationChecked($key, $label)) required>
+                <input type="checkbox" name="declaration_{{ $key }}" value="1" {{ $declarationChecked($key, $label) ? 'checked' : '' }} required>
                 <span>{{ $label }}</span>
             </label>
-            @error('declaration_' . $key)<span class="field-error">{{ $message }}</span>@enderror
         @endforeach
     </div>
+    @if($errors->hasAny(array_map(function ($key) { return 'declaration_' . $key; }, array_keys(SisterhoodCollective::declarations()))))
+        <span class="field-error">Please mark every participation declaration.</span>
+    @endif
 </div>
 
 @once
 <style>
+.sisterhood-fields .autocap { text-transform: uppercase; }
 .sisterhood-fields .custom-dropdown-container { position: relative; width: 100%; }
 .sisterhood-fields .dropdown-validity {
     position: absolute;
@@ -308,6 +337,42 @@
 </style>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.sisterhood-fields .autocap').forEach(function (input) {
+        function capitalise() {
+            var start = input.selectionStart;
+            var end = input.selectionEnd;
+            var upper = input.value.toLocaleUpperCase();
+            if (upper !== input.value) {
+                input.value = upper;
+                if (typeof start === 'number' && typeof end === 'number') {
+                    input.setSelectionRange(start, end);
+                }
+            }
+        }
+        input.addEventListener('input', capitalise);
+        capitalise();
+    });
+
+    var declarationBoxes = document.querySelectorAll('.sisterhood-fields input[name^="declaration_"]');
+    function markDeclarations() {
+        var unchecked = Array.prototype.filter.call(declarationBoxes, function (box) { return !box.checked; });
+        declarationBoxes.forEach(function (box) { box.setCustomValidity(''); });
+        if (unchecked.length) {
+            unchecked[0].setCustomValidity('Please mark every participation declaration.');
+        }
+    }
+    declarationBoxes.forEach(function (box) {
+        box.addEventListener('change', markDeclarations);
+    });
+    var declarationForm = declarationBoxes.length ? declarationBoxes[0].form : null;
+    if (declarationForm) {
+        declarationForm.addEventListener('click', function (event) {
+            if (event.target && event.target.closest && event.target.closest('[type="submit"]')) {
+                markDeclarations();
+            }
+        }, true);
+    }
+
     var dropdowns = document.querySelectorAll('.sisterhood-fields .custom-dropdown-container');
 
     dropdowns.forEach(function (dropdown) {

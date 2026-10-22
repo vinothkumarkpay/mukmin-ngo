@@ -61,10 +61,17 @@ class KiplePayService
             return false;
         }
 
-        $amountWithoutDecimal = number_format((float) $amount, 2, '', '');
-        $calculatedHash = sha1($this->secretKey . $this->merchantId . $orderNo . $amountWithoutDecimal);
+        $amountWithoutDecimal = str_replace([',', '.'], '', (string) $amount);
+        $base = $this->secretKey . $this->merchantId . $orderNo . $amountWithoutDecimal;
+        $returnCode = (string) ($data['returncode'] ?? '');
 
-        return hash_equals(strtolower($calculatedHash), $receivedHash);
+        foreach ([$base, $base . $returnCode] as $value) {
+            if (hash_equals(sha1($value), $receivedHash)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function isSuccessfulReturn($returncode): bool

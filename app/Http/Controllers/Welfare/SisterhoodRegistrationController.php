@@ -28,11 +28,13 @@ class SisterhoodRegistrationController extends Controller
                 ->with('error', 'Registration closed on 17 November 2026.');
         }
 
+        $request->merge(SisterhoodCollective::capitaliseInput($request->all()));
+
         $request->validate(
             array_merge(SisterhoodCollective::rules(), [
                 'g-recaptcha-response' => $recaptcha->isEnabled() ? 'required|string' : 'nullable',
             ]),
-            [],
+            SisterhoodCollective::validationMessages(),
             SisterhoodCollective::attributeNames()
         );
 
@@ -84,6 +86,7 @@ class SisterhoodRegistrationController extends Controller
 
         $registration->update([
             'order_id' => SisterhoodCollective::newOrderId(),
+            'amount' => SisterhoodCollective::FEE,
             'payment_status' => 'pending',
             'payment_attempts' => $attempts,
         ]);
@@ -98,7 +101,7 @@ class SisterhoodRegistrationController extends Controller
         $registration = $this->findRegistration($request);
 
         if ($registration) {
-            $recorder->record($registration, $request->all());
+            $recorder->record($registration, $request->all(), false);
             $registration->refresh();
             session(['sisterhood_registration_id' => $registration->id]);
         }
