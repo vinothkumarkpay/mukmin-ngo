@@ -28,8 +28,8 @@ class SisterhoodRegistrationMail extends Mailable
         $this->statusKey = $registration->payment_status === 'paid' ? 'success' : 'failed';
         $this->statusLabel = $registration->paymentStatusLabel();
         $this->subject = $this->statusKey === 'success'
-            ? 'The Sisterhood Collective 2026 — Registration Successful'
-            : 'The Sisterhood Collective 2026 — Registration Incomplete';
+            ? 'The Sisterhood Collective 2026 - Registration Successful'
+            : 'The Sisterhood Collective 2026 - Registration Incomplete';
         $this->registrationRows = $this->buildRegistrationRows();
         $this->eventRows = [
             ['label' => 'Date', 'value' => SisterhoodCollective::EVENT_DATE],
@@ -53,7 +53,8 @@ class SisterhoodRegistrationMail extends Mailable
             config('mail.from.name')
         )
             ->subject($this->subject)
-            ->view('emails.sisterhood_registration');
+            ->view('emails.sisterhood_registration')
+            ->text('emails.sisterhood_registration_text');
     }
 
     protected function buildRegistrationRows(): array

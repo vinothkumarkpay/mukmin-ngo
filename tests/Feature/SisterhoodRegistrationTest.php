@@ -180,7 +180,8 @@ class SisterhoodRegistrationTest extends TestCase
                 && str_contains($html, 'RM' . number_format(SisterhoodCollective::FEE, 2))
                 && str_contains($html, 'Your entry QR code')
                 && str_contains($html, 'Check-in code: ' . $mail->registration->check_in_code)
-                && str_starts_with($mail->qrPng, "\x89PNG");
+                && str_starts_with($mail->qrPng, "\x89PNG")
+                && str_contains($this->renderMailText($mail), 'Check-in code: ' . $mail->registration->check_in_code);
         });
 
         $this->post(route('welfare.sisterhood.payment.callback'), $this->gatewayPayload('TSC-PAID', '100'))
@@ -436,6 +437,17 @@ class SisterhoodRegistrationTest extends TestCase
             'eventRows' => $mail->eventRows,
             'qrPng' => $mail->qrPng,
             'qrDataUri' => $mail->qrDataUri,
+        ])->render();
+    }
+
+    private function renderMailText(SisterhoodRegistrationMail $mail): string
+    {
+        return view('emails.sisterhood_registration_text', [
+            'registration' => $mail->registration,
+            'statusKey' => $mail->statusKey,
+            'statusLabel' => $mail->statusLabel,
+            'registrationRows' => $mail->registrationRows,
+            'eventRows' => $mail->eventRows,
         ])->render();
     }
 

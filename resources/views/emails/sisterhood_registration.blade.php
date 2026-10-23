@@ -131,7 +131,7 @@
         <div class="email-container">
             <div class="email-header">
                 <div class="email-header-top">
-                    <img class="email-header-logo" src="{{ asset('welfare/img/mukmin_logo.png') }}" alt="MUKMIN Logo">
+                    <img class="email-header-logo" src="{{ isset($message) ? $message->embed(public_path('welfare/img/mukmin_logo.png')) : asset('welfare/img/mukmin_logo.png') }}" alt="MUKMIN Logo">
                 </div>
                 <div class="email-header-main">
                     <h1>The Sisterhood Collective 2026</h1>
