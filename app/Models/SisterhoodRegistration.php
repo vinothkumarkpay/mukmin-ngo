@@ -52,13 +52,29 @@ class SisterhoodRegistration extends Model
         'payment_payload' => 'array',
         'payment_attempts' => 'array',
         'paid_at' => 'datetime',
+        'attended_at' => 'datetime',
     ];
 
     protected static function booted(): void
     {
+        static::creating(function (SisterhoodRegistration $registration) {
+            if (! filled($registration->check_in_code)) {
+                $registration->check_in_code = self::newCheckInCode();
+            }
+        });
+
         static::saving(function (SisterhoodRegistration $registration) {
             $registration->nric_normalized = self::normalizeNric((string) $registration->nric_passport);
         });
+    }
+
+    public static function newCheckInCode(): string
+    {
+        do {
+            $code = strtoupper(bin2hex(random_bytes(6)));
+        } while (self::query()->where('check_in_code', $code)->exists());
+
+        return $code;
     }
 
     public static function normalizeNric(string $nric): string
@@ -69,6 +85,16 @@ class SisterhoodRegistration extends Model
     public function isPaid(): bool
     {
         return $this->payment_status === 'paid' && $this->paid_at !== null;
+    }
+
+    public function isPresent(): bool
+    {
+        return $this->attended_at !== null;
+    }
+
+    public function attendanceLabel(): string
+    {
+        return $this->isPresent() ? 'Present' : 'Not present';
     }
 
     public function professionLabel(): string

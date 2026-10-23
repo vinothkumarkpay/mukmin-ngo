@@ -170,6 +170,15 @@
                     </tbody>
                 </table>
 
+                @if($statusKey === 'success' && $qrDataUri !== '')
+                    <p class="section-title">Your entry QR code</p>
+                    <p>Show this code at the hall on {{ \App\Support\SisterhoodCollective::EVENT_DATE }}. It carries your registration details so your attendance can be marked.</p>
+                    <p style="text-align: center; margin: 18px 0;">
+                        <img src="{{ isset($message) ? $message->embedData($qrPng, 'sisterhood-check-in.png', 'image/png') : $qrDataUri }}" alt="Entry QR code for {{ $registration->full_name }}" width="220" height="220" style="width: 220px; height: 220px;">
+                    </p>
+                    <p style="text-align: center; color: #718096; font-size: 13px;">Check-in code: {{ $registration->check_in_code }}</p>
+                @endif
+
                 <p class="section-title">Event details</p>
                 <table class="form-table">
                     <tbody>

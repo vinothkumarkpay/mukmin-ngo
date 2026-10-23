@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Welfare;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Welfare\Concerns\ChecksAdminAccess;
 use App\Models\SisterhoodRegistration;
+use App\Services\Welfare\SisterhoodQrCode;
 use App\Services\Welfare\SisterhoodRegistrationNotifier;
 use App\Support\SisterhoodCollective;
 use Illuminate\Http\Request;
@@ -34,6 +35,7 @@ class AdminSisterhoodRegistrationController extends Controller
                     ->orWhere('contact_number', 'like', $like)
                     ->orWhere('nric_passport', 'like', $like)
                     ->orWhere('order_id', 'like', $like)
+                    ->orWhere('check_in_code', 'like', $like)
                     ->orWhere('payment_reference', 'like', $like);
             });
         }
@@ -46,6 +48,7 @@ class AdminSisterhoodRegistrationController extends Controller
             'paidCount' => SisterhoodRegistration::where('payment_status', 'paid')->count(),
             'pendingCount' => SisterhoodRegistration::where('payment_status', 'pending')->count(),
             'failedCount' => SisterhoodRegistration::where('payment_status', 'failed')->count(),
+            'presentCount' => SisterhoodRegistration::whereNotNull('attended_at')->count(),
         ]);
     }
 
@@ -104,5 +107,100 @@ class AdminSisterhoodRegistrationController extends Controller
             ->with('success', $registration->isPaid()
                 ? 'Registration updated. Payment is recorded and the registration is confirmed.'
                 : 'Registration updated. It stays incomplete until payment of RM' . number_format(SisterhoodCollective::FEE, 0) . ' is recorded.');
+    }
+
+    public function qr(SisterhoodRegistration $registration, SisterhoodQrCode $qrCode)
+    {
+        $this->authorizePermission('sisterhood.view');
+
+        return response($qrCode->png($registration), 200, [
+            'Content-Type' => 'image/png',
+            'Cache-Control' => 'private, max-age=3600',
+        ]);
+    }
+
+    public function attendance()
+    {
+        $this->authorizePermission('sisterhood.view');
+
+        return view('welfare.admin.sisterhood.attendance', [
+            'presentCount' => SisterhoodRegistration::whereNotNull('attended_at')->count(),
+            'paidCount' => SisterhoodRegistration::where('payment_status', 'paid')->count(),
+        ]);
+    }
+
+    public function markAttendance(Request $request, SisterhoodQrCode $qrCode)
+    {
+        $this->authorizePermission('sisterhood.view');
+
+        $data = $request->validate([
+            'code' => ['required', 'string', 'max:2000'],
+            'present' => ['required', 'boolean'],
+        ]);
+
+        $code = $qrCode->codeFromScan($data['code']);
+        $registration = $code
+            ? SisterhoodRegistration::where('check_in_code', $code)->first()
+            : null;
+
+        if (! $registration) {
+            return $this->attendanceResponse($request, null, false, 'No registration matches this code.', 404);
+        }
+
+        $markPresent = $request->boolean('present');
+
+        if ($markPresent && ! $registration->isPaid()) {
+            return $this->attendanceResponse(
+                $request,
+                $registration,
+                false,
+                'This registration is not paid, so attendance cannot be marked.',
+                422
+            );
+        }
+
+        if ($markPresent) {
+            $alreadyPresent = $registration->isPresent();
+            if (! $alreadyPresent) {
+                $registration->attended_at = now();
+                $registration->save();
+            }
+            $message = $alreadyPresent
+                ? $registration->full_name . ' is already marked present.'
+                : $registration->full_name . ' is marked present.';
+        } else {
+            $registration->attended_at = null;
+            $registration->save();
+            $message = $registration->full_name . ' is marked not present.';
+        }
+
+        return $this->attendanceResponse($request, $registration->fresh(), true, $message, 200);
+    }
+
+    private function attendanceResponse(Request $request, ?SisterhoodRegistration $registration, bool $ok, string $message, int $status)
+    {
+        $payload = [
+            'ok' => $ok,
+            'message' => $message,
+            'registration' => $registration ? [
+                'name' => $registration->full_name,
+                'preferred_name' => $registration->preferred_name,
+                'order_id' => $registration->order_id,
+                'email' => $registration->email,
+                'payment' => $registration->paymentStatusLabel(),
+                'attendance' => $registration->attendanceLabel(),
+                'present' => $registration->isPresent(),
+                'attended_at' => optional($registration->attended_at)->format('d M Y, h:i A'),
+                'url' => route('welfare.admin.sisterhood.show', $registration),
+            ] : null,
+        ];
+
+        if ($request->expectsJson()) {
+            return response()->json($payload, $status);
+        }
+
+        return redirect()
+            ->back()
+            ->with($ok ? 'success' : 'error', $message);
     }
 }

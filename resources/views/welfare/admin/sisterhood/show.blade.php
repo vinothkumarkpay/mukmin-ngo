@@ -18,11 +18,17 @@
                     <i class="fas fa-check-circle"></i> {{ session('success') }}
                 </div>
             @endif
+            @if(session('error'))
+                <div class="alert-admin alert-admin-error">
+                    <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
+                </div>
+            @endif
 
             <div class="dashboard-card">
                 <div class="card-header">
                     <h3>{{ $registration->full_name }}</h3>
                     <div class="card-actions">
+                        <a href="{{ route('welfare.admin.sisterhood.attendance') }}" class="btn-admin btn-admin-secondary">Scan attendance</a>
                         <a href="{{ route('welfare.admin.sisterhood.index') }}" class="btn-admin btn-admin-secondary">Back to list</a>
                         @if($canManage)
                             <a href="{{ route('welfare.admin.sisterhood.edit', $registration) }}" class="btn-admin btn-admin-primary">Edit</a>
@@ -33,7 +39,29 @@
                     <p style="margin-top: 0;">
                         <span class="badge badge-{{ $registration->payment_status }}">{{ $registration->paymentStatusLabel() }}</span>
                         Registration {{ strtolower($registration->registrationStatusLabel()) }}
+                        <span class="badge {{ $registration->isPresent() ? 'badge-paid' : 'badge-pending' }}">{{ $registration->attendanceLabel() }}</span>
                     </p>
+
+                    <div style="display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; margin: 8px 0 28px;">
+                        <img src="{{ route('welfare.admin.sisterhood.qr', $registration) }}" alt="Check-in QR code for {{ $registration->full_name }}" width="180" height="180" style="width: 180px; height: 180px; border: 1px solid #e6e6e6; border-radius: 8px; background: #fff;">
+                        <div>
+                            <p style="margin: 0 0 8px;"><strong>Check-in code:</strong> <code>{{ $registration->check_in_code }}</code></p>
+                            <p style="margin: 0 0 8px;">The same code is in the confirmation email. Scanning it marks this participant present.</p>
+                            @if($registration->attended_at)
+                                <p style="margin: 0 0 12px;">Marked present {{ $registration->attended_at->format('d M Y, h:i A') }}.</p>
+                            @endif
+                            @if($registration->isPaid())
+                                <form method="POST" action="{{ route('welfare.admin.sisterhood.attendance.store') }}">
+                                    @csrf
+                                    <input type="hidden" name="code" value="{{ $registration->check_in_code }}">
+                                    <input type="hidden" name="present" value="{{ $registration->isPresent() ? '0' : '1' }}">
+                                    <button type="submit" class="btn-admin btn-admin-primary">{{ $registration->isPresent() ? 'Mark not present' : 'Mark present' }}</button>
+                                </form>
+                            @else
+                                <p style="margin: 0;">Attendance can be marked after payment is confirmed.</p>
+                            @endif
+                        </div>
+                    </div>
 
                     <div class="detail-grid">
                         @foreach([
@@ -44,6 +72,9 @@
                             'Order ID' => $registration->order_id,
                             'Payment reference' => $registration->payment_reference ?: '—',
                             'Paid at' => optional($registration->paid_at)->format('d M Y, h:i A') ?: '—',
+                            'Attendance' => $registration->attendanceLabel(),
+                            'Attended at' => optional($registration->attended_at)->format('d M Y, h:i A') ?: '—',
+                            'Check-in code' => $registration->check_in_code,
                             'Payment method' => $registration->payment_method,
                             'Full name' => $registration->full_name,
                             'Salutation' => $registration->salutation,

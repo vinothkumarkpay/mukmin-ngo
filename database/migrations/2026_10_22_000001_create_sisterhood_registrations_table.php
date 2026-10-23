@@ -41,10 +41,12 @@ class CreateSisterhoodRegistrationsTable extends Migration
             $table->string('payment_status')->default('pending')->index();
             $table->string('payment_method')->default('KiplePay');
             $table->string('order_id')->unique();
+            $table->string('check_in_code', 12)->unique();
             $table->string('payment_reference')->nullable();
             $table->json('payment_payload')->nullable();
             $table->json('payment_attempts')->nullable();
             $table->timestamp('paid_at')->nullable();
+            $table->timestamp('attended_at')->nullable();
             $table->text('admin_notes')->nullable();
             $table->timestamps();
         });

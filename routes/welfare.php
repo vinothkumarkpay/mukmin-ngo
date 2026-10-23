@@ -124,6 +124,9 @@ Route::name('welfare.')->group(function () {
             ->name('admin.donation-payments');
 
         Route::get('/admin/sisterhood', [AdminSisterhoodRegistrationController::class, 'index'])->name('admin.sisterhood.index');
+        Route::get('/admin/sisterhood/attendance', [AdminSisterhoodRegistrationController::class, 'attendance'])->name('admin.sisterhood.attendance');
+        Route::post('/admin/sisterhood/attendance', [AdminSisterhoodRegistrationController::class, 'markAttendance'])->name('admin.sisterhood.attendance.store');
+        Route::get('/admin/sisterhood/{registration}/qr', [AdminSisterhoodRegistrationController::class, 'qr'])->name('admin.sisterhood.qr');
         Route::get('/admin/sisterhood/{registration}', [AdminSisterhoodRegistrationController::class, 'show'])->name('admin.sisterhood.show');
         Route::get('/admin/sisterhood/{registration}/edit', [AdminSisterhoodRegistrationController::class, 'edit'])->name('admin.sisterhood.edit');
         Route::put('/admin/sisterhood/{registration}', [AdminSisterhoodRegistrationController::class, 'update'])->name('admin.sisterhood.update');

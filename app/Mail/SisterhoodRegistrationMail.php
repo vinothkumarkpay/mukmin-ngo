@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\SisterhoodRegistration;
+use App\Services\Welfare\SisterhoodQrCode;
 use App\Support\SisterhoodCollective;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -18,6 +19,8 @@ class SisterhoodRegistrationMail extends Mailable
     public string $statusLabel;
     public array $registrationRows;
     public array $eventRows;
+    public string $qrPng = '';
+    public string $qrDataUri = '';
 
     public function __construct(SisterhoodRegistration $registration)
     {
@@ -36,6 +39,11 @@ class SisterhoodRegistrationMail extends Mailable
             ['label' => 'Registration fee', 'value' => 'RM' . number_format(SisterhoodCollective::FEE, 0) . ' per person'],
             ['label' => 'Organised by', 'value' => SisterhoodCollective::ORGANISER],
         ];
+
+        if ($this->statusKey === 'success' && filled($registration->check_in_code)) {
+            $this->qrPng = app(SisterhoodQrCode::class)->png($registration);
+            $this->qrDataUri = 'data:image/png;base64,' . base64_encode($this->qrPng);
+        }
     }
 
     public function build()

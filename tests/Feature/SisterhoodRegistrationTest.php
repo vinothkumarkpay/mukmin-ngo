@@ -177,7 +177,10 @@ class SisterhoodRegistrationTest extends TestCase
                 && str_contains($html, SisterhoodCollective::EVENT_DATE)
                 && str_contains($html, SisterhoodCollective::EVENT_TIME)
                 && str_contains($html, SisterhoodCollective::EVENT_VENUE)
-                && str_contains($html, 'RM' . number_format(SisterhoodCollective::FEE, 2));
+                && str_contains($html, 'RM' . number_format(SisterhoodCollective::FEE, 2))
+                && str_contains($html, 'Your entry QR code')
+                && str_contains($html, 'Check-in code: ' . $mail->registration->check_in_code)
+                && str_starts_with($mail->qrPng, "\x89PNG");
         });
 
         $this->post(route('welfare.sisterhood.payment.callback'), $this->gatewayPayload('TSC-PAID', '100'))
@@ -203,7 +206,9 @@ class SisterhoodRegistrationTest extends TestCase
                 && str_contains($html, SisterhoodCollective::EVENT_TIME)
                 && str_contains($html, SisterhoodCollective::SUPPORT_PHONE)
                 && str_contains($html, 'has not been successfully received')
-                && ! str_contains($html, 'have been successfully received');
+                && ! str_contains($html, 'have been successfully received')
+                && ! str_contains($html, 'Your entry QR code')
+                && $mail->qrPng === '';
         });
 
         $unverified = $this->makeRegistration('TSC-BADHASH');
@@ -358,6 +363,62 @@ class SisterhoodRegistrationTest extends TestCase
         Mail::assertSent(SisterhoodRegistrationMail::class, 1);
     }
 
+    public function test_admin_can_show_the_qr_code_and_mark_attendance(): void
+    {
+        $registration = $this->makeRegistration('TSC-QR');
+        $registration->forceFill([
+            'payment_status' => 'paid',
+            'paid_at' => now(),
+        ])->save();
+
+        $this->actingAs(User::factory()->create());
+
+        $this->get(route('welfare.admin.sisterhood.show', $registration))
+            ->assertOk()
+            ->assertSee('Not present', false)
+            ->assertSee($registration->check_in_code, false)
+            ->assertSee(route('welfare.admin.sisterhood.qr', $registration), false);
+
+        $this->get(route('welfare.admin.sisterhood.qr', $registration))
+            ->assertOk()
+            ->assertHeader('content-type', 'image/png');
+
+        $scan = "The Sisterhood Collective 2026\nName: {$registration->full_name}\nCheck-in: {$registration->check_in_code}";
+
+        $this->postJson(route('welfare.admin.sisterhood.attendance.store'), [
+            'code' => $scan,
+            'present' => true,
+        ])->assertOk()
+            ->assertJsonPath('registration.attendance', 'Present')
+            ->assertJsonPath('registration.name', $registration->full_name);
+
+        $registration->refresh();
+        $this->assertTrue($registration->isPresent());
+
+        $this->postJson(route('welfare.admin.sisterhood.attendance.store'), [
+            'code' => $registration->check_in_code,
+            'present' => false,
+        ])->assertOk()
+            ->assertJsonPath('registration.attendance', 'Not present');
+
+        $registration->refresh();
+        $this->assertFalse($registration->isPresent());
+    }
+
+    public function test_unpaid_registration_cannot_be_marked_present(): void
+    {
+        $registration = $this->makeRegistration('TSC-UNPAID-QR');
+        $this->actingAs(User::factory()->create());
+
+        $this->postJson(route('welfare.admin.sisterhood.attendance.store'), [
+            'code' => $registration->check_in_code,
+            'present' => true,
+        ])->assertStatus(422);
+
+        $registration->refresh();
+        $this->assertFalse($registration->isPresent());
+    }
+
     public function test_guest_cannot_open_the_admin_section(): void
     {
         $this->get(route('welfare.admin.sisterhood.index'))
@@ -373,6 +434,8 @@ class SisterhoodRegistrationTest extends TestCase
             'statusLabel' => $mail->statusLabel,
             'registrationRows' => $mail->registrationRows,
             'eventRows' => $mail->eventRows,
+            'qrPng' => $mail->qrPng,
+            'qrDataUri' => $mail->qrDataUri,
         ])->render();
     }
 

@@ -41,11 +41,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="stat-card">
+                    <div class="stat-card-main">
+                        <div class="stat-icon"><i class="fas fa-qrcode"></i></div>
+                        <div class="stat-info">
+                            <h3>{{ $presentCount }}</h3>
+                            <p>Present</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="dashboard-card">
                 <div class="card-header">
                     <h3>The Sisterhood Collective 2026</h3>
+                    <div class="card-actions">
+                        <a href="{{ route('welfare.admin.sisterhood.attendance') }}" class="btn-admin btn-admin-primary">Scan attendance</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     @php
@@ -61,7 +73,7 @@
                                 <span class="payments-filter-icon"><i class="fas fa-search"></i></span>
                                 <div>
                                     <h4>Search registrations and payments</h4>
-                                    <p>Find a participant by name, contact, NRIC, email, order reference, or payment status</p>
+                                    <p>Find a participant by name, contact, NRIC, email, order reference, check-in code, or payment status</p>
                                 </div>
                             </div>
                             <div class="payments-filter-meta">
@@ -139,6 +151,7 @@
                                     <th>Amount</th>
                                     <th>Payment</th>
                                     <th>Registration</th>
+                                    <th>Attendance</th>
                                     <th style="text-align: right;">Actions</th>
                                 </tr>
                             </thead>
@@ -158,6 +171,7 @@
                                         <td>RM {{ number_format($item->amount, 2) }}</td>
                                         <td><span class="badge badge-{{ $item->payment_status }}">{{ $item->paymentStatusLabel() }}</span></td>
                                         <td>{{ $item->registrationStatusLabel() }}</td>
+                                        <td><span class="badge {{ $item->isPresent() ? 'badge-paid' : 'badge-pending' }}">{{ $item->attendanceLabel() }}</span></td>
                                         <td style="text-align: right; white-space: nowrap;">
                                             <a href="{{ route('welfare.admin.sisterhood.show', $item) }}" class="btn-admin btn-admin-secondary">View</a>
                                             @if($canManage)
@@ -167,7 +181,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="8" style="text-align: center; color: var(--admin-text-muted);">No registrations found.</td>
+                                        <td colspan="9" style="text-align: center; color: var(--admin-text-muted);">No registrations found.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
