@@ -45,7 +45,7 @@
 </div>
 
 <div class="form-group">
-    <label for="salutation">Salutation / Gelaran</label>
+    <label for="salutation">Salutation</label>
     <select id="salutation" name="salutation" class="form-control" required>
         <option value="">Choose</option>
         @foreach(SisterhoodCollective::salutations() as $option)
@@ -56,7 +56,7 @@
 </div>
 
 <div class="form-group">
-    <label for="preferred_name">Preferred Name (Nama Panggilan)</label>
+    <label for="preferred_name">Preferred Name</label>
     <input type="text" id="preferred_name" name="preferred_name" class="form-control autocap" value="{{ $field('preferred_name') }}" maxlength="255" required autocapitalize="characters">
     @error('preferred_name')<span class="field-error">{{ $message }}</span>@enderror
 </div>

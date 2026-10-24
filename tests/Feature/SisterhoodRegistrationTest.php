@@ -54,7 +54,17 @@ class SisterhoodRegistrationTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('Full Name (as per NRIC/Passport)', false);
-        $response->assertSee('Salutation / Gelaran', false);
+        $response->assertSee('Salutation', false);
+        $response->assertSee('Preferred Name', false);
+        $response->assertSee('Organised by:', false);
+        $response->assertSee('Upon submitting this form, you will be redirected to the payment gateway to complete the RM30 registration fee.', false);
+        $response->assertSee('Your registration will only be confirmed once payment has been successfully received.', false);
+        $response->assertDontSee('Every question is required, except address line 2.', false);
+        $response->assertSee('Registered Friends of MUKMIN', false);
+        $response->assertSee('Indian Muslim women aged 18 and above', false);
+        $response->assertDontSee('Salutation / Gelaran', false);
+        $response->assertDontSee('Nama Panggilan', false);
+        $response->assertDontSee('Friends of Mukmin', false);
         $response->assertSee('Area of Interest', false);
         $response->assertSee('Participation Declaration', false);
         $response->assertSee('Emergency Contact Name', false);

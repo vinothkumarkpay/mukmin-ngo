@@ -48,9 +48,13 @@
 }
 .event-details-title { font-size: 22px; font-weight: 700; color: #1e1e1e; margin: 22px 0 12px; }
 .event-details { list-style: none; margin: 0 0 16px; padding: 0; }
-.event-details li { display: flex; align-items: flex-start; gap: 8px; margin: 8px 0; color: #222; line-height: 1.5; }
-.event-details li span { flex-shrink: 0; width: 1.4em; }
+.event-details > li { display: flex; align-items: flex-start; gap: 8px; margin: 8px 0; color: #222; line-height: 1.5; }
+.event-details > li > span { flex-shrink: 0; width: 1.4em; }
+.event-details-sub { list-style: disc; margin: 4px 0 0; padding-left: 1.2em; }
+.event-details-sub li { display: list-item; margin: 2px 0; }
 .fee-note { background: #fdf6f4; border-left: 4px solid #d43c18; padding: 14px 16px; margin: 20px 0 28px; }
+.fee-note p { margin: 0 0 10px; }
+.fee-note p:last-child { margin-bottom: 0; }
 .form-control {
     width: 100%;
     padding: 12px 16px;
@@ -99,7 +103,7 @@
 <div class="form-page-container">
     <div class="container">
         <div class="form-card">
-            <img class="sisterhood-form-banner" src="{{ asset('welfare/img/sisterhood-collective-banner.jpg') }}" alt="MUKMIN Women and Family Development Bureau presents The Sisterhood Collective. Connect. Empower. Rise Together.">
+            <img class="sisterhood-form-banner" src="{{ asset('welfare/img/sisterhood-collective-banner.jpg') }}?v=2" alt="The Sisterhood Collective. Connect. Empower. Rise Together. Organised by Women and Family Development Bureau.">
             <div class="form-header">
                 <h1>The Sisterhood Collective 2026 | Participant Registration</h1>
                 <p class="form-tagline">Connect. Empower. Rise Together.</p>
@@ -114,13 +118,22 @@
                     <li><span aria-hidden="true">🕘</span> Time: {{ \App\Support\SisterhoodCollective::EVENT_TIME }}</li>
                     <li><span aria-hidden="true">📍</span> Venue: {{ \App\Support\SisterhoodCollective::EVENT_VENUE }}</li>
                     <li><span aria-hidden="true">🎟️</span> Registration Fee: RM{{ number_format(\App\Support\SisterhoodCollective::FEE, 0) }} per person</li>
-                    <li><span aria-hidden="true">👩</span> Open to: Registered Friends of Mukmin Indian Muslim women aged 18 and above</li>
+                    <li>
+                        <span aria-hidden="true">👩</span>
+                        <div>
+                            Open to:
+                            <ul class="event-details-sub">
+                                <li>Registered Friends of MUKMIN</li>
+                                <li>Indian Muslim women aged 18 and above</li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
                 <p class="form-body">Dress Theme: {{ \App\Support\SisterhoodCollective::EVENT_DRESS }}. Modest attire complemented by Indian Muslim traditional jewellery or cultural accessories.</p>
                 <p>Registration closes on 17 November 2026.</p>
                 <p class="form-body">Come as you are, bring your stories and leave with new connections, fresh inspiration and a shared sense of purpose.</p>
                 <p>Because when women connect, communities grow and generations rise.</p>
-                <p><strong>Organised by {{ \App\Support\SisterhoodCollective::ORGANISER }}</strong></p>
+                <p><strong>Organised by:<br>{{ \App\Support\SisterhoodCollective::ORGANISER }}</strong></p>
                 </div>
             </div>
 
@@ -135,8 +148,8 @@
                 </div>
             @else
                 <div class="fee-note">
-                    <strong>Every question is required, except address line 2.</strong>
-                    <p style="margin: 8px 0 0;">After you submit this form you will be taken to the payment gateway to pay the RM{{ number_format(\App\Support\SisterhoodCollective::FEE, 0) }} registration fee. Your place is confirmed only after that payment is received.</p>
+                    <p>Upon submitting this form, you will be redirected to the payment gateway to complete the RM30 registration fee.</p>
+                    <p>Your registration will only be confirmed once payment has been successfully received.</p>
                 </div>
 
                 @if($errors->any())
