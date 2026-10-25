@@ -9,7 +9,9 @@ use Illuminate\Validation\Rule;
 
 class SisterhoodCollective
 {
-    public const FEE = 1.00;
+    public const FEE = 30.00;
+
+    public const CAPACITY = 155;
 
     public const SUPPORT_PHONE = '014-3021800';
 
@@ -37,6 +39,23 @@ class SisterhoodCollective
     public static function isOpen(): bool
     {
         return now()->lt(self::closesAt());
+    }
+
+    public static function placesTaken(): int
+    {
+        return SisterhoodRegistration::query()
+            ->whereIn('payment_status', ['paid', 'pending'])
+            ->count();
+    }
+
+    public static function isFull(): bool
+    {
+        return self::placesTaken() >= self::CAPACITY;
+    }
+
+    public static function fullMessage(): string
+    {
+        return 'Registration is full. All ' . self::CAPACITY . ' places have been taken.';
     }
 
     public static function newOrderId(): string

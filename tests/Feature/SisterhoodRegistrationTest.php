@@ -79,7 +79,43 @@ class SisterhoodRegistrationTest extends TestCase
         $response->assertDontSee('Emergency Contact Name &amp; Number', false);
         $response->assertDontSee('<span aria-hidden="true">*</span>', false);
         $response->assertSee('RM' . number_format(SisterhoodCollective::FEE, 0), false);
+        $response->assertSee('Places are limited to ' . SisterhoodCollective::CAPACITY . ' participants.', false);
         $response->assertSee('class="btn-submit">Register</button>', false);
+    }
+
+    public function test_registration_stops_when_all_places_are_taken(): void
+    {
+        foreach (range(1, SisterhoodCollective::CAPACITY) as $number) {
+            $this->makeRegistration('TSC-FULL-' . $number);
+        }
+
+        $this->get(route('welfare.sisterhood.create'))
+            ->assertOk()
+            ->assertSee(SisterhoodCollective::fullMessage(), false)
+            ->assertDontSee('class="btn-submit">Register</button>', false);
+
+        $this->from(route('welfare.sisterhood.create'))
+            ->post(route('welfare.sisterhood.store'), $this->payload([
+                'nric_passport' => '910101-01-9999',
+                'email' => 'another@example.com',
+            ]))
+            ->assertRedirect(route('welfare.sisterhood.create'))
+            ->assertSessionHas('error', SisterhoodCollective::fullMessage());
+
+        $this->assertSame(SisterhoodCollective::CAPACITY, SisterhoodRegistration::count());
+    }
+
+    public function test_a_failed_payment_does_not_keep_a_place(): void
+    {
+        foreach (range(1, SisterhoodCollective::CAPACITY) as $number) {
+            $registration = $this->makeRegistration('TSC-OPEN-' . $number);
+            $registration->payment_status = 'failed';
+            $registration->save();
+        }
+
+        $this->get(route('welfare.sisterhood.create'))
+            ->assertOk()
+            ->assertSee('class="btn-submit">Register</button>', false);
     }
 
     public function test_incomplete_form_is_rejected_and_does_not_create_a_registration(): void

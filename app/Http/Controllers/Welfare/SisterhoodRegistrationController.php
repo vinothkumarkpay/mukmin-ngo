@@ -8,7 +8,9 @@ use App\Services\KiplePayService;
 use App\Services\RecaptchaService;
 use App\Services\Welfare\SisterhoodPaymentRecorder;
 use App\Support\SisterhoodCollective;
+use Illuminate\Contracts\Cache\LockTimeoutException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\ValidationException;
 
 class SisterhoodRegistrationController extends Controller
@@ -17,6 +19,7 @@ class SisterhoodRegistrationController extends Controller
     {
         return view('welfare.pages.sisterhood.register', [
             'registrationOpen' => SisterhoodCollective::isOpen(),
+            'registrationFull' => SisterhoodCollective::isFull(),
         ]);
     }
 
@@ -50,15 +53,23 @@ class SisterhoodRegistrationController extends Controller
             ]);
         }
 
-        $registration = SisterhoodRegistration::create(array_merge(
-            SisterhoodCollective::attributesFrom($request->all()),
-            [
-                'amount' => SisterhoodCollective::FEE,
-                'payment_status' => 'pending',
-                'payment_method' => 'KiplePay',
-                'order_id' => SisterhoodCollective::newOrderId(),
-            ]
-        ));
+        $registration = $this->reservePlace(function () use ($request) {
+            return SisterhoodRegistration::create(array_merge(
+                SisterhoodCollective::attributesFrom($request->all()),
+                [
+                    'amount' => SisterhoodCollective::FEE,
+                    'payment_status' => 'pending',
+                    'payment_method' => 'KiplePay',
+                    'order_id' => SisterhoodCollective::newOrderId(),
+                ]
+            ));
+        });
+
+        if (! $registration) {
+            return redirect()
+                ->route('welfare.sisterhood.create')
+                ->with('error', SisterhoodCollective::fullMessage());
+        }
 
         session(['sisterhood_registration_id' => $registration->id]);
 
@@ -77,6 +88,7 @@ class SisterhoodRegistrationController extends Controller
             return redirect()->route('welfare.sisterhood.result');
         }
 
+        $holdsPlace = $registration->payment_status === 'pending';
         $attempts = $registration->payment_attempts ?? [];
         $attempts[] = [
             'order_id' => $registration->order_id,
@@ -84,12 +96,24 @@ class SisterhoodRegistrationController extends Controller
             'at' => now()->toIso8601String(),
         ];
 
-        $registration->update([
-            'order_id' => SisterhoodCollective::newOrderId(),
-            'amount' => SisterhoodCollective::FEE,
-            'payment_status' => 'pending',
-            'payment_attempts' => $attempts,
-        ]);
+        $renew = function () use ($registration, $attempts) {
+            $registration->update([
+                'order_id' => SisterhoodCollective::newOrderId(),
+                'amount' => SisterhoodCollective::FEE,
+                'payment_status' => 'pending',
+                'payment_attempts' => $attempts,
+            ]);
+
+            return $registration;
+        };
+
+        if ($holdsPlace) {
+            $renew();
+        } elseif (! $this->reservePlace($renew)) {
+            return redirect()
+                ->route('welfare.sisterhood.create')
+                ->with('error', SisterhoodCollective::fullMessage());
+        }
 
         session(['sisterhood_registration_id' => $registration->id]);
 
@@ -130,6 +154,27 @@ class SisterhoodRegistrationController extends Controller
             'registration' => $registration,
             'successful' => $registration ? $registration->isPaid() : false,
         ]);
+    }
+
+    private function reservePlace(callable $create): ?SisterhoodRegistration
+    {
+        $lock = Cache::lock('sisterhood-registration', 10);
+
+        try {
+            $lock->block(5);
+        } catch (LockTimeoutException $e) {
+            return null;
+        }
+
+        try {
+            if (SisterhoodCollective::isFull()) {
+                return null;
+            }
+
+            return $create();
+        } finally {
+            $lock->release();
+        }
     }
 
     private function paymentRedirect(SisterhoodRegistration $registration)

@@ -155,10 +155,16 @@
                     <strong>Registration is closed.</strong>
                     <p style="margin: 8px 0 0;">Registration closed on 17 November 2026.</p>
                 </div>
+            @elseif($registrationFull)
+                <div class="fee-note">
+                    <strong>Registration is full.</strong>
+                    <p style="margin: 8px 0 0;">{{ \App\Support\SisterhoodCollective::fullMessage() }}</p>
+                </div>
             @else
                 <div class="fee-note">
-                    <p>Upon submitting this form, you will be redirected to the payment gateway to complete the RM30 registration fee.</p>
+                    <p>Upon submitting this form, you will be redirected to the payment gateway to complete the RM{{ number_format(\App\Support\SisterhoodCollective::FEE, 0) }} registration fee.</p>
                     <p>Your registration will only be confirmed once payment has been successfully received.</p>
+                    <p>Places are limited to {{ \App\Support\SisterhoodCollective::CAPACITY }} participants.</p>
                 </div>
 
                 @if($errors->any())
@@ -170,7 +176,7 @@
                     @include('welfare.partials.sisterhood-fields', ['registration' => null])
                     <div class="policy-box">
                         <h2>Registration &amp; Cancellation Policy</h2>
-                        <p>Registration fees of RM30 are non-refundable upon cancellation or non-attendance. Participants are responsible for ensuring their registration details are accurate. Any changes or cancellations must be communicated to the organiser before the registration closing date. MUKMIN reserves the right to make changes to the event arrangements when necessary.</p>
+                        <p>Registration fees of RM{{ number_format(\App\Support\SisterhoodCollective::FEE, 0) }} are non-refundable upon cancellation or non-attendance. Participants are responsible for ensuring their registration details are accurate. Any changes or cancellations must be communicated to the organiser before the registration closing date. MUKMIN reserves the right to make changes to the event arrangements when necessary.</p>
                     </div>
                     @include('welfare.partials.recaptcha')
                     <div class="form-submit">
