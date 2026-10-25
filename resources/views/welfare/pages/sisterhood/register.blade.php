@@ -52,6 +52,8 @@
 .event-details > li > span { flex-shrink: 0; width: 1.4em; }
 .event-details-sub { list-style: disc; margin: 4px 0 0; padding-left: 1.2em; }
 .event-details-sub li { display: list-item; margin: 2px 0; }
+.dress-theme-label { margin-bottom: 4px; }
+.dress-theme { margin: 0 0 16px; padding-left: 1.4em; }
 .fee-note { background: #fdf6f4; border-left: 4px solid #d43c18; padding: 14px 16px; margin: 20px 0 28px; }
 .fee-note p { margin: 0 0 10px; }
 .fee-note p:last-child { margin-bottom: 0; }
@@ -88,6 +90,9 @@
 .sisterhood-fields .field-hint { display: block; margin-top: 6px; color: #666; font-size: 13px; }
 .sisterhood-fields .field-error { display: block; margin-top: 6px; color: #b91c1c; font-size: 13px; }
 .sisterhood-fields .declaration-box { background: #fdf6f4; border-left: 4px solid #d43c18; padding: 18px 18px 8px; border-radius: 0 8px 8px 0; }
+.policy-box { background: #fdf6f4; border: 1px solid #ead3cb; border-left: 4px solid #d43c18; border-radius: 0 8px 8px 0; padding: 16px 18px; margin: 8px 0 22px; }
+.policy-box h2 { margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #1e1e1e; }
+.policy-box p { margin: 0; color: #333; line-height: 1.6; text-align: justify; hyphens: auto; }
 @media (max-width: 700px) {
     .form-card { padding-bottom: 24px; }
     .form-header,
@@ -110,8 +115,8 @@
                 <div class="form-copy">
                 <p><strong>SHE LEADS. GENERATIONS RISE.</strong></p>
                 <p>A celebration of sisterhood, empowerment and shared purpose.</p>
-                <p class="form-body">Join us for the inaugural The Sisterhood Collective, a meaningful gathering bringing together Indian Muslim women from all walks of life to connect, be inspired and grow together.</p>
-                <p class="form-body">An opportunity to build new friendships, celebrate women's strengths, exchange ideas and explore how we can collectively make a difference in our families and communities.</p>
+                <p class="form-body">Join us for the inaugural edition of The Sisterhood Collective, a meaningful gathering that brings together Indian Muslim women from all walks of life to connect, find inspiration, and grow together.</p>
+                <p class="form-body">An opportunity to build new friendships, celebrate women's strengths, exchange ideas and explore how we can collectively make a difference for our families and communities.</p>
                 <h2 class="event-details-title">Event Details</h2>
                 <ul class="event-details">
                     <li><span aria-hidden="true">📅</span> Date: {{ \App\Support\SisterhoodCollective::EVENT_DATE }}</li>
@@ -123,13 +128,17 @@
                         <div>
                             Open to:
                             <ul class="event-details-sub">
-                                <li>Registered Friends of MUKMIN</li>
+                                <li>Registered Friends of MUKMIN, and</li>
                                 <li>Indian Muslim women aged 18 and above</li>
                             </ul>
                         </div>
                     </li>
                 </ul>
-                <p class="form-body">Dress Theme: {{ \App\Support\SisterhoodCollective::EVENT_DRESS }}. Modest attire complemented by Indian Muslim traditional jewellery or cultural accessories.</p>
+                <p class="dress-theme-label">Dress Theme:</p>
+                <ul class="event-details-sub dress-theme">
+                    <li>{{ \App\Support\SisterhoodCollective::EVENT_DRESS }}.</li>
+                    <li>Modest attire complemented by Indian Muslim traditional jewellery or cultural accessories.</li>
+                </ul>
                 <p>Registration closes on 17 November 2026.</p>
                 <p class="form-body">Come as you are, bring your stories and leave with new connections, fresh inspiration and a shared sense of purpose.</p>
                 <p>Because when women connect, communities grow and generations rise.</p>
@@ -159,6 +168,10 @@
                 <form method="POST" action="{{ route('welfare.sisterhood.store') }}" class="sisterhood-fields">
                     @csrf
                     @include('welfare.partials.sisterhood-fields', ['registration' => null])
+                    <div class="policy-box">
+                        <h2>Registration &amp; Cancellation Policy</h2>
+                        <p>Registration fees of RM30 are non-refundable upon cancellation or non-attendance. Participants are responsible for ensuring their registration details are accurate. Any changes or cancellations must be communicated to the organiser before the registration closing date. MUKMIN reserves the right to make changes to the event arrangements when necessary.</p>
+                    </div>
                     @include('welfare.partials.recaptcha')
                     <div class="form-submit">
                         <button type="submit" class="btn-submit">Register</button>

@@ -60,7 +60,7 @@ class SisterhoodRegistrationTest extends TestCase
         $response->assertSee('Upon submitting this form, you will be redirected to the payment gateway to complete the RM30 registration fee.', false);
         $response->assertSee('Your registration will only be confirmed once payment has been successfully received.', false);
         $response->assertDontSee('Every question is required, except address line 2.', false);
-        $response->assertSee('Registered Friends of MUKMIN', false);
+        $response->assertSee('Registered Friends of MUKMIN, and', false);
         $response->assertSee('Indian Muslim women aged 18 and above', false);
         $response->assertDontSee('Salutation / Gelaran', false);
         $response->assertDontSee('Nama Panggilan', false);
@@ -74,6 +74,8 @@ class SisterhoodRegistrationTest extends TestCase
         $response->assertSee('Address Line 2', false);
         $response->assertSee('Postcode', false);
         $response->assertSee('Every statement must be marked before you can register.', false);
+        $response->assertSee('Registration &amp; Cancellation Policy', false);
+        $response->assertSee('Registration fees of RM30 are non-refundable upon cancellation or non-attendance.', false);
         $response->assertDontSee('Emergency Contact Name &amp; Number', false);
         $response->assertDontSee('<span aria-hidden="true">*</span>', false);
         $response->assertSee('RM' . number_format(SisterhoodCollective::FEE, 0), false);
