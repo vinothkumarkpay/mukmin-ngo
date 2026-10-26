@@ -173,11 +173,7 @@
 
                 <form method="POST" action="{{ route('welfare.sisterhood.store') }}" class="sisterhood-fields">
                     @csrf
-                    @include('welfare.partials.sisterhood-fields', ['registration' => null])
-                    <div class="policy-box">
-                        <h2>Registration &amp; Cancellation Policy</h2>
-                        <p>Registration fees of RM{{ number_format(\App\Support\SisterhoodCollective::FEE, 0) }} are non-refundable upon cancellation or non-attendance. Participants are responsible for ensuring their registration details are accurate. Any changes or cancellations must be communicated to the organiser before the registration closing date. MUKMIN reserves the right to make changes to the event arrangements when necessary.</p>
-                    </div>
+                    @include('welfare.partials.sisterhood-fields', ['registration' => null, 'showRegistrationPolicy' => true])
                     @include('welfare.partials.recaptcha')
                     <div class="form-submit">
                         <button type="submit" class="btn-submit">Register</button>

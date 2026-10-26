@@ -67,6 +67,7 @@
                         @foreach([
                             'Submitted' => $registration->created_at->format('d M Y, h:i A'),
                             'Registration' => $registration->registrationStatusLabel(),
+                            'Record status' => $registration->statusLabel(),
                             'Payment status' => $registration->paymentStatusLabel(),
                             'Amount' => 'RM ' . number_format($registration->amount, 2),
                             'Order ID' => $registration->order_id,

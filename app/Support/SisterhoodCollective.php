@@ -44,7 +44,7 @@ class SisterhoodCollective
     public static function placesTaken(): int
     {
         return SisterhoodRegistration::query()
-            ->whereIn('payment_status', ['paid', 'pending'])
+            ->where('status', SisterhoodRegistration::STATUS_SUCCESS)
             ->count();
     }
 
@@ -206,7 +206,7 @@ class SisterhoodCollective
 
         return SisterhoodRegistration::query()
             ->where('nric_normalized', $normalized)
-            ->where('payment_status', 'paid')
+            ->where('status', SisterhoodRegistration::STATUS_SUCCESS)
             ->when($ignoreId, function ($query) use ($ignoreId) {
                 $query->where('id', '!=', $ignoreId);
             })

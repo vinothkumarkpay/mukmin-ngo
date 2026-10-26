@@ -45,10 +45,10 @@ class AdminSisterhoodRegistrationController extends Controller
         return view('welfare.admin.sisterhood.index', [
             'registrations' => $registrations,
             'canManage' => $this->adminUser()->hasPermission('sisterhood.manage'),
-            'paidCount' => SisterhoodRegistration::where('payment_status', 'paid')->count(),
-            'pendingCount' => SisterhoodRegistration::where('payment_status', 'pending')->count(),
-            'failedCount' => SisterhoodRegistration::where('payment_status', 'failed')->count(),
-            'presentCount' => SisterhoodRegistration::whereNotNull('attended_at')->count(),
+            'paidCount' => SisterhoodRegistration::where('status', SisterhoodRegistration::STATUS_SUCCESS)->count(),
+            'pendingCount' => SisterhoodRegistration::where('status', SisterhoodRegistration::STATUS_PENDING)->count(),
+            'failedCount' => SisterhoodRegistration::where('status', SisterhoodRegistration::STATUS_FAIL)->count(),
+            'presentCount' => SisterhoodRegistration::where('status', SisterhoodRegistration::STATUS_SUCCESS)->whereNotNull('attended_at')->count(),
         ]);
     }
 
@@ -99,6 +99,10 @@ class AdminSisterhoodRegistrationController extends Controller
             ? ($registration->paid_at ?? now())
             : null;
 
+        if (! $registration->isTest()) {
+            $attributes['status'] = SisterhoodRegistration::statusForPayment($validated['payment_status']);
+        }
+
         $registration->update($attributes);
         $notifier->notifyIfStatusChanged($registration, $previousStatus);
 
@@ -124,8 +128,8 @@ class AdminSisterhoodRegistrationController extends Controller
         $this->authorizePermission('sisterhood.view');
 
         return view('welfare.admin.sisterhood.attendance', [
-            'presentCount' => SisterhoodRegistration::whereNotNull('attended_at')->count(),
-            'paidCount' => SisterhoodRegistration::where('payment_status', 'paid')->count(),
+            'presentCount' => SisterhoodRegistration::where('status', SisterhoodRegistration::STATUS_SUCCESS)->whereNotNull('attended_at')->count(),
+            'paidCount' => SisterhoodRegistration::where('status', SisterhoodRegistration::STATUS_SUCCESS)->count(),
         ]);
     }
 

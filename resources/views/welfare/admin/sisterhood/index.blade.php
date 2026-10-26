@@ -19,7 +19,7 @@
                         <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
                         <div class="stat-info">
                             <h3>{{ $paidCount }}</h3>
-                            <p>Paid registrations</p>
+                            <p>Successful registrations</p>
                         </div>
                     </div>
                 </div>
@@ -170,7 +170,7 @@
                                         <td><code>{{ $item->order_id }}</code></td>
                                         <td>RM {{ number_format($item->amount, 2) }}</td>
                                         <td><span class="badge badge-{{ $item->payment_status }}">{{ $item->paymentStatusLabel() }}</span></td>
-                                        <td>{{ $item->registrationStatusLabel() }}</td>
+                                        <td>{{ $item->statusLabel() }}</td>
                                         <td><span class="badge {{ $item->isPresent() ? 'badge-paid' : 'badge-pending' }}">{{ $item->attendanceLabel() }}</span></td>
                                         <td style="text-align: right; white-space: nowrap;">
                                             <a href="{{ route('welfare.admin.sisterhood.show', $item) }}" class="btn-admin btn-admin-secondary">View</a>

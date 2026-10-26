@@ -232,6 +232,13 @@
     @error('heard_from_other')<span class="field-error">{{ $message }}</span>@enderror
 </div>
 
+@if(! empty($showRegistrationPolicy))
+    <div class="policy-box">
+        <h2>Registration &amp; Cancellation Policy</h2>
+        <p>Registration fees of RM{{ number_format(SisterhoodCollective::FEE, 0) }} are non-refundable upon cancellation or non-attendance. Participants are responsible for ensuring their registration details are accurate. Any changes or cancellations must be communicated to the organiser before the registration closing date. MUKMIN reserves the right to make changes to the event arrangements when necessary.</p>
+    </div>
+@endif
+
 <div class="form-group form-group-full declaration-box">
     <span id="declaration-label">Participation Declaration</span>
     <span class="field-hint">Every statement must be marked before you can register.</span>

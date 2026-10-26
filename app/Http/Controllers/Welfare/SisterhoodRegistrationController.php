@@ -59,6 +59,7 @@ class SisterhoodRegistrationController extends Controller
                 [
                     'amount' => SisterhoodCollective::FEE,
                     'payment_status' => 'pending',
+                    'status' => SisterhoodRegistration::STATUS_PENDING,
                     'payment_method' => 'KiplePay',
                     'order_id' => SisterhoodCollective::newOrderId(),
                 ]
@@ -97,12 +98,18 @@ class SisterhoodRegistrationController extends Controller
         ];
 
         $renew = function () use ($registration, $attempts) {
-            $registration->update([
+            $attributes = [
                 'order_id' => SisterhoodCollective::newOrderId(),
                 'amount' => SisterhoodCollective::FEE,
                 'payment_status' => 'pending',
                 'payment_attempts' => $attempts,
-            ]);
+            ];
+
+            if (! $registration->isTest()) {
+                $attributes['status'] = SisterhoodRegistration::STATUS_PENDING;
+            }
+
+            $registration->update($attributes);
 
             return $registration;
         };

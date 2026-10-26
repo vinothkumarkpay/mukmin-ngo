@@ -53,12 +53,20 @@ class SisterhoodPaymentRecorder
             return false;
         }
 
-        $registration->update([
+        $attributes = [
             'payment_status' => $isSuccess ? 'paid' : 'failed',
             'paid_at' => $isSuccess ? now() : null,
             'payment_reference' => $payload['wcID'] ?? $registration->payment_reference,
             'payment_payload' => $payload,
-        ]);
+        ];
+
+        if (! $registration->isTest()) {
+            $attributes['status'] = $isSuccess
+                ? SisterhoodRegistration::STATUS_SUCCESS
+                : SisterhoodRegistration::STATUS_FAIL;
+        }
+
+        $registration->update($attributes);
 
         Log::info('Sisterhood registration ' . $registration->order_id . ' payment status updated to ' . $registration->payment_status);
 

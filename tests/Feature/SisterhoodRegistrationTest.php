@@ -86,7 +86,11 @@ class SisterhoodRegistrationTest extends TestCase
     public function test_registration_stops_when_all_places_are_taken(): void
     {
         foreach (range(1, SisterhoodCollective::CAPACITY) as $number) {
-            $this->makeRegistration('TSC-FULL-' . $number);
+            $registration = $this->makeRegistration('TSC-FULL-' . $number);
+            $registration->status = SisterhoodRegistration::STATUS_SUCCESS;
+            $registration->payment_status = 'paid';
+            $registration->paid_at = now();
+            $registration->save();
         }
 
         $this->get(route('welfare.sisterhood.create'))
@@ -103,6 +107,39 @@ class SisterhoodRegistrationTest extends TestCase
             ->assertSessionHas('error', SisterhoodCollective::fullMessage());
 
         $this->assertSame(SisterhoodCollective::CAPACITY, SisterhoodRegistration::count());
+    }
+
+    public function test_test_records_are_excluded_from_the_place_limit(): void
+    {
+        foreach (range(1, SisterhoodCollective::CAPACITY) as $number) {
+            $registration = $this->makeRegistration('TSC-TEST-' . $number);
+            $registration->status = SisterhoodRegistration::STATUS_TEST;
+            $registration->payment_status = 'paid';
+            $registration->paid_at = now();
+            $registration->save();
+        }
+
+        $this->assertSame(0, SisterhoodCollective::placesTaken());
+
+        $this->get(route('welfare.sisterhood.create'))
+            ->assertOk()
+            ->assertSee('class="btn-submit">Register</button>', false);
+    }
+
+    public function test_a_test_registration_stays_status_9_when_payment_is_recorded(): void
+    {
+        $registration = $this->makeRegistration('TSC-KEEP-TEST');
+        $registration->status = SisterhoodRegistration::STATUS_TEST;
+        $registration->save();
+
+        app(\App\Services\Welfare\SisterhoodPaymentRecorder::class)->record(
+            $registration,
+            $this->gatewayPayload('TSC-KEEP-TEST', '100')
+        );
+
+        $registration->refresh();
+        $this->assertTrue($registration->isPaid());
+        $this->assertSame(SisterhoodRegistration::STATUS_TEST, (int) $registration->status);
     }
 
     public function test_a_failed_payment_does_not_keep_a_place(): void
@@ -188,6 +225,7 @@ class SisterhoodRegistrationTest extends TestCase
         $registration = SisterhoodRegistration::first();
         $this->assertNotNull($registration);
         $this->assertSame('pending', $registration->payment_status);
+        $this->assertSame(SisterhoodRegistration::STATUS_PENDING, (int) $registration->status);
         $this->assertNull($registration->paid_at);
         $this->assertFalse($registration->isPaid());
         $this->assertSame(number_format(SisterhoodCollective::FEE, 2, '.', ''), $registration->amount);
@@ -213,6 +251,7 @@ class SisterhoodRegistrationTest extends TestCase
         $registration->refresh();
         $this->assertTrue($registration->isPaid());
         $this->assertSame('paid', $registration->payment_status);
+        $this->assertSame(SisterhoodRegistration::STATUS_SUCCESS, (int) $registration->status);
         $this->assertNotNull($registration->paid_at);
 
         Mail::assertSent(SisterhoodRegistrationMail::class, function (SisterhoodRegistrationMail $mail) {
@@ -341,6 +380,7 @@ class SisterhoodRegistrationTest extends TestCase
         $existing = $this->makeRegistration('TSC-EXISTING');
         $existing->update([
             'payment_status' => 'paid',
+            'status' => SisterhoodRegistration::STATUS_SUCCESS,
             'paid_at' => now(),
             'nric_passport' => '900101-01-1234',
         ]);
@@ -375,7 +415,7 @@ class SisterhoodRegistrationTest extends TestCase
         $this->get(route('welfare.admin.sisterhood.index'))
             ->assertOk()
             ->assertSee('AISHA RAHMAN', false)
-            ->assertSee('Incomplete', false);
+            ->assertSee('Pending', false);
 
         $this->get(route('welfare.admin.sisterhood.show', $registration))
             ->assertOk()
@@ -391,6 +431,7 @@ class SisterhoodRegistrationTest extends TestCase
 
         $registration->refresh();
         $this->assertTrue($registration->isPaid());
+        $this->assertSame(SisterhoodRegistration::STATUS_SUCCESS, (int) $registration->status);
         $this->assertSame('AISH', $registration->preferred_name);
         $this->assertSame('MANUAL-1', $registration->payment_reference);
         $this->assertSame('Paid at the counter.', $registration->admin_notes);
@@ -506,6 +547,7 @@ class SisterhoodRegistrationTest extends TestCase
             [
                 'amount' => SisterhoodCollective::FEE,
                 'payment_status' => 'pending',
+                'status' => SisterhoodRegistration::STATUS_PENDING,
                 'payment_method' => 'KiplePay',
                 'order_id' => $orderId,
             ]

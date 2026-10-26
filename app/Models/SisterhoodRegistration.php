@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class SisterhoodRegistration extends Model
 {
+    public const STATUS_PENDING = 0;
+
+    public const STATUS_SUCCESS = 1;
+
+    public const STATUS_FAIL = 2;
+
+    public const STATUS_TEST = 9;
+
     protected $fillable = [
         'full_name',
         'salutation',
@@ -34,6 +42,7 @@ class SisterhoodRegistration extends Model
         'declarations',
         'amount',
         'payment_status',
+        'status',
         'payment_method',
         'order_id',
         'payment_reference',
@@ -85,6 +94,31 @@ class SisterhoodRegistration extends Model
     public function isPaid(): bool
     {
         return $this->payment_status === 'paid' && $this->paid_at !== null;
+    }
+
+    public function isTest(): bool
+    {
+        return $this->status !== null && (int) $this->status === self::STATUS_TEST;
+    }
+
+    public static function statusForPayment(string $paymentStatus): int
+    {
+        return match ($paymentStatus) {
+            'paid' => self::STATUS_SUCCESS,
+            'failed' => self::STATUS_FAIL,
+            default => self::STATUS_PENDING,
+        };
+    }
+
+    public function statusLabel(): string
+    {
+        return match ($this->status === null ? null : (int) $this->status) {
+            self::STATUS_PENDING => 'Pending',
+            self::STATUS_SUCCESS => 'Success',
+            self::STATUS_FAIL => 'Fail',
+            self::STATUS_TEST => 'Test',
+            default => '—',
+        };
     }
 
     public function isPresent(): bool
