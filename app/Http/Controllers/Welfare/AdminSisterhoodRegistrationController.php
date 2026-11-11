@@ -8,8 +8,11 @@ use App\Models\SisterhoodRegistration;
 use App\Services\Welfare\SisterhoodQrCode;
 use App\Services\Welfare\SisterhoodRegistrationNotifier;
 use App\Support\SisterhoodCollective;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class AdminSisterhoodRegistrationController extends Controller
 {
@@ -19,10 +22,122 @@ class AdminSisterhoodRegistrationController extends Controller
     {
         $this->authorizePermission('sisterhood.view');
 
+        $registrations = $this->filteredRegistrations($request)->paginate(30)->withQueryString();
+
+        return view('welfare.admin.sisterhood.index', [
+            'registrations' => $registrations,
+            'canManage' => $this->adminUser()->hasPermission('sisterhood.manage'),
+            'paidCount' => SisterhoodRegistration::where('status', SisterhoodRegistration::STATUS_SUCCESS)->count(),
+            'pendingCount' => SisterhoodRegistration::where('status', SisterhoodRegistration::STATUS_PENDING)->count(),
+            'failedCount' => SisterhoodRegistration::where('status', SisterhoodRegistration::STATUS_FAIL)->count(),
+            'presentCount' => SisterhoodRegistration::where('status', SisterhoodRegistration::STATUS_SUCCESS)->whereNotNull('attended_at')->count(),
+        ]);
+    }
+
+    public function export(Request $request)
+    {
+        $this->authorizePermission('sisterhood.view');
+
+        $registrations = $this->filteredRegistrations($request)->get();
+        $headers = [
+            'Registered at',
+            'Full name',
+            'Salutation',
+            'Preferred name',
+            'NRIC / Passport',
+            'Email',
+            'Contact number',
+            'Age',
+            'Profession',
+            'Education',
+            'Unit number',
+            'Address line 1',
+            'Address line 2',
+            'Postcode',
+            'State',
+            'Area of interest',
+            'Looking forward',
+            'Food preference',
+            'Emergency contact name',
+            'Emergency contact number',
+            'Relationship',
+            'How they heard',
+            'Amount (RM)',
+            'Payment status',
+            'Record status',
+            'Order ID',
+            'Payment reference',
+            'Paid at',
+            'Check-in code',
+            'Attendance',
+            'Attended at',
+            'Admin notes',
+        ];
+
+        $rows = [$headers];
+        foreach ($registrations as $item) {
+            $rows[] = [
+                optional($item->created_at)->format('d M Y, h:i A'),
+                $item->full_name,
+                $item->salutation,
+                $item->preferred_name,
+                $item->nric_passport,
+                $item->email,
+                $item->contact_number,
+                $item->age,
+                $item->professionLabel(),
+                $item->educationLabel(),
+                $item->unit_number,
+                $item->address_line_1,
+                $item->address_line_2,
+                $item->postcode,
+                $item->state,
+                $this->exportList($item->areas_of_interest),
+                $this->exportList($item->looking_forward),
+                $item->food_preference,
+                $item->emergency_contact_name,
+                $item->emergency_contact_number,
+                $item->emergency_relationship,
+                $item->heardFromLabel(),
+                number_format((float) $item->amount, 2, '.', ''),
+                $item->paymentStatusLabel(),
+                $item->statusLabel(),
+                $item->order_id,
+                $item->payment_reference,
+                optional($item->paid_at)->format('d M Y, h:i A'),
+                $item->check_in_code,
+                $item->attendanceLabel(),
+                optional($item->attended_at)->format('d M Y, h:i A'),
+                $item->admin_notes,
+            ];
+        }
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setTitle('Registrations');
+        $sheet->fromArray($rows, null, 'A1');
+        $sheet->getStyle('A1:AF1')->getFont()->setBold(true);
+        $sheet->freezePane('A2');
+        $sheet->setAutoFilter($sheet->calculateWorksheetDimension());
+
+        $suffix = $request->filled('payment_status') ? '-' . $request->input('payment_status') : '';
+        $filename = 'sisterhood-registrations' . $suffix . '-' . now()->format('Ymd-His') . '.xlsx';
+        $temp = tempnam(sys_get_temp_dir(), 'sisterhood-xlsx');
+        (new Xlsx($spreadsheet))->save($temp);
+        $spreadsheet->disconnectWorksheets();
+
+        return response()->download($temp, $filename, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ])->deleteFileAfterSend(true);
+    }
+
+    private function filteredRegistrations(Request $request): Builder
+    {
         $query = SisterhoodRegistration::query()->orderByDesc('created_at');
 
-        if ($request->filled('payment_status')) {
-            $query->where('payment_status', $request->input('payment_status'));
+        $paymentStatus = (string) $request->input('payment_status', '');
+        if (in_array($paymentStatus, ['pending', 'paid', 'failed'], true)) {
+            $query->where('payment_status', $paymentStatus);
         }
 
         $search = trim((string) $request->input('search', ''));
@@ -40,16 +155,16 @@ class AdminSisterhoodRegistrationController extends Controller
             });
         }
 
-        $registrations = $query->paginate(30)->withQueryString();
+        return $query;
+    }
 
-        return view('welfare.admin.sisterhood.index', [
-            'registrations' => $registrations,
-            'canManage' => $this->adminUser()->hasPermission('sisterhood.manage'),
-            'paidCount' => SisterhoodRegistration::where('status', SisterhoodRegistration::STATUS_SUCCESS)->count(),
-            'pendingCount' => SisterhoodRegistration::where('status', SisterhoodRegistration::STATUS_PENDING)->count(),
-            'failedCount' => SisterhoodRegistration::where('status', SisterhoodRegistration::STATUS_FAIL)->count(),
-            'presentCount' => SisterhoodRegistration::where('status', SisterhoodRegistration::STATUS_SUCCESS)->whereNotNull('attended_at')->count(),
-        ]);
+    private function exportList($value): string
+    {
+        if (! is_array($value)) {
+            return (string) $value;
+        }
+
+        return implode(', ', $value);
     }
 
     public function show(SisterhoodRegistration $registration)

@@ -98,19 +98,19 @@
                                 <span class="payments-filter-status-label">Payment</span>
                                 <div class="payments-status-pills">
                                     <label class="payments-status-pill">
-                                        <input type="radio" name="payment_status" value="" @checked(!request('payment_status'))>
+                                        <input type="radio" name="payment_status" value="" {{ request('payment_status') ? '' : 'checked' }}>
                                         <span>All</span>
                                     </label>
                                     <label class="payments-status-pill payments-status-pill--pending">
-                                        <input type="radio" name="payment_status" value="pending" @checked(request('payment_status') === 'pending')>
+                                        <input type="radio" name="payment_status" value="pending" {{ request('payment_status') === 'pending' ? 'checked' : '' }}>
                                         <span>Pending</span>
                                     </label>
                                     <label class="payments-status-pill payments-status-pill--paid">
-                                        <input type="radio" name="payment_status" value="paid" @checked(request('payment_status') === 'paid')>
+                                        <input type="radio" name="payment_status" value="paid" {{ request('payment_status') === 'paid' ? 'checked' : '' }}>
                                         <span>Paid</span>
                                     </label>
                                     <label class="payments-status-pill payments-status-pill--failed">
-                                        <input type="radio" name="payment_status" value="failed" @checked(request('payment_status') === 'failed')>
+                                        <input type="radio" name="payment_status" value="failed" {{ request('payment_status') === 'failed' ? 'checked' : '' }}>
                                         <span>Failed</span>
                                     </label>
                                 </div>
@@ -132,6 +132,9 @@
                                     <a href="{{ route('welfare.admin.sisterhood.index') }}" class="btn-admin btn-admin-secondary payments-btn-clear">
                                         <i class="fas fa-rotate-left"></i> Reset
                                     </a>
+                                    <button type="submit" class="btn-admin btn-admin-secondary payments-btn-export" formaction="{{ route('welfare.admin.sisterhood.export') }}">
+                                        <i class="fas fa-file-excel"></i> Export Excel
+                                    </button>
                                     <button type="submit" class="btn-admin btn-admin-primary payments-btn-apply">
                                         <i class="fas fa-sliders"></i> Apply filters
                                     </button>
@@ -189,7 +192,7 @@
                     </div>
 
                     <div style="margin-top: 18px;">
-                        {{ $registrations->links() }}
+                        {{ $registrations->links('welfare.admin.partials.pagination') }}
                     </div>
                 </div>
             </div>

@@ -513,6 +513,75 @@ class SisterhoodRegistrationTest extends TestCase
     {
         $this->get(route('welfare.admin.sisterhood.index'))
             ->assertRedirect(route('welfare.admin.login'));
+
+        $this->get(route('welfare.admin.sisterhood.export'))
+            ->assertRedirect(route('welfare.admin.login'));
+    }
+
+    public function test_admin_can_export_the_filtered_registrations_as_excel(): void
+    {
+        $paid = $this->makeRegistration('TSC-EXPORT-PAID');
+        $paid->update([
+            'full_name' => 'PAID PERSON',
+            'payment_status' => 'paid',
+            'paid_at' => now(),
+        ]);
+        $pending = $this->makeRegistration('TSC-EXPORT-PENDING');
+        $pending->update([
+            'full_name' => 'PENDING PERSON',
+            'payment_status' => 'pending',
+        ]);
+
+        $this->actingAs(User::factory()->create());
+
+        $this->get(route('welfare.admin.sisterhood.index', ['payment_status' => 'paid']))
+            ->assertOk()
+            ->assertSee('Export Excel', false)
+            ->assertSee('PAID PERSON', false)
+            ->assertDontSee('PENDING PERSON', false);
+
+        $response = $this->get(route('welfare.admin.sisterhood.export', ['payment_status' => 'paid']));
+        $response->assertOk();
+        $response->assertHeader('content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+        $path = tempnam(sys_get_temp_dir(), 'sisterhood-export');
+        copy($response->baseResponse->getFile()->getPathname(), $path);
+        $sheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($path)->getActiveSheet();
+        @unlink($path);
+
+        $headers = $sheet->rangeToArray('A1:AF1')[0];
+        $nameColumn = array_search('Full name', $headers, true);
+        $paymentColumn = array_search('Payment status', $headers, true);
+        $names = [];
+        for ($row = 2; $row <= $sheet->getHighestRow(); $row++) {
+            $names[] = $sheet->getCellByColumnAndRow($nameColumn + 1, $row)->getValue();
+            $this->assertSame('Paid', $sheet->getCellByColumnAndRow($paymentColumn + 1, $row)->getValue());
+        }
+
+        $this->assertSame(['PAID PERSON'], $names);
+    }
+
+    public function test_admin_pagination_keeps_the_active_filter(): void
+    {
+        foreach (range(1, 31) as $number) {
+            $registration = $this->makeRegistration('TSC-PAGE-' . $number);
+            $registration->update([
+                'full_name' => 'PAGE PERSON ' . $number,
+                'email' => 'page' . $number . '@example.com',
+                'nric_passport' => sprintf('900101-14-%04d', $number),
+                'payment_status' => 'paid',
+                'paid_at' => now(),
+            ]);
+        }
+
+        $this->actingAs(User::factory()->create());
+
+        $this->get(route('welfare.admin.sisterhood.index', ['payment_status' => 'paid']))
+            ->assertOk()
+            ->assertSee('class="admin-pagination"', false)
+            ->assertSee('Showing 1–30 of 31', false)
+            ->assertSee('payment_status=paid&amp;page=2', false)
+            ->assertDontSee('<svg', false);
     }
 
     private function renderMail(SisterhoodRegistrationMail $mail): string

@@ -886,8 +886,55 @@ a:hover {
     align-items: center;
     margin-left: auto;
 }
+.admin-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.admin-pagination-summary {
+    margin: 0;
+    color: var(--admin-text-muted);
+    font-size: 13px;
+}
+.admin-pagination-pages {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.admin-page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid var(--admin-border);
+    border-radius: 8px;
+    background: #ffffff;
+    color: var(--admin-text-dark);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+}
+a.admin-page-link:hover {
+    border-color: var(--admin-primary);
+    color: var(--admin-primary);
+}
+.admin-page-link.is-current {
+    background: var(--admin-primary);
+    border-color: var(--admin-primary);
+    color: #ffffff;
+}
+.admin-page-link.is-disabled {
+    color: var(--admin-text-muted);
+    background: #f8fafc;
+}
 .payments-btn-apply,
-.payments-btn-clear {
+.payments-btn-clear,
+.payments-btn-export {
     padding: 10px 18px !important;
     border-radius: 10px !important;
     font-weight: 600 !important;
