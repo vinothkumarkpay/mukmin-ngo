@@ -118,11 +118,25 @@ class FormSubmissionEmailTest extends TestCase
             'ind_email' => 'friend_ind@example.com',
             'ind_phone' => '+60111222333',
             'ind_area_of_interest' => 'Education and Talent Development',
+            'network_communities' => ['MUKMIN Youth', 'MUKMIN Professionals'],
+            'communications_consent' => '1',
             'declaration_confirmed' => '1',
         ];
 
         $response = $this->post(route('welfare.membership.friends.submit'), $formData);
         $response->assertStatus(200);
+
+        $this->assertDatabaseHas('friend_member_submissions', [
+            'ind_email' => 'friend_ind@example.com',
+            'communications_consent' => 1,
+        ]);
+
+        $submission = \App\Models\FriendMemberSubmission::where('ind_email', 'friend_ind@example.com')->first();
+        $this->assertNotNull($submission);
+        $this->assertSame(
+            ['Friends of MUKMIN', 'MUKMIN Youth', 'MUKMIN Professionals'],
+            $submission->network_communities
+        );
 
         Mail::assertSent(FormSubmissionMail::class, function ($mail) {
             $mail->build();
@@ -152,6 +166,7 @@ class FormSubmissionEmailTest extends TestCase
             'org_contact_person_salutation' => 'Mr.',
             'org_contact_person_name' => 'Ali bin Abu',
             'org_contact_person_nric' => '900101145555',
+            'communications_consent' => '1',
             'declaration_confirmed' => '1',
         ];
 

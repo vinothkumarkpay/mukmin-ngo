@@ -990,6 +990,8 @@ Content-Disposition: attachment; filename=submissions_{type}_{Ymd_His}.csv
 |------|----------|------|----------|-------------|
 | `entity_type` | body | string | Yes | `"Individual"` triggers individual rules; any other value triggers organisation rules |
 | `others_specify` | body | string | No | Specify if type is "Others" |
+| `network_communities` | body | array | No | Optional specialised networks: `MUKMIN Youth`, `MUKMIN Professionals`, `MUKMIN Women`, `MUKMIN Affiliates`. `Friends of MUKMIN` is always enrolled automatically |
+| `communications_consent` | body | boolean | Yes | Accepted — consent to email/WhatsApp/SMS communications |
 | `declaration_confirmed` | body | boolean | Yes | Accepted |
 
 **When `entity_type` = `"Individual"`**
@@ -1025,6 +1027,8 @@ Content-Disposition: attachment; filename=submissions_{type}_{Ymd_His}.csv
   "ind_address": "No 5, Jalan Ampang",
   "ind_email": "fatimah@example.com",
   "ind_phone": "+60111222333",
+  "network_communities": ["MUKMIN Youth", "MUKMIN Women"],
+  "communications_consent": true,
   "declaration_confirmed": true
 }
 ```

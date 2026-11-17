@@ -275,6 +275,7 @@ class FormSubmissionController extends Controller
         $categories = $this->friendsCategoryOptions();
         $areaOfInterestOptions = $this->friendsAreaOfInterestOptions();
         $professionOptions = $this->friendsProfessionOptions();
+        $networkCommunities = $this->friendsNetworkCommunityOptions();
         $states = $this->malaysianStateOptions();
         $salutations = $this->officeBearerSalutationOptions();
 
@@ -282,9 +283,38 @@ class FormSubmissionController extends Controller
             'categories',
             'areaOfInterestOptions',
             'professionOptions',
+            'networkCommunities',
             'states',
             'salutations'
         ));
+    }
+
+    /**
+     * Optional specialised networks shown on Friends of MUKMIN registration.
+     * Friends of MUKMIN itself is always enrolled automatically.
+     *
+     * @return array<string, array{description: string, icon: string}>
+     */
+    private function friendsNetworkCommunityOptions(): array
+    {
+        return [
+            'MUKMIN Youth' => [
+                'description' => 'For individuals aged 30 and below. Connect with young leaders, youth programmes and development opportunities.',
+                'icon' => 'fa-user-graduate',
+            ],
+            'MUKMIN Professionals' => [
+                'description' => 'For working professionals, entrepreneurs and industry practitioners seeking networking and professional development opportunities.',
+                'icon' => 'fa-briefcase',
+            ],
+            'MUKMIN Women' => [
+                'description' => 'For women interested in empowerment, leadership, sisterhood and community engagement.',
+                'icon' => 'fa-venus',
+            ],
+            'MUKMIN Affiliates' => [
+                'description' => "Exclusively for representatives of MUKMIN's registered affiliate organisations.",
+                'icon' => 'fa-handshake',
+            ],
+        ];
     }
 
     private function friendsAreaOfInterestOptions(): array
@@ -326,9 +356,14 @@ class FormSubmissionController extends Controller
         $states = $this->malaysianStateOptions();
         $salutations = $this->officeBearerSalutationOptions();
 
+        $networkKeys = array_keys($this->friendsNetworkCommunityOptions());
+
         $rules = [
             'entity_type' => ['required', 'string', Rule::in($this->friendsCategoryOptions())],
             'others_specify' => 'nullable|string|max:255',
+            'network_communities' => 'nullable|array',
+            'network_communities.*' => ['string', Rule::in($networkKeys)],
+            'communications_consent' => 'required|accepted',
             'declaration_confirmed' => 'required|accepted',
         ];
 
@@ -363,7 +398,15 @@ class FormSubmissionController extends Controller
 
         $validated = $request->validate($rules, [
             'org_name.regex' => 'Organisation name may only contain letters and spaces (no numbers).',
+            'communications_consent.accepted' => 'You must agree to receive communications from MUKMIN.',
         ]);
+
+        $selectedNetworks = array_values(array_intersect($validated['network_communities'] ?? [], $networkKeys));
+        $validated['network_communities'] = array_values(array_unique(array_merge(
+            ['Friends of MUKMIN'],
+            $selectedNetworks
+        )));
+        $validated['communications_consent'] = true;
 
         $this->applyDefaultSubmissionStatus($validated);
         FriendMemberSubmission::create($validated);

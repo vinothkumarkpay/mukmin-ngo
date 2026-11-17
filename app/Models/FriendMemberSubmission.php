@@ -11,13 +11,16 @@ class FriendMemberSubmission extends Model
         'org_email', 'org_phone', 'org_contact_person_salutation', 'org_contact_person_name',
         'org_contact_person_nric', 'org_website', 'ind_salutation', 'ind_name', 'ind_nric', 'ind_state',
         'ind_postcode', 'ind_profession', 'ind_profession_other', 'ind_address',
-        'ind_email', 'ind_phone', 'ind_area_of_interest', 'declaration_confirmed', 'status',
+        'ind_email', 'ind_phone', 'ind_area_of_interest', 'network_communities',
+        'declaration_confirmed', 'communications_consent', 'status',
         'membership_number', 'membership_start_date', 'membership_end_date', 'approved_at',
         'welcome_email_sent_at',
     ];
 
     protected $casts = [
+        'network_communities' => 'array',
         'declaration_confirmed' => 'boolean',
+        'communications_consent' => 'boolean',
         'membership_number' => 'integer',
         'membership_start_date' => 'date',
         'membership_end_date' => 'date',

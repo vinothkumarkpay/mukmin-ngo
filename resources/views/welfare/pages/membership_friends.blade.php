@@ -93,6 +93,117 @@
     margin-top: 3px;
     accent-color: #d43c18;
 }
+.stay-connected-box {
+    background: #f4f8f5;
+    border: 1px solid #d7e5db;
+    border-left: 4px solid #0c5930;
+    padding: 22px 24px;
+    border-radius: 0 8px 8px 0;
+    margin: 10px 0 30px;
+}
+.stay-connected-box .stay-connected-tagline {
+    margin: 0 0 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e1e1e;
+}
+.stay-connected-box p {
+    margin: 0 0 10px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: #444;
+}
+.stay-connected-box ul {
+    margin: 0;
+    padding-left: 20px;
+}
+.stay-connected-box li {
+    margin-bottom: 6px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #444;
+}
+.network-section-intro {
+    margin: -8px 0 18px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: #666;
+}
+.network-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 18px;
+    border: 1px solid #e5ebe7;
+    border-radius: 10px;
+    background: #fcfdfd;
+    margin-bottom: 12px;
+}
+.network-option-auto {
+    border-color: #cfe3d5;
+    background: #f4faf6;
+}
+.network-option-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #eef5f0;
+    color: #0c5930;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+}
+.network-option-body {
+    flex: 1;
+    min-width: 0;
+}
+.network-option-title-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+.network-option-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e1e1e;
+}
+.network-auto-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #0c5930;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+.network-option-desc {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #666;
+}
+.network-option-check {
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+.network-option-check input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #0c5930;
+    cursor: pointer;
+}
+.consent-copy {
+    margin: 0 0 16px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #555;
+}
 .btn-submit {
     background: #d43c18;
     color: #ffffff;
@@ -384,6 +495,62 @@
                         <label for="org_website">Website / Social Media (if any)</label>
                         <input type="text" id="org_website" name="org_website" class="form-control" value="{{ old('org_website') }}">
                     </div>
+                </div>
+
+                <div class="form-section-title">Stay Connected. Be Part of the Network.</div>
+                <div class="stay-connected-box">
+                    <p class="stay-connected-tagline">One Identity. One Vision. One Community.</p>
+                    <p>Stay connected and be part of the MUKMIN community through our official WhatsApp groups.</p>
+                    <p>Join our WhatsApp communities to receive:</p>
+                    <ul>
+                        <li>The latest MUKMIN announcements and updates.</li>
+                        <li>Early notifications and priority registration for selected programmes and events.</li>
+                        <li>Exclusive invitations to networking sessions, forums and community activities.</li>
+                        <li>Relevant opportunities, initiatives and updates within your respective communities.</li>
+                    </ul>
+                </div>
+
+                <div class="form-section-title">Your MUKMIN Network Membership</div>
+                <div class="network-option network-option-auto">
+                    <div class="network-option-icon" aria-hidden="true"><i class="fas fa-users"></i></div>
+                    <div class="network-option-body">
+                        <div class="network-option-title-row">
+                            <h3 class="network-option-title">Friends of MUKMIN</h3>
+                            <span class="network-auto-badge">Automatic enrollment</span>
+                        </div>
+                        <p class="network-option-desc">General community network. All registered individuals will automatically be included in Friends of MUKMIN to receive general updates and announcements.</p>
+                    </div>
+                </div>
+
+                <div class="form-section-title">Join Additional MUKMIN Communities</div>
+                <p class="network-section-intro">You may also choose to join the following specialised networks, subject to the respective eligibility requirements. Select all that apply.</p>
+                @foreach($networkCommunities as $networkName => $networkMeta)
+                    @php
+                        $networkId = 'network-' . \Illuminate\Support\Str::slug($networkName);
+                        $selectedNetworks = old('network_communities', []);
+                        $isChecked = is_array($selectedNetworks) && in_array($networkName, $selectedNetworks, true);
+                    @endphp
+                    <label class="network-option" for="{{ $networkId }}">
+                        <div class="network-option-icon" aria-hidden="true"><i class="fas {{ $networkMeta['icon'] }}"></i></div>
+                        <div class="network-option-body">
+                            <div class="network-option-title-row">
+                                <span class="network-option-title">{{ $networkName }}</span>
+                            </div>
+                            <p class="network-option-desc">{{ $networkMeta['description'] }}</p>
+                        </div>
+                        <div class="network-option-check">
+                            <input type="checkbox" name="network_communities[]" id="{{ $networkId }}" value="{{ $networkName }}" {{ $isChecked ? 'checked' : '' }}>
+                        </div>
+                    </label>
+                @endforeach
+
+                <div class="form-section-title">Consent &amp; Communication Preferences</div>
+                <p class="consent-copy">By submitting this registration, I consent to MUKMIN contacting me through email, WhatsApp, SMS or other communication channels for relevant updates, programmes, invitations and opportunities relating to my selected networks. I understand that I may opt out of these communications at any time.</p>
+                <div class="declaration-box">
+                    <label>
+                        <input type="checkbox" name="communications_consent" value="1" required {{ old('communications_consent') ? 'checked' : '' }}>
+                        I agree to receive communications from MUKMIN and consent to the above.
+                    </label>
                 </div>
 
                 <!-- DECLARATION -->

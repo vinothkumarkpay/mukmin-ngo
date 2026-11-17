@@ -265,6 +265,12 @@ class SubmissionImportRegistry
 
             case 'friends':
                 $data['declaration_confirmed'] = true;
+                $data['communications_consent'] = $data['communications_consent'] ?? true;
+                if (empty($data['network_communities']) || ! is_array($data['network_communities'])) {
+                    $data['network_communities'] = ['Friends of MUKMIN'];
+                } elseif (! in_array('Friends of MUKMIN', $data['network_communities'], true)) {
+                    array_unshift($data['network_communities'], 'Friends of MUKMIN');
+                }
                 $data['status'] = SubmissionStatus::default();
                 break;
 
@@ -441,6 +447,12 @@ class SubmissionImportRegistry
                     'ind_email' => ['label' => 'Ind Email'],
                     'ind_phone' => ['label' => 'Ind Phone'],
                     'ind_area_of_interest' => ['label' => 'Ind Area of Interest'],
+                    'network_communities' => [
+                        'label' => 'Network Communities',
+                        'type' => 'list',
+                        'hint' => 'Comma-separated. Friends of MUKMIN is always included. Optional: MUKMIN Youth, MUKMIN Professionals, MUKMIN Women, MUKMIN Affiliates',
+                    ],
+                    'communications_consent' => ['label' => 'Communications Consent', 'type' => 'boolean'],
                 ],
             ],
             'mentor' => [

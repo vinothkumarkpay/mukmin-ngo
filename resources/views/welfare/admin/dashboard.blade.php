@@ -1277,6 +1277,7 @@
                     'applied_to_university',
                     'received_offer_letter',
                     'declaration_confirmed',
+                    'communications_consent',
                     'contact_consent',
                     'is_registered_ros',
                     'has_served_before',
@@ -1377,6 +1378,8 @@
                         emergency_contact_relationship: 'Emergency Contact Relationship',
                         emergency_contact_phone: 'Emergency Contact Phone',
                         declaration_confirmed: 'Declaration Confirmed',
+                        network_communities: 'Network Communities',
+                        communications_consent: 'Communications Consent',
                     };
 
                     let label = fieldLabels[key] || key.replace(/_/g, ' ').toUpperCase();
