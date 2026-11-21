@@ -127,6 +127,9 @@ Route::name('welfare.')->group(function () {
         Route::get('/admin/sisterhood/export', [AdminSisterhoodRegistrationController::class, 'export'])->name('admin.sisterhood.export');
         Route::get('/admin/sisterhood/attendance', [AdminSisterhoodRegistrationController::class, 'attendance'])->name('admin.sisterhood.attendance');
         Route::post('/admin/sisterhood/attendance', [AdminSisterhoodRegistrationController::class, 'markAttendance'])->name('admin.sisterhood.attendance.store');
+        Route::get('/admin/sisterhood/reminder', [AdminSisterhoodRegistrationController::class, 'reminder'])->name('admin.sisterhood.reminder');
+        Route::post('/admin/sisterhood/reminder/test', [AdminSisterhoodRegistrationController::class, 'sendReminderTest'])->name('admin.sisterhood.reminder.test');
+        Route::post('/admin/sisterhood/reminder/send', [AdminSisterhoodRegistrationController::class, 'sendReminderToPaid'])->name('admin.sisterhood.reminder.send');
         Route::get('/admin/sisterhood/{registration}/qr', [AdminSisterhoodRegistrationController::class, 'qr'])->name('admin.sisterhood.qr');
         Route::get('/admin/sisterhood/{registration}', [AdminSisterhoodRegistrationController::class, 'show'])->name('admin.sisterhood.show');
         Route::get('/admin/sisterhood/{registration}/edit', [AdminSisterhoodRegistrationController::class, 'edit'])->name('admin.sisterhood.edit');

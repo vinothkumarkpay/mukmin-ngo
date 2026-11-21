@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Welfare;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Welfare\Concerns\ChecksAdminAccess;
 use App\Models\SisterhoodRegistration;
+use App\Services\Welfare\SisterhoodAgendaReminderSender;
 use App\Services\Welfare\SisterhoodQrCode;
 use App\Services\Welfare\SisterhoodRegistrationNotifier;
 use App\Support\SisterhoodCollective;
@@ -246,6 +247,78 @@ class AdminSisterhoodRegistrationController extends Controller
             'presentCount' => SisterhoodRegistration::where('status', SisterhoodRegistration::STATUS_SUCCESS)->whereNotNull('attended_at')->count(),
             'paidCount' => SisterhoodRegistration::where('status', SisterhoodRegistration::STATUS_SUCCESS)->count(),
         ]);
+    }
+
+    public function reminder(SisterhoodAgendaReminderSender $sender)
+    {
+        $this->authorizePermission('sisterhood.manage');
+
+        $recipients = $sender->paidRecipients();
+
+        return view('welfare.admin.sisterhood.reminder', [
+            'paidCount' => SisterhoodRegistration::where('status', SisterhoodRegistration::STATUS_SUCCESS)->count(),
+            'recipientCount' => $recipients->count(),
+            'agendaAvailable' => SisterhoodCollective::agendaPdfAvailable(),
+            'agendaFilename' => SisterhoodCollective::AGENDA_PDF_FILENAME,
+        ]);
+    }
+
+    public function sendReminderTest(Request $request, SisterhoodAgendaReminderSender $sender)
+    {
+        $this->authorizePermission('sisterhood.manage');
+
+        $validated = $request->validate([
+            'test_email' => ['required', 'email', 'max:255'],
+        ]);
+
+        try {
+            $sender->sendTest($validated['test_email']);
+        } catch (\Throwable $e) {
+            return redirect()
+                ->route('welfare.admin.sisterhood.reminder')
+                ->withInput()
+                ->with('error', 'Test email failed: ' . $e->getMessage());
+        }
+
+        return redirect()
+            ->route('welfare.admin.sisterhood.reminder')
+            ->with('success', 'Test reminder email with agenda attachment sent to ' . $validated['test_email'] . '.');
+    }
+
+    public function sendReminderToPaid(Request $request, SisterhoodAgendaReminderSender $sender)
+    {
+        $this->authorizePermission('sisterhood.manage');
+
+        $request->validate([
+            'confirm' => ['accepted'],
+        ], [
+            'confirm.accepted' => 'Confirm that you want to email all paid participants before sending.',
+        ]);
+
+        try {
+            $result = $sender->sendToPaid();
+        } catch (\Throwable $e) {
+            return redirect()
+                ->route('welfare.admin.sisterhood.reminder')
+                ->with('error', 'Bulk send failed: ' . $e->getMessage());
+        }
+
+        $message = 'Agenda reminder sent to ' . $result['sent'] . ' paid participant'
+            . ($result['sent'] === 1 ? '' : 's') . '.';
+
+        if ($result['failed'] > 0) {
+            $message .= ' ' . $result['failed'] . ' failed.';
+            $firstFailures = collect($result['failures'])->take(3)
+                ->map(fn ($failure) => $failure['email'] . ' (' . $failure['error'] . ')')
+                ->implode('; ');
+            if ($firstFailures !== '') {
+                $message .= ' Examples: ' . $firstFailures;
+            }
+        }
+
+        return redirect()
+            ->route('welfare.admin.sisterhood.reminder')
+            ->with($result['failed'] > 0 && $result['sent'] === 0 ? 'error' : 'success', $message);
     }
 
     public function markAttendance(Request $request, SisterhoodQrCode $qrCode)

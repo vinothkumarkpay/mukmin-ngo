@@ -25,11 +25,35 @@ class SisterhoodCollective
 
     public const ORGANISER = 'MUKMIN Women & Family Development Bureau';
 
+    public const AGENDA_PDF_RELATIVE = 'welfare/docs/sisterhood-agenda.pdf';
+
+    public const AGENDA_PDF_FILENAME = 'The Sisterhood - Agenda.pdf';
+
     public const PROFESSION_OTHER = 'Other (Please Specify)';
 
     public const EDUCATION_OTHER = 'Other';
 
     public const HEARD_OTHER = 'Other';
+
+    public static function agendaPdfPath(): string
+    {
+        return public_path(self::AGENDA_PDF_RELATIVE);
+    }
+
+    public static function agendaPdfAvailable(): bool
+    {
+        return is_file(self::agendaPdfPath());
+    }
+
+    public static function paidRecipientsQuery()
+    {
+        return SisterhoodRegistration::query()
+            ->where('status', SisterhoodRegistration::STATUS_SUCCESS)
+            ->where('payment_status', 'paid')
+            ->whereNotNull('email')
+            ->where('email', '!=', '')
+            ->orderBy('id');
+    }
 
     public static function closesAt(): CarbonInterface
     {

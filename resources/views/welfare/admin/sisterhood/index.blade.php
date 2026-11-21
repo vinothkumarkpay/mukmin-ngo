@@ -56,6 +56,9 @@
                 <div class="card-header">
                     <h3>The Sisterhood Collective 2026</h3>
                     <div class="card-actions">
+                        @if($canManage)
+                            <a href="{{ route('welfare.admin.sisterhood.reminder') }}" class="btn-admin btn-admin-secondary">Agenda reminder</a>
+                        @endif
                         <a href="{{ route('welfare.admin.sisterhood.attendance') }}" class="btn-admin btn-admin-primary">Scan attendance</a>
                     </div>
                 </div>

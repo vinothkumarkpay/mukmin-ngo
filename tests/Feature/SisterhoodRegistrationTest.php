@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Mail\SisterhoodAgendaReminderMail;
 use App\Mail\SisterhoodRegistrationMail;
 use App\Models\SisterhoodRegistration;
 use App\Models\User;
@@ -516,6 +517,71 @@ class SisterhoodRegistrationTest extends TestCase
 
         $this->get(route('welfare.admin.sisterhood.export'))
             ->assertRedirect(route('welfare.admin.login'));
+
+        $this->get(route('welfare.admin.sisterhood.reminder'))
+            ->assertRedirect(route('welfare.admin.login'));
+    }
+
+    public function test_admin_can_send_agenda_reminder_test_and_paid_emails(): void
+    {
+        $this->assertTrue(SisterhoodCollective::agendaPdfAvailable());
+
+        $paid = $this->makeRegistration('TSC-REMIND-PAID');
+        $paid->update([
+            'email' => 'paid@example.com',
+            'preferred_name' => 'Paid Guest',
+            'payment_status' => 'paid',
+            'status' => SisterhoodRegistration::STATUS_SUCCESS,
+            'paid_at' => now(),
+        ]);
+
+        $paidDuplicate = $this->makeRegistration('TSC-REMIND-DUP');
+        $paidDuplicate->update([
+            'email' => 'paid@example.com',
+            'nric_passport' => '900101-01-9999',
+            'payment_status' => 'paid',
+            'status' => SisterhoodRegistration::STATUS_SUCCESS,
+            'paid_at' => now(),
+        ]);
+
+        $pending = $this->makeRegistration('TSC-REMIND-PENDING');
+        $pending->update([
+            'email' => 'pending@example.com',
+            'nric_passport' => '900101-01-8888',
+            'payment_status' => 'pending',
+            'status' => SisterhoodRegistration::STATUS_PENDING,
+        ]);
+
+        $this->actingAs(User::factory()->create());
+
+        $this->get(route('welfare.admin.sisterhood.reminder'))
+            ->assertOk()
+            ->assertViewHas('recipientCount', 1)
+            ->assertSee('Agenda reminder', false)
+            ->assertSee('Unique paid emails', false);
+
+        $this->post(route('welfare.admin.sisterhood.reminder.test'), [
+            'test_email' => 'tester@example.com',
+        ])->assertRedirect(route('welfare.admin.sisterhood.reminder'));
+
+        Mail::assertSent(SisterhoodAgendaReminderMail::class, function (SisterhoodAgendaReminderMail $mail) {
+            return $mail->hasTo('tester@example.com')
+                && $mail->subject === 'See you this Sunday! The Sisterhood Collective 2026 – Programme Agenda Inside';
+        });
+
+        $this->post(route('welfare.admin.sisterhood.reminder.send'), [
+            'confirm' => '1',
+        ])->assertRedirect(route('welfare.admin.sisterhood.reminder'));
+
+        Mail::assertSent(SisterhoodAgendaReminderMail::class, function (SisterhoodAgendaReminderMail $mail) {
+            return $mail->hasTo('paid@example.com');
+        });
+
+        Mail::assertNotSent(SisterhoodAgendaReminderMail::class, function (SisterhoodAgendaReminderMail $mail) {
+            return $mail->hasTo('pending@example.com');
+        });
+
+        Mail::assertSent(SisterhoodAgendaReminderMail::class, 2);
     }
 
     public function test_admin_can_export_the_filtered_registrations_as_excel(): void
