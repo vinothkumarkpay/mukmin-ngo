@@ -142,7 +142,7 @@
 
             <div class="email-body">
                 <div class="intro-text">
-                    <p>Assalamualaikum@if($recipientName !== ''), {{ $recipientName }}@endif,</p>
+                    <p>Assalamualaikum{{ $recipientName !== '' ? ', ' . $recipientName : '' }},</p>
                     <p>We are just days away from The Sisterhood Collective 2026, and we can't wait to welcome you!</p>
                     <p>As we get closer to the event, we are pleased to share the programme agenda for your reference. Please find the agenda attached and take a moment to familiarise yourself with the day's sessions and activities.</p>
                 </div>

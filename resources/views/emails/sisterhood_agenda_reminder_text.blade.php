@@ -1,4 +1,4 @@
-Assalamualaikum@if($recipientName !== ''), {{ $recipientName }}@endif,
+Assalamualaikum{{ $recipientName !== '' ? ', ' . $recipientName : '' }},
 
 We are just days away from The Sisterhood Collective 2026, and we can't wait to welcome you!
 
