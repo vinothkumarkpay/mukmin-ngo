@@ -627,6 +627,63 @@ class SisterhoodRegistrationTest extends TestCase
         $this->assertSame(['PAID PERSON'], $names);
     }
 
+    public function test_admin_can_filter_and_export_by_attendance(): void
+    {
+        $present = $this->makeRegistration('TSC-ATTEND-PRESENT');
+        $present->update([
+            'full_name' => 'PRESENT PERSON',
+            'payment_status' => 'paid',
+            'paid_at' => now(),
+        ]);
+        $present->attended_at = now();
+        $present->save();
+
+        $absent = $this->makeRegistration('TSC-ATTEND-ABSENT');
+        $absent->update([
+            'full_name' => 'ABSENT PERSON',
+            'payment_status' => 'paid',
+            'paid_at' => now(),
+        ]);
+        $absent->attended_at = null;
+        $absent->save();
+
+        $this->actingAs(User::factory()->create());
+
+        $this->get(route('welfare.admin.sisterhood.index', ['attendance' => 'present']))
+            ->assertOk()
+            ->assertSee('Attendance', false)
+            ->assertSee('PRESENT PERSON', false)
+            ->assertDontSee('ABSENT PERSON', false);
+
+        $this->get(route('welfare.admin.sisterhood.index', ['attendance' => 'not_present']))
+            ->assertOk()
+            ->assertSee('ABSENT PERSON', false)
+            ->assertDontSee('PRESENT PERSON', false);
+
+        $response = $this->get(route('welfare.admin.sisterhood.export', [
+            'payment_status' => 'paid',
+            'attendance' => 'present',
+        ]));
+        $response->assertOk();
+        $response->assertHeader('content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+        $path = tempnam(sys_get_temp_dir(), 'sisterhood-export-attendance');
+        copy($response->baseResponse->getFile()->getPathname(), $path);
+        $sheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($path)->getActiveSheet();
+        @unlink($path);
+
+        $headers = $sheet->rangeToArray('A1:AF1')[0];
+        $nameColumn = array_search('Full name', $headers, true);
+        $attendanceColumn = array_search('Attendance', $headers, true);
+        $names = [];
+        for ($row = 2; $row <= $sheet->getHighestRow(); $row++) {
+            $names[] = $sheet->getCellByColumnAndRow($nameColumn + 1, $row)->getValue();
+            $this->assertSame('Present', $sheet->getCellByColumnAndRow($attendanceColumn + 1, $row)->getValue());
+        }
+
+        $this->assertSame(['PRESENT PERSON'], $names);
+    }
+
     public function test_admin_pagination_keeps_the_active_filter(): void
     {
         foreach (range(1, 31) as $number) {

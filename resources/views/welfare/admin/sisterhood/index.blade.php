@@ -64,9 +64,14 @@
                 </div>
                 <div class="card-body">
                     @php
+                        $attendanceLabels = [
+                            'present' => 'Present',
+                            'not_present' => 'Not present',
+                        ];
                         $activeFilters = collect([
                             'search' => request('search'),
                             'payment_status' => request('payment_status'),
+                            'attendance' => $attendanceLabels[request('attendance')] ?? request('attendance'),
                         ])->filter(fn ($value) => filled($value));
                     @endphp
 
@@ -76,7 +81,7 @@
                                 <span class="payments-filter-icon"><i class="fas fa-search"></i></span>
                                 <div>
                                     <h4>Search registrations and payments</h4>
-                                    <p>Find a participant by name, contact, NRIC, email, order reference, check-in code, or payment status</p>
+                                    <p>Find a participant by name, contact, NRIC, email, order reference, check-in code, payment status, or attendance</p>
                                 </div>
                             </div>
                             <div class="payments-filter-meta">
@@ -115,6 +120,23 @@
                                     <label class="payments-status-pill payments-status-pill--failed">
                                         <input type="radio" name="payment_status" value="failed" {{ request('payment_status') === 'failed' ? 'checked' : '' }}>
                                         <span>Failed</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="payments-filter-status-row">
+                                <span class="payments-filter-status-label">Attendance</span>
+                                <div class="payments-status-pills">
+                                    <label class="payments-status-pill">
+                                        <input type="radio" name="attendance" value="" {{ request('attendance') ? '' : 'checked' }}>
+                                        <span>All</span>
+                                    </label>
+                                    <label class="payments-status-pill payments-status-pill--paid">
+                                        <input type="radio" name="attendance" value="present" {{ request('attendance') === 'present' ? 'checked' : '' }}>
+                                        <span>Present</span>
+                                    </label>
+                                    <label class="payments-status-pill payments-status-pill--pending">
+                                        <input type="radio" name="attendance" value="not_present" {{ request('attendance') === 'not_present' ? 'checked' : '' }}>
+                                        <span>Not present</span>
                                     </label>
                                 </div>
                             </div>

@@ -121,7 +121,14 @@ class AdminSisterhoodRegistrationController extends Controller
         $sheet->freezePane('A2');
         $sheet->setAutoFilter($sheet->calculateWorksheetDimension());
 
-        $suffix = $request->filled('payment_status') ? '-' . $request->input('payment_status') : '';
+        $suffixParts = [];
+        if ($request->filled('payment_status')) {
+            $suffixParts[] = $request->input('payment_status');
+        }
+        if ($request->filled('attendance')) {
+            $suffixParts[] = $request->input('attendance');
+        }
+        $suffix = $suffixParts === [] ? '' : '-' . implode('-', $suffixParts);
         $filename = 'sisterhood-registrations' . $suffix . '-' . now()->format('Ymd-His') . '.xlsx';
         $temp = tempnam(sys_get_temp_dir(), 'sisterhood-xlsx');
         (new Xlsx($spreadsheet))->save($temp);
@@ -139,6 +146,13 @@ class AdminSisterhoodRegistrationController extends Controller
         $paymentStatus = (string) $request->input('payment_status', '');
         if (in_array($paymentStatus, ['pending', 'paid', 'failed'], true)) {
             $query->where('payment_status', $paymentStatus);
+        }
+
+        $attendance = (string) $request->input('attendance', '');
+        if ($attendance === 'present') {
+            $query->whereNotNull('attended_at');
+        } elseif ($attendance === 'not_present') {
+            $query->whereNull('attended_at');
         }
 
         $search = trim((string) $request->input('search', ''));
