@@ -766,13 +766,7 @@
     <!-- HERO SLIDER SECTION -->
     <section class="hero-slider">
         <div class="slider-container">
-            <a href="{{ route('welfare.sisterhood.create') }}" class="slide active">
-                <picture>
-                    <source media="(max-width: 768px)" srcset="{{ asset('welfare/img/banner-sisterhood-mobile.jpg') }}">
-                    <img src="{{ asset('welfare/img/banner-sisterhood.jpg') }}" alt="The Sisterhood Collective 2026. Register now.">
-                </picture>
-            </a>
-            <a href="{{ route('welfare.about') }}" class="slide">
+            <a href="{{ route('welfare.about') }}" class="slide active">
                 <picture>
                     <source media="(max-width: 768px)" srcset="{{ asset('welfare/img/banner-1-mobile.jpg') }}">
                     <img src="{{ asset('welfare/img/banner-1.jpeg') }}" alt="One Identity. One Vision. One Community.">
@@ -805,7 +799,6 @@
                 <span class="dot" data-index="1"></span>
                 <span class="dot" data-index="2"></span>
                 <span class="dot" data-index="3"></span>
-                <span class="dot" data-index="4"></span>
             </div>
         </div>
     </section>

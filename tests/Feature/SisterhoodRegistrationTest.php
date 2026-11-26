@@ -39,13 +39,14 @@ class SisterhoodRegistrationTest extends TestCase
         parent::tearDown();
     }
 
-    public function test_home_page_links_to_the_registration_form(): void
+    public function test_home_page_does_not_promote_sisterhood_registration(): void
     {
         $response = $this->get(route('welfare.home'));
 
         $response->assertOk();
-        $response->assertSee('btn-sisterhood-rounded', false);
-        $response->assertSee(route('welfare.sisterhood.create'), false);
+        $response->assertDontSee('btn-sisterhood-rounded', false);
+        $response->assertDontSee('banner-sisterhood', false);
+        $response->assertDontSee(route('welfare.sisterhood.create'), false);
         $response->assertDontSee('sisterhood-home-banner', false);
     }
 

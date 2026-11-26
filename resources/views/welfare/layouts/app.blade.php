@@ -97,11 +97,6 @@
                             <span class="action-text">Scholarship</span>
                         </a>
 
-                        <a href="{{ route('welfare.sisterhood.create') }}" class="btn-sisterhood-rounded" aria-label="The Sisterhood Collective 2026 registration">
-                            <i class="fas fa-users" aria-hidden="true"></i>
-                            <span class="action-text">Sisterhood</span>
-                        </a>
-
                         <!-- Register Button -->
                         <a href="{{ route('welfare.serve') }}#membership-vertical-tabs" class="btn-register-rounded" aria-label="Register">
                             <i class="fas fa-user-plus" aria-hidden="true"></i>
